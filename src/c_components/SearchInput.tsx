@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {Image} from 'react-native';
 import styled from 'styled-components/native';
@@ -60,6 +61,9 @@ const SearchInput = ({
         value={value}
         maxLength={20}
         onBlur={onSubmit}
+        style={{
+          color: '#fff',
+        }}
       />
       <LengthContainer>
         <Image
