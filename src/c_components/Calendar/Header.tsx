@@ -81,7 +81,7 @@ const Header = ({date, GoToAgenda, setCurrent}: Props) => {
             }}
             source={images.calendar}
           />
-          <Modal animationType="slide" visible={show} transparent={true}>
+          {show && (
             <MonthPicker
               onChange={onValueChange}
               value={date}
@@ -89,7 +89,7 @@ const Header = ({date, GoToAgenda, setCurrent}: Props) => {
               maximumDate={new Date(2024, 5)}
               locale="ko"
             />
-          </Modal>
+          )}
         </Row>
       </HHeader>
     </Container>

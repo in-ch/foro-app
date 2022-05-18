@@ -154,8 +154,8 @@ const CCalendar = ({GoToAgenda, GoToDetail}: Props) => {
         enableSwipeMonths={false}
         horizontal={true}
         pagingEnabled={true}
-        pastScrollRange={50}
-        futureScrollRange={50}
+        pastScrollRange={24}
+        futureScrollRange={24}
         renderHeader={date => {
           return (
             <>

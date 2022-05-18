@@ -23,11 +23,9 @@ const DDatePicker = () => {
         date={date}
         mode="date"
         textColor="#fff"
-        locale="kr"
         onConfirm={value => {
           setOpen(false);
           setDate(value);
-          console.log(value);
         }}
         onCancel={() => {
           setOpen(false);
