@@ -7,11 +7,11 @@ import {cssUtil} from '@utills/cssUtil';
 import Images from 'assets';
 
 const Container = styled.View<ContainerProps>`
-  width: ${props => (props.width ? props.width : 90)}%;
+  width: ${props => (props.widths ? props.widths : 90)}%;
   height: ${nomalizes[35]}px;
   background-color: #fff;
   border: 1px solid #777777;
-  margin-left: ${props => (props.width ? 100 - Number(props.width) : 5)}%;
+  margin-left: ${props => (props.widths ? 100 - Number(props.widths) : 5)}%;
   display: flex;
   flex-direction: row;
   border-radius: ${nomalizes[5]}px;
@@ -38,20 +38,28 @@ interface Props {
   setValue: (value: string) => void;
   placeholder?: string;
   width?: number;
+  onSubmit?: () => void;
 }
 interface ContainerProps {
-  width: string;
+  widths: string;
 }
 
-const SearchInput = ({value, setValue, placeholder, width}: Props) => {
+const SearchInput = ({
+  value,
+  setValue,
+  placeholder,
+  width,
+  onSubmit,
+}: Props) => {
   return (
-    <Container width={width}>
+    <Container widths={width}>
       <TTextInput
         placeholder={placeholder ? placeholder : '검색하기'}
         placeholderTextColor="#646464"
         onChangeText={(text: string) => setValue(text)}
         value={value}
         maxLength={20}
+        onBlur={onSubmit}
       />
       <LengthContainer>
         <Image
