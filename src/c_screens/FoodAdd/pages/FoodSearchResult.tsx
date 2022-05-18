@@ -65,8 +65,8 @@ export interface FoodSearchResultProps {
 }
 
 const FoodSearchResult = ({navigation, route}: FoodSearchResultProps) => {
-  const GoToFoodAddInput = (text: string) => {
-    navigation.navigate('FoodAddInput', {text});
+  const GoToFoodAddInput = (food: FoodData) => {
+    navigation.navigate('FoodAddInput', {food});
   };
   const [results, setResults] = useState<FoodData | []>([]);
   useEffect(() => {
@@ -81,7 +81,7 @@ const FoodSearchResult = ({navigation, route}: FoodSearchResultProps) => {
         return (
           <SearchResultBox
             style={{borderBottomWidth: 1}}
-            onPress={() => GoToFoodAddInput(food.name)}>
+            onPress={() => GoToFoodAddInput(food)}>
             <SearchResultBoxHeading>{food.name}</SearchResultBoxHeading>
             <SizedBox.Custom margin={nomalizes[5]} />
             <SearchResultBoxTextContainer>

@@ -23,6 +23,7 @@ import Terms from '@screens/Setting/pages/Terms';
 import PersonalPolicy from '@screens/Setting/pages/PersonalPolicy';
 import Profile from '@screens/Profile/Profile';
 import ProfileEdit from '@screens/Profile/pages/ProfileEdit';
+import {FoodData} from '~/types/Food';
 
 export type RootTabParamList = {
   Home: {};
@@ -49,7 +50,7 @@ export type RootTabParamList = {
     selected?: string;
   };
   FoodAddInput: {
-    text: string;
+    food: FoodData;
   };
 };
 
