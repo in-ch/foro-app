@@ -1,12 +1,10 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 
 import Header from '@components/Header/Header';
 import SearchInput from '@components/SearchInput';
 import {nomalizes} from '@utills/constants';
 import {SizedBox} from '@components/SizedBox';
-import {FoodData} from '~/types/Food';
 
 const Container = styled.View`
   flex: 1;
@@ -20,33 +18,15 @@ const Heading = styled.Text`
   margin-bottom: ${nomalizes[10]}px;
   color: #000;
 `;
-const SearchRelateView = styled.View`
-  width: 100%;
-`;
-const SearchRelateViewText = styled.Text`
-  font-size: ${nomalizes[12]}px;
-  margin-top: ${nomalizes[12]}px;
-  margin-bottom: ${nomalizes[8]}px;
-  color: rgb(50, 50, 50);
-`;
 
 interface Props {
   GoBack: () => void;
-  GoToFoodSearchResult: () => void;
   handleSearch: () => void;
   value: string;
   setValue: (value: string) => void;
-  results: FoodData | [];
 }
 
-const FoodAddPresenter = ({
-  GoBack,
-  GoToFoodSearchResult,
-  handleSearch,
-  value,
-  setValue,
-  results,
-}: Props) => {
+const FoodAddPresenter = ({GoBack, handleSearch, value, setValue}: Props) => {
   return (
     <>
       <Header text="식품 추가하기" back={GoBack} />
@@ -59,16 +39,6 @@ const FoodAddPresenter = ({
           width={100}
           onSubmit={handleSearch}
         />
-        <SearchRelateView>
-          {results &&
-            results?.map((food: {name: React.ReactNode}) => {
-              return (
-                <TouchableWithoutFeedback onPress={GoToFoodSearchResult}>
-                  <SearchRelateViewText>{food.name}</SearchRelateViewText>
-                </TouchableWithoutFeedback>
-              );
-            })}
-        </SearchRelateView>
         <SizedBox.Custom margin={nomalizes[20]} />
       </Container>
     </>

@@ -1,13 +1,17 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from 'styled-components/native';
 
 import {nomalizes} from '@utills/constants';
 import {cssUtil} from '@utills/cssUtil';
 import Header from '@components/Header/Header';
 import {RootTabParamList} from '@navigation/RootNavigation';
-import {NavigationProp} from '@react-navigation/native';
+import {NavigationProp, RouteProp} from '@react-navigation/native';
 import {SizedBox} from '@components/SizedBox';
+import {FoodData} from '~/types/Food';
+import {foods} from '~/data/FOOD';
+import {getListFilter} from '~/utills/getListFilter';
 
 const Container = styled.View`
   flex: 1;
@@ -57,79 +61,45 @@ const HashTagText = styled.Text`
 
 export interface FoodSearchResultProps {
   navigation: NavigationProp<RootTabParamList, 'FoodSearchResult'>;
+  route: RouteProp<RootTabParamList, 'FoodSearchResult'>;
 }
 
-const FoodSearchResult = ({navigation}: FoodSearchResultProps) => {
+const FoodSearchResult = ({navigation, route}: FoodSearchResultProps) => {
   const GoToFoodAddInput = (text: string) => {
     navigation.navigate('FoodAddInput', {text});
   };
+  const [results, setResults] = useState<FoodData | []>([]);
+  useEffect(() => {
+    setResults(getListFilter(foods, route.params.text));
+  }, []);
   return (
     <Container>
-      <Header text="토마토" back={() => navigation.goBack()} />
+      <Header text={route.params.text} back={() => navigation.goBack()} />
       <SizedBox.Custom margin={nomalizes[20]} />
-      <SearchResultBox
-        style={{borderBottomWidth: 1}}
-        onPress={() => GoToFoodAddInput('토마토')}>
-        <SearchResultBoxHeading>토마토</SearchResultBoxHeading>
-        <SizedBox.Custom margin={nomalizes[5]} />
-        <SearchResultBoxTextContainer>
-          <SearchResultBoxText>식품 권장 기한</SearchResultBoxText>
-          <SearchResultBoxNumber>14일</SearchResultBoxNumber>
-        </SearchResultBoxTextContainer>
-        <SearchResultBoxTextContainer>
-          <HashTag>
-            <HashTagText>신선식품</HashTagText>
-          </HashTag>
-          <HashTag>
-            <HashTagText>상온보관</HashTagText>
-          </HashTag>
-          <HashTag>
-            <HashTagText>비조리 섭취 금지</HashTagText>
-          </HashTag>
-        </SearchResultBoxTextContainer>
-      </SearchResultBox>
-      <SearchResultBox
-        style={{borderBottomWidth: 1}}
-        onPress={() => GoToFoodAddInput('토마토')}>
-        <SearchResultBoxHeading>토마토 무침</SearchResultBoxHeading>
-        <SizedBox.Custom margin={nomalizes[5]} />
-        <SearchResultBoxTextContainer>
-          <SearchResultBoxText>식품 권장 기한</SearchResultBoxText>
-          <SearchResultBoxNumber>14일</SearchResultBoxNumber>
-        </SearchResultBoxTextContainer>
-        <SearchResultBoxTextContainer>
-          <HashTag>
-            <HashTagText>신선식품</HashTagText>
-          </HashTag>
-          <HashTag>
-            <HashTagText>상온보관</HashTagText>
-          </HashTag>
-          <HashTag>
-            <HashTagText>비조리 섭취 금지</HashTagText>
-          </HashTag>
-        </SearchResultBoxTextContainer>
-      </SearchResultBox>
-      <SearchResultBox
-        style={{borderBottomWidth: 1}}
-        onPress={() => GoToFoodAddInput('토마토')}>
-        <SearchResultBoxHeading>방울 토마토</SearchResultBoxHeading>
-        <SizedBox.Custom margin={nomalizes[5]} />
-        <SearchResultBoxTextContainer>
-          <SearchResultBoxText>식품 권장 기한</SearchResultBoxText>
-          <SearchResultBoxNumber>14일</SearchResultBoxNumber>
-        </SearchResultBoxTextContainer>
-        <SearchResultBoxTextContainer>
-          <HashTag>
-            <HashTagText>신선식품</HashTagText>
-          </HashTag>
-          <HashTag>
-            <HashTagText>상온보관</HashTagText>
-          </HashTag>
-          <HashTag>
-            <HashTagText>비조리 섭취 금지</HashTagText>
-          </HashTag>
-        </SearchResultBoxTextContainer>
-      </SearchResultBox>
+
+      {results.map((food: FoodData) => {
+        return (
+          <SearchResultBox
+            style={{borderBottomWidth: 1}}
+            onPress={() => GoToFoodAddInput(food.name)}>
+            <SearchResultBoxHeading>{food.name}</SearchResultBoxHeading>
+            <SizedBox.Custom margin={nomalizes[5]} />
+            <SearchResultBoxTextContainer>
+              <SearchResultBoxText>식품 권장 기한</SearchResultBoxText>
+              <SearchResultBoxNumber>{food.date}일</SearchResultBoxNumber>
+            </SearchResultBoxTextContainer>
+            <SearchResultBoxTextContainer>
+              {food.keyword.map(keyword => {
+                return (
+                  <HashTag>
+                    <HashTagText>{keyword}</HashTagText>
+                  </HashTag>
+                );
+              })}
+            </SearchResultBoxTextContainer>
+          </SearchResultBox>
+        );
+      })}
     </Container>
   );
 };

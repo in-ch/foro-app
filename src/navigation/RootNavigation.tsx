@@ -31,7 +31,9 @@ export type RootTabParamList = {
   Search: {};
   FoodAdd: {};
   InputProfile: {};
-  FoodSearchResult: {};
+  FoodSearchResult: {
+    text: string;
+  };
   FoodDone: {};
   Detail: {};
   Category: {};
