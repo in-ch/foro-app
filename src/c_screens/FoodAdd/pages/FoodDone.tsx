@@ -1,16 +1,19 @@
 /* eslint-disable react-native/no-inline-styles */
-import {NavigationProp} from '@react-navigation/native';
+import {NavigationProp, RouteProp} from '@react-navigation/native';
 import React from 'react';
 import styled from 'styled-components/native';
+import moment from 'moment';
 
 import HeaderX from '@components/Header/HeaderX';
 import {RootTabParamList} from '@navigation/RootNavigation';
 import {nomalizes} from '@utills/constants';
 import {SizedBox} from '@components/SizedBox';
 import {Switch, View} from 'react-native';
+import {cssUtil} from '~/utills/cssUtil';
 
 export interface FoodAddResultProps {
-  navigation: NavigationProp<RootTabParamList, 'FoodAddInput'>;
+  navigation: NavigationProp<RootTabParamList, 'FoodDone'>;
+  route: RouteProp<RootTabParamList, 'FoodDone'>;
 }
 
 const Box = styled.View`
@@ -57,17 +60,18 @@ const DDay = styled.Text`
   font-size: ${nomalizes[14]}px;
   margin-right: ${nomalizes[35]}px;
 `;
-const Hashtag = styled.View`
+const HashTag = styled.View`
+  height: ${nomalizes[16]}px;
+  padding-left: ${nomalizes[5]}px;
+  padding-right: ${nomalizes[5]}px;
   background-color: #f5f5f5;
-  width: 100px;
-  height: ${nomalizes[25]}px;
-  padding: ${nomalizes[5]}px;
-  margin-right: ${nomalizes[10]}px;
-  margin-bottom: ${nomalizes[10]}px;
+  display: flex;
+  margin-right: ${nomalizes[5]}px;
   border-radius: ${nomalizes[4]}px;
+  ${cssUtil.doubleCenter};
 `;
-const HashtagText = styled.Text`
-  font-size: ${nomalizes[10]}px;
+const HashTagText = styled.Text`
+  font-size: ${nomalizes[8]}px;
   color: #757575;
 `;
 const RowBoxSwitch = styled.View`
@@ -85,7 +89,9 @@ interface ColorProps {
   color: string;
 }
 
-const FoodDone = ({navigation}: FoodAddResultProps) => {
+const FoodDone = ({navigation, route}: FoodAddResultProps) => {
+  const {category, dday, keyword, name, onlyMe} = route.params.foodAddParams;
+
   return (
     <>
       <HeaderX
@@ -93,46 +99,44 @@ const FoodDone = ({navigation}: FoodAddResultProps) => {
         button={() => navigation.reset({routes: [{name: 'Home'}]})}
       />
       <Box>
-        <Heading>과일</Heading>
+        <Heading>{category.name}</Heading>
         <RowBox>
-          <Mark color="#FDC000" />
-          <TText>사과</TText>
+          <Mark color={String(category.color)} />
+          <TText>{name}</TText>
         </RowBox>
       </Box>
       <Box>
         <Heading>식품등록일</Heading>
-        <Sub>22.04.01(금)</Sub>
+        <Sub>{moment(new Date()).format('YYYY.MM.DD')}</Sub>
         <SizedBox.Custom margin={nomalizes[30]} />
         <Heading>소비기한</Heading>
-        <Sub>22.04.01(금)</Sub>
+        <Sub>{moment(dday).format('YYYY.MM.DD')}</Sub>
         <SizedBox.Custom margin={nomalizes[30]} />
         <Heading>알림 예정일</Heading>
         <Row>
           <DDay>D-2</DDay>
-          <Sub>22.04.01(금)</Sub>
+          <Sub>{moment(dday).add(Number(-2), 'day').format('YYYY.MM.DD')}</Sub>
         </Row>
       </Box>
       <Box>
         <Heading>유의 키워드</Heading>
         <View style={{display: 'flex', flexDirection: 'row'}}>
-          <Hashtag>
-            <HashtagText>비조리 섭취 금지</HashtagText>
-          </Hashtag>
-          <Hashtag>
-            <HashtagText>비조리 섭취 금지</HashtagText>
-          </Hashtag>
-          <Hashtag>
-            <HashtagText>비조리 섭취 금지</HashtagText>
-          </Hashtag>
+          {keyword.map(keywor => {
+            return (
+              <HashTag>
+                <HashTagText>{keywor}</HashTagText>
+              </HashTag>
+            );
+          })}
         </View>
         <SizedBox.Custom margin={nomalizes[20]} />
         <RowBoxSwitch>
           <RowText>나만 보기</RowText>
           <Switch
             trackColor={{false: '#767577', true: '#FF6C63'}}
-            thumbColor={true ? '#fff' : '#f4f3f4'}
+            thumbColor={onlyMe ? '#fff' : '#f4f3f4'}
             ios_backgroundColor="#3e3e3e"
-            value={true}
+            value={onlyMe}
             style={{marginLeft: 10}}
           />
         </RowBoxSwitch>

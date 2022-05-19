@@ -92,6 +92,7 @@ const FoodAddInput = ({navigation, route}: FoodSearchResultProps) => {
               keyword,
               category: categoryValue,
               dday: String(dday),
+              onlyMe,
             },
           })
         }

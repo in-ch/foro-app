@@ -8,4 +8,5 @@ export interface FoodData {
   dateword?: string;
   keyword: string[];
   dday?: string;
+  onlyMe?: boolean;
 }
