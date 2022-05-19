@@ -8,7 +8,7 @@ const FoodAddContainer = ({navigation}: FoodAddProps) => {
     navigation.goBack();
   };
   const GoToFoodSearchResult = () => {
-    navigation.navigate('FoodSearchResult', {text});
+    navigation.navigate('FoodSearchResult', {text: text.trim()});
   };
   const handleSearch = () => {
     if (text !== '') {
