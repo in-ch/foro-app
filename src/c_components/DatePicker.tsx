@@ -2,6 +2,8 @@ import React, {useState} from 'react';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import DatePicker from 'react-native-date-picker';
 import styled from 'styled-components/native';
+import moment from 'moment';
+
 import TextBox from './TextBox';
 import {cWidth} from '@utills/constants';
 
@@ -19,13 +21,14 @@ const DDatePicker = ({day, setDay, disable = false}: Props) => {
 
   return (
     <Container>
-      <TouchableWithoutFeedback onPress={() => setOpen(true)}>
-        <TextBox text={String(day)} />
+      <TouchableWithoutFeedback
+        onPress={disable ? () => console.log('asdf') : () => setOpen(true)}>
+        <TextBox text={moment(day).format('YYYY / MM / DD')} />
       </TouchableWithoutFeedback>
       <DatePicker
         modal
         open={open}
-        date={new Date()}
+        date={new Date(day)}
         mode="date"
         textColor="#fff"
         onConfirm={value => {

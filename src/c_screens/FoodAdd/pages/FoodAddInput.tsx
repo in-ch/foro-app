@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import {NavigationProp, RouteProp} from '@react-navigation/native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from 'styled-components/native';
 import {View, Switch} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
@@ -70,14 +70,14 @@ export interface FoodSearchResultProps {
 const FoodAddInput = ({navigation, route}: FoodSearchResultProps) => {
   const [onlyMe, setOnlyMe] = useState(false); // 나만보기
   const {name, date, keyword} = route.params.food;
-  const [dday, setDDay] = useState(
-    moment(new Date()).add(date, 'days').format('YYYY / MM / DD'),
-  );
+  const [dday, setDDay] = useState(moment(new Date()).add(date, 'days'));
   const [alarmDay, setAlarmDay] = useState(
-    moment(new Date())
-      .add(Number(date) - Number(2), 'days')
-      .format('YYYY / MM / DD'),
+    moment(new Date()).add(Number(date) - Number(2), 'days'),
   );
+
+  useEffect(() => {
+    setAlarmDay(moment(dday).add(-Number(2), 'days'));
+  }, [dday]);
   return (
     <>
       <Header
@@ -95,7 +95,7 @@ const FoodAddInput = ({navigation, route}: FoodSearchResultProps) => {
           <SizedBox.Custom margin={nomalizes[30]} />
           <Heading>등록일</Heading>
           <DDatePicker
-            day={moment(new Date()).format('YYYY / MM / DD')}
+            day={moment(new Date())}
             setDay={() => console.log('asd')}
             disable={true}
           />
@@ -106,7 +106,7 @@ const FoodAddInput = ({navigation, route}: FoodSearchResultProps) => {
           <Heading>알림 예정일</Heading>
           <Row>
             <DDay>D-2</DDay>
-            <DDatePicker day={alarmDay} setDay={setAlarmDay} />
+            <DDatePicker day={alarmDay} disable={true} setDay={setAlarmDay} />
           </Row>
           <SizedBox.Custom margin={nomalizes[30]} />
           <Heading>유의키워드</Heading>
