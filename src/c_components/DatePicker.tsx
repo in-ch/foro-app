@@ -22,7 +22,7 @@ const DDatePicker = ({day, setDay, disable = false}: Props) => {
   return (
     <Container>
       <TouchableWithoutFeedback
-        onPress={disable ? () => console.log('asdf') : () => setOpen(true)}>
+        onPress={disable ? () => console.log('무혀니') : () => setOpen(true)}>
         <TextBox text={moment(day).format('YYYY / MM / DD')} />
       </TouchableWithoutFeedback>
       <DatePicker

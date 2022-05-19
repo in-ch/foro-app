@@ -7,6 +7,7 @@ import {
   ScrollView,
   TouchableWithoutFeedback,
 } from 'react-native-gesture-handler';
+import {CategoryProps} from '~/types/Category';
 
 const Container = styled.View`
   min-width: ${nomalizes[85]}px;
@@ -50,7 +51,7 @@ const Option = styled.TouchableOpacity`
   align-items: center;
   padding-left: ${nomalizes[15]}px;
 `;
-const Mark = styled.View<ColorProps>`
+const Mark = styled.View<CategoryProps>`
   width: ${nomalizes[12]}px;
   height: ${nomalizes[12]}px;
   border-radius: ${nomalizes[3]}px;
@@ -59,15 +60,12 @@ const Mark = styled.View<ColorProps>`
 `;
 const AnimatedOption = Animated.createAnimatedComponent(Options);
 
-interface ColorProps {
-  color: string;
+interface Props {
+  setValue: (value: CategoryProps) => void;
+  value: CategoryProps;
 }
-const SelectInput = () => {
+const SelectInput = ({value, setValue}: Props) => {
   const [show, setShow] = useState<boolean>(false);
-  const [value, setValue] = useState({
-    color: '#ade4fa',
-    name: '과일',
-  });
   const animatedHeight = useRef(new Animated.Value(0)).current;
   const animatedBorder = useRef(new Animated.Value(0)).current;
 

@@ -14,6 +14,7 @@ import {SizedBox} from '@components/SizedBox';
 import SelectInput from '@components/SelectInput';
 import DDatePicker from '@components/DatePicker';
 import {cssUtil} from '@utills/cssUtil';
+import {CategoryProps} from '~/types/Category';
 
 const Container = styled.View`
   flex: 1;
@@ -69,7 +70,8 @@ export interface FoodSearchResultProps {
 
 const FoodAddInput = ({navigation, route}: FoodSearchResultProps) => {
   const [onlyMe, setOnlyMe] = useState(false); // 나만보기
-  const {name, date, keyword} = route.params.food;
+  const {name, date, keyword, category} = route.params.food;
+  const [categoryValue, setCategoryValue] = useState<CategoryProps>(category); // 카테고리
   const [dday, setDDay] = useState(moment(new Date()).add(date, 'days'));
   const [alarmDay, setAlarmDay] = useState(
     moment(new Date()).add(Number(date) - Number(2), 'days'),
@@ -83,7 +85,16 @@ const FoodAddInput = ({navigation, route}: FoodSearchResultProps) => {
       <Header
         text="식품 추가하기"
         back={() => navigation.goBack()}
-        button={() => navigation.reset({routes: [{name: 'FoodDone'}]})}
+        button={() =>
+          navigation.navigate('FoodDone', {
+            foodAddParams: {
+              name,
+              keyword,
+              category: categoryValue,
+              dday: String(dday),
+            },
+          })
+        }
       />
       <Container>
         <ScrollView>
@@ -91,7 +102,10 @@ const FoodAddInput = ({navigation, route}: FoodSearchResultProps) => {
           <TextBox text={name} isLeft={true} />
           <SizedBox.Custom margin={nomalizes[30]} />
           <Heading>카테고리 지정</Heading>
-          <SelectInput />
+          <SelectInput
+            setValue={(value: CategoryProps) => setCategoryValue(value)}
+            value={categoryValue}
+          />
           <SizedBox.Custom margin={nomalizes[30]} />
           <Heading>등록일</Heading>
           <DDatePicker
