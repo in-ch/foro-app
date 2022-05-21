@@ -62,7 +62,7 @@ const SearchInput = ({
         maxLength={20}
         onBlur={onSubmit}
         style={{
-          color: '#fff',
+          color: '#000',
         }}
       />
       <LengthContainer>

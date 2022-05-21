@@ -17,9 +17,11 @@ const Heading = styled.Text`
   font-size: ${nomalizes[14]}px;
   margin-top: ${nomalizes[20]}px;
   margin-bottom: ${nomalizes[5]}px;
+  color: #272727;
 `;
 const TText = styled.Text`
   font-size: ${nomalizes[12]}px;
+  color: #272727;
 `;
 const Row = styled.View`
   width: 86%;
