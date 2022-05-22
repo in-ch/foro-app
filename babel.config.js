@@ -20,6 +20,7 @@ module.exports = {
           '~': './src',
           '@components': './src/c_components',
           '@screens': './src/c_screens',
+          '@services': './src/c_services',
           '@assets': './src/assets',
           '@utills': './src/utills',
           '@navigation': './src/navigation',

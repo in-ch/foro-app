@@ -1,15 +1,18 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
+import React, {useEffect} from 'react';
+import {Switch, View} from 'react-native';
 import {NavigationProp, RouteProp} from '@react-navigation/native';
-import React from 'react';
+import {useMutation} from '@apollo/client';
 import styled from 'styled-components/native';
 import moment from 'moment';
 
 import HeaderX from '@components/Header/HeaderX';
-import {RootTabParamList} from '@navigation/RootNavigation';
-import {nomalizes} from '@utills/constants';
 import {SizedBox} from '@components/SizedBox';
-import {Switch, View} from 'react-native';
-import {cssUtil} from '~/utills/cssUtil';
+import {INSERT_FOOD} from '@services/mutations/food';
+import {nomalizes} from '@utills/constants';
+import {cssUtil} from '@utills/cssUtil';
+import {RootTabParamList} from '@navigation/RootNavigation';
 
 export interface FoodAddResultProps {
   navigation: NavigationProp<RootTabParamList, 'FoodDone'>;
@@ -92,6 +95,26 @@ interface ColorProps {
 const FoodDone = ({navigation, route}: FoodAddResultProps) => {
   const {category, dday, keyword, name, onlyMe} = route.params.foodAddParams;
 
+  const [mutationInsertFood] = useMutation(INSERT_FOOD);
+  const handleInsertFood = () => {
+    mutationInsertFood({
+      variables: {
+        userNo: 1,
+        food: {
+          name,
+          category: category.name,
+          categoryColor: category.color,
+          dday,
+          keyword: String(keyword),
+          onlyMe,
+        },
+      },
+    });
+  };
+
+  useEffect(() => {
+    handleInsertFood();
+  }, []);
   return (
     <>
       <HeaderX

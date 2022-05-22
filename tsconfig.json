@@ -61,6 +61,7 @@
       "~/*": ["./*"],
       "@components/*": ["c_components/*"],
       "@screens/*": ["c_screens/*"],
+      "@services/*": ["c_services/*"],
       "@assets/*": ["assets/*"],
       "@utills/*": ["utills/*"],
       "@navigation/*": ["navigation/*"],
