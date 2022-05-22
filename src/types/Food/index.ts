@@ -17,7 +17,8 @@ export interface FoodOutputData {
   category: string;
   categoryColor: string;
   keyword: string[];
-  dday?: string;
-  onlyMe?: boolean;
-  createdAt?: string;
+  dday: string;
+  onlyMe: boolean;
+  consumed: boolean;
+  createdAt: string;
 }

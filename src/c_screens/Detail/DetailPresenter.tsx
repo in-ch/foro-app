@@ -175,7 +175,7 @@ const DetailPresenter = ({goToBack, data}: Props) => {
               trackColor={{false: '#767577', true: '#FF6C63'}}
               thumbColor={true ? '#fff' : '#f4f3f4'}
               ios_backgroundColor="#3e3e3e"
-              value={true}
+              value={data?.consumed}
               style={{marginLeft: 10}}
             />
           </RowBoxSwitch>
