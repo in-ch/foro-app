@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {useState} from 'react';
 import {StyleSheet, View, TouchableOpacity, Image} from 'react-native';
 import {
   Agenda,
@@ -11,6 +11,10 @@ import styled from 'styled-components/native';
 import images from '@assets/images';
 import {nomalizes} from '@utills/constants';
 import {cssUtil} from '@utills/cssUtil';
+import {LOAD_FOOD} from '@services/queries/food';
+import {useQuery} from '@apollo/client';
+import {getDateListFilter} from '@utills/getListFilter';
+import {FoodData} from '~/types/Food';
 
 const Heading = styled.Text`
   font-weight: bold;
@@ -56,11 +60,12 @@ const ConsumeDoneDate = styled.Text`
   font-size: ${nomalizes[10]}px;
   color: #a8a8a8;
 `;
-const Mark = styled.View`
+const Mark = styled.View<MarkProps>`
   width: ${nomalizes[8]}px;
   height: ${nomalizes[8]}px;
   border-radius: ${nomalizes[2]}px;
-  background-color: #637cff;
+  background-color: ${props =>
+    props.background ? props.background : '#637cff'};
 `;
 const ModalBackground = styled.View`
   background-color: rgba(0, 0, 0, 0);
@@ -107,101 +112,73 @@ const testIDs = {
   weekCalendar: {CONTAINER: 'weekCalendar'},
 };
 
-interface State {
-  items?: AgendaSchedule;
+interface Props {
+  items?: FoodData;
   selected?: string;
   goToDetail: () => void;
   GoToFoodAdd: () => void;
 }
-
-export default class AgendaScreen extends Component<State> {
-  state: State = {
-    items: undefined,
-    selected: this.props.selected
-      ? this.props.selected
-      : String(moment(new Date()).format('YYYY-MM-DD')),
-    goToDetail: this.props.goToDetail,
-    GoToFoodAdd: this.props.GoToFoodAdd,
-  };
-
-  render() {
-    return (
-      <>
-        <Agenda
-          testID={testIDs.agenda.CONTAINER}
-          items={this.state.items}
-          loadItemsForMonth={this.loadItems}
-          selected={this.state.selected}
-          renderItem={this.renderItem}
-          renderEmptyDate={this.renderEmptyDate}
-          rowHasChanged={this.rowHasChanged}
-          showClosingKnob={true}
-          theme={{
-            agendaDayNumColor: '#000',
-            agendaTodayColor: '#FF6C63',
-            agendaKnobColor: '#e4e4e4',
-            dotColor: '#fff',
-            selectedDayBackgroundColor: '#FF6C63',
-          }}
-        />
-        <ModalBackground>
-          <ModalButton onPress={this.props.GoToFoodAdd}>
-            <Image
-              style={{
-                width: nomalizes[18],
-                height: nomalizes[18],
-              }}
-              source={images.plusWhite}
-            />
-          </ModalButton>
-        </ModalBackground>
-      </>
-    );
-  }
-
-  loadItems = (day: DateData) => {
-    const items = this.state.items || {};
+interface MarkProps {
+  background: string;
+}
+const AgendaScreen = ({items, selected, goToDetail, GoToFoodAdd}: Props) => {
+  const {data} = useQuery(LOAD_FOOD, {
+    variables: {
+      userNo: 1,
+    },
+  });
+  const [selectedValue] = useState(
+    selected ? selected : String(moment(new Date()).format('YYYY-MM-DD')),
+  );
+  const [iitems, setIitems] = useState<AgendaSchedule | undefined>(items);
+  const loadItems = (day: DateData) => {
+    const itemsValue = iitems || {};
     setTimeout(() => {
       for (let i = -15; i < 85; i++) {
         const time = day.timestamp + i * 24 * 60 * 60 * 1000;
-        const strTime = this.timeToString(time);
+        const strTime = timeToString(time);
 
-        if (!items[strTime]) {
-          items[strTime] = [];
-
-          const numItems = Math.floor(Math.random() * 3 + 1);
-          for (let j = 0; j < numItems; j++) {
-            items[strTime].push({
-              name: 'Item for ' + strTime + ' #' + j,
+        const ddata = getDateListFilter(data?.loadFood, strTime);
+        console.log(ddata);
+        if (!itemsValue[strTime]) {
+          itemsValue[strTime] = [];
+          for (let j = 0; j < ddata?.length; j++) {
+            itemsValue[strTime].push({
+              name: ddata[i]?.name,
               height: Math.max(50, Math.floor(Math.random() * 150)),
               day: strTime,
+              category: ddata[i].category,
+              categoryColor: ddata[i].categoryColor,
             });
           }
         }
       }
 
       const newItems: AgendaSchedule = {};
-      Object.keys(items).forEach(key => {
-        newItems[key] = items[key];
+      Object.keys(itemsValue).forEach(key => {
+        newItems[key] = itemsValue[key];
       });
-      this.setState({
-        items: newItems,
-      });
+      setIitems(newItems);
     }, 1000);
   };
 
-  renderItem = () => {
+  const renderItem = (item: {
+    name: React.ReactNode;
+    categoryColor: any;
+    category: React.ReactNode;
+  }) => {
+    console.log('아이템' + JSON.stringify(item));
     return (
       <TouchableOpacity
         testID={testIDs.agenda.ITEM}
         style={[styles.item]}
-        onPress={this.props.goToDetail}>
-        <Heading>과일</Heading>
+        onPress={goToDetail}>
+        <Heading>{item?.name}</Heading>
         <RenderContainer>
           <RenderFlexOne>
             <Row>
-              <Mark />
-              <FruitText>사과</FruitText>
+              <Mark background={item?.categoryColor} />
+              <FruitText>{item?.category}</FruitText>
             </Row>
             <Row>
               <ConsumeDone>
@@ -225,19 +202,52 @@ export default class AgendaScreen extends Component<State> {
     );
   };
 
-  renderEmptyDate = () => {
+  const renderEmptyDate = () => {
     return <View style={styles.emptyDate} />;
   };
 
-  rowHasChanged = (r1: AgendaEntry, r2: AgendaEntry) => {
+  const rowHasChanged = (r1: AgendaEntry, r2: AgendaEntry) => {
     return r1.name !== r2.name;
   };
 
-  timeToString(time: number) {
+  const timeToString = (time: number) => {
     const date = new Date(time);
     return date.toISOString().split('T')[0];
-  }
-}
+  };
+
+  return (
+    <>
+      <Agenda
+        testID={testIDs.agenda.CONTAINER}
+        items={iitems}
+        loadItemsForMonth={loadItems}
+        selected={selectedValue}
+        renderItem={renderItem}
+        renderEmptyDate={renderEmptyDate}
+        rowHasChanged={rowHasChanged}
+        showClosingKnob={true}
+        theme={{
+          agendaDayNumColor: '#000',
+          agendaTodayColor: '#FF6C63',
+          agendaKnobColor: '#e4e4e4',
+          dotColor: '#fff',
+          selectedDayBackgroundColor: '#FF6C63',
+        }}
+      />
+      <ModalBackground>
+        <ModalButton onPress={GoToFoodAdd}>
+          <Image
+            style={{
+              width: nomalizes[18],
+              height: nomalizes[18],
+            }}
+            source={images.plusWhite}
+          />
+        </ModalButton>
+      </ModalBackground>
+    </>
+  );
+};
 
 const styles = StyleSheet.create({
   item: {
@@ -254,3 +264,5 @@ const styles = StyleSheet.create({
     paddingTop: 30,
   },
 });
+
+export default AgendaScreen;

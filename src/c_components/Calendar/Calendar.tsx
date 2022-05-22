@@ -17,6 +17,7 @@ import {LOAD_FOOD} from '@services/queries/food';
 import {useQuery} from '@apollo/client';
 import {textOverflow} from '@utills/textOverflow';
 import {FoodData} from '~/types/Food';
+import {DateToString} from '~/utills/dateToString';
 
 const TextContainer = styled.View<TextContainerProps>`
   padding-left: ${nomalizes[3]}px;
@@ -68,15 +69,6 @@ interface Props {
   GoToAgenda: () => void;
   GoToDetail: (value: string) => void;
 }
-const DateToString = (
-  year: number | undefined,
-  month: number | undefined,
-  day: number | undefined,
-) => {
-  return `${year}-${String(month)?.length > 1 ? '' : '0'}${month}-${
-    String(day)?.length > 1 ? '' : '0'
-  }${day}`;
-};
 const CCalendar = ({GoToAgenda, GoToDetail}: Props) => {
   const [current, setCurrent] = useState(
     String(moment(new Date()).format('YYYY-MM')),
@@ -93,7 +85,6 @@ const CCalendar = ({GoToAgenda, GoToDetail}: Props) => {
 
   useEffect(() => {
     refetch();
-    console.log('리패취');
   }, [refetch]);
   return (
     <>
