@@ -10,7 +10,6 @@ export const LOAD_FOOD = gql`
       dday
       keyword
       onlyMe
-      user
       createdAt
       updatedAt
     }

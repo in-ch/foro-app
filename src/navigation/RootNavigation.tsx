@@ -61,22 +61,8 @@ const RootNavigation = () => {
 
   return (
     <Stack.Navigator
-      initialRouteName="Login"
+      initialRouteName="Home"
       screenOptions={{headerShown: false}}>
-      <Stack.Screen
-        name="Login"
-        component={Login}
-        options={{
-          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
-        }}
-      />
-      <Stack.Screen
-        name="InputProfile"
-        component={InputProfile}
-        options={{
-          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
-        }}
-      />
       <Stack.Screen
         name="Home"
         component={Home}
@@ -199,6 +185,20 @@ const RootNavigation = () => {
       <Stack.Screen
         name="ProfileEdit"
         component={ProfileEdit}
+        options={{
+          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+        }}
+      />
+      <Stack.Screen
+        name="Login"
+        component={Login}
+        options={{
+          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+        }}
+      />
+      <Stack.Screen
+        name="InputProfile"
+        component={InputProfile}
         options={{
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
         }}

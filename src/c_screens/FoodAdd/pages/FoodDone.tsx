@@ -104,7 +104,7 @@ const FoodDone = ({navigation, route}: FoodAddResultProps) => {
           name,
           category: category.name,
           categoryColor: category.color,
-          dday,
+          dday: moment(new Date(`${dday}`)).format('YYYY-MM-DD'),
           keyword: String(keyword),
           onlyMe,
         },

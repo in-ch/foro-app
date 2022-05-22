@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {CalendarList} from 'react-native-calendars';
 import {View} from 'react-native';
 import styled from 'styled-components/native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import moment from 'moment';
 import 'moment/locale/ko';
 
@@ -12,14 +12,31 @@ import Header from './Header';
 import {SizedBox} from '@components/SizedBox';
 import {nomalizes} from '@utills/constants';
 import {cssUtil} from '@utills/cssUtil';
+import {getDateListFilter} from '@utills/getListFilter';
+import {LOAD_FOOD} from '@services/queries/food';
+import {useQuery} from '@apollo/client';
+import {textOverflow} from '@utills/textOverflow';
+import {FoodData} from '~/types/Food';
 
-const TextContainer = styled.View`
-  padding-left: ${nomalizes[2]}px;
+const TextContainer = styled.View<TextContainerProps>`
+  padding-left: ${nomalizes[3]}px;
+  padding-right: ${nomalizes[3]}px;
   padding-bottom: ${nomalizes[1]}px;
-  margin-bottom: ${nomalizes[2]}px;
   margin-right: ${nomalizes[5]}px;
-  background-color: #5f5bff;
-  display: flex;
+  background-color: ${props =>
+    props.background ? props.background : '#FF6C63'};
+  height: ${nomalizes[13]}px;
+  margin-bottom: ${nomalizes[2]}px;
+  width: 98%;
+  min-width: 0px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+`;
+const TText = styled.Text`
+  text-align: left;
+  font-size: ${nomalizes[7]}px;
+  color: #fff;
 `;
 const DayContainer = styled.View<CurrentProps>`
   width: ${nomalizes[20]}px;
@@ -33,21 +50,19 @@ const DayContainer = styled.View<CurrentProps>`
 `;
 const DayText = styled.Text<DayTextProps>`
   color: ${props =>
-    props.dis === 'disabled' ? '#cacaca' : props.current ? '#fff' : '#303030'};
-`;
-const TText = styled.Text`
-  text-align: left;
-  font-size: ${nomalizes[8]}px;
-  color: rgb(50, 50, 50);
+    props.dis === 'disabled' ? '#b6b6b6' : props.current ? '#fff' : '#303030'};
 `;
 
 interface CurrentProps {
   current?: boolean;
 }
 interface DayTextProps {
-  dis?: string;
+  dis?: string | undefined;
   GoToAgenda: () => void;
   current?: boolean;
+}
+interface TextContainerProps {
+  background?: string;
 }
 interface Props {
   GoToAgenda: () => void;
@@ -69,11 +84,25 @@ const CCalendar = ({GoToAgenda, GoToDetail}: Props) => {
   const [currentDay] = useState(
     String(moment(new Date()).format('YYYY-MM-DD')),
   ); // today를 고정시키기 위한 값.
+
+  const {data, refetch} = useQuery(LOAD_FOOD, {
+    variables: {
+      userNo: 1,
+    },
+  });
+
+  useEffect(() => {
+    refetch();
+    console.log('리패취');
+  }, [refetch]);
   return (
     <>
       <CalendarList
         dayComponent={({date, state}) => {
-          console.log(DateToString(date?.year, date?.month, date?.day));
+          const ddata = getDateListFilter(
+            data?.loadFood,
+            DateToString(date?.year, date?.month, date?.day),
+          );
           return (
             <View style={{height: nomalizes[75], marginTop: nomalizes[3]}}>
               <DayContainer
@@ -82,7 +111,7 @@ const CCalendar = ({GoToAgenda, GoToDetail}: Props) => {
                   String(currentDay)
                 }>
                 <DayText
-                  dis={Boolean(state)}
+                  dis={state}
                   current={
                     DateToString(date?.year, date?.month, date?.day) ===
                     String(currentDay)
@@ -90,30 +119,34 @@ const CCalendar = ({GoToAgenda, GoToDetail}: Props) => {
                   {date?.day}
                 </DayText>
               </DayContainer>
-              {state !== 'disabled' && (
-                <TouchableOpacity
-                  onPress={() =>
-                    GoToDetail(
-                      `${date?.year}-${
-                        String(date?.month)?.length > 1 ? '' : '0'
-                      }${date?.month}-${
-                        String(date?.day)?.length > 1 ? '' : '0'
-                      }${date?.day}`,
-                    )
-                  }>
-                  <SizedBox.Custom margin={nomalizes[5]} />
-                  <TextContainer>
-                    <TText>파인애플</TText>
-                  </TextContainer>
-                  <TextContainer>
-                    <TText>토마토</TText>
-                  </TextContainer>
-                  <TextContainer>
-                    <TText>토마토</TText>
-                  </TextContainer>
-                  <SizedBox.Custom margin={nomalizes[5]} />
-                </TouchableOpacity>
-              )}
+              <TouchableWithoutFeedback
+                onPress={() =>
+                  GoToDetail(
+                    `${date?.year}-${
+                      String(date?.month)?.length > 1 ? '' : '0'
+                    }${date?.month}-${
+                      String(date?.day)?.length > 1 ? '' : '0'
+                    }${date?.day}`,
+                  )
+                }>
+                <SizedBox.Custom margin={nomalizes[5]} />
+                {state !== 'disabled' &&
+                  ddata !== [] &&
+                  ddata !== undefined &&
+                  ddata[0]?.name !== undefined &&
+                  ddata.map((food: FoodData, index: number) => {
+                    if (index > 2) {
+                      return '';
+                    }
+                    return (
+                      <>
+                        <TextContainer background={food?.categoryColor}>
+                          <TText>{textOverflow(food?.name)}</TText>
+                        </TextContainer>
+                      </>
+                    );
+                  })}
+              </TouchableWithoutFeedback>
             </View>
           );
         }}
@@ -167,7 +200,6 @@ const CCalendar = ({GoToAgenda, GoToDetail}: Props) => {
             </>
           );
         }}
-        // Enable the option to swipe between months. Default = false
       />
     </>
   );
