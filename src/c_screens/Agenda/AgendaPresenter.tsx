@@ -10,7 +10,7 @@ const Container = styled.View`
 `;
 interface Props {
   GoBack: () => void;
-  goToDetail: () => void;
+  goToDetail: (value: number) => void;
   selected?: string;
   GoToFoodAdd: () => void;
 }

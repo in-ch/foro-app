@@ -6,8 +6,8 @@ const AgendaContainer = ({navigation, route}: AgendaProps) => {
   const GoBack = () => {
     navigation.goBack();
   };
-  const goToDetail = () => {
-    navigation.navigate('Detail', {});
+  const goToDetail = (no: number) => {
+    navigation.navigate('Detail', {no});
   };
   const GoToFoodAdd = () => {
     navigation.navigate('FoodAdd', {});

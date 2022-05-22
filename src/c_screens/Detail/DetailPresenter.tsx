@@ -1,12 +1,16 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import styled from 'styled-components/native';
-import HeaderX from '@components/Header/HeaderX';
-import {nomalizes} from '~/utills/constants';
-import {SizedBox} from '~/c_components/SizedBox';
 import {Switch, View} from 'react-native';
-import {cssUtil} from '~/utills/cssUtil';
 import {ScrollView} from 'react-native-gesture-handler';
+import moment from 'moment';
+
+import HeaderX from '@components/Header/HeaderX';
+import {nomalizes} from '@utills/constants';
+import {cssUtil} from '@utills/cssUtil';
+import {SizedBox} from '@components/SizedBox';
+import {FoodOutputData} from '~/types/Food';
+import {numberToWeek} from '@utills/numberToWeek';
 
 const Box = styled.View`
   width: 100%;
@@ -57,17 +61,18 @@ const DDay = styled.Text`
   font-size: ${nomalizes[14]}px;
   margin-right: ${nomalizes[35]}px;
 `;
-const Hashtag = styled.View`
+const HashTag = styled.View`
+  height: ${nomalizes[16]}px;
+  padding-left: ${nomalizes[5]}px;
+  padding-right: ${nomalizes[5]}px;
   background-color: #f5f5f5;
-  width: 100px;
-  height: ${nomalizes[25]}px;
-  padding: ${nomalizes[5]}px;
-  margin-right: ${nomalizes[10]}px;
-  margin-bottom: ${nomalizes[10]}px;
+  display: flex;
+  margin-right: ${nomalizes[5]}px;
   border-radius: ${nomalizes[4]}px;
+  ${cssUtil.doubleCenter};
 `;
-const HashtagText = styled.Text`
-  font-size: ${nomalizes[10]}px;
+const HashTagText = styled.Text`
+  font-size: ${nomalizes[8]}px;
   color: #757575;
 `;
 const RowBoxSwitch = styled.View`
@@ -101,44 +106,56 @@ interface ColorProps {
 }
 interface Props {
   goToBack: () => void;
+  data: FoodOutputData;
 }
-const DetailPresenter = ({goToBack}: Props) => {
+const DetailPresenter = ({goToBack, data}: Props) => {
+  const keywords = String(data?.keyword).split(',');
   return (
     <>
       <HeaderX text="식품 상세" button={goToBack} />
       <ScrollView>
         <Box>
-          <Heading>과일</Heading>
+          <Heading>{data?.category}</Heading>
           <RowBox>
-            <Mark color="#FDC000" />
-            <TText>사과</TText>
+            <Mark color={data?.categoryColor} />
+            <TText>{data?.name}</TText>
           </RowBox>
         </Box>
         <Box>
           <Heading>식품등록일</Heading>
-          <Sub>22.04.01(금)</Sub>
+          <Sub>
+            {moment(new Date(`${data?.createdAt}`)).format('YY.MM.DD')}(
+            {numberToWeek(moment(new Date(`${data?.createdAt}`)).isoWeekday())})
+          </Sub>
           <SizedBox.Custom margin={nomalizes[30]} />
           <Heading>소비기한</Heading>
-          <Sub>22.04.01(금)</Sub>
+          <Sub>
+            {moment(new Date(`${data?.dday}`)).format('YY.MM.DD')}(
+            {numberToWeek(moment(new Date(`${data?.dday}`)).isoWeekday())})
+          </Sub>
           <SizedBox.Custom margin={nomalizes[30]} />
           <Heading>알림 예정일</Heading>
           <Row>
             <DDay>D-2</DDay>
-            <Sub>22.04.01(금)</Sub>
+            <Sub>
+              {' '}
+              {moment(new Date(`${data?.dday}`))
+                .add(Number(-2), 'days')
+                .format('YY.MM.DD')}
+              ({numberToWeek(moment(new Date(`${data?.dday}`)).isoWeekday())})
+            </Sub>
           </Row>
         </Box>
         <Box>
           <Heading>유의 키워드</Heading>
           <View style={{display: 'flex', flexDirection: 'row'}}>
-            <Hashtag>
-              <HashtagText>비조리 섭취 금지</HashtagText>
-            </Hashtag>
-            <Hashtag>
-              <HashtagText>비조리 섭취 금지</HashtagText>
-            </Hashtag>
-            <Hashtag>
-              <HashtagText>비조리 섭취 금지</HashtagText>
-            </Hashtag>
+            {keywords?.map(keywor => {
+              return (
+                <HashTag>
+                  <HashTagText>{keywor}</HashTagText>
+                </HashTag>
+              );
+            })}
           </View>
           <SizedBox.Custom margin={nomalizes[20]} />
           <RowBoxSwitch>
@@ -147,7 +164,7 @@ const DetailPresenter = ({goToBack}: Props) => {
               trackColor={{false: '#767577', true: '#FF6C63'}}
               thumbColor={true ? '#fff' : '#f4f3f4'}
               ios_backgroundColor="#3e3e3e"
-              value={true}
+              value={data?.onlyMe}
               style={{marginLeft: 10}}
             />
           </RowBoxSwitch>

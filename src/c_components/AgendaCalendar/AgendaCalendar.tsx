@@ -116,7 +116,7 @@ const testIDs = {
 interface Props {
   items?: FoodData;
   selected?: string;
-  goToDetail: () => void;
+  goToDetail: (value: number) => void;
   GoToFoodAdd: () => void;
 }
 interface MarkProps {
@@ -144,6 +144,7 @@ const AgendaScreen = ({items, selected, goToDetail, GoToFoodAdd}: Props) => {
           itemsValue[strTime] = [];
           for (let j = 0; j < ddata?.length; j++) {
             itemsValue[strTime].push({
+              no: ddata[j]?.no,
               name: ddata[j]?.name,
               height: Math.max(50, Math.floor(Math.random() * 150)),
               day: strTime,
@@ -165,6 +166,7 @@ const AgendaScreen = ({items, selected, goToDetail, GoToFoodAdd}: Props) => {
   };
 
   const renderItem = (item: {
+    no: number;
     name: React.ReactNode;
     categoryColor: any;
     category: React.ReactNode;
@@ -173,12 +175,12 @@ const AgendaScreen = ({items, selected, goToDetail, GoToFoodAdd}: Props) => {
   }) => {
     return (
       <View testID={testIDs.agenda.ITEM} style={[styles.item]}>
-        <TouchableNativeFeedback onPress={goToDetail}>
+        <TouchableNativeFeedback onPress={() => goToDetail(item?.no)}>
           <Heading>{item?.name}</Heading>
         </TouchableNativeFeedback>
         <RenderContainer>
           <RenderFlexOne>
-            <TouchableNativeFeedback onPress={goToDetail}>
+            <TouchableNativeFeedback onPress={() => goToDetail(item?.no)}>
               <Row>
                 <Mark background={item?.categoryColor} />
                 <FruitText>{item?.category}</FruitText>

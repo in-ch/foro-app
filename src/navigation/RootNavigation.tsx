@@ -38,7 +38,9 @@ export type RootTabParamList = {
   FoodDone: {
     foodAddParams: FoodData;
   };
-  Detail: {};
+  Detail: {
+    no: number;
+  };
   Category: {};
   CategoryAdd: {};
   CategoryUpdate: {};

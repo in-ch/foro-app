@@ -15,3 +15,18 @@ export const LOAD_FOOD = gql`
     }
   }
 `;
+
+export const LOAD_FOOD_DATA = gql`
+  query loadFoodData($foodNo: Float!) {
+    loadFoodData(foodNo: $foodNo) {
+      name
+      category
+      categoryColor
+      dday
+      keyword
+      onlyMe
+      createdAt
+      updatedAt
+    }
+  }
+`;

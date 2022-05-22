@@ -10,3 +10,14 @@ export interface FoodData {
   dday?: string;
   onlyMe?: boolean;
 }
+
+export interface FoodOutputData {
+  no: number;
+  name: string;
+  category: string;
+  categoryColor: string;
+  keyword: string[];
+  dday?: string;
+  onlyMe?: boolean;
+  createdAt?: string;
+}
