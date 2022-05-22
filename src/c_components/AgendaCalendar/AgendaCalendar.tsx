@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {StyleSheet, View, TouchableOpacity, Image} from 'react-native';
+import {StyleSheet, View, Image, TouchableNativeFeedback} from 'react-native';
 import {
   Agenda,
   DateData,
@@ -8,6 +8,7 @@ import {
 } from 'react-native-calendars';
 import moment from 'moment';
 import styled from 'styled-components/native';
+
 import images from '@assets/images';
 import {nomalizes} from '@utills/constants';
 import {cssUtil} from '@utills/cssUtil';
@@ -139,16 +140,17 @@ const AgendaScreen = ({items, selected, goToDetail, GoToFoodAdd}: Props) => {
         const strTime = timeToString(time);
 
         const ddata = getDateListFilter(data?.loadFood, strTime);
-        console.log(ddata);
         if (!itemsValue[strTime]) {
           itemsValue[strTime] = [];
           for (let j = 0; j < ddata?.length; j++) {
             itemsValue[strTime].push({
-              name: ddata[i]?.name,
+              name: ddata[j]?.name,
               height: Math.max(50, Math.floor(Math.random() * 150)),
               day: strTime,
-              category: ddata[i].category,
-              categoryColor: ddata[i].categoryColor,
+              category: ddata[j].category,
+              categoryColor: ddata[j].categoryColor,
+              createdAt: ddata[j].createdAt,
+              dday: ddata[j].dday,
             });
           }
         }
@@ -166,20 +168,22 @@ const AgendaScreen = ({items, selected, goToDetail, GoToFoodAdd}: Props) => {
     name: React.ReactNode;
     categoryColor: any;
     category: React.ReactNode;
+    dday: string;
+    createdAt: string;
   }) => {
-    console.log('아이템' + JSON.stringify(item));
     return (
-      <TouchableOpacity
-        testID={testIDs.agenda.ITEM}
-        style={[styles.item]}
-        onPress={goToDetail}>
-        <Heading>{item?.name}</Heading>
+      <View testID={testIDs.agenda.ITEM} style={[styles.item]}>
+        <TouchableNativeFeedback onPress={goToDetail}>
+          <Heading>{item?.name}</Heading>
+        </TouchableNativeFeedback>
         <RenderContainer>
           <RenderFlexOne>
-            <Row>
-              <Mark background={item?.categoryColor} />
-              <FruitText>{item?.category}</FruitText>
-            </Row>
+            <TouchableNativeFeedback onPress={goToDetail}>
+              <Row>
+                <Mark background={item?.categoryColor} />
+                <FruitText>{item?.category}</FruitText>
+              </Row>
+            </TouchableNativeFeedback>
             <Row>
               <ConsumeDone>
                 <ConsumeDoneText>소비 완료</ConsumeDoneText>
@@ -194,11 +198,14 @@ const AgendaScreen = ({items, selected, goToDetail, GoToFoodAdd}: Props) => {
             </Row>
           </RenderFlexOne>
           <RenderFlexOne>
-            <ConsumeDoneDate>22.05.01 ~ 23.05.01</ConsumeDoneDate>
+            <ConsumeDoneDate>
+              {moment(new Date(item?.createdAt)).format('YYYY-MM-DD')} ~{' '}
+              {item?.dday}
+            </ConsumeDoneDate>
             <ConsumeDoneDate>비공개</ConsumeDoneDate>
           </RenderFlexOne>
         </RenderContainer>
-      </TouchableOpacity>
+      </View>
     );
   };
 
@@ -222,7 +229,7 @@ const AgendaScreen = ({items, selected, goToDetail, GoToFoodAdd}: Props) => {
         items={iitems}
         loadItemsForMonth={loadItems}
         selected={selectedValue}
-        renderItem={renderItem}
+        renderItem={(item: any) => renderItem(item)}
         renderEmptyDate={renderEmptyDate}
         rowHasChanged={rowHasChanged}
         showClosingKnob={true}
@@ -230,7 +237,7 @@ const AgendaScreen = ({items, selected, goToDetail, GoToFoodAdd}: Props) => {
           agendaDayNumColor: '#000',
           agendaTodayColor: '#FF6C63',
           agendaKnobColor: '#e4e4e4',
-          dotColor: '#fff',
+          dotColor: '#FF 6C63',
           selectedDayBackgroundColor: '#FF6C63',
         }}
       />
