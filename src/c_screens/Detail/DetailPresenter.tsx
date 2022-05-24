@@ -4,9 +4,10 @@ import styled from 'styled-components/native';
 import {Switch, View} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import moment from 'moment';
+import Toast from 'react-native-easy-toast';
 
 import HeaderX from '@components/Header/HeaderX';
-import {nomalizes} from '@utills/constants';
+import {cHeight, nomalizes} from '@utills/constants';
 import {cssUtil} from '@utills/cssUtil';
 import {SizedBox} from '@components/SizedBox';
 import {FoodOutputData} from '~/types/Food';
@@ -113,6 +114,7 @@ interface Props {
   setOnlyMe: (value: boolean) => void;
   handleUpdate: () => void;
   handleDelete: () => void;
+  toastRef: any;
 }
 const DetailPresenter = ({
   goToBack,
@@ -123,6 +125,7 @@ const DetailPresenter = ({
   setOnlyMe,
   handleUpdate,
   handleDelete,
+  toastRef,
 }: Props) => {
   const keywords = String(data?.keyword).split(',');
   return (
@@ -206,6 +209,12 @@ const DetailPresenter = ({
           </RowBoxCenter>
           <SizedBox.Custom margin={nomalizes[40]} />
         </Box>
+        <Toast
+          ref={toastRef}
+          positionValue={cHeight * 0.5}
+          fadeInDuration={200}
+          fadeOutDuration={1200}
+        />
       </ScrollView>
     </>
   );

@@ -1,5 +1,5 @@
 import {useMutation, useQuery} from '@apollo/client';
-import React, {useState} from 'react';
+import React, {useCallback, useRef, useState} from 'react';
 
 import {DELETE_FOOD, UPDATE_FOOD} from '@services/mutations/food';
 import {LOAD_FOOD_DATA} from '@services/queries/food';
@@ -12,11 +12,17 @@ const DetailContainer = ({navigation, route}: DetailProps) => {
   const [consumed, setConsumed] = useState<boolean>(false);
   const [onlyMe, setOnlyMe] = useState<boolean>(false);
   const [me, setMe] = useState<number>(0);
+  const toastRef = useRef<any>(null);
   const goToBack = () => {
     navigation.goBack();
   };
+  const showToast = useCallback((text: string) => {
+    toastRef.current.show(text);
+  }, []);
+
   const handleUpdate = () => {
     if (cacheConsumed === consumed && cacheOnlyMe === onlyMe) {
+      showToast('값이 동일합니다.');
     } else {
       // 여기서 뮤테이션 실행
       mutationUpdateFood({
@@ -52,7 +58,11 @@ const DetailContainer = ({navigation, route}: DetailProps) => {
     },
   });
 
-  const [mutationUpdateFood] = useMutation(UPDATE_FOOD);
+  const [mutationUpdateFood] = useMutation(UPDATE_FOOD, {
+    onCompleted: () => {
+      showToast('수정이 완료되었습니다.');
+    },
+  });
   const [mutationDeleteFood] = useMutation(DELETE_FOOD);
 
   return (
@@ -65,6 +75,7 @@ const DetailContainer = ({navigation, route}: DetailProps) => {
       onlyMe={onlyMe}
       handleUpdate={handleUpdate}
       handleDelete={handleDelete}
+      toastRef={toastRef}
     />
   );
 };

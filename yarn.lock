@@ -5889,6 +5889,13 @@ react-native-date-picker@^4.2.1:
   resolved "https://registry.npmjs.org/react-native-date-picker/-/react-native-date-picker-4.2.1.tgz"
   integrity sha512-buJkmVkyJIQwqeV1/1YYLVmBj9ah1L9AFJVFad20aObJuyxPSqJZClmuwDjVH1kf9jqXICDHJEH3bbagtr6Hfg==
 
+react-native-easy-toast@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-easy-toast/-/react-native-easy-toast-2.0.0.tgz#059671ed23efd7fbe2855a1c3e4d21e6c4222a84"
+  integrity sha512-mLvHOy/slCJfgrLfOercIhVKslTF6D7NrJ7XLTRK3BCim7kNO1JdAgQ5+IF6bqdcUcFMIW/GwiauUbnSpynr8Q==
+  dependencies:
+    prop-types "^15.5.10"
+
 react-native-gesture-handler@^2.4.1:
   version "2.4.2"
   resolved "https://registry.npmjs.org/react-native-gesture-handler/-/react-native-gesture-handler-2.4.2.tgz"
