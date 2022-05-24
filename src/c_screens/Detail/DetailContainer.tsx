@@ -1,6 +1,8 @@
-import {useQuery} from '@apollo/client';
+import {useMutation, useQuery} from '@apollo/client';
 import React, {useState} from 'react';
-import {LOAD_FOOD_DATA} from '~/c_services/queries/food';
+
+import {DELETE_FOOD, UPDATE_FOOD} from '@services/mutations/food';
+import {LOAD_FOOD_DATA} from '@services/queries/food';
 import {DetailProps} from './Detail';
 import DetailPresenter from './DetailPresenter';
 
@@ -9,6 +11,7 @@ const DetailContainer = ({navigation, route}: DetailProps) => {
   const [cacheOnlyMe, setCacheOnlyMe] = useState<boolean>(false);
   const [consumed, setConsumed] = useState<boolean>(false);
   const [onlyMe, setOnlyMe] = useState<boolean>(false);
+  const [me, setMe] = useState<number>(0);
   const goToBack = () => {
     navigation.goBack();
   };
@@ -16,7 +19,24 @@ const DetailContainer = ({navigation, route}: DetailProps) => {
     if (cacheConsumed === consumed && cacheOnlyMe === onlyMe) {
     } else {
       // 여기서 뮤테이션 실행
+      mutationUpdateFood({
+        variables: {
+          food: {
+            no: me,
+            onlyMe: onlyMe,
+            consumed: consumed,
+          },
+        },
+      });
     }
+  };
+
+  const handleDelete = () => {
+    mutationDeleteFood({
+      variables: {
+        foodNo: me,
+      },
+    });
   };
 
   const {data} = useQuery(LOAD_FOOD_DATA, {
@@ -24,12 +44,17 @@ const DetailContainer = ({navigation, route}: DetailProps) => {
       foodNo: route?.params.no,
     },
     onCompleted: d => {
+      setMe(d?.loadFoodData?.no);
       setConsumed(d?.loadFoodData?.consumed);
       setOnlyMe(d?.loadFoodData?.onlyMe);
       setCacheConsumed(d?.loadFoodData?.consumed);
       setCacheOnlyMe(d?.loadFoodData?.onlyMe);
     },
   });
+
+  const [mutationUpdateFood] = useMutation(UPDATE_FOOD);
+  const [mutationDeleteFood] = useMutation(DELETE_FOOD);
+
   return (
     <DetailPresenter
       goToBack={goToBack}
@@ -38,6 +63,8 @@ const DetailContainer = ({navigation, route}: DetailProps) => {
       setConsumed={setConsumed}
       setOnlyMe={setOnlyMe}
       onlyMe={onlyMe}
+      handleUpdate={handleUpdate}
+      handleDelete={handleDelete}
     />
   );
 };

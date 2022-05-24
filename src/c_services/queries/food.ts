@@ -19,6 +19,7 @@ export const LOAD_FOOD = gql`
 export const LOAD_FOOD_DATA = gql`
   query loadFoodData($foodNo: Float!) {
     loadFoodData(foodNo: $foodNo) {
+      no
       name
       category
       categoryColor

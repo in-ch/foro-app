@@ -111,6 +111,8 @@ interface Props {
   onlyMe: boolean;
   setConsumed: (value: boolean) => void;
   setOnlyMe: (value: boolean) => void;
+  handleUpdate: () => void;
+  handleDelete: () => void;
 }
 const DetailPresenter = ({
   goToBack,
@@ -119,6 +121,8 @@ const DetailPresenter = ({
   onlyMe,
   setConsumed,
   setOnlyMe,
+  handleUpdate,
+  handleDelete,
 }: Props) => {
   const keywords = String(data?.keyword).split(',');
   return (
@@ -193,10 +197,10 @@ const DetailPresenter = ({
             />
           </RowBoxSwitch>
           <RowBoxCenter>
-            <Button>
+            <Button onPress={handleUpdate}>
               <ButtonText>수정</ButtonText>
             </Button>
-            <Button>
+            <Button onPress={handleDelete}>
               <ButtonText>삭제</ButtonText>
             </Button>
           </RowBoxCenter>
