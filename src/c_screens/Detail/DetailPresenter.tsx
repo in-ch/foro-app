@@ -107,8 +107,19 @@ interface ColorProps {
 interface Props {
   goToBack: () => void;
   data: FoodOutputData;
+  consumed: boolean;
+  onlyMe: boolean;
+  setConsumed: (value: boolean) => void;
+  setOnlyMe: (value: boolean) => void;
 }
-const DetailPresenter = ({goToBack, data}: Props) => {
+const DetailPresenter = ({
+  goToBack,
+  data,
+  consumed,
+  onlyMe,
+  setConsumed,
+  setOnlyMe,
+}: Props) => {
   const keywords = String(data?.keyword).split(',');
   return (
     <>
@@ -161,10 +172,11 @@ const DetailPresenter = ({goToBack, data}: Props) => {
           <RowBoxSwitch>
             <RowText>나만 보기</RowText>
             <Switch
+              onChange={() => setOnlyMe(!onlyMe)}
               trackColor={{false: '#767577', true: '#FF6C63'}}
               thumbColor={true ? '#fff' : '#f4f3f4'}
               ios_backgroundColor="#3e3e3e"
-              value={data?.onlyMe}
+              value={onlyMe}
               style={{marginLeft: 10}}
             />
           </RowBoxSwitch>
@@ -172,10 +184,11 @@ const DetailPresenter = ({goToBack, data}: Props) => {
           <RowBoxSwitch>
             <RowText>소비 완료</RowText>
             <Switch
+              onChange={() => setConsumed(!consumed)}
               trackColor={{false: '#767577', true: '#FF6C63'}}
               thumbColor={true ? '#fff' : '#f4f3f4'}
               ios_backgroundColor="#3e3e3e"
-              value={data?.consumed}
+              value={consumed}
               style={{marginLeft: 10}}
             />
           </RowBoxSwitch>
