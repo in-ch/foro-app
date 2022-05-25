@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {StyleSheet, View, Image, TouchableNativeFeedback} from 'react-native';
 import {
   Agenda,
@@ -8,6 +8,7 @@ import {
 } from 'react-native-calendars';
 import moment from 'moment';
 import styled from 'styled-components/native';
+import {useIsFocused} from '@react-navigation/native';
 
 import images from '@assets/images';
 import {nomalizes} from '@utills/constants';
@@ -123,11 +124,17 @@ interface MarkProps {
   background: string;
 }
 const AgendaScreen = ({items, selected, goToDetail, GoToFoodAdd}: Props) => {
-  const {data} = useQuery(LOAD_FOOD, {
+  const isFocused = useIsFocused();
+  const {data, refetch} = useQuery(LOAD_FOOD, {
     variables: {
       userNo: 1,
     },
   });
+  useEffect(() => {
+    if (isFocused) {
+      refetch();
+    }
+  }, [isFocused, refetch]);
   const [selectedValue] = useState(
     selected ? selected : String(moment(new Date()).format('YYYY-MM-DD')),
   );
@@ -152,6 +159,8 @@ const AgendaScreen = ({items, selected, goToDetail, GoToFoodAdd}: Props) => {
               categoryColor: ddata[j].categoryColor,
               createdAt: ddata[j].createdAt,
               dday: ddata[j].dday,
+              consumed: ddata[j].consumed,
+              onlyMe: ddata[j].onlyMe,
             });
           }
         }
@@ -172,6 +181,8 @@ const AgendaScreen = ({items, selected, goToDetail, GoToFoodAdd}: Props) => {
     category: React.ReactNode;
     dday: string;
     createdAt: string;
+    onlyMe: boolean;
+    consumed: boolean;
   }) => {
     return (
       <View testID={testIDs.agenda.ITEM} style={[styles.item]}>
@@ -187,9 +198,11 @@ const AgendaScreen = ({items, selected, goToDetail, GoToFoodAdd}: Props) => {
               </Row>
             </TouchableNativeFeedback>
             <Row>
-              <ConsumeDone>
-                <ConsumeDoneText>소비 완료</ConsumeDoneText>
-              </ConsumeDone>
+              {item?.consumed && (
+                <ConsumeDone>
+                  <ConsumeDoneText>소비 완료</ConsumeDoneText>
+                </ConsumeDone>
+              )}
               <Image
                 style={{
                   width: nomalizes[10],
