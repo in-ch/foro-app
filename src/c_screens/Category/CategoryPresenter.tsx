@@ -112,21 +112,23 @@ const CategoryPresenter = ({
         <SizedBox.Custom margin={nomalizes[10]} />
 
         {data?.map((category: CategoryData) => {
-          <Box>
-            <Row>
-              <Mark color={category?.color} />
-              <TText>{category?.name}</TText>
-            </Row>
-            <RowRight onPress={onShowModal}>
-              <Image
-                style={{
-                  width: nomalizes[16],
-                  height: nomalizes[16],
-                }}
-                source={images.setting}
-              />
-            </RowRight>
-          </Box>;
+          return (
+            <Box>
+              <Row>
+                <Mark color={category?.color} />
+                <TText>{category?.name}</TText>
+              </Row>
+              <RowRight onPress={onShowModal}>
+                <Image
+                  style={{
+                    width: nomalizes[16],
+                    height: nomalizes[16],
+                  }}
+                  source={images.setting}
+                />
+              </RowRight>
+            </Box>
+          );
         })}
 
         {data?.length < 1 && <NoResult text="카테고리가 없습니다." />}

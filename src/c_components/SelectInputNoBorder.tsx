@@ -1,15 +1,14 @@
+import {Animated} from 'react-native';
 import React, {useRef, useState} from 'react';
 import styled from 'styled-components/native';
-import {nomalizes} from '@utills/constants';
+import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
+
+import {cWidth, nomalizes} from '@utills/constants';
 import images from '@assets/images';
-import {Animated} from 'react-native';
-import {
-  ScrollView,
-  TouchableWithoutFeedback,
-} from 'react-native-gesture-handler';
+import {cssUtil} from '@utills/cssUtil';
 
 const Container = styled.View`
-  min-width: ${nomalizes[60]}px;
+  width: ${cWidth}px;
 `;
 const Wrapper = styled.View`
   height: ${nomalizes[35]}px;
@@ -22,6 +21,14 @@ const Wrapper = styled.View`
   align-items: center;
   justify-content: space-between;
 `;
+const Row = styled.View`
+  width: ${nomalizes[30]}px;
+  height: ${nomalizes[35]}px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+`;
 const FlexEndRow = styled.View`
   display: flex;
   flex-direction: row;
@@ -29,29 +36,42 @@ const FlexEndRow = styled.View`
 `;
 const IImage = styled.Image``;
 const Options = styled.View`
-  width: 100%;
-  overflow: hidden;
   margin-top: -${nomalizes[3]}px;
   background-color: #fff;
+  overflow: hidden;
 `;
-const Option = styled.TouchableOpacity`
-  width: 100%;
-  height: ${nomalizes[30]}px;
+const RowColor = styled.View`
   display: flex;
   flex-direction: row;
-  align-items: center;
-  padding-left: ${nomalizes[15]}px;
+  ${cssUtil.doubleCenter};
+  flex-wrap: nowrap;
+`;
+const Option = styled.TouchableOpacity<Selected>`
+  width: ${nomalizes[22]}px;
+  height: ${nomalizes[22]}px;
+  border-radius: ${nomalizes[5]}px;
+  display: flex;
+  flex-direction: row;
+  margin: ${nomalizes[15]}px;
+  border: ${props => (props.isSelected ? 1 : 0)}px solid #b1b1b1;
+  ${cssUtil.doubleCenter};
 `;
 const Mark = styled.View<ColorProps>`
-  width: ${nomalizes[12]}px;
-  height: ${nomalizes[12]}px;
-  margin-right: ${nomalizes[7]}px;
+  width: ${nomalizes[15]}px;
+  height: ${nomalizes[15]}px;
   background-color: ${props => props.color};
+`;
+const TText = styled.Text`
+  color: #000;
+  font-size: ${nomalizes[12]}px;
 `;
 const AnimatedOption = Animated.createAnimatedComponent(Options);
 
 interface ColorProps {
   color: string;
+}
+interface Selected {
+  isSelected: boolean;
 }
 const SelectInputNoBorder = () => {
   const [show, setShow] = useState<boolean>(false);
@@ -86,41 +106,81 @@ const SelectInputNoBorder = () => {
     <Container>
       <TouchableWithoutFeedback onPress={show ? onHide : onShow}>
         <Wrapper>
-          <FlexEndRow>
-            <Mark color={value?.color} />
-          </FlexEndRow>
-          <IImage
-            style={{
-              width: nomalizes[5],
-              height: nomalizes[5],
-            }}
-            source={images.arrowDown}
-          />
+          <Row>
+            <TText>색상</TText>
+          </Row>
+          <Row>
+            <FlexEndRow>
+              <Mark color={value?.color} />
+            </FlexEndRow>
+            <IImage
+              style={{
+                width: nomalizes[5],
+                height: nomalizes[5],
+              }}
+              source={images.arrowDown}
+            />
+          </Row>
         </Wrapper>
       </TouchableWithoutFeedback>
       <AnimatedOption
         style={{
           height: animatedHeight,
         }}>
-        <ScrollView>
-          <Option onPress={() => onSelectCategory('#a14124', '과일')}>
-            <Mark color="#a14124" />
+        <RowColor>
+          <Option
+            isSelected={value.color === '#43419A'}
+            onPress={() => onSelectCategory('#43419A', '과일')}>
+            <Mark color="#43419A" />
           </Option>
-
-          <Option onPress={() => onSelectCategory('#81c98d', '냉동식품')}>
-            <Mark color="#81c98d" />
+          <Option
+            isSelected={value.color === '#02DA8C'}
+            onPress={() => onSelectCategory('#02DA8C', '냉동식품')}>
+            <Mark color="#02DA8C" />
           </Option>
-
-          <Option onPress={() => onSelectCategory('#c981ad', '즉석식품')}>
-            <Mark color="#c981ad" />
+          <Option
+            isSelected={value.color === '#9DB694'}
+            onPress={() => onSelectCategory('#9DB694', '즉석식품')}>
+            <Mark color="#9DB694" />
           </Option>
-          <Option onPress={() => onSelectCategory('#b3c981', '생선류')}>
-            <Mark color="#b3c981" />
+          <Option
+            isSelected={value.color === '#A389C5'}
+            onPress={() => onSelectCategory('#A389C5', '생선류')}>
+            <Mark color="#A389C5" />
           </Option>
-          <Option onPress={() => onSelectCategory('#5887bd', '인스턴트')}>
-            <Mark color="#5887bd" />
+          <Option
+            isSelected={value.color === '#787766'}
+            onPress={() => onSelectCategory('#787766', '인스턴트')}>
+            <Mark color="#787766" />
           </Option>
-        </ScrollView>
+        </RowColor>
+        <RowColor>
+          <Option
+            isSelected={value.color === '#BDEC00'}
+            onPress={() => onSelectCategory('#BDEC00', '과일')}>
+            <Mark color="#BDEC00" />
+          </Option>
+          <Option
+            isSelected={value.color === '#FF7676'}
+            onPress={() => onSelectCategory('#FF7676', '냉동식품')}>
+            <Mark color="#FF7676" />
+          </Option>
+          <Option
+            isSelected={value.color === '#39A5BC'}
+            onPress={() => onSelectCategory('#39A5BC', '즉석식품')}>
+            <Mark color="#39A5BC" />
+          </Option>
+          <Option
+            isSelected={value.color === '#DAAE15'}
+            onPress={() => onSelectCategory('#DAAE15', '생선류')}>
+            <Mark color="#DAAE15" />
+          </Option>
+          <Option
+            isSelected={value.color === '#AD00FF'}
+            onPress={() => onSelectCategory('#AD00FF', '인스턴트')}>
+            <Mark color="#AD00FF" />
+          </Option>
+        </RowColor>
       </AnimatedOption>
     </Container>
   );

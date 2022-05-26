@@ -16,8 +16,7 @@ const Container = styled.View`
   background-color: #fff;
 `;
 const RowBox = styled.View`
-  width: 92%;
-  margin-left: 4%;
+  width: 100%;
   min-height: 10px;
   margin-top: 15px;
   display: flex;
@@ -27,11 +26,6 @@ const RowBox = styled.View`
 const Row = styled.View`
   display: flex;
   flex-direction: row;
-`;
-const TText = styled.Text`
-  color: #000;
-  margin-top: ${nomalizes[10]}px;
-  font-size: ${nomalizes[14]}px;
 `;
 
 interface ColorProps {
@@ -54,9 +48,6 @@ const CategoryAdd = ({navigation}: CategoryAddProps) => {
       />
       <SizedBox.Custom margin={nomalizes[15]} />
       <RowBox>
-        <Row>
-          <TText>색상</TText>
-        </Row>
         <Row>
           <SelectInputNoBorder />
         </Row>
