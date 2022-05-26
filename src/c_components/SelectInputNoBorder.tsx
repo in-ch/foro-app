@@ -73,10 +73,13 @@ interface ColorProps {
 interface Selected {
   isSelected: boolean;
 }
-const SelectInputNoBorder = () => {
+interface Props {
+  setColor: (value: string) => void;
+}
+const SelectInputNoBorder = ({setColor}: Props) => {
   const [show, setShow] = useState<boolean>(false);
   const [value, setValue] = useState({
-    color: '#ade4fa',
+    color: '#43419A',
     name: '과일',
   });
   const animatedHeight = useRef(new Animated.Value(0)).current;
@@ -99,6 +102,7 @@ const SelectInputNoBorder = () => {
 
   const onSelectCategory = (color: string, name: string) => {
     setValue({color, name});
+    setColor(color);
     onHide();
   };
 
