@@ -4,7 +4,9 @@ import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
 import images from '~/assets/images';
 import HeaderPlus from '~/c_components/Header/HeaderPlus';
+import NoResult from '~/c_components/NoResult';
 import {SizedBox} from '~/c_components/SizedBox';
+import {CategoryData} from '~/types/Category';
 import {nomalizes} from '~/utills/constants';
 import {cssUtil} from '~/utills/cssUtil';
 
@@ -80,6 +82,7 @@ interface Props {
   goToCategoryUpdate: () => void;
   modalShow: boolean;
   onShowModal: () => void;
+  data: CategoryData[];
 }
 interface ColorProps {
   color: string;
@@ -91,75 +94,58 @@ const CategoryPresenter = ({
   onShowModal,
   goToCategoryAdd,
   goToCategoryUpdate,
+  data,
 }: Props) => {
   const goToUpdate = () => {
     onShowModal();
     goToCategoryUpdate();
   };
+  console.log(data);
   return (
     <Container>
-      <HeaderPlus text="카테고리 관리" back={goBack} button={goToCategoryAdd} />
-      <SizedBox.Custom margin={nomalizes[10]} />
-      <Box>
-        <Row>
-          <Mark color="#e7a6a6" />
-          <TText>과일</TText>
-        </Row>
-        <RowRight onPress={onShowModal}>
-          <Image
-            style={{
-              width: nomalizes[16],
-              height: nomalizes[16],
-            }}
-            source={images.setting}
-          />
-        </RowRight>
-      </Box>
-      <Box>
-        <Row>
-          <Mark color="#e7a6a6" />
-          <TText>과일</TText>
-        </Row>
-        <RowRight onPress={onShowModal}>
-          <Image
-            style={{
-              width: nomalizes[16],
-              height: nomalizes[16],
-            }}
-            source={images.setting}
-          />
-        </RowRight>
-      </Box>
-      <Box>
-        <Row>
-          <Mark color="#e7a6a6" />
-          <TText>과일</TText>
-        </Row>
-        <RowRight onPress={onShowModal}>
-          <Image
-            style={{
-              width: nomalizes[16],
-              height: nomalizes[16],
-            }}
-            source={images.setting}
-          />
-        </RowRight>
-      </Box>
+      <>
+        <HeaderPlus
+          text="카테고리 관리"
+          back={goBack}
+          button={goToCategoryAdd}
+        />
+        <SizedBox.Custom margin={nomalizes[10]} />
 
-      <Modal animationType="fade" visible={modalShow} transparent={true}>
-        <Wrapper>
-          <ModalExtra onPress={onShowModal} />
-          <ModalContentBox>
-            <TouchableWithoutFeedback>
-              <ModalText>삭제하기</ModalText>
-            </TouchableWithoutFeedback>
-            <Hr />
-            <TouchableWithoutFeedback onPress={goToUpdate}>
-              <ModalText>수정하기</ModalText>
-            </TouchableWithoutFeedback>
-          </ModalContentBox>
-        </Wrapper>
-      </Modal>
+        {data?.map((category: CategoryData) => {
+          <Box>
+            <Row>
+              <Mark color={category?.color} />
+              <TText>{category?.name}</TText>
+            </Row>
+            <RowRight onPress={onShowModal}>
+              <Image
+                style={{
+                  width: nomalizes[16],
+                  height: nomalizes[16],
+                }}
+                source={images.setting}
+              />
+            </RowRight>
+          </Box>;
+        })}
+
+        {data?.length < 1 && <NoResult text="카테고리가 없습니다." />}
+
+        <Modal animationType="fade" visible={modalShow} transparent={true}>
+          <Wrapper>
+            <ModalExtra onPress={onShowModal} />
+            <ModalContentBox>
+              <TouchableWithoutFeedback>
+                <ModalText>삭제하기</ModalText>
+              </TouchableWithoutFeedback>
+              <Hr />
+              <TouchableWithoutFeedback onPress={goToUpdate}>
+                <ModalText>수정하기</ModalText>
+              </TouchableWithoutFeedback>
+            </ModalContentBox>
+          </Wrapper>
+        </Modal>
+      </>
     </Container>
   );
 };

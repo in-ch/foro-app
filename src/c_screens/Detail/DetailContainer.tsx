@@ -2,7 +2,7 @@ import {useMutation, useQuery} from '@apollo/client';
 import React, {useCallback, useRef, useState} from 'react';
 
 import {DELETE_FOOD, UPDATE_FOOD} from '@services/mutations/food';
-import {LOAD_FOOD_DATA} from '@services/queries/food';
+import {LOAD_FOOD, LOAD_FOOD_DATA} from '@services/queries/food';
 import {DetailProps} from './Detail';
 import DetailPresenter from './DetailPresenter';
 
@@ -69,7 +69,6 @@ const DetailContainer = ({navigation, route}: DetailProps) => {
           foodNo: route?.params.no,
         },
       });
-      console.log('ㅁㄴㅇㄹㅁㄴㅇㄹ : ' + JSON.stringify(dataFoodQuery));
       cache.writeQuery({
         query: LOAD_FOOD_DATA,
         variables: {
@@ -89,6 +88,22 @@ const DetailContainer = ({navigation, route}: DetailProps) => {
             onlyMe,
             consumed,
           },
+        },
+      });
+
+      // let dataFoodQuery2 = cache.readQuery<any>({
+      //   query: LOAD_FOOD,
+      //   variables: {
+      //     userNo: 1,
+      //   },
+      // });
+      cache.writeQuery({
+        query: LOAD_FOOD,
+        variables: {
+          userNo: 1,
+        },
+        data: {
+          loadFood: [],
         },
       });
     },
