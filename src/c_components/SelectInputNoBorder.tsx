@@ -125,6 +125,7 @@ const SelectInputNoBorder = ({setColor, color}: Props) => {
                 style={{
                   width: nomalizes[5],
                   height: nomalizes[5],
+                  transform: [{rotate: '180deg'}],
                 }}
                 source={images.arrowDown}
               />
@@ -133,7 +134,6 @@ const SelectInputNoBorder = ({setColor, color}: Props) => {
                 style={{
                   width: nomalizes[5],
                   height: nomalizes[5],
-                  transform: [{rotate: '180deg'}],
                 }}
                 source={images.arrowDown}
               />
