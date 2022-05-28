@@ -123,11 +123,21 @@ interface Props {
 interface MarkProps {
   background: string;
 }
-const AgendaScreen = ({items, selected, goToDetail, GoToFoodAdd}: Props) => {
+const AgendaScreen = ({selected, goToDetail, GoToFoodAdd}: Props) => {
+  const [selectedValue] = useState(
+    selected ? selected : String(moment(new Date()).format('YYYY-MM-DD')),
+  );
+  const [loading, setLoading] = useState<boolean>(true);
   const isFocused = useIsFocused();
   const {data, refetch} = useQuery(LOAD_FOOD, {
     variables: {
       userNo: 1,
+    },
+    fetchPolicy: 'network-only',
+    onCompleted: d => {
+      setIitems(d);
+      setLoading(true);
+      setLoading(false);
     },
   });
   useEffect(() => {
@@ -135,43 +145,37 @@ const AgendaScreen = ({items, selected, goToDetail, GoToFoodAdd}: Props) => {
       refetch();
     }
   }, [isFocused, refetch]);
-  const [selectedValue] = useState(
-    selected ? selected : String(moment(new Date()).format('YYYY-MM-DD')),
-  );
-  const [iitems, setIitems] = useState<AgendaSchedule | undefined>(items);
+  const [iitems, setIitems] = useState<AgendaSchedule | undefined>();
   const loadItems = (day: DateData) => {
     const itemsValue = iitems || {};
-    setTimeout(() => {
-      for (let i = -15; i < 85; i++) {
-        const time = day.timestamp + i * 24 * 60 * 60 * 1000;
-        const strTime = timeToString(time);
+    for (let i = -15; i < 85; i++) {
+      const time = day.timestamp + i * 24 * 60 * 60 * 1000;
+      const strTime = timeToString(time);
 
-        const ddata = getDateListFilter(data?.loadFood, strTime);
-        if (!itemsValue[strTime]) {
-          itemsValue[strTime] = [];
-          for (let j = 0; j < ddata?.length; j++) {
-            itemsValue[strTime].push({
-              no: ddata[j]?.no,
-              name: ddata[j]?.name,
-              height: Math.max(50, Math.floor(Math.random() * 150)),
-              day: strTime,
-              category: ddata[j].category,
-              categoryColor: ddata[j].categoryColor,
-              createdAt: ddata[j].createdAt,
-              dday: ddata[j].dday,
-              consumed: ddata[j].consumed,
-              onlyMe: ddata[j].onlyMe,
-            });
-          }
+      const ddata = getDateListFilter(data?.loadFood, strTime);
+      if (!itemsValue[strTime]) {
+        itemsValue[strTime] = [];
+        for (let j = 0; j < ddata?.length; j++) {
+          itemsValue[strTime].push({
+            no: ddata[j]?.no,
+            name: ddata[j]?.name,
+            height: Math.max(50, Math.floor(Math.random() * 150)),
+            day: strTime,
+            category: ddata[j].category,
+            categoryColor: ddata[j].categoryColor,
+            createdAt: ddata[j].createdAt,
+            dday: ddata[j].dday,
+            consumed: ddata[j].consumed,
+            onlyMe: ddata[j].onlyMe,
+          });
         }
       }
-
-      const newItems: AgendaSchedule = {};
-      Object.keys(itemsValue).forEach(key => {
-        newItems[key] = itemsValue[key];
-      });
-      setIitems(newItems);
-    }, 1000);
+    }
+    const newItems: AgendaSchedule = {};
+    Object.keys(itemsValue).forEach(key => {
+      newItems[key] = itemsValue[key];
+    });
+    setIitems(newItems);
   };
 
   const renderItem = (item: {
@@ -237,8 +241,8 @@ const AgendaScreen = ({items, selected, goToDetail, GoToFoodAdd}: Props) => {
     return date.toISOString().split('T')[0];
   };
 
-  return (
-    <>
+  const CAgenda = () => {
+    return (
       <Agenda
         testID={testIDs.agenda.CONTAINER}
         items={iitems}
@@ -247,15 +251,21 @@ const AgendaScreen = ({items, selected, goToDetail, GoToFoodAdd}: Props) => {
         renderItem={(item: any) => renderItem(item)}
         renderEmptyDate={renderEmptyDate}
         rowHasChanged={rowHasChanged}
-        showClosingKnob={true}
+        showClosingKnob={false}
         theme={{
           agendaDayNumColor: '#000',
           agendaTodayColor: '#FF6C63',
           agendaKnobColor: '#e4e4e4',
-          dotColor: '#FF 6C63',
+          dotColor: '#FF6C63',
           selectedDayBackgroundColor: '#FF6C63',
         }}
       />
+    );
+  };
+
+  return (
+    <>
+      {!loading && CAgenda()}
       <ModalBackground>
         <ModalButton onPress={GoToFoodAdd}>
           <Image

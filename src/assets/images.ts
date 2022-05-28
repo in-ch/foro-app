@@ -17,6 +17,7 @@ const images = {
   setting: require('./icons/setting-icon.png'),
   plusWhite: require('./icons/plus-white-icon.png'),
   close: require('./icons/close-icon.png'),
+  loading: require('./icons/loading.gif'),
 };
 
 export default images;
