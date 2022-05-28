@@ -2,16 +2,18 @@ import {useMutation, useQuery} from '@apollo/client';
 import React, {useCallback, useRef, useState} from 'react';
 
 import {DELETE_FOOD, UPDATE_FOOD} from '@services/mutations/food';
-import {LOAD_FOOD, LOAD_FOOD_DATA} from '@services/queries/food';
+import {LOAD_FOOD_DATA} from '@services/queries/food';
 import {DetailProps} from './Detail';
 import DetailPresenter from './DetailPresenter';
 
 const DetailContainer = ({navigation, route}: DetailProps) => {
   const [cacheConsumed, setCacheConsumed] = useState<boolean>(false);
   const [cacheOnlyMe, setCacheOnlyMe] = useState<boolean>(false);
+  const [cacheMemo, setCacheMemo] = useState<string>('');
   const [consumed, setConsumed] = useState<boolean>(false);
   const [onlyMe, setOnlyMe] = useState<boolean>(false);
   const [me, setMe] = useState<number>(0);
+  const [memo, setMemo] = useState<string>('');
   const toastRef = useRef<any>(null);
   const goToBack = () => {
     navigation.goBack();
@@ -21,7 +23,11 @@ const DetailContainer = ({navigation, route}: DetailProps) => {
   }, []);
 
   const handleUpdate = () => {
-    if (cacheConsumed === consumed && cacheOnlyMe === onlyMe) {
+    if (
+      cacheConsumed === consumed &&
+      cacheOnlyMe === onlyMe &&
+      cacheMemo === memo
+    ) {
       showToast('값이 동일합니다.');
     } else {
       // 여기서 뮤테이션 실행
@@ -31,6 +37,7 @@ const DetailContainer = ({navigation, route}: DetailProps) => {
             no: me,
             onlyMe: onlyMe,
             consumed: consumed,
+            memo,
           },
         },
       });
@@ -51,10 +58,12 @@ const DetailContainer = ({navigation, route}: DetailProps) => {
     },
     onCompleted: d => {
       setMe(d?.loadFoodData?.no);
+      setMemo(d?.loadFoodData?.memo);
       setConsumed(d?.loadFoodData?.consumed);
       setOnlyMe(d?.loadFoodData?.onlyMe);
       setCacheConsumed(d?.loadFoodData?.consumed);
       setCacheOnlyMe(d?.loadFoodData?.onlyMe);
+      setCacheMemo(d?.loadFoodData?.memo);
     },
   });
 
@@ -85,18 +94,10 @@ const DetailContainer = ({navigation, route}: DetailProps) => {
             dday: dataFoodQuery.loadFoodData.dday,
             updatedAt: dataFoodQuery.loadFoodData.updatedAt,
             createdAt: dataFoodQuery.loadFoodData.createdAt,
+            memo,
             onlyMe,
             consumed,
           },
-        },
-      });
-      cache.writeQuery({
-        query: LOAD_FOOD,
-        variables: {
-          userNo: 1,
-        },
-        data: {
-          loadFood: [],
         },
       });
     },
@@ -110,9 +111,11 @@ const DetailContainer = ({navigation, route}: DetailProps) => {
       consumed={consumed}
       setConsumed={setConsumed}
       setOnlyMe={setOnlyMe}
+      setMemo={(value: string) => setMemo(value)}
       onlyMe={onlyMe}
       handleUpdate={handleUpdate}
       handleDelete={handleDelete}
+      memo={memo}
       toastRef={toastRef}
     />
   );

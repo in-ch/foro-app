@@ -27,6 +27,7 @@ export const LOAD_FOOD_DATA = gql`
       dday
       keyword
       onlyMe
+      memo
       createdAt
       updatedAt
       consumed

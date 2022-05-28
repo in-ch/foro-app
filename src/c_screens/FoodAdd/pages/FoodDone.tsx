@@ -35,7 +35,7 @@ const Heading = styled.Text`
 `;
 const Sub = styled.Text`
   font-size: ${nomalizes[12]}px;
-  color: #000;
+  color: #666666;
 `;
 const Mark = styled.View<ColorProps>`
   width: ${nomalizes[12]}px;
@@ -93,8 +93,8 @@ interface ColorProps {
 }
 
 const FoodDone = ({navigation, route}: FoodAddResultProps) => {
-  const {category, dday, keyword, name, onlyMe} = route.params.foodAddParams;
-
+  const {category, dday, keyword, name, onlyMe, memo} =
+    route.params.foodAddParams;
   const [mutationInsertFood] = useMutation(INSERT_FOOD);
   const handleInsertFood = () => {
     mutationInsertFood({
@@ -107,6 +107,7 @@ const FoodDone = ({navigation, route}: FoodAddResultProps) => {
           dday: moment(new Date(`${dday}`)).format('YYYY-MM-DD'),
           keyword: String(keyword),
           onlyMe,
+          memo,
         },
       },
     });
@@ -139,6 +140,11 @@ const FoodDone = ({navigation, route}: FoodAddResultProps) => {
         <Row>
           <DDay>D-2</DDay>
           <Sub>{moment(dday).add(Number(-2), 'day').format('YYYY.MM.DD')}</Sub>
+        </Row>
+        <SizedBox.Custom margin={nomalizes[30]} />
+        <Heading>기타 메모</Heading>
+        <Row>
+          <Sub>{memo}</Sub>
         </Row>
       </Box>
       <Box>

@@ -9,6 +9,7 @@ export interface FoodData {
   keyword: string[];
   dday?: string;
   onlyMe?: boolean;
+  memo?: string;
 }
 
 export interface FoodOutputData {

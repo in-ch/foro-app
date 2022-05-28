@@ -1,17 +1,20 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import styled from 'styled-components/native';
-import {Switch, View} from 'react-native';
+import {Platform, Switch, View} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import moment from 'moment';
 import Toast from 'react-native-easy-toast';
 
 import HeaderX from '@components/Header/HeaderX';
-import {cHeight, nomalizes} from '@utills/constants';
+import TextInput from '@components/TextInput';
+import {cHeight, nomalizes, statusBarHeight} from '@utills/constants';
 import {cssUtil} from '@utills/cssUtil';
 import {SizedBox} from '@components/SizedBox';
 import {FoodOutputData} from '~/types/Food';
 import {numberToWeek} from '@utills/numberToWeek';
+
+const Container = styled.KeyboardAvoidingView``;
 
 const Box = styled.View`
   width: 100%;
@@ -29,7 +32,7 @@ const Heading = styled.Text`
 `;
 const Sub = styled.Text`
   font-size: ${nomalizes[12]}px;
-  color: #000;
+  color: #3b3b3b;
 `;
 const Mark = styled.View<ColorProps>`
   width: ${nomalizes[12]}px;
@@ -110,8 +113,10 @@ interface Props {
   data: FoodOutputData;
   consumed: boolean;
   onlyMe: boolean;
+  memo: string;
   setConsumed: (value: boolean) => void;
   setOnlyMe: (value: boolean) => void;
+  setMemo: (value: string) => void;
   handleUpdate: () => void;
   handleDelete: () => void;
   toastRef: any;
@@ -121,15 +126,19 @@ const DetailPresenter = ({
   data,
   consumed,
   onlyMe,
+  memo,
   setConsumed,
   setOnlyMe,
+  setMemo,
   handleUpdate,
   handleDelete,
   toastRef,
 }: Props) => {
   const keywords = String(data?.keyword).split(',');
   return (
-    <>
+    <Container
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      keyboardVerticalOffset={statusBarHeight}>
       <HeaderX text="식품 상세" button={goToBack} />
       <ScrollView>
         <Box>
@@ -145,23 +154,32 @@ const DetailPresenter = ({
             {moment(new Date(`${data?.createdAt}`)).format('YY.MM.DD')}(
             {numberToWeek(moment(new Date(`${data?.createdAt}`)).isoWeekday())})
           </Sub>
-          <SizedBox.Custom margin={nomalizes[30]} />
+          <SizedBox.Custom margin={nomalizes[20]} />
           <Heading>소비기한</Heading>
           <Sub>
             {moment(new Date(`${data?.dday}`)).format('YY.MM.DD')}(
             {numberToWeek(moment(new Date(`${data?.dday}`)).isoWeekday())})
           </Sub>
-          <SizedBox.Custom margin={nomalizes[30]} />
+          <SizedBox.Custom margin={nomalizes[20]} />
           <Heading>알림 예정일</Heading>
           <Row>
             <DDay>D-2</DDay>
             <Sub>
-              {' '}
               {moment(new Date(`${data?.dday}`))
                 .add(Number(-2), 'days')
                 .format('YY.MM.DD')}
               ({numberToWeek(moment(new Date(`${data?.dday}`)).isoWeekday())})
             </Sub>
+          </Row>
+          <SizedBox.Custom margin={nomalizes[20]} />
+          <Heading>기타 메모</Heading>
+          <Row>
+            <TextInput
+              value={memo}
+              setValue={setMemo}
+              maxLength={15}
+              placeholder="기타 메모"
+            />
           </Row>
         </Box>
         <Box>
@@ -216,7 +234,7 @@ const DetailPresenter = ({
           fadeOutDuration={1200}
         />
       </ScrollView>
-    </>
+    </Container>
   );
 };
 

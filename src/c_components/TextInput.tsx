@@ -4,20 +4,21 @@ import {nomalizes} from '@utills/constants';
 import {cssUtil} from '@utills/cssUtil';
 
 const Container = styled.View`
-  width: 90%;
-  height: ${nomalizes[40]}px;
+  height: ${nomalizes[35]}px;
   background-color: #fff;
   border: 1px solid #777777;
-  margin-left: 5%;
+  border-radius: ${nomalizes[5]}px;
   display: flex;
+  width: 100%;
   flex-direction: row;
-  ${cssUtil.doubleCenter};
+  align-items: center;
+  justify-content: flex-start;
 `;
 const TTextInput = styled.TextInput`
   padding-left: ${nomalizes[10]}px;
   flex: 8;
   height: ${nomalizes[40]}px;
-  font-size: ${nomalizes[14]}px;
+  font-size: ${nomalizes[12]}px;
   color: rgb(50, 50, 50);
 `;
 const LengthContainer = styled.View`
@@ -36,12 +37,13 @@ interface Props {
   value: string;
   setValue: (value: string) => void;
   maxLength: number;
+  placeholder?: string;
 }
-const TextInput = ({value, setValue, maxLength}: Props) => {
+const TextInput = ({value, setValue, maxLength, placeholder}: Props) => {
   return (
     <Container>
       <TTextInput
-        placeholder="닉네임 입력"
+        placeholder={placeholder ? placeholder : '닉네임 입력'}
         placeholderTextColor="#646464"
         onChangeText={(text: string) => setValue(text)}
         value={value}
