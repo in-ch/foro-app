@@ -10,3 +10,13 @@ export const LOAD_CATEGORY = gql`
     }
   }
 `;
+
+export const LOAD_CATEGORY_DATA = gql`
+  query loadCategoryData($categoryNo: Float!) {
+    loadCategoryData(categoryNo: $categoryNo) {
+      no
+      name
+      color
+    }
+  }
+`;

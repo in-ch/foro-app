@@ -43,7 +43,9 @@ export type RootTabParamList = {
   };
   Category: {};
   CategoryAdd: {};
-  CategoryUpdate: {};
+  CategoryUpdate: {
+    no: number;
+  };
   Neighbor: {};
   Setting: {};
   Terms: {};

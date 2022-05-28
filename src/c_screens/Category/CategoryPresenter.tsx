@@ -79,10 +79,11 @@ const Hr = styled.View`
 interface Props {
   goBack: () => void;
   goToCategoryAdd: () => void;
-  goToCategoryUpdate: () => void;
+  goToCategoryUpdate: (value: number) => void;
   modalShow: boolean;
-  onShowModal: () => void;
+  onShowModal: (value: number) => void;
   data: CategoryData[];
+  categoryNo: number;
 }
 interface ColorProps {
   color: string;
@@ -94,13 +95,13 @@ const CategoryPresenter = ({
   onShowModal,
   goToCategoryAdd,
   goToCategoryUpdate,
+  categoryNo,
   data,
 }: Props) => {
-  const goToUpdate = () => {
-    onShowModal();
-    goToCategoryUpdate();
+  const goToUpdate = (no: number) => {
+    onShowModal(no);
+    goToCategoryUpdate(no);
   };
-  console.log(data);
   return (
     <Container>
       <>
@@ -108,6 +109,8 @@ const CategoryPresenter = ({
           text="카테고리 관리"
           back={goBack}
           button={goToCategoryAdd}
+          buttonStyleText="추가"
+          buttonStyle={true}
         />
         <SizedBox.Custom margin={nomalizes[10]} />
 
@@ -118,7 +121,7 @@ const CategoryPresenter = ({
                 <Mark color={category?.color} />
                 <TText>{category?.name}</TText>
               </Row>
-              <RowRight onPress={onShowModal}>
+              <RowRight onPress={() => onShowModal(category?.no)}>
                 <Image
                   style={{
                     width: nomalizes[16],
@@ -135,13 +138,13 @@ const CategoryPresenter = ({
 
         <Modal animationType="fade" visible={modalShow} transparent={true}>
           <Wrapper>
-            <ModalExtra onPress={onShowModal} />
+            <ModalExtra onPress={() => onShowModal(0)} />
             <ModalContentBox>
               <TouchableWithoutFeedback>
                 <ModalText>삭제하기</ModalText>
               </TouchableWithoutFeedback>
               <Hr />
-              <TouchableWithoutFeedback onPress={goToUpdate}>
+              <TouchableWithoutFeedback onPress={() => goToUpdate(categoryNo)}>
                 <ModalText>수정하기</ModalText>
               </TouchableWithoutFeedback>
             </ModalContentBox>

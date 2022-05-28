@@ -1,12 +1,13 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import styled from 'styled-components/native';
-import {Image} from 'react-native';
-import {cWidth, nomalizes, statusBarHeight} from '@utills/constants';
-import {SizedBox} from '@components/SizedBox';
-import {cssUtil} from '@utills/cssUtil';
-import Images from '@assets/images';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import {Image} from 'react-native';
+import styled from 'styled-components/native';
+
+import {cWidth, nomalizes, statusBarHeight} from '@utills/constants';
+import {cssUtil} from '@utills/cssUtil';
+import {SizedBox} from '@components/SizedBox';
+import Images from '@assets/images';
 
 const Container = styled.View`
   background-color: #fff;
@@ -37,6 +38,20 @@ const TText = styled.Text<TextContainerProps>`
   font-weight: bold;
   color: #000;
 `;
+
+const StyledButton = styled.View`
+  width: ${nomalizes[40]}px;
+  height: ${nomalizes[25]}px;
+  border-radius: ${nomalizes[5]}px;
+  background-color: #ff6c63;
+  margin-right: ${nomalizes[5]}px;
+  display: flex;
+  ${cssUtil.doubleCenter};
+`;
+const StyledButtonText = styled.Text`
+  color: #fff;
+  font-size: ${nomalizes[10]}px;
+`;
 interface TextContainerProps {
   button?: boolean;
 }
@@ -45,9 +60,17 @@ interface HeaderProps {
   back: () => void;
   button?: () => void;
   plus?: boolean;
+  buttonStyle?: boolean;
+  buttonStyleText?: string;
 }
 
-const HeaderPlus = ({text, back, button}: HeaderProps) => {
+const HeaderPlus = ({
+  text,
+  back,
+  button,
+  buttonStyle,
+  buttonStyleText,
+}: HeaderProps) => {
   return (
     <Container>
       <SizedBox.Custom margin={statusBarHeight} />
@@ -77,14 +100,20 @@ const HeaderPlus = ({text, back, button}: HeaderProps) => {
               justifyContent: 'center',
               alignItems: 'center',
             }}>
-            <Image
-              style={{
-                width: nomalizes[20],
-                height: nomalizes[20],
-                marginRight: nomalizes[10],
-              }}
-              source={Images.bigPlus}
-            />
+            {buttonStyle ? (
+              <StyledButton>
+                <StyledButtonText>{buttonStyleText}</StyledButtonText>
+              </StyledButton>
+            ) : (
+              <Image
+                style={{
+                  width: nomalizes[20],
+                  height: nomalizes[20],
+                  marginRight: nomalizes[10],
+                }}
+                source={Images.bigPlus}
+              />
+            )}
           </TouchableOpacity>
         )}
       </Wrapper>

@@ -10,3 +10,14 @@ export const INSERT_CATEGORY = gql`
     }
   }
 `;
+
+export const UPDATE_CATEGORY = gql`
+  mutation updateCategory($category: UpdateCategoryInput!) {
+    updateCategory(category: $category) {
+      no
+      name
+      color
+      createdAt
+    }
+  }
+`;

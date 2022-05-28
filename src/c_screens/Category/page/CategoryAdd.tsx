@@ -65,7 +65,7 @@ const CategoryAdd = ({navigation}: CategoryAddProps) => {
     }
   };
   const [mutationCategoryAdd] = useMutation(INSERT_CATEGORY, {
-    onCompleted: d => {
+    onCompleted: () => {
       showToast('카테고리가 추가되었습니다.');
       setValue('');
     },
@@ -80,7 +80,6 @@ const CategoryAdd = ({navigation}: CategoryAddProps) => {
         },
       });
       const newData = [data.insertCategory, ...dataCategoryQuery.loadCategory];
-      console.log('뉴데이타' + JSON.stringify(newData));
       cache.writeQuery({
         query: LOAD_CATEGORY,
         variables: {
@@ -98,6 +97,8 @@ const CategoryAdd = ({navigation}: CategoryAddProps) => {
         text="카테고리 추가"
         back={goBack}
         button={handleAddCategory}
+        buttonStyleText="완료"
+        buttonStyle={true}
       />
       <SizedBox.Custom margin={nomalizes[10]} />
       <SearchInputOneLine

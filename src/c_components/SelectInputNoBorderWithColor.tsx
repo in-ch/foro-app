@@ -1,6 +1,6 @@
 /* eslint-disable no-shadow */
 import {Animated} from 'react-native';
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import styled from 'styled-components/native';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 
@@ -76,14 +76,20 @@ interface Selected {
 }
 interface Props {
   setColor: (value: string) => void;
-  color?: string;
+  color: string;
 }
-const SelectInputNoBorder = ({setColor, color}: Props) => {
+const SelectInputNoBorderWithColor = ({setColor, color}: Props) => {
   const [show, setShow] = useState<boolean>(false);
   const [value, setValue] = useState({
-    color: color ? color : '#43419A',
+    color: color ? color : '',
     name: '과일',
   });
+  useEffect(() => {
+    setValue({
+      color,
+      name: '과일',
+    });
+  }, [color]);
   const animatedHeight = useRef(new Animated.Value(0)).current;
 
   const onShow = () => {
@@ -204,4 +210,4 @@ const SelectInputNoBorder = ({setColor, color}: Props) => {
   );
 };
 
-export default SelectInputNoBorder;
+export default SelectInputNoBorderWithColor;
