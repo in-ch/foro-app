@@ -90,13 +90,6 @@ const DetailContainer = ({navigation, route}: DetailProps) => {
           },
         },
       });
-
-      // let dataFoodQuery2 = cache.readQuery<any>({
-      //   query: LOAD_FOOD,
-      //   variables: {
-      //     userNo: 1,
-      //   },
-      // });
       cache.writeQuery({
         query: LOAD_FOOD,
         variables: {

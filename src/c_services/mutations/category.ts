@@ -21,3 +21,12 @@ export const UPDATE_CATEGORY = gql`
     }
   }
 `;
+
+export const DELETE_CATEGORY = gql`
+  mutation deleteCategory($categoryNo: Float!) {
+    deleteCategory(categoryNo: $categoryNo) {
+      ok
+      error
+    }
+  }
+`;

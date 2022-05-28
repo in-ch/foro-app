@@ -1,14 +1,21 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
+import {useMutation, useQuery} from '@apollo/client';
+
 import CategoryPresenter from './CategoryPresenter';
 import {CategoryProps} from './Category';
-import {useQuery} from '@apollo/client';
 import {LOAD_CATEGORY} from '@services/queries/category';
+import {DELETE_CATEGORY} from '@services/mutations/category';
 import {useIsFocused} from '@react-navigation/native';
 
 const CategoryContainer = ({navigation}: CategoryProps) => {
   const [modalShow, setModalShow] = useState<boolean>(false);
   const [categoryNo, setCategoryNo] = useState(0);
   const isFocused = useIsFocused();
+  const toastRef = useRef<any>(null);
+  const showToast = useCallback((text: string) => {
+    toastRef.current.show(text);
+  }, []);
+
   const goBack = () => {
     navigation.goBack();
   };
@@ -32,6 +39,16 @@ const CategoryContainer = ({navigation}: CategoryProps) => {
     fetchPolicy: 'network-only',
   });
 
+  const [mutationDeleteCategory] = useMutation(DELETE_CATEGORY, {
+    variables: {
+      categoryNo,
+    },
+    onCompleted: () => {
+      setModalShow(false);
+      refetch();
+      showToast('삭제가 완료되었습니다.');
+    },
+  });
   useEffect(() => {
     if (isFocused) {
       refetch();
@@ -46,6 +63,8 @@ const CategoryContainer = ({navigation}: CategoryProps) => {
       onShowModal={onShowModal}
       data={data?.loadCategory}
       categoryNo={categoryNo}
+      handleDeleteCategory={mutationDeleteCategory}
+      toastRef={toastRef}
     />
   );
 };

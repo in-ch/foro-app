@@ -1,14 +1,16 @@
 import React from 'react';
 import {Image, Modal} from 'react-native';
+import Toast from 'react-native-easy-toast';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
-import images from '~/assets/images';
-import HeaderPlus from '~/c_components/Header/HeaderPlus';
-import NoResult from '~/c_components/NoResult';
-import {SizedBox} from '~/c_components/SizedBox';
+
+import images from '@assets/images';
+import HeaderPlus from '@components/Header/HeaderPlus';
+import NoResult from '@components/NoResult';
+import {SizedBox} from '@components/SizedBox';
+import {cHeight, nomalizes} from '@utills/constants';
+import {cssUtil} from '@utills/cssUtil';
 import {CategoryData} from '~/types/Category';
-import {nomalizes} from '~/utills/constants';
-import {cssUtil} from '~/utills/cssUtil';
 
 const Container = styled.View`
   flex: 1;
@@ -84,6 +86,8 @@ interface Props {
   onShowModal: (value: number) => void;
   data: CategoryData[];
   categoryNo: number;
+  handleDeleteCategory: () => void;
+  toastRef: any;
 }
 interface ColorProps {
   color: string;
@@ -97,6 +101,8 @@ const CategoryPresenter = ({
   goToCategoryUpdate,
   categoryNo,
   data,
+  handleDeleteCategory,
+  toastRef,
 }: Props) => {
   const goToUpdate = (no: number) => {
     onShowModal(no);
@@ -140,7 +146,7 @@ const CategoryPresenter = ({
           <Wrapper>
             <ModalExtra onPress={() => onShowModal(0)} />
             <ModalContentBox>
-              <TouchableWithoutFeedback>
+              <TouchableWithoutFeedback onPress={handleDeleteCategory}>
                 <ModalText>삭제하기</ModalText>
               </TouchableWithoutFeedback>
               <Hr />
@@ -151,6 +157,12 @@ const CategoryPresenter = ({
           </Wrapper>
         </Modal>
       </>
+      <Toast
+        ref={toastRef}
+        positionValue={cHeight * 0.5}
+        fadeInDuration={200}
+        fadeOutDuration={1200}
+      />
     </Container>
   );
 };

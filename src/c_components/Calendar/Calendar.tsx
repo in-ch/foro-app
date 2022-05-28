@@ -81,6 +81,7 @@ const CCalendar = ({GoToAgenda, GoToDetail}: Props) => {
     variables: {
       userNo: 1,
     },
+    fetchPolicy: 'no-cache',
   });
 
   useEffect(() => {
