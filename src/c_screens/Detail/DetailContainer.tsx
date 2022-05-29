@@ -65,42 +65,43 @@ const DetailContainer = ({navigation, route}: DetailProps) => {
       setCacheOnlyMe(d?.loadFoodData?.onlyMe);
       setCacheMemo(d?.loadFoodData?.memo);
     },
+    fetchPolicy: 'network-only',
   });
 
   const [mutationUpdateFood] = useMutation(UPDATE_FOOD, {
     onCompleted: () => {
       showToast('수정이 완료되었습니다.');
     },
-    update(cache) {
-      let dataFoodQuery = cache.readQuery<any>({
-        query: LOAD_FOOD_DATA,
-        variables: {
-          foodNo: route?.params.no,
-        },
-      });
-      cache.writeQuery({
-        query: LOAD_FOOD_DATA,
-        variables: {
-          foodNo: route?.params.no,
-        },
-        data: {
-          loadFoodData: {
-            __typename: 'Food',
-            no: dataFoodQuery.loadFoodData.no,
-            name: dataFoodQuery.loadFoodData.name,
-            category: dataFoodQuery.loadFoodData.category,
-            categoryColor: dataFoodQuery.loadFoodData.categoryColor,
-            keyword: dataFoodQuery.loadFoodData.keyword,
-            dday: dataFoodQuery.loadFoodData.dday,
-            updatedAt: dataFoodQuery.loadFoodData.updatedAt,
-            createdAt: dataFoodQuery.loadFoodData.createdAt,
-            memo,
-            onlyMe,
-            consumed,
-          },
-        },
-      });
-    },
+    // update(cache) {
+    //   let dataFoodQuery = cache.readQuery<any>({
+    //     query: LOAD_FOOD_DATA,
+    //     variables: {
+    //       foodNo: route?.params.no,
+    //     },
+    //   });
+    //   cache.writeQuery({
+    //     query: LOAD_FOOD_DATA,
+    //     variables: {
+    //       foodNo: route?.params.no,
+    //     },
+    //     data: {
+    //       loadFoodData: {
+    //         __typename: 'Food',
+    //         no: dataFoodQuery.loadFoodData.no,
+    //         name: dataFoodQuery.loadFoodData.name,
+    //         category: dataFoodQuery.loadFoodData.category.name,
+    //         categoryColor: dataFoodQuery.loadFoodData.category.color,
+    //         keyword: dataFoodQuery.loadFoodData.keyword,
+    //         dday: dataFoodQuery.loadFoodData.dday,
+    //         updatedAt: dataFoodQuery.loadFoodData.updatedAt,
+    //         createdAt: dataFoodQuery.loadFoodData.createdAt,
+    //         memo,
+    //         onlyMe,
+    //         consumed,
+    //       },
+    //     },
+    //   });
+    // },
   });
   const [mutationDeleteFood] = useMutation(DELETE_FOOD);
 

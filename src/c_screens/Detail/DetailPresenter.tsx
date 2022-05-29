@@ -142,9 +142,9 @@ const DetailPresenter = ({
       <HeaderX text="식품 상세" button={goToBack} />
       <ScrollView>
         <Box>
-          <Heading>{data?.category}</Heading>
+          <Heading>{data?.category?.name}</Heading>
           <RowBox>
-            <Mark color={data?.categoryColor} />
+            <Mark color={String(data?.category?.color)} />
             <TText>{data?.name}</TText>
           </RowBox>
         </Box>
@@ -233,6 +233,7 @@ const DetailPresenter = ({
           fadeInDuration={200}
           fadeOutDuration={1200}
         />
+        <SizedBox.Custom margin={nomalizes[30]} />
       </ScrollView>
     </Container>
   );

@@ -16,8 +16,9 @@ import {getDateListFilter} from '@utills/getListFilter';
 import {LOAD_FOOD} from '@services/queries/food';
 import {useQuery} from '@apollo/client';
 import {textOverflow} from '@utills/textOverflow';
+import {DateToString} from '@utills/dateToString';
 import {FoodData} from '~/types/Food';
-import {DateToString} from '~/utills/dateToString';
+import {useIsFocused} from '@react-navigation/native';
 
 const TextContainer = styled.View<TextContainerProps>`
   padding-left: ${nomalizes[3]}px;
@@ -70,6 +71,8 @@ interface Props {
   GoToDetail: (value: string) => void;
 }
 const CCalendar = ({GoToAgenda, GoToDetail}: Props) => {
+  const isFocused = useIsFocused();
+
   const [current, setCurrent] = useState(
     String(moment(new Date()).format('YYYY-MM')),
   ); // month를 바꾸기 위한 값
@@ -81,12 +84,13 @@ const CCalendar = ({GoToAgenda, GoToDetail}: Props) => {
     variables: {
       userNo: 1,
     },
-    fetchPolicy: 'no-cache',
+    fetchPolicy: 'network-only',
   });
 
   useEffect(() => {
     refetch();
-  }, [refetch]);
+  }, [refetch, isFocused]);
+
   return (
     <>
       <CalendarList
@@ -132,7 +136,7 @@ const CCalendar = ({GoToAgenda, GoToDetail}: Props) => {
                     }
                     return (
                       <>
-                        <TextContainer background={food?.categoryColor}>
+                        <TextContainer background={food?.category.color}>
                           <TText>{textOverflow(food?.name)}</TText>
                         </TextContainer>
                       </>

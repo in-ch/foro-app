@@ -15,8 +15,7 @@ export interface FoodData {
 export interface FoodOutputData {
   no: number;
   name: string;
-  category: string;
-  categoryColor: string;
+  category: CategoryProps;
   keyword: string[];
   dday: string;
   onlyMe: boolean;

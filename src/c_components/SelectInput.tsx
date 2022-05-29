@@ -64,8 +64,9 @@ const AnimatedOption = Animated.createAnimatedComponent(Options);
 interface Props {
   setValue: (value: CategoryProps) => void;
   value: CategoryProps;
+  data?: any;
 }
-const SelectInput = ({value, setValue}: Props) => {
+const SelectInput = ({value, setValue, data}: Props) => {
   const [show, setShow] = useState<boolean>(false);
   const animatedHeight = useRef(new Animated.Value(0)).current;
   const animatedBorder = useRef(new Animated.Value(0)).current;
@@ -101,7 +102,22 @@ const SelectInput = ({value, setValue}: Props) => {
     setValue({color, name, no});
     onHide();
   };
-
+  // const [loadCategory, {data: Category}] = useLazyQuery(LOAD_CATEGORY, {
+  //   onCompleted: d => {
+  //     console.log(JSON.stringify(d));
+  //   },
+  //   onError: e => {
+  //     console.log(JSON.stringify(e));
+  //   },
+  //   fetchPolicy: 'network-only',
+  // });
+  // useEffect(() => {
+  //   loadCategory({
+  //     variables: {
+  //       userNo: 1,
+  //     },
+  //   });
+  // }, [loadCategory]);
   return (
     <Container>
       <TouchableWithoutFeedback onPress={show ? onHide : onShow}>
@@ -125,28 +141,69 @@ const SelectInput = ({value, setValue}: Props) => {
           borderWidth: animatedBorder,
         }}>
         <ScrollView>
-          <Option onPress={() => onSelectCategory('#a14124', '과일', 0)}>
-            <Mark color="#a14124" />
-            <TText>과일</TText>
+          <Option onPress={() => onSelectCategory('#FF8616', '과일·견과', 1)}>
+            <Mark color="#FF8616" />
+            <TText>과일·견과</TText>
           </Option>
 
-          <Option onPress={() => onSelectCategory('#81c98d', '냉동식품', 0)}>
-            <Mark color="#81c98d" />
+          <Option onPress={() => onSelectCategory('#019C11', '채소·버섯', 2)}>
+            <Mark color="#019C11" />
+            <TText>채소·버섯</TText>
+          </Option>
+
+          <Option onPress={() => onSelectCategory('#5F5BFF', '냉동식품', 3)}>
+            <Mark color="#5F5BFF" />
             <TText>냉동식품</TText>
           </Option>
-
-          <Option onPress={() => onSelectCategory('#c981ad', '즉석식품', 0)}>
-            <Mark color="#c981ad" />
-            <TText>즉석식품</TText>
+          <Option onPress={() => onSelectCategory('#FFD056', '유제품', 4)}>
+            <Mark color="#FFD056" />
+            <TText>유제품</TText>
           </Option>
-          <Option onPress={() => onSelectCategory('#b3c981', '생선류', 0)}>
-            <Mark color="#b3c981" />
-            <TText>생선류</TText>
+          <Option
+            onPress={() => onSelectCategory('#FFA1F6', '가공식품·간식', 5)}>
+            <Mark color="#FFA1F6" />
+            <TText>가공식품·간식</TText>
           </Option>
-          <Option onPress={() => onSelectCategory('#5887bd', '인스턴트', 0)}>
-            <Mark color="#5887bd" />
-            <TText>인스턴트</TText>
+          <Option onPress={() => onSelectCategory('#1ED4FC', '냉장식품', 6)}>
+            <Mark color="#1ED4FC" />
+            <TText>냉장식품</TText>
           </Option>
+          <Option onPress={() => onSelectCategory('#E33292', '주류', 7)}>
+            <Mark color="#E33292" />
+            <TText>주류</TText>
+          </Option>
+          <Option onPress={() => onSelectCategory('#078E8E', '수산·건어물', 8)}>
+            <Mark color="#078E8E" />
+            <TText>수산·건어물</TText>
+          </Option>
+          <Option
+            onPress={() => onSelectCategory('#8A2C2C', '장·양념·소스', 9)}>
+            <Mark color="#8A2C2C" />
+            <TText>장·양념·소스</TText>
+          </Option>
+          <Option onPress={() => onSelectCategory('#B97E89', '쌀·잡곡', 10)}>
+            <Mark color="#B97E89" />
+            <TText>쌀·잡곡</TText>
+          </Option>
+          <Option onPress={() => onSelectCategory('#EE1E1E', '정육·난류', 11)}>
+            <Mark color="#EE1E1E" />
+            <TText>정육·난류</TText>
+          </Option>
+          {data?.map((category: CategoryProps) => {
+            return (
+              <Option
+                onPress={() =>
+                  onSelectCategory(
+                    String(category.color),
+                    String(category.name),
+                    Number(category.no),
+                  )
+                }>
+                <Mark color={String(category.color)} />
+                <TText>{String(category.name)}</TText>
+              </Option>
+            );
+          })}
         </ScrollView>
       </AnimatedOption>
     </Container>

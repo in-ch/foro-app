@@ -16,6 +16,8 @@ import DDatePicker from '@components/DatePicker';
 import TextInput from '@components/TextInput';
 import {cssUtil} from '@utills/cssUtil';
 import {CategoryProps} from '~/types/Category';
+import {useQuery} from '@apollo/client';
+import {LOAD_CATEGORY} from '~/c_services/queries/category';
 
 const Container = styled.KeyboardAvoidingView`
   flex: 1;
@@ -82,6 +84,19 @@ const FoodAddInput = ({navigation, route}: FoodSearchResultProps) => {
   useEffect(() => {
     setAlarmDay(moment(dday).add(-Number(2), 'days'));
   }, [dday]);
+
+  const {data: Category} = useQuery(LOAD_CATEGORY, {
+    variables: {
+      userNo: 1,
+    },
+    onCompleted: d => {
+      console.log(JSON.stringify(d));
+    },
+    onError: e => {
+      console.log(JSON.stringify(e));
+    },
+    fetchPolicy: 'network-only',
+  });
   return (
     <>
       <Header
@@ -111,6 +126,7 @@ const FoodAddInput = ({navigation, route}: FoodSearchResultProps) => {
           <SelectInput
             setValue={(value: CategoryProps) => setCategoryValue(value)}
             value={categoryValue}
+            data={Category.loadCategory}
           />
           <SizedBox.Custom margin={nomalizes[20]} />
           <Heading>등록일</Heading>

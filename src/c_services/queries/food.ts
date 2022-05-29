@@ -5,8 +5,10 @@ export const LOAD_FOOD = gql`
     loadFood(userNo: $userNo) {
       no
       name
-      category
-      categoryColor
+      category {
+        color
+        name
+      }
       dday
       keyword
       onlyMe
@@ -22,8 +24,10 @@ export const LOAD_FOOD_DATA = gql`
     loadFoodData(foodNo: $foodNo) {
       no
       name
-      category
-      categoryColor
+      category {
+        name
+        color
+      }
       dday
       keyword
       onlyMe
