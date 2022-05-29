@@ -24,8 +24,8 @@ const AlarmPresenter = ({GoToBack}: Props) => {
   const [index, setIndex] = useState(0);
   const layout = useWindowDimensions();
   const [routes] = useState([
-    {key: 'first', title: '식품 알림'},
-    {key: 'second', title: '공유 알림'},
+    {key: 'first', title: 'MY 알림'},
+    {key: 'second', title: '이웃 알림'},
   ]);
 
   const renderTabBar = (props: any) => (
