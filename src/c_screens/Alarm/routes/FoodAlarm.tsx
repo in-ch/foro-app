@@ -1,8 +1,6 @@
 import React from 'react';
-import {Image} from 'react-native';
 import styled from 'styled-components/native';
 
-import images from '@assets/images';
 import {nomalizes} from '@utills/constants';
 import {cssUtil} from '@utills/cssUtil';
 
@@ -23,12 +21,6 @@ const ProfileContainer = styled.View`
   display: flex;
   flex-direction: column;
   align-items: center;
-`;
-const Profile = styled.View`
-  width: ${nomalizes[35]}px;
-  height: ${nomalizes[35]}px;
-  border-radius: ${nomalizes[20]}px;
-  overflow: hidden;
 `;
 const Button = styled.View`
   width: ${nomalizes[55]}px;
