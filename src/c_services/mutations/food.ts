@@ -31,3 +31,13 @@ export const DELETE_FOOD = gql`
     }
   }
 `;
+
+export const SEARCH_FOOD_USER = gql`
+  mutation searchFoodUser($userNo: Float!, $keyword: String!) {
+    searchFoodUser(userNo: $userNo, keyword: $keyword) {
+      no
+      name
+      createdAt
+    }
+  }
+`;

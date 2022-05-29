@@ -33,17 +33,17 @@ const AlarmPresenter = ({GoToBack}: Props) => {
       {...props}
       style={{backgroundColor: '#fff', height: nomalizes[35]}}
       indicatorStyle={{
-        backgroundColor: '#000',
+        backgroundColor: '#FF6258',
         width: '40%',
         marginLeft: '5%',
-        height: 3,
+        height: 2,
       }}
       renderLabel={({route, focused}) => (
         <Text
           style={{
             color: focused ? '#000' : '#acacac',
             margin: 8,
-            fontSize: nomalizes[12],
+            fontSize: nomalizes[10],
             fontWeight: 'bold',
           }}>
           {route.title}

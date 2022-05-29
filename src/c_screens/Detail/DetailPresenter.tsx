@@ -8,11 +8,11 @@ import Toast from 'react-native-easy-toast';
 
 import HeaderX from '@components/Header/HeaderX';
 import TextInput from '@components/TextInput';
+import {SizedBox} from '@components/SizedBox';
 import {cHeight, nomalizes, statusBarHeight} from '@utills/constants';
 import {cssUtil} from '@utills/cssUtil';
-import {SizedBox} from '@components/SizedBox';
-import {FoodOutputData} from '~/types/Food';
 import {numberToWeek} from '@utills/numberToWeek';
+import {FoodOutputData} from '~/types/Food';
 
 const Container = styled.KeyboardAvoidingView``;
 

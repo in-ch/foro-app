@@ -17,12 +17,13 @@ const Container = styled.View`
 
 interface Props {
   GoBack: () => void;
+  goToDetail: (value: number) => void;
 }
 interface PProps {
   route: any;
 }
 
-const SearchPresenter = ({GoBack}: Props) => {
+const SearchPresenter = ({GoBack, goToDetail}: Props) => {
   const [index, setIndex] = useState(0);
   const layout = useWindowDimensions();
   const [routes] = useState([
@@ -35,17 +36,17 @@ const SearchPresenter = ({GoBack}: Props) => {
       {...props}
       style={{backgroundColor: '#fff', height: nomalizes[35]}}
       indicatorStyle={{
-        backgroundColor: '#000',
+        backgroundColor: '#FF6258',
         width: '40%',
         marginLeft: '5%',
-        height: 3,
+        height: 2,
       }}
       renderLabel={({route, focused}) => (
         <Text
           style={{
             color: focused ? '#000' : '#acacac',
             margin: 8,
-            fontSize: nomalizes[12],
+            fontSize: nomalizes[10],
             fontWeight: 'bold',
           }}>
           {route.title}
@@ -57,7 +58,7 @@ const SearchPresenter = ({GoBack}: Props) => {
   const renderScene = ({route}: PProps) => {
     switch (route.key) {
       case 'first':
-        return <MyRefrigerator />;
+        return <MyRefrigerator goToDetail={goToDetail} />;
       case 'second':
         return <FriendRefrigerator />;
       default:
