@@ -126,7 +126,7 @@ const FoodAddInput = ({navigation, route}: FoodSearchResultProps) => {
           <SelectInput
             setValue={(value: CategoryProps) => setCategoryValue(value)}
             value={categoryValue}
-            data={Category.loadCategory}
+            data={Category?.loadCategory}
           />
           <SizedBox.Custom margin={nomalizes[20]} />
           <Heading>등록일</Heading>

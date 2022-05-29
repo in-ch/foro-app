@@ -4,7 +4,7 @@ import styled from 'styled-components/native';
 import moment from 'moment';
 import MonthPicker from 'react-native-month-year-picker';
 
-import {nomalizes} from '@utills/constants';
+import {isAndroid, nomalizes} from '@utills/constants';
 import images from '@assets/images';
 
 const Container = styled.View`
@@ -59,29 +59,45 @@ const Header = ({date, GoToAgenda, setCurrent}: Props) => {
     [dateP, showPicker, setCurrent],
   );
   return (
-    <Container>
-      <HHeader>
-        <Row onPress={() => setShow(true)}>
-          <TText>
-            {year}년 {month + 1}월
-          </TText>
-          <Image
-            style={{
-              width: nomalizes[5],
-              height: nomalizes[5],
-            }}
-            source={images.arrowDown}
-          />
-        </Row>
-        <Row onPress={GoToAgenda}>
-          <Image
-            style={{
-              width: nomalizes[15],
-              height: nomalizes[15],
-            }}
-            source={images.calendar}
-          />
-          {show && (
+    <>
+      <Container>
+        <HHeader>
+          <Row onPress={() => setShow(true)}>
+            <TText>
+              {year}년 {month + 1}월
+            </TText>
+            <Image
+              style={{
+                width: nomalizes[5],
+                height: nomalizes[5],
+              }}
+              source={images.arrowDown}
+            />
+          </Row>
+          <Row onPress={GoToAgenda}>
+            <Image
+              style={{
+                width: nomalizes[15],
+                height: nomalizes[15],
+              }}
+              source={images.calendar}
+            />
+          </Row>
+        </HHeader>
+      </Container>
+      {!isAndroid
+        ? show && (
+            <Modal animationType="slide" visible={show} transparent={true}>
+              <MonthPicker
+                onChange={onValueChange}
+                value={date}
+                minimumDate={new Date(2022, 1)}
+                maximumDate={new Date(2024, 5)}
+                locale="ko"
+              />
+            </Modal>
+          )
+        : show && (
             <MonthPicker
               onChange={onValueChange}
               value={date}
@@ -90,9 +106,7 @@ const Header = ({date, GoToAgenda, setCurrent}: Props) => {
               locale="ko"
             />
           )}
-        </Row>
-      </HHeader>
-    </Container>
+    </>
   );
 };
 
