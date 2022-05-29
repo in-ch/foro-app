@@ -2,8 +2,9 @@ export const foods = [
   {
     name: '감자',
     category: {
-      name: '채소',
-      color: '#000',
+      name: '채소·버섯',
+      color: '#019C11',
+      no: 2,
     },
     date: '30',
     dateword: '감자의 권장 소비기한은 30일입니다',
@@ -12,8 +13,9 @@ export const foods = [
   {
     name: '감자(삶은것)',
     category: {
-      name: '채소',
-      color: '#000',
+      name: '채소·버섯',
+      color: '#019C11',
+      no: 2,
     },
     date: '5',
     dateword:
@@ -23,8 +25,9 @@ export const foods = [
   {
     name: '고구마',
     category: {
-      name: '채소',
-      color: '#000',
+      name: '채소·버섯',
+      color: '#019C11',
+      no: 2,
     },
     date: '60',
     dateword: '고구마의 권장 소비기한은 60일입니다',
@@ -33,8 +36,9 @@ export const foods = [
   {
     name: '군고구마',
     category: {
-      name: '채소',
-      color: '#000',
+      name: '채소·버섯',
+      color: '#019C11',
+      no: 2,
     },
     date: '7',
     dateword:
@@ -44,8 +48,9 @@ export const foods = [
   {
     name: '고구마(삶은것)',
     category: {
-      name: '채소',
-      color: '#000',
+      name: '채소·버섯',
+      color: '#019C11',
+      no: 2,
     },
     date: '7',
     dateword:
@@ -55,8 +60,9 @@ export const foods = [
   {
     name: '상추',
     category: {
-      name: '채소',
-      color: '#000',
+      name: '채소·버섯',
+      color: '#019C11',
+      no: 2,
     },
     date: '7',
     dateword: '상추의 권장 소비기한은 냉장 보관 시 7일입니다',
@@ -65,8 +71,9 @@ export const foods = [
   {
     name: '깻잎',
     category: {
-      name: '채소',
-      color: '#000',
+      name: '채소·버섯',
+      color: '#019C11',
+      no: 2,
     },
     date: '7',
     dateword: '깻잎의 권장 소비기한은 냉장 보관 시 7일입니다',
@@ -75,8 +82,9 @@ export const foods = [
   {
     name: '오이고추·아삭이고추',
     category: {
-      name: '채소',
-      color: '#000',
+      name: '채소·버섯',
+      color: '#019C11',
+      no: 2,
     },
     date: '5',
     dateword: '오이고추의 권장 소비기한은 냉장 보관 시 5일입니다',
@@ -85,8 +93,9 @@ export const foods = [
   {
     name: '쑥갓',
     category: {
-      name: '채소',
-      color: '#000',
+      name: '채소·버섯',
+      color: '#019C11',
+      no: 2,
     },
     date: '7',
     dateword: '쑥갓의 권장 소비기한은 냉장 보관 시 7일입니다',
