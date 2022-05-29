@@ -13,9 +13,9 @@ import TextBox from '@components/TextBox';
 import {SizedBox} from '@components/SizedBox';
 import SelectInput from '@components/SelectInput';
 import DDatePicker from '@components/DatePicker';
+import TextInput from '@components/TextInput';
 import {cssUtil} from '@utills/cssUtil';
 import {CategoryProps} from '~/types/Category';
-import TextInput from '~/c_components/TextInput';
 
 const Container = styled.KeyboardAvoidingView`
   flex: 1;

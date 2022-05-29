@@ -1,12 +1,13 @@
 import React, {useRef, useState} from 'react';
 import styled from 'styled-components/native';
-import {nomalizes} from '@utills/constants';
-import images from '@assets/images';
 import {Animated} from 'react-native';
 import {
   ScrollView,
   TouchableWithoutFeedback,
 } from 'react-native-gesture-handler';
+
+import {nomalizes} from '@utills/constants';
+import images from '@assets/images';
 import {CategoryProps} from '~/types/Category';
 
 const Container = styled.View`
@@ -96,8 +97,8 @@ const SelectInput = ({value, setValue}: Props) => {
     setShow(!show);
   };
 
-  const onSelectCategory = (color: string, name: string) => {
-    setValue({color, name});
+  const onSelectCategory = (color: string, name: string, no: number) => {
+    setValue({color, name, no});
     onHide();
   };
 
@@ -124,25 +125,25 @@ const SelectInput = ({value, setValue}: Props) => {
           borderWidth: animatedBorder,
         }}>
         <ScrollView>
-          <Option onPress={() => onSelectCategory('#a14124', '과일')}>
+          <Option onPress={() => onSelectCategory('#a14124', '과일', 0)}>
             <Mark color="#a14124" />
             <TText>과일</TText>
           </Option>
 
-          <Option onPress={() => onSelectCategory('#81c98d', '냉동식품')}>
+          <Option onPress={() => onSelectCategory('#81c98d', '냉동식품', 0)}>
             <Mark color="#81c98d" />
             <TText>냉동식품</TText>
           </Option>
 
-          <Option onPress={() => onSelectCategory('#c981ad', '즉석식품')}>
+          <Option onPress={() => onSelectCategory('#c981ad', '즉석식품', 0)}>
             <Mark color="#c981ad" />
             <TText>즉석식품</TText>
           </Option>
-          <Option onPress={() => onSelectCategory('#b3c981', '생선류')}>
+          <Option onPress={() => onSelectCategory('#b3c981', '생선류', 0)}>
             <Mark color="#b3c981" />
             <TText>생선류</TText>
           </Option>
-          <Option onPress={() => onSelectCategory('#5887bd', '인스턴트')}>
+          <Option onPress={() => onSelectCategory('#5887bd', '인스턴트', 0)}>
             <Mark color="#5887bd" />
             <TText>인스턴트</TText>
           </Option>

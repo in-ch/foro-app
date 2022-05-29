@@ -1,6 +1,7 @@
 export interface CategoryProps {
   name?: string;
   color?: string;
+  no?: number;
 }
 
 export interface CategoryData {

@@ -51,7 +51,7 @@ const TextInput = ({value, setValue, maxLength, placeholder}: Props) => {
       />
       <LengthContainer>
         <TText>
-          {value?.length}/{maxLength}
+          {value?.length ? value?.length : 0}/{maxLength}
         </TText>
       </LengthContainer>
     </Container>

@@ -1,8 +1,12 @@
 import {gql} from '@apollo/client';
 
 export const INSERT_FOOD = gql`
-  mutation insertFood($userNo: Float!, $food: InsertFoodInput!) {
-    insertFood(userNo: $userNo, food: $food) {
+  mutation insertFood(
+    $userNo: Float!
+    $food: InsertFoodInput!
+    $categoryNo: Float!
+  ) {
+    insertFood(userNo: $userNo, food: $food, categoryNo: $categoryNo) {
       ok
       error
       isAdd

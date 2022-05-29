@@ -1,5 +1,6 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
+/* eslint-disable react-hooks/exhaustive-deps */
+
 import React, {useEffect} from 'react';
 import {Switch, View} from 'react-native';
 import {NavigationProp, RouteProp} from '@react-navigation/native';
@@ -102,13 +103,12 @@ const FoodDone = ({navigation, route}: FoodAddResultProps) => {
         userNo: 1,
         food: {
           name,
-          category: category.name,
-          categoryColor: category.color,
           dday: moment(new Date(`${dday}`)).format('YYYY-MM-DD'),
           keyword: String(keyword),
           onlyMe,
           memo,
         },
+        categoryNo: category.no,
       },
     });
   };
