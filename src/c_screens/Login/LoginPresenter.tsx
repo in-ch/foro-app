@@ -67,9 +67,10 @@ const LoadingContainer = styled.View`
 `;
 interface Props {
   GoToEmailPage: () => void;
+  signInWithKakao: () => void;
 }
 
-const LoginPresenter = ({GoToEmailPage}: Props) => {
+const LoginPresenter = ({GoToEmailPage, signInWithKakao}: Props) => {
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
@@ -96,10 +97,7 @@ const LoginPresenter = ({GoToEmailPage}: Props) => {
               <Heading2>이웃과 음식을 나눠 보세요.</Heading2>
             </IntroJon>
             <LoginJon>
-              <PhoneButton
-                onPress={() => {
-                  GoToEmailPage();
-                }}>
+              <PhoneButton onPress={signInWithKakao}>
                 <Image
                   style={{
                     width: nomalizes[25],
