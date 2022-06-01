@@ -12,9 +12,9 @@ import {isAndroid} from '@utills/constants';
 // 로그인 관련 state 끝
 
 const DevIosURL = 'http://localhost:4000';
-const iosURL = 'http://3.37.173.215:4000';
+const iosURL = 'http://13.209.190.64:4000';
 const DevAndroidURL = 'http://localhost:4000';
-const androidURL = 'http://3.37.173.215:4000';
+const androidURL = 'http://13.209.190.64:4000';
 
 const URL = isAndroid ? androidURL : iosURL;
 const devURL = isAndroid ? DevAndroidURL : DevIosURL;
