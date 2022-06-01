@@ -7,6 +7,7 @@ import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import {cHeight, cWidth, nomalizes} from '@utills/constants';
 import {cssUtil} from '@utills/cssUtil';
 import Images from 'assets';
+import FFText from '../FFText';
 
 const Container = styled.View`
   width: 100%;
@@ -34,10 +35,6 @@ const SearchAlarmContainer = styled.View`
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
-`;
-const LogoText = styled.Text`
-  font-size: ${nomalizes[14]}px;
-  font-weight: bold;
 `;
 const Img = styled.Image`
   width: ${nomalizes[17]}px;
@@ -102,6 +99,7 @@ const ProfileNickname = styled.Text`
   font-size: ${nomalizes[14]}px;
   font-weight: bold;
   color: rgb(50, 50, 50);
+  font-family: 'Pretendard';
 `;
 const CategoryContainer = styled.View`
   width: 100%;
@@ -134,6 +132,7 @@ const SettingContainer = styled.View`
 `;
 const TText = styled.Text`
   color: rgb(50, 50, 50);
+  font-family: 'Pretendard';
 `;
 
 const AnimatedContainer = Animated.createAnimatedComponent(SidebarContainer);
@@ -179,7 +178,9 @@ const MenuBar = ({
         <HambergerContainer onPress={onShow}>
           <Img source={Images.hamber} />
         </HambergerContainer>
-        <LogoText>Fooro</LogoText>
+        <FFText fontSize={nomalizes[14]} fontWeight="bold">
+          Fooro
+        </FFText>
         <SearchAlarmContainer>
           <TouchableWithoutFeedback onPress={GoToAlarm}>
             <Img

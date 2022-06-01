@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components/native';
 
 import {nomalizes} from '@utills/constants';
+import FFText from './FFText';
 
 const Container = styled.View<ContainerProps>`
   height: ${nomalizes[35]}px;
@@ -15,10 +16,6 @@ const Container = styled.View<ContainerProps>`
   align-items: center;
   justify-content: ${props => (props.isLeft ? 'flex-start' : 'center')};
 `;
-const TText = styled.Text`
-  font-size: ${nomalizes[12]}px;
-  color: #000;
-`;
 
 interface Props {
   text: string;
@@ -31,7 +28,7 @@ interface ContainerProps {
 const TextBox = ({text, isLeft}: Props) => {
   return (
     <Container isLeft={isLeft}>
-      <TText>{text}</TText>
+      <FFText>{text}</FFText>
     </Container>
   );
 };

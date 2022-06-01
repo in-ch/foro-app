@@ -15,6 +15,7 @@ const Wrapper = styled.View`
 const Heading = styled.Text`
   font-size: ${nomalizes[13]}px;
   color: #272727;
+  font-family: 'Pretendard';
 `;
 const FriendRefrigerator = () => {
   const [text, setText] = useState<string>('');

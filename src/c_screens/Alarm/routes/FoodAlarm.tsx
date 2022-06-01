@@ -34,6 +34,7 @@ const Button = styled.View`
 const ButtonText = styled.Text`
   font-size: ${nomalizes[8]}px;
   color: #ff6258;
+  font-family: 'Pretendard';
 `;
 const TextContainer = styled.View`
   padding-left: ${nomalizes[10]}px;
@@ -59,11 +60,13 @@ const FoodText = styled.Text`
   flex-wrap: nowrap;
   margin-bottom: ${nomalizes[2]};
   line-height: ${nomalizes[15]}px;
+  font-family: 'Pretendard';
 `;
 const DDay = styled.Text`
   color: #a4a4a4;
   font-size: ${nomalizes[10]}px;
   margin-top: ${nomalizes[5]};
+  font-family: 'Pretendard';
 `;
 const ShareAlarm = () => {
   return (

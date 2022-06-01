@@ -28,21 +28,25 @@ const SearchResultBox = styled.TouchableOpacity`
 const SearchResultBoxHeading = styled.Text`
   font-size: ${nomalizes[12]}px;
   color: rgb(50, 50, 50);
+  font-family: 'Pretendard';
 `;
 const SearchResultBoxTextContainer = styled.View`
   height: ${nomalizes[16]}px;
   margin-top: ${nomalizes[10]}px;
   display: flex;
+  font-family: 'Pretendard';
   flex-direction: row;
 `;
 const SearchResultBoxText = styled.Text`
   font-size: ${nomalizes[11]}px;
   color: rgb(50, 50, 50);
+  font-family: 'Pretendard';
 `;
 const SearchResultBoxNumber = styled.Text`
   font-size: ${nomalizes[11]}px;
   margin-left: ${nomalizes[5]}px;
   color: #ff6c63;
+  font-family: 'Pretendard';
 `;
 const HashTag = styled.View`
   height: ${nomalizes[16]}px;
@@ -57,6 +61,7 @@ const HashTag = styled.View`
 const HashTagText = styled.Text`
   font-size: ${nomalizes[8]}px;
   color: #757575;
+  font-family: 'Pretendard';
 `;
 
 export interface FoodSearchResultProps {

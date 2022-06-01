@@ -39,6 +39,7 @@ const TText = styled.Text`
   text-align: left;
   font-size: ${nomalizes[7]}px;
   color: #fff;
+  font-family: 'Pretendard';
 `;
 const DayContainer = styled.View<CurrentProps>`
   width: ${nomalizes[20]}px;
@@ -51,6 +52,7 @@ const DayContainer = styled.View<CurrentProps>`
   ${cssUtil.doubleCenter};
 `;
 const DayText = styled.Text<DayTextProps>`
+  font-family: 'Pretendard';
   color: ${props =>
     props.dis === 'disabled' ? '#b6b6b6' : props.current ? '#fff' : '#303030'};
 `;

@@ -9,7 +9,7 @@ import {nomalizes} from '@utills/constants';
 import {SizedBox} from '@components/SizedBox';
 import {useMutation} from '@apollo/client';
 import {SEARCH_FOOD_USER} from '@services/mutations/food';
-import {numberToWeek} from '~/utills/numberToWeek';
+import {numberToWeek} from '@utills/numberToWeek';
 
 const Container = styled.View``;
 const ResultContainer = styled.View`
@@ -30,10 +30,12 @@ const Result = styled.TouchableOpacity`
 const TText = styled.Text`
   font-size: ${nomalizes[12]}px;
   color: #000000;
+  font-family: 'Pretendard';
 `;
 const DDay = styled.Text`
   font-size: ${nomalizes[10]}px;
   color: #a8a8a8;
+  font-family: 'Pretendard';
 `;
 
 interface Props {

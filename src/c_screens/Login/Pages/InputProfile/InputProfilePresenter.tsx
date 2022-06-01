@@ -34,6 +34,7 @@ const Button = styled.TouchableOpacity`
 `;
 const TText = styled.Text`
   font-size: ${nomalizes[14]}px;
+  font-family: 'Pretendard';
 `;
 
 const InputProfilePresenter = ({GoBack, GoToHome}: Props) => {

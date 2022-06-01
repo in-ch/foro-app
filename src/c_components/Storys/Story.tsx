@@ -4,6 +4,7 @@ import styled from 'styled-components/native';
 import {nomalizes} from '@utills/constants';
 import images from '@assets/images';
 import {cssUtil} from '@utills/cssUtil';
+import FFText from '../FFText';
 
 const Container = styled.View`
   width: ${nomalizes[50]}px;
@@ -29,9 +30,7 @@ const NameContainer = styled.View`
   align-items: flex-end;
   margin-top: ${nomalizes[5]}px;
 `;
-const TText = styled.Text`
-  color: #000;
-`;
+
 interface Props {
   isPlus?: boolean;
 }
@@ -58,7 +57,7 @@ const Story = ({isPlus}: Props) => {
         )}
       </Profile>
       <NameContainer>
-        <TText>아무 이름</TText>
+        <FFText>아무 이름</FFText>
       </NameContainer>
     </Container>
   );

@@ -49,6 +49,7 @@ const Mark = styled.View<ColorProps>`
 `;
 const TText = styled.Text`
   color: #000;
+  font-family: 'Pretendard';
 `;
 const Wrapper = styled.View`
   background-color: rgba(0, 0, 0, 0.3);
@@ -72,6 +73,7 @@ const ModalText = styled.Text`
   margin-top: ${nomalizes[15]}px;
   margin-bottom: ${nomalizes[15]}px;
   color: #272727;
+  font-family: 'Pretendard';
 `;
 const Hr = styled.View`
   background-color: #f5f5f5;

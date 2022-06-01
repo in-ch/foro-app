@@ -2,16 +2,13 @@ import React from 'react';
 import styled from 'styled-components/native';
 import {cWidth, nomalizes} from '@utills/constants';
 import {cssUtil} from '@utills/cssUtil';
+import FFText from './FFText';
 
 const Container = styled.View`
   width: ${cWidth}px;
   height: ${nomalizes[250]}px;
   display: flex;
   ${cssUtil.doubleCenter};
-`;
-const TText = styled.Text`
-  color: #5e5e5e;
-  font-size: ${nomalizes[12]}px;
 `;
 
 interface Props {
@@ -20,7 +17,7 @@ interface Props {
 const NoResult = ({text}: Props) => {
   return (
     <Container>
-      <TText>{text}</TText>
+      <FFText color="TText">{text}</FFText>
     </Container>
   );
 };

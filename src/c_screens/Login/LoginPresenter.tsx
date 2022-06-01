@@ -44,16 +44,19 @@ const PhoneButton = styled.TouchableOpacity`
 const TText = styled.Text`
   margin-left: ${nomalizes[10]}px;
   color: rgb(50, 50, 50);
+  font-family: 'Pretendard';
 `;
 const Heading = styled.Text`
   color: #8f8f8f;
   font-size: ${nomalizes[12]}px;
   margin-top: ${nomalizes[20]}px;
+  font-family: 'Pretendard';
 `;
 const Heading2 = styled.Text`
   font-size: ${nomalizes[14]}px;
   margin-top: ${nomalizes[3]}px;
   color: #4d4d4d;
+  font-family: 'Pretendard';
 `;
 const LoadingContainer = styled.View`
   background-color: white;

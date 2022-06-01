@@ -35,6 +35,7 @@ const TText = styled.Text<TextContainerProps>`
   font-size: ${nomalizes[14]}px;
   font-weight: bold;
   color: #000;
+  font-family: 'Pretendard';
 `;
 const Button = styled.TouchableOpacity`
   width: ${nomalizes[45]}px;
@@ -47,6 +48,7 @@ const Button = styled.TouchableOpacity`
 `;
 const ButtonText = styled.Text`
   color: white;
+  font-family: 'Pretendard';
 `;
 interface TextContainerProps {
   button?: boolean;

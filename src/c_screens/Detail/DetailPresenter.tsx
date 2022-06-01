@@ -29,10 +29,12 @@ const Heading = styled.Text`
   font-size: ${nomalizes[14]}px;
   margin-bottom: ${nomalizes[10]}px;
   color: #000;
+  font-family: 'Pretendard';
 `;
 const Sub = styled.Text`
   font-size: ${nomalizes[12]}px;
   color: #3b3b3b;
+  font-family: 'Pretendard';
 `;
 const Mark = styled.View<ColorProps>`
   width: ${nomalizes[12]}px;
@@ -54,6 +56,7 @@ const RowBoxCenter = styled.View`
 `;
 const TText = styled.Text`
   color: #000;
+  font-family: 'Pretendard';
 `;
 const Row = styled.View`
   display: flex;
@@ -64,6 +67,7 @@ const DDay = styled.Text`
   color: #ff6c63;
   font-size: ${nomalizes[14]}px;
   margin-right: ${nomalizes[35]}px;
+  font-family: 'Pretendard';
 `;
 const HashTag = styled.View`
   height: ${nomalizes[16]}px;
@@ -78,6 +82,7 @@ const HashTag = styled.View`
 const HashTagText = styled.Text`
   font-size: ${nomalizes[8]}px;
   color: #757575;
+  font-family: 'Pretendard';
 `;
 const RowBoxSwitch = styled.View`
   display: flex;
@@ -88,6 +93,7 @@ const RowBoxSwitch = styled.View`
 const RowText = styled.Text`
   font-size: ${nomalizes[14]}px;
   color: #000;
+  font-family: 'Pretendard';
 `;
 const Button = styled.TouchableOpacity`
   width: ${nomalizes[120]}px;
@@ -103,6 +109,7 @@ const Button = styled.TouchableOpacity`
 const ButtonText = styled.Text`
   color: #fff;
   font-size: ${nomalizes[14]}px;
+  font-family: 'Pretendard';
 `;
 
 interface ColorProps {

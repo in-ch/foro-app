@@ -44,6 +44,7 @@ const FruitText = styled.Text`
   margin-left: ${nomalizes[5]}px;
   font-size: ${nomalizes[12]}px;
   color: RGB(50, 50, 50);
+  font-family: 'Pretendard';
 `;
 const ConsumeDone = styled.View`
   width: ${nomalizes[26]}px;
@@ -57,6 +58,7 @@ const ConsumeDone = styled.View`
 const ConsumeDoneText = styled.Text`
   font-size: ${nomalizes[5]}px;
   color: #ff6c63;
+  font-family: 'Pretendard';
 `;
 const ConsumeDoneDate = styled.Text`
   font-size: ${nomalizes[10]}px;

@@ -28,6 +28,7 @@ const TText = styled.Text<TextContainerProps>`
   font-size: ${nomalizes[14]}px;
   font-weight: bold;
   color: #000;
+  font-family: 'Pretendard';
 `;
 const Button = styled.TouchableOpacity`
   width: ${nomalizes[45]}px;

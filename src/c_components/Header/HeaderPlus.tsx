@@ -37,6 +37,7 @@ const TText = styled.Text<TextContainerProps>`
   font-size: ${nomalizes[14]}px;
   font-weight: bold;
   color: #000;
+  font-family: 'Pretendard';
 `;
 
 const StyledButton = styled.View`
@@ -51,6 +52,7 @@ const StyledButton = styled.View`
 const StyledButtonText = styled.Text`
   color: #fff;
   font-size: ${nomalizes[10]}px;
+  font-family: 'Pretendard';
 `;
 interface TextContainerProps {
   button?: boolean;

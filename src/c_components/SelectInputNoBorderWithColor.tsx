@@ -7,6 +7,7 @@ import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import {cWidth, nomalizes} from '@utills/constants';
 import images from '@assets/images';
 import {cssUtil} from '@utills/cssUtil';
+import FFText from './FFText';
 
 const Container = styled.View`
   width: ${cWidth}px;
@@ -62,10 +63,7 @@ const Mark = styled.View<ColorProps>`
   height: ${nomalizes[15]}px;
   background-color: ${props => props.color};
 `;
-const TText = styled.Text`
-  color: #000;
-  font-size: ${nomalizes[12]}px;
-`;
+
 const AnimatedOption = Animated.createAnimatedComponent(Options);
 
 interface ColorProps {
@@ -120,7 +118,7 @@ const SelectInputNoBorderWithColor = ({setColor, color}: Props) => {
       <TouchableWithoutFeedback onPress={show ? onHide : onShow}>
         <Wrapper>
           <Row>
-            <TText>색상</TText>
+            <FFText>색상</FFText>
           </Row>
           <Row>
             <FlexEndRow>

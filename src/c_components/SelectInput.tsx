@@ -9,6 +9,7 @@ import {
 import {nomalizes} from '@utills/constants';
 import images from '@assets/images';
 import {CategoryProps} from '~/types/Category';
+import FFText from './FFText';
 
 const Container = styled.View`
   min-width: ${nomalizes[85]}px;
@@ -31,9 +32,7 @@ const FlexEndRow = styled.View`
   flex: 1;
 `;
 const IImage = styled.Image``;
-const TText = styled.Text`
-  color: #000;
-`;
+
 const Options = styled.View`
   width: 100%;
   overflow: hidden;
@@ -124,7 +123,7 @@ const SelectInput = ({value, setValue, data}: Props) => {
         <Wrapper>
           <FlexEndRow>
             <Mark color={value?.color} />
-            <TText>{value?.name}</TText>
+            <FFText>{value?.name}</FFText>
           </FlexEndRow>
           <IImage
             style={{
@@ -143,51 +142,51 @@ const SelectInput = ({value, setValue, data}: Props) => {
         <ScrollView>
           <Option onPress={() => onSelectCategory('#FF8616', '과일·견과', 1)}>
             <Mark color="#FF8616" />
-            <TText>과일·견과</TText>
+            <FFText>과일·견과</FFText>
           </Option>
 
           <Option onPress={() => onSelectCategory('#019C11', '채소·버섯', 2)}>
             <Mark color="#019C11" />
-            <TText>채소·버섯</TText>
+            <FFText>채소·버섯</FFText>
           </Option>
 
           <Option onPress={() => onSelectCategory('#5F5BFF', '냉동식품', 3)}>
             <Mark color="#5F5BFF" />
-            <TText>냉동식품</TText>
+            <FFText>냉동식품</FFText>
           </Option>
           <Option onPress={() => onSelectCategory('#FFD056', '유제품', 4)}>
             <Mark color="#FFD056" />
-            <TText>유제품</TText>
+            <FFText>유제품</FFText>
           </Option>
           <Option
             onPress={() => onSelectCategory('#FFA1F6', '가공식품·간식', 5)}>
             <Mark color="#FFA1F6" />
-            <TText>가공식품·간식</TText>
+            <FFText>가공식품·간식</FFText>
           </Option>
           <Option onPress={() => onSelectCategory('#1ED4FC', '냉장식품', 6)}>
             <Mark color="#1ED4FC" />
-            <TText>냉장식품</TText>
+            <FFText>냉장식품</FFText>
           </Option>
           <Option onPress={() => onSelectCategory('#E33292', '주류', 7)}>
             <Mark color="#E33292" />
-            <TText>주류</TText>
+            <FFText>주류</FFText>
           </Option>
           <Option onPress={() => onSelectCategory('#078E8E', '수산·건어물', 8)}>
             <Mark color="#078E8E" />
-            <TText>수산·건어물</TText>
+            <FFText>수산·건어물</FFText>
           </Option>
           <Option
             onPress={() => onSelectCategory('#8A2C2C', '장·양념·소스', 9)}>
             <Mark color="#8A2C2C" />
-            <TText>장·양념·소스</TText>
+            <FFText>장·양념·소스</FFText>
           </Option>
           <Option onPress={() => onSelectCategory('#B97E89', '쌀·잡곡', 10)}>
             <Mark color="#B97E89" />
-            <TText>쌀·잡곡</TText>
+            <FFText>쌀·잡곡</FFText>
           </Option>
           <Option onPress={() => onSelectCategory('#EE1E1E', '정육·난류', 11)}>
             <Mark color="#EE1E1E" />
-            <TText>정육·난류</TText>
+            <FFText>정육·난류</FFText>
           </Option>
           {data?.map((category: CategoryProps) => {
             return (
@@ -200,7 +199,7 @@ const SelectInput = ({value, setValue, data}: Props) => {
                   )
                 }>
                 <Mark color={String(category.color)} />
-                <TText>{String(category.name)}</TText>
+                <FFText>{String(category.name)}</FFText>
               </Option>
             );
           })}

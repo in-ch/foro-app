@@ -41,6 +41,7 @@ const Nickname = styled.Text`
   align-items: center;
   text-align: center;
   color: #575757;
+  font-family: 'Pretendard';
 `;
 const Nim = styled.Text`
   font-size: ${nomalizes[14]}px;
@@ -53,6 +54,7 @@ const EditText = styled.Text`
   margin-top: ${nomalizes[10]}px;
   font-size: ${nomalizes[12]}px;
   color: #575757;
+  font-family: 'Pretendard';
 `;
 interface Props {
   goBack: () => void;

@@ -30,6 +30,7 @@ const Heading = styled.Text`
   font-size: ${nomalizes[14]}px;
   margin-bottom: ${nomalizes[10]}px;
   color: #000;
+  font-family: 'Pretendard';
 `;
 const Row = styled.View`
   display: flex;
@@ -46,11 +47,13 @@ const RowBox = styled.View`
 const RowText = styled.Text`
   font-size: ${nomalizes[14]}px;
   color: #000;
+  font-family: 'Pretendard';
 `;
 const DDay = styled.Text`
   color: #ff6c63;
   font-size: ${nomalizes[14]}px;
   margin-right: ${nomalizes[10]}px;
+  font-family: 'Pretendard';
 `;
 const HashTag = styled.View`
   height: ${nomalizes[16]}px;
@@ -65,6 +68,7 @@ const HashTag = styled.View`
 const HashTagText = styled.Text`
   font-size: ${nomalizes[8]}px;
   color: #757575;
+  font-family: 'Pretendard';
 `;
 export interface FoodSearchResultProps {
   navigation: NavigationProp<RootTabParamList, 'FoodAddInput'>;

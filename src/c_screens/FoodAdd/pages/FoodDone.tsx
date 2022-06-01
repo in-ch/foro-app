@@ -53,6 +53,7 @@ const RowBox = styled.View`
 `;
 const TText = styled.Text`
   color: #000;
+  font-family: 'Pretendard';
 `;
 const Row = styled.View`
   display: flex;
@@ -63,6 +64,7 @@ const DDay = styled.Text`
   color: #ff6c63;
   font-size: ${nomalizes[14]}px;
   margin-right: ${nomalizes[35]}px;
+  font-family: 'Pretendard';
 `;
 const HashTag = styled.View`
   height: ${nomalizes[16]}px;
@@ -77,6 +79,7 @@ const HashTag = styled.View`
 const HashTagText = styled.Text`
   font-size: ${nomalizes[8]}px;
   color: #757575;
+  font-family: 'Pretendard';
 `;
 const RowBoxSwitch = styled.View`
   display: flex;
@@ -87,6 +90,7 @@ const RowBoxSwitch = styled.View`
 const RowText = styled.Text`
   font-size: ${nomalizes[14]}px;
   color: #000;
+  font-family: 'Pretendard';
 `;
 
 interface ColorProps {

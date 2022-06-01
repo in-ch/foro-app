@@ -30,6 +30,7 @@ const TText = styled.Text`
   color: #000;
   font-size: ${nomalizes[14]}px;
   margin-left: ${nomalizes[10]}px;
+  font-family: 'Pretendard';
 `;
 const Wrapper = styled.View`
   background-color: rgba(0, 0, 0, 0.3);
@@ -53,6 +54,7 @@ const ModalText = styled.Text`
   margin-top: ${nomalizes[15]}px;
   margin-bottom: ${nomalizes[15]}px;
   color: rgb(50, 50, 50);
+  font-family: 'Pretendard';
 `;
 
 interface Props {

@@ -48,6 +48,7 @@ const SearchPresenter = ({GoBack, goToDetail}: Props) => {
             margin: 8,
             fontSize: nomalizes[10],
             fontWeight: 'bold',
+            fontFamily: 'Pretendard',
           }}>
           {route.title}
         </Text>

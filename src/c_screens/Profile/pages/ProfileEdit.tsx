@@ -45,9 +45,11 @@ const WarningContainer = styled.View`
 `;
 const RedText = styled.Text`
   color: #ee1e1e;
+  font-family: 'Pretendard';
 `;
 const GreenText = styled.Text`
   color: #019c11;
+  font-family: 'Pretendard';
 `;
 export interface ProfileEditProps {
   navigation: NavigationProp<RootTabParamList, 'ProfileEdit'>;

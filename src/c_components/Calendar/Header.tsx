@@ -29,6 +29,7 @@ const TText = styled.Text`
   font-weight: bold;
   padding-right: ${nomalizes[5]}px;
   color: rgb(50, 50, 50);
+  font-family: 'Pretendard';
 `;
 
 interface Props {

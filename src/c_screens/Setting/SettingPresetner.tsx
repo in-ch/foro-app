@@ -18,10 +18,12 @@ const Heading = styled.Text`
   margin-top: ${nomalizes[20]}px;
   margin-bottom: ${nomalizes[5]}px;
   color: #272727;
+  font-family: 'Pretendard';
 `;
 const TText = styled.Text`
   font-size: ${nomalizes[12]}px;
   color: #272727;
+  font-family: 'Pretendard';
 `;
 const Row = styled.View`
   width: 86%;

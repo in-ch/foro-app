@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components/native';
 import {nomalizes} from '@utills/constants';
 import {cssUtil} from '@utills/cssUtil';
+import FFText from './FFText';
 
 const Container = styled.View`
   height: ${nomalizes[35]}px;
@@ -29,9 +30,6 @@ const LengthContainer = styled.View`
   flex-direction: row;
   ${cssUtil.doubleCenter};
 `;
-const TText = styled.Text`
-  color: RGB(50, 50, 50);
-`;
 
 interface Props {
   value: string;
@@ -50,9 +48,9 @@ const TextInput = ({value, setValue, maxLength, placeholder}: Props) => {
         maxLength={maxLength}
       />
       <LengthContainer>
-        <TText>
+        <FFText>
           {value?.length ? value?.length : 0}/{maxLength}
-        </TText>
+        </FFText>
       </LengthContainer>
     </Container>
   );
