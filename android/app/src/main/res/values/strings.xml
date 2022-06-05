@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">foro</string>
+    <string name="kakao_app_key">8e1ff68c09e6b4bb069c110e76d314df</string>
 </resources>

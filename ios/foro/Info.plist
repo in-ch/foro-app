@@ -36,7 +36,7 @@
 	<key>KAKAO_APP_KEY</key>
 	<string>8e1ff68c09e6b4bb069c110e76d314df</string>
 	<key>LSApplicationCategoryType</key>
-	<string></string>
+	<string/>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>kakaokompathauth</string>
@@ -58,7 +58,7 @@
 		</dict>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string/>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Pretendard-Black.ttf</string>
