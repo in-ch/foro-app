@@ -1,6 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {ActivityIndicator, Image} from 'react-native';
 import styled from 'styled-components/native';
+
 import {SizedBox} from '@components/SizedBox';
 import {cHeight, cWidth, nomalizes, statusBarHeight} from '@utills/constants';
 import {cssUtil} from '@utills/cssUtil';
@@ -61,24 +62,16 @@ const Heading2 = styled.Text`
 const LoadingContainer = styled.View`
   background-color: white;
   width: ${cWidth}px;
-  height: ${cHeight}px;
+  height: ${cHeight + nomalizes[50]}px;
   display: flex;
   ${cssUtil.doubleCenter};
 `;
 interface Props {
-  GoToEmailPage: () => void;
   signInWithKakao: () => void;
+  loading: boolean;
 }
 
-const LoginPresenter = ({GoToEmailPage, signInWithKakao}: Props) => {
-  const [loading, setLoading] = useState<boolean>(true);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
-  }, []);
-
+const LoginPresenter = ({signInWithKakao, loading}: Props) => {
   return (
     <>
       {!loading ? (
@@ -109,7 +102,7 @@ const LoginPresenter = ({GoToEmailPage, signInWithKakao}: Props) => {
               </PhoneButton>
               <PhoneButton
                 onPress={() => {
-                  GoToEmailPage();
+                  console.log();
                 }}>
                 <Image
                   style={{
@@ -122,7 +115,7 @@ const LoginPresenter = ({GoToEmailPage, signInWithKakao}: Props) => {
               </PhoneButton>
               <PhoneButton
                 onPress={() => {
-                  GoToEmailPage();
+                  console.log();
                 }}>
                 <Image
                   style={{
