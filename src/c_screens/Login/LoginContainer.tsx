@@ -10,8 +10,6 @@ import {
   KakaoProfile,
   KakaoProfileNoneAgreement,
   getProfile as getKakaoProfile,
-  getAccessToken,
-  KakaoAccessTokenInfo,
 } from '@react-native-seoul/kakao-login';
 import {useMutation} from '@apollo/client';
 // import KakaoShareLink from 'react-native-kakao-share-link';
@@ -24,6 +22,7 @@ import {
 import LoginPresenter from './LoginPresenter';
 import {RootTabParamList} from '../../navigation/RootNavigation';
 import {logUserIn} from '../../apollo/apollo';
+import {Alert} from 'react-native';
 // const kakaoshare = async () => {
 //   try {
 //     const response = await KakaoShareLink.sendCommerce({
@@ -77,7 +76,7 @@ interface KakaoProps {
 }
 
 const LoginContainer = ({navigation}: Props) => {
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false); // 로딩
   const [token, setToken] = useState<string>(''); // 결과
   const [profile, setProfile] = useState<string>(''); // 유저 닉네임
   const [nickname, setNickname] = useState<string>(''); // 유저 프로필
@@ -85,6 +84,7 @@ const LoginContainer = ({navigation}: Props) => {
   const [kakaoToken, setKakaoToken] = useState<string>(''); // 카카오 토큰
   const [googleToken, setGoogleToken] = useState<string>(''); // 구글 토큰
   const [appleToken, setAppleToken] = useState<string>(''); // 애플 토큰
+  const [id, setId] = useState<string>(''); // 고유값
 
   // kakao login
   const Kakaologin = async (): Promise<void> => {
@@ -93,83 +93,74 @@ const LoginContainer = ({navigation}: Props) => {
   };
 
   const signInWithKakao = async (): Promise<void> => {
-    try {
-      const existToken: KakaoAccessTokenInfo = await getAccessToken(); // 엑세스 토큰 조회
-      console.log('엑세스 토큰' + JSON.stringify(existToken));
-      await setToken(JSON.stringify(existToken.accessToken));
-      await setKakaoToken(JSON.stringify(existToken.accessToken));
-      await setType('KAKAO');
-      if (existToken?.expiresIn < 1) {
-        // expiresIn 만료 시 분기 처리 할 거 추가 작성
-      } else {
-        // expiredIn 만료 안됨. -> 로그인 정보 조회 후 로그인 실시
-        await mutationLogin();
-      }
-    } catch (e) {
-      // 토큰이 없다면 아래 코드 실행
-      const token: KakaoOAuthToken = await login();
-      setLoading(true);
-      await setToken(JSON.stringify(token.accessToken));
-      await setKakaoToken(
-        JSON.stringify(token.accessToken.replace('"', '').replace('"', '')),
-      );
-      await getProfile();
-      await mutationInsertUser();
-    }
+    // 토큰이 없다면 아래 코드 실행
+    const token: KakaoOAuthToken = await login();
+    setLoading(true);
+    await setToken(JSON.stringify(token.refreshToken));
+    await setKakaoToken(
+      JSON.stringify(token.refreshToken.replace('"', '').replace('"', '')),
+    );
+    await getProfile();
   };
 
   const getProfile = async (): Promise<void> => {
     const profile: KakaoProfile | KakaoProfileNoneAgreement | KakaoProps =
       await getKakaoProfile();
-    setProfile(profile?.profileImageUrl);
-    setNickname(profile?.nickname);
-    setType('KAKAO');
+    await setProfile(profile?.profileImageUrl);
+    await setNickname(profile?.nickname);
+    await setId(profile?.id);
+    await setType('KAKAO');
+    await mutationLoadUserWithToken();
   };
 
   // google login
 
   // apple login
-
   const GoToInputProfilePage = () => {
-    navigation.navigate('InputProfile', {});
+    navigation.reset('InputProfile', {});
   };
   const GoToHomePage = () => {
-    navigation.navigate('Home', {});
+    navigation.reset('Home', {});
   };
 
-  // const [mutationLoadUserWithToken] = useMutation(LOAD_USER_WITH_TOKEN, {
-  //   // 유저가 있었는지 여부
-  //   variables: {
-  //     type,
-  //     token,
-  //   },
-  //   onCompleted: d => {
-  //     console.log(JSON.stringify(d));
-  //     if (d?.loadUserWithToken?.length < 1) {
-  //       // 로그인 한 적이 없다면
-  //       return;
-  //     } else if (d?.loadUserWithToken?.length > 0) {
-  //       // 로그인 한 적이 있다면
-  //       return;
-  //     }
-  //   },
-  //   onError: e => {
-  //     console.log('뭥미');
-  //     console.log(JSON.stringify(e));
-  //   },
-  // });
-  const kakao_token = kakaoToken.replace('"', '').replace('"', ''); // 카카오 토큰 쓸데없는 문자 제거
+  const [mutationLoadUserWithToken] = useMutation(LOAD_USER_WITH_TOKEN, {
+    // 유저가 있었는지 여부
+    variables: {
+      id,
+      type,
+    },
+    onCompleted: async d => {
+      console.log(d?.loadUserWithToken?.new);
+      if (d?.loadUserWithToken?.new) {
+        // 로그인 한 적이 없다면
+        console.log('로그인 실행');
+        return;
+      } else {
+        console.log('유저 insert 실행 후 로그인 실행');
+        await mutationInsertUser();
+      }
+    },
+    onError: e => {
+      Alert.alert('오류가 발생했습니다. 관리자에게 문의해주세요.');
+    },
+  });
+
   const [mutationInsertUser] = useMutation(INSERT_USER, {
     variables: {
       user: {
         nickname,
         profile,
-        kakao_token,
+        kakao_token: kakaoToken,
         google_token: googleToken,
         apple_token: appleToken,
+        kakao_id: type === 'KAKAO' ? id : '',
+        google_id: type === 'GOOGLE' ? id : '',
+        apple_id: type === 'APPLE' ? id : '',
       },
     },
-    onCompleted: async () => {
+    onCompleted: async d => {
+      console.log('아이디 : ' + id);
+      console.log('결과 : ' + JSON.stringify(d));
       await mutationLogin();
     },
     onError: e => {
@@ -181,6 +172,7 @@ const LoginContainer = ({navigation}: Props) => {
     variables: {
       token: token.replace('"', '').replace('"', ''),
       type,
+      id,
     },
     onCompleted: d => {
       logUserIn(d.login.token);

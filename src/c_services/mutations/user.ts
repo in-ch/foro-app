@@ -1,11 +1,11 @@
 import {gql} from '@apollo/client';
 
 export const LOAD_USER_WITH_TOKEN = gql`
-  mutation loadUserWithToken($token: String!, $type: String!) {
-    loadUserWithToken(token: $token, type: $type) {
-      no
-      nickname
-      profile
+  mutation loadUserWithToken($id: String!, $type: String!) {
+    loadUserWithToken(id: $id, type: $type) {
+      ok
+      error
+      new
     }
   }
 `;

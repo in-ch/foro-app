@@ -67,6 +67,7 @@ const RootNavigation = () => {
     <Stack.Navigator
       // initialRouteName="Home"
       initialRouteName="Login"
+      // initialRouteName="InputProfile"
       screenOptions={{headerShown: false}}>
       <Stack.Screen
         name="Home"
