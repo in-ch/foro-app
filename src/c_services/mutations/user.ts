@@ -21,8 +21,8 @@ export const INSERT_USER = gql`
 `;
 
 export const LOGIN = gql`
-  mutation login($token: String!, $type: String!) {
-    login(token: $token, type: $type) {
+  mutation login($id: String!, $type: String!) {
+    login(id: $id, type: $type) {
       ok
       token
     }

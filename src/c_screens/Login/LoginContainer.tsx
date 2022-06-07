@@ -116,12 +116,6 @@ const LoginContainer = ({navigation}: Props) => {
   // google login
 
   // apple login
-  const GoToInputProfilePage = () => {
-    navigation.reset('InputProfile', {});
-  };
-  const GoToHomePage = () => {
-    navigation.reset('Home', {});
-  };
 
   const [mutationLoadUserWithToken] = useMutation(LOAD_USER_WITH_TOKEN, {
     // 유저가 있었는지 여부
@@ -130,13 +124,10 @@ const LoginContainer = ({navigation}: Props) => {
       type,
     },
     onCompleted: async d => {
-      console.log(d?.loadUserWithToken?.new);
       if (d?.loadUserWithToken?.new) {
-        // 로그인 한 적이 없다면
-        console.log('로그인 실행');
+        await mutationLogin();
         return;
       } else {
-        console.log('유저 insert 실행 후 로그인 실행');
         await mutationInsertUser();
       }
     },
@@ -159,38 +150,43 @@ const LoginContainer = ({navigation}: Props) => {
       },
     },
     onCompleted: async d => {
-      console.log('아이디 : ' + id);
-      console.log('결과 : ' + JSON.stringify(d));
       await mutationLogin();
     },
     onError: e => {
-      console.log('에러' + JSON.stringify(e));
+      Alert.alert('오류가 발생했습니다. 관리자에게 문의해주세요.');
     },
   });
 
   const [mutationLogin] = useMutation(LOGIN, {
     variables: {
-      token: token.replace('"', '').replace('"', ''),
-      type,
       id,
+      type,
     },
     onCompleted: d => {
-      logUserIn(d.login.token);
+      logUserIn(d?.login?.token);
       if (
         d?.login?.profile === null ||
         d?.login?.profile === '' ||
         d?.login?.profile === undefined
       ) {
         GoToInputProfilePage(); // 프로필이 없다면 ..
+        console.log('프로필 페이지로');
       } else {
         GoToHomePage(); // 프로필이 있다면 ..
+        console.log('홈페이지로');
       }
     },
     onError: e => {
-      // 여기 토스트하나 만들어주기
-      console.log('로그인 오류' + JSON.stringify(e));
+      Alert.alert('로그인 오류가 발생했습니다.');
     },
   });
+  const GoToInputProfilePage = () => {
+    navigation.reset({routes: [{name: 'InputProfile', params: {}}]});
+  };
+  const GoToHomePage = () => {
+    navigation.reset({routes: [{name: 'Home', params: {}}]});
+  };
+
   return (
     <>
       <LoginPresenter signInWithKakao={Kakaologin} loading={loading} />
