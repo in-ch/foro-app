@@ -18,9 +18,10 @@ const Loading = () => {
     <Container>
       <Image
         style={{
-          width: nomalizes[20],
-          height: nomalizes[20],
-          marginBottom: '100',
+          width: nomalizes[80],
+          height: nomalizes[80],
+          position: 'relative',
+          top: -nomalizes[80],
         }}
         source={images.loading}
       />

@@ -317,6 +317,8 @@ PODS:
     - glog
   - react-native-date-picker (4.2.1):
     - React-Core
+  - react-native-image-picker (4.7.1):
+    - React-Core
   - react-native-kakao-share-link (1.0.6):
     - KakaoSDKCommon (~> 2.4.0)
     - KakaoSDKLink (~> 2.4.0)
@@ -448,6 +450,7 @@ DEPENDENCIES:
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
   - react-native-date-picker (from `../node_modules/react-native-date-picker`)
+  - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - react-native-kakao-share-link (from `../node_modules/react-native-kakao-share-link`)
   - react-native-month-year-picker (from `../node_modules/react-native-month-year-picker`)
   - react-native-pager-view (from `../node_modules/react-native-pager-view`)
@@ -534,6 +537,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/logger"
   react-native-date-picker:
     :path: "../node_modules/react-native-date-picker"
+  react-native-image-picker:
+    :path: "../node_modules/react-native-image-picker"
   react-native-kakao-share-link:
     :path: "../node_modules/react-native-kakao-share-link"
   react-native-month-year-picker:
@@ -616,6 +621,7 @@ SPEC CHECKSUMS:
   React-jsinspector: d0374f7509d407d2264168b6d0fad0b54e300b85
   React-logger: 933f80c97c633ee8965d609876848148e3fef438
   react-native-date-picker: 211dead8aeaecab3904a07b967f580e6ea3dee88
+  react-native-image-picker: 5fe0a96bef4935bbdfb02f59b910bf40d5526109
   react-native-kakao-share-link: 198508e0a6d44d891fdd9d2ddbbd2738a233c5b6
   react-native-month-year-picker: 66acab2013309482578a015f01c71e8f2eebb134
   react-native-pager-view: b1914469643f40042e65d78cbf3d3dfebd6fb0d9

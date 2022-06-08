@@ -1,16 +1,14 @@
 import React, {useState} from 'react';
 import {Platform} from 'react-native';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
 
 import {SizedBox} from '@components/SizedBox';
-import {nomalizes} from '@utills/constants';
 import TextInput from '@components/TextInput';
+import Loading from '@components/Loading';
+import {nomalizes} from '@utills/constants';
 import {cssUtil} from '@utills/cssUtil';
-
-interface Props {
-  GoBack: () => void;
-  GoToHome: () => void;
-}
+import images from '@assets/images';
 
 const Container = styled.KeyboardAvoidingView`
   display: flex;
@@ -28,6 +26,9 @@ const TextContainer = styled.View`
 `;
 const InputContainer = styled.View`
   flex: 6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 const ButtonContainer = styled.View`
   flex: 2;
@@ -58,19 +59,40 @@ const SubText = styled.Text`
   font-weight: normal;
   margin-top: ${nomalizes[2]}px;
 `;
-const InputProfilePresenter = ({GoToHome}: Props) => {
+const IImage = styled.Image`
+  width: ${nomalizes[65]}px;
+  height: ${nomalizes[65]}px;
+`;
+
+interface Props {
+  GoBack: () => void;
+  GoToHome: () => void;
+  isProfileLoading: boolean;
+  showImagePicker: () => void;
+}
+
+const InputProfilePresenter = ({
+  GoToHome,
+  isProfileLoading,
+  showImagePicker,
+}: Props) => {
   const [nickname, setNickname] = useState<string>('');
 
   return (
     <Container behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+      {isProfileLoading && <Loading />}
       <SizedBox.Custom margin={nomalizes[30]} />
       <TextContainer>
         <Heading>반갑습니다!</Heading>
-        <SizedBox.Custom margin={nomalizes[10]} />
+        <SizedBox.Custom margin={nomalizes[25]} />
         <SubText>Fooro에서 사용하실 닉네임과 프로필 사진을</SubText>
         <SubText>설정해주세요</SubText>
       </TextContainer>
       <InputContainer>
+        <TouchableOpacity onPress={showImagePicker}>
+          <IImage source={images.uploadAccount} />
+        </TouchableOpacity>
+        <SizedBox.Custom margin={nomalizes[20]} />
         <TextInput
           value={nickname}
           setValue={(value: string) => setNickname(value)}
