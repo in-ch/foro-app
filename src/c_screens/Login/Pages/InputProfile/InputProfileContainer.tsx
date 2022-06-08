@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, {useState} from 'react';
 import {
   ImageLibraryOptions,
@@ -12,7 +11,9 @@ import {InputProfileProp} from './InputProfile';
 
 const InputProfileContainer = ({navigation, route}: InputProfileProp) => {
   const [isProfileLoading, setIsProfileLoading] = useState<boolean>(false);
-  const [profile, setProfile] = useState<null | string>(route?.params?.profile);
+  const [profile, setProfile] = useState<string>(
+    'https://fooro.s3.ap-northeast-2.amazonaws.com/Account.png',
+  );
   const [nickname, setNickname] = useState<null | string>(
     route?.params?.nickname,
   );
@@ -53,8 +54,7 @@ const InputProfileContainer = ({navigation, route}: InputProfileProp) => {
           });
           try {
             const {url} = await (
-              await fetch(`${API_URL}/imgUploads`, {
-                // 서버에 업로드 요청을 보냄. 나중에 배포 버전 서버로 바꿔야 함.
+              await fetch(`${API_URL}/uploads`, {
                 // 안드로이드에서 실험할 때는 npm run androidTcp 명령어 emulator 실행 때 마다 쳐야함.
                 method: 'POST',
                 headers: {
@@ -63,7 +63,7 @@ const InputProfileContainer = ({navigation, route}: InputProfileProp) => {
                 body: formData,
               })
             ).json();
-            setProfile(url);
+            await setProfile(String(url));
             setIsProfileLoading(false);
           } catch (error) {
             console.log('이미지 등록 에러 등장 ------------------------------');
@@ -88,6 +88,7 @@ const InputProfileContainer = ({navigation, route}: InputProfileProp) => {
         showImagePicker={showImagePicker}
         nickname={nickname}
         setNickname={setNickname}
+        profile={profile}
       />
     </>
   );

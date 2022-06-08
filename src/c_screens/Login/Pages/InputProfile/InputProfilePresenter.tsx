@@ -8,7 +8,6 @@ import TextInput from '@components/TextInput';
 import Loading from '@components/Loading';
 import {nomalizes} from '@utills/constants';
 import {cssUtil} from '@utills/cssUtil';
-import images from '@assets/images';
 
 const Container = styled.KeyboardAvoidingView`
   display: flex;
@@ -71,6 +70,7 @@ interface Props {
   showImagePicker: () => void;
   nickname: string | null;
   setNickname: (value: string) => void;
+  profile: string;
 }
 
 const InputProfilePresenter = ({
@@ -79,6 +79,7 @@ const InputProfilePresenter = ({
   showImagePicker,
   nickname,
   setNickname,
+  profile,
 }: Props) => {
   return (
     <Container behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
@@ -92,7 +93,7 @@ const InputProfilePresenter = ({
       </TextContainer>
       <InputContainer>
         <TouchableOpacity onPress={showImagePicker}>
-          <IImage source={images.uploadAccount} />
+          <IImage source={{uri: profile}} />
         </TouchableOpacity>
         <SizedBox.Custom margin={nomalizes[20]} />
         <TextInput
