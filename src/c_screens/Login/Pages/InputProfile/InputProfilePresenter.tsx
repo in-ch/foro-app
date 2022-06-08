@@ -1,7 +1,7 @@
 import React from 'react';
-import {Platform} from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import {Platform, View} from 'react-native';
 import styled from 'styled-components/native';
+import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
 import {SizedBox} from '@components/SizedBox';
 import TextInput from '@components/TextInput';
@@ -58,15 +58,23 @@ const SubText = styled.Text`
   font-weight: normal;
   margin-top: ${nomalizes[2]}px;
 `;
+const ImageContainer = styled.TouchableOpacity`
+  width: ${nomalizes[66]}px;
+  height: ${nomalizes[66]}px;
+  border-radius: ${nomalizes[33]}px;
+  overflow: hidden;
+  position: relative;
+`;
 const IImage = styled.Image`
-  width: ${nomalizes[65]}px;
-  height: ${nomalizes[65]}px;
+  width: ${nomalizes[66]}px;
+  height: ${nomalizes[66]}px;
 `;
 
 interface Props {
   GoBack: () => void;
   GoToHome: () => void;
   isProfileLoading: boolean;
+  profileLoading: boolean;
   showImagePicker: () => void;
   nickname: string | null;
   setNickname: (value: string) => void;
@@ -80,6 +88,7 @@ const InputProfilePresenter = ({
   nickname,
   setNickname,
   profile,
+  profileLoading,
 }: Props) => {
   return (
     <Container behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
@@ -92,9 +101,14 @@ const InputProfilePresenter = ({
         <SubText>설정해주세요</SubText>
       </TextContainer>
       <InputContainer>
-        <TouchableOpacity onPress={showImagePicker}>
+        <ImageContainer onPress={showImagePicker}>
+          {profileLoading && (
+            <SkeletonPlaceholder speed={1500}>
+              <View style={{width: nomalizes[66], height: nomalizes[66]}} />
+            </SkeletonPlaceholder>
+          )}
           <IImage source={{uri: profile}} />
-        </TouchableOpacity>
+        </ImageContainer>
         <SizedBox.Custom margin={nomalizes[20]} />
         <TextInput
           value={String(nickname)}

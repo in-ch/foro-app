@@ -8,9 +8,11 @@ import InputProfilePresenter from './InputProfilePresenter';
 import {isAndroid} from '@utills/constants';
 import {API_URL} from '~/apollo/client';
 import {InputProfileProp} from './InputProfile';
+import {Alert} from 'react-native';
 
 const InputProfileContainer = ({navigation, route}: InputProfileProp) => {
   const [isProfileLoading, setIsProfileLoading] = useState<boolean>(false);
+  const [profileLoading, setProfileLoading] = useState<boolean>(false);
   const [profile, setProfile] = useState<string>(
     'https://fooro.s3.ap-northeast-2.amazonaws.com/Account.png',
   );
@@ -34,13 +36,10 @@ const InputProfileContainer = ({navigation, route}: InputProfileProp) => {
     try {
       launchImageLibrary(options, async response => {
         if (response.didCancel) {
-          console.log('1111111 ', response);
           setIsProfileLoading(false);
         } else if (response.errorCode) {
-          console.log('2 ', response.errorCode);
           setIsProfileLoading(false);
         } else if (response.errorMessage) {
-          console.log('3 ', response.errorMessage);
           setIsProfileLoading(false);
         } else if (response.assets) {
           let photo = response.assets[0];
@@ -63,18 +62,22 @@ const InputProfileContainer = ({navigation, route}: InputProfileProp) => {
                 body: formData,
               })
             ).json();
+            setProfileLoading(true);
             await setProfile(String(url));
+            setTimeout(() => {
+              setProfileLoading(false);
+            }, 2000);
             setIsProfileLoading(false);
           } catch (error) {
-            console.log('이미지 등록 에러 등장 ------------------------------');
-            console.log(JSON.stringify(error));
+            Alert.alert('이미지 등록에 오류가 발생했습니다.');
           }
         } else {
-          console.log('5 ', response);
+          Alert.alert('이미지 등록에 오류가 발생했습니다.');
           setIsProfileLoading(false);
         }
       });
     } catch (error) {
+      Alert.alert('이미지 등록에 오류가 발생했습니다.');
       throw error;
     }
   };
@@ -83,6 +86,7 @@ const InputProfileContainer = ({navigation, route}: InputProfileProp) => {
     <>
       <InputProfilePresenter
         isProfileLoading={isProfileLoading}
+        profileLoading={profileLoading}
         GoBack={GoBack}
         GoToHome={GoToHome}
         showImagePicker={showImagePicker}
