@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Platform} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
@@ -69,15 +69,17 @@ interface Props {
   GoToHome: () => void;
   isProfileLoading: boolean;
   showImagePicker: () => void;
+  nickname: string | null;
+  setNickname: (value: string) => void;
 }
 
 const InputProfilePresenter = ({
   GoToHome,
   isProfileLoading,
   showImagePicker,
+  nickname,
+  setNickname,
 }: Props) => {
-  const [nickname, setNickname] = useState<string>('');
-
   return (
     <Container behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
       {isProfileLoading && <Loading />}
@@ -94,7 +96,7 @@ const InputProfilePresenter = ({
         </TouchableOpacity>
         <SizedBox.Custom margin={nomalizes[20]} />
         <TextInput
-          value={nickname}
+          value={String(nickname)}
           setValue={(value: string) => setNickname(value)}
           maxLength={10}
           onlyBottom={true}

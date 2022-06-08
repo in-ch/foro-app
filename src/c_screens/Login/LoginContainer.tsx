@@ -181,7 +181,9 @@ const LoginContainer = ({navigation}: Props) => {
     },
   });
   const GoToInputProfilePage = () => {
-    navigation.reset({routes: [{name: 'InputProfile', params: {}}]});
+    navigation.reset({
+      routes: [{name: 'InputProfile', params: {profile, nickname}}],
+    });
   };
   const GoToHomePage = () => {
     navigation.reset({routes: [{name: 'Home', params: {}}]});

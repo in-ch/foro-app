@@ -1,17 +1,18 @@
 import React from 'react';
-import {NavigationProp} from '@react-navigation/native';
+import {NavigationProp, RouteProp} from '@react-navigation/native';
 import {RootTabParamList} from '../../../../navigation/RootNavigation';
 
 import InputProfileContainer from './InputProfileContainer';
 
 export interface InputProfileProp {
   navigation: NavigationProp<RootTabParamList, 'InputProfile'>;
+  route: RouteProp<RootTabParamList, 'InputProfile'>;
 }
 
-const InputProfile = ({navigation}: InputProfileProp) => {
+const InputProfile = ({navigation, route}: InputProfileProp) => {
   return (
     <>
-      <InputProfileContainer navigation={navigation} />
+      <InputProfileContainer navigation={navigation} route={route} />
     </>
   );
 };
