@@ -11,7 +11,7 @@ import {isAndroid} from '@utills/constants';
 import {InputProfileProp} from './InputProfile';
 import {UPDATE_USER} from '@services/mutations/user';
 import {API_URL} from '~/apollo/client';
-import {tokenUserNo} from '~/apollo/apollo';
+import {tokenNickname, tokenProfile, tokenUserNo} from '~/apollo/apollo';
 
 const InputProfileContainer = ({navigation, route}: InputProfileProp) => {
   const [isProfileLoading, setIsProfileLoading] = useState<boolean>(false);

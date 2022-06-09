@@ -3,11 +3,14 @@ import React, {useRef} from 'react';
 import styled from 'styled-components/native';
 import {Animated, Image} from 'react-native';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
+import {useQuery, useReactiveVar} from '@apollo/client';
 
 import {cHeight, cWidth, nomalizes} from '@utills/constants';
 import {cssUtil} from '@utills/cssUtil';
 import Images from 'assets';
 import FFText from '../FFText';
+import {tokenUserNo} from '~/apollo/apollo';
+import {LOAD_USER} from '@services/queries/user';
 
 const Container = styled.View`
   width: 100%;
@@ -134,6 +137,10 @@ const TText = styled.Text`
   color: rgb(50, 50, 50);
   font-family: 'Pretendard';
 `;
+const IImage = styled.Image`
+  width: ${nomalizes[50]};
+  height: ${nomalizes[50]};
+`;
 
 const AnimatedContainer = Animated.createAnimatedComponent(SidebarContainer);
 
@@ -172,6 +179,13 @@ const MenuBar = ({
       useNativeDriver: false,
     }).start();
   };
+
+  const userNo = useReactiveVar(tokenUserNo);
+  const {data} = useQuery(LOAD_USER, {
+    variables: {
+      userNo,
+    },
+  });
   return (
     <>
       <Container>
@@ -202,16 +216,12 @@ const MenuBar = ({
               <ProfileContainer
                 style={{borderBottomColor: '#000', borderBottomWidth: 1}}>
                 <Profile>
-                  <Image
-                    style={{
-                      width: nomalizes[50],
-                      height: nomalizes[50],
-                    }}
-                    source={Images.user}
-                  />
+                  <IImage source={{uri: data?.loadUser?.profile}} />
                 </Profile>
                 <ProfileNicknameContainer onPress={GoToProfile}>
-                  <ProfileNickname numberOfLines={1}>닉네임</ProfileNickname>
+                  <ProfileNickname numberOfLines={1}>
+                    {data?.loadUser?.nickname}
+                  </ProfileNickname>
                 </ProfileNicknameContainer>
                 <Image
                   style={{

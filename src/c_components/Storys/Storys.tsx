@@ -5,7 +5,7 @@ import {View} from 'react-native';
 import {nomalizes} from '@utills/constants';
 import Story from './Story';
 import {useQuery, useReactiveVar} from '@apollo/client';
-import {LOAD_USER} from '~/c_services/queries/user';
+import {LOAD_USER} from '@services/queries/user';
 import {tokenUserNo} from '~/apollo/apollo';
 
 const Container = styled.View`

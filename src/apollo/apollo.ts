@@ -10,6 +10,8 @@ export const SKIP: string = 'skip';
 export const isLoggedInVar = makeVar(false);
 export const tokenVar = makeVar(null);
 export const tokenUserNo = makeVar(null);
+export const tokenProfile = makeVar(null);
+export const tokenNickname = makeVar(null);
 
 export const logUserIn = async (token: any) => {
   await AsyncStorage.setItem(TOKEN, token);
@@ -17,6 +19,8 @@ export const logUserIn = async (token: any) => {
   isLoggedInVar(true);
   tokenVar(token);
   tokenUserNo(decoded.id);
+  tokenProfile(decoded.profile);
+  tokenNickname(decoded.nickname);
 };
 
 export const logUserOut = async () => {
@@ -24,6 +28,8 @@ export const logUserOut = async () => {
   isLoggedInVar(false);
   tokenVar(null);
   tokenUserNo(null);
+  tokenProfile(null);
+  tokenNickname(null);
 };
 
 // device 토큰

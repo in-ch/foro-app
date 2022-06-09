@@ -78,10 +78,10 @@ const Header = ({date, GoToAgenda, setCurrent}: Props) => {
           <Row onPress={GoToAgenda}>
             <Image
               style={{
-                width: nomalizes[15],
-                height: nomalizes[15],
+                width: nomalizes[17],
+                height: nomalizes[17],
               }}
-              source={images.calendar}
+              source={images.list}
             />
           </Row>
         </HHeader>
