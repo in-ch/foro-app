@@ -1,12 +1,12 @@
 import React from 'react';
-import {Platform, View} from 'react-native';
+import {ActivityIndicator, Platform, View} from 'react-native';
 import styled from 'styled-components/native';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
 import {SizedBox} from '@components/SizedBox';
 import TextInput from '@components/TextInput';
 import Loading from '@components/Loading';
-import {nomalizes} from '@utills/constants';
+import {cHeight, cWidth, nomalizes} from '@utills/constants';
 import {cssUtil} from '@utills/cssUtil';
 
 const Container = styled.KeyboardAvoidingView`
@@ -71,6 +71,13 @@ const IImage = styled.Image`
   width: ${nomalizes[66]}px;
   height: ${nomalizes[66]}px;
 `;
+const LoadingContainer = styled.View`
+  background-color: white;
+  width: ${cWidth}px;
+  height: ${cHeight + nomalizes[50]}px;
+  display: flex;
+  ${cssUtil.doubleCenter};
+`;
 
 interface IsOkProps {
   isOk: boolean;
@@ -80,6 +87,7 @@ interface Props {
   UpdateUser: () => void;
   isProfileLoading: boolean;
   profileLoading: boolean;
+  loading: boolean;
   showImagePicker: () => void;
   nickname: string | null;
   setNickname: (value: string) => void;
@@ -90,46 +98,54 @@ interface Props {
 const InputProfilePresenter = ({
   UpdateUser,
   isProfileLoading,
+  profileLoading,
+  loading,
   showImagePicker,
   nickname,
   setNickname,
   profile,
-  profileLoading,
   isOk,
 }: Props) => {
   return (
-    <Container behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-      {isProfileLoading && <Loading />}
-      <SizedBox.Custom margin={nomalizes[30]} />
-      <TextContainer>
-        <Heading>반갑습니다!</Heading>
-        <SizedBox.Custom margin={nomalizes[25]} />
-        <SubText>Fooro에서 사용하실 닉네임과 프로필 사진을</SubText>
-        <SubText>설정해주세요</SubText>
-      </TextContainer>
-      <InputContainer>
-        <ImageContainer onPress={showImagePicker}>
-          {profileLoading && (
-            <SkeletonPlaceholder speed={1500}>
-              <View style={{width: nomalizes[66], height: nomalizes[66]}} />
-            </SkeletonPlaceholder>
-          )}
-          <IImage source={{uri: profile}} />
-        </ImageContainer>
-        <SizedBox.Custom margin={nomalizes[20]} />
-        <TextInput
-          value={String(nickname)}
-          setValue={(value: string) => setNickname(value)}
-          maxLength={10}
-          onlyBottom={true}
-        />
-      </InputContainer>
-      <ButtonContainer>
-        <Button isOk={isOk} onPress={() => UpdateUser()}>
-          <TText isOk={isOk}>확 인</TText>
-        </Button>
-      </ButtonContainer>
-    </Container>
+    <>
+      <Container behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+        {isProfileLoading && <Loading />}
+        <SizedBox.Custom margin={nomalizes[30]} />
+        <TextContainer>
+          <Heading>반갑습니다!</Heading>
+          <SizedBox.Custom margin={nomalizes[25]} />
+          <SubText>Fooro에서 사용하실 닉네임과 프로필 사진을</SubText>
+          <SubText>설정해주세요</SubText>
+        </TextContainer>
+        <InputContainer>
+          <ImageContainer onPress={showImagePicker}>
+            {profileLoading && (
+              <SkeletonPlaceholder speed={1500}>
+                <View style={{width: nomalizes[66], height: nomalizes[66]}} />
+              </SkeletonPlaceholder>
+            )}
+            <IImage source={{uri: profile}} />
+          </ImageContainer>
+          <SizedBox.Custom margin={nomalizes[20]} />
+          <TextInput
+            value={String(nickname)}
+            setValue={(value: string) => setNickname(value)}
+            maxLength={10}
+            onlyBottom={true}
+          />
+        </InputContainer>
+        <ButtonContainer>
+          <Button isOk={isOk} onPress={() => UpdateUser()}>
+            <TText isOk={isOk}>확 인</TText>
+          </Button>
+        </ButtonContainer>
+      </Container>
+      {loading && (
+        <LoadingContainer>
+          <ActivityIndicator animating={true} size="small" color="#000" />
+        </LoadingContainer>
+      )}
+    </>
   );
 };
 

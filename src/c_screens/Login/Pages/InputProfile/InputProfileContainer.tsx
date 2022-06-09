@@ -51,7 +51,7 @@ const InputProfileContainer = ({navigation, route}: InputProfileProp) => {
     }
   }, [profile, nickname, profileLoading]);
 
-  const [mutationUpdateUser] = useMutation(UPDATE_USER, {
+  const [mutationUpdateUser, {loading}] = useMutation(UPDATE_USER, {
     variables: {
       user: {
         profile,
@@ -127,6 +127,7 @@ const InputProfileContainer = ({navigation, route}: InputProfileProp) => {
       <InputProfilePresenter
         isProfileLoading={isProfileLoading}
         profileLoading={profileLoading}
+        loading={loading}
         GoBack={GoBack}
         UpdateUser={UpdateUser}
         showImagePicker={showImagePicker}

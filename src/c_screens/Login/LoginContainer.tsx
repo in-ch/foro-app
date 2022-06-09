@@ -89,11 +89,9 @@ const LoginContainer = ({navigation}: Props) => {
   // kakao login
   const Kakaologin = async (): Promise<void> => {
     await signInWithKakao();
-    setLoading(false);
   };
 
   const signInWithKakao = async (): Promise<void> => {
-    // 토큰이 없다면 아래 코드 실행
     const token: KakaoOAuthToken = await login();
     setLoading(true);
     await setToken(JSON.stringify(token.refreshToken));
@@ -133,6 +131,7 @@ const LoginContainer = ({navigation}: Props) => {
     },
     onError: e => {
       Alert.alert('오류가 발생했습니다. 관리자에게 문의해주세요.');
+      setLoading(false);
     },
   });
 
@@ -154,6 +153,7 @@ const LoginContainer = ({navigation}: Props) => {
     },
     onError: e => {
       Alert.alert('오류가 발생했습니다. 관리자에게 문의해주세요.');
+      setLoading(false);
     },
   });
 
@@ -162,22 +162,21 @@ const LoginContainer = ({navigation}: Props) => {
       id,
       type,
     },
-    onCompleted: d => {
+    onCompleted: async d => {
       logUserIn(d?.login?.token);
       if (
         d?.login?.profile === null ||
         d?.login?.profile === '' ||
         d?.login?.profile === undefined
       ) {
-        GoToInputProfilePage(); // 프로필이 없다면 ..
-        console.log('프로필 페이지로');
+        await GoToInputProfilePage(); // 프로필이 없다면 ..
       } else {
-        GoToHomePage(); // 프로필이 있다면 ..
-        console.log('홈페이지로');
+        await GoToHomePage(); // 프로필이 있다면 ..
       }
     },
     onError: e => {
       Alert.alert('로그인 오류가 발생했습니다.');
+      setLoading(false);
     },
   });
   const GoToInputProfilePage = () => {
