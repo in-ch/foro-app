@@ -25,6 +25,7 @@ export const LOGIN = gql`
     login(id: $id, type: $type) {
       ok
       token
+      profile
     }
   }
 `;
