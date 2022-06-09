@@ -34,18 +34,20 @@ const ButtonContainer = styled.View`
   display: flex;
   flex-direction: row;
   align-items: flex-end;
-  padding-bottom: ${nomalizes[20]}px;
+  padding-bottom: ${nomalizes[25]}px;
 `;
-const Button = styled.TouchableOpacity`
+const Button = styled.TouchableOpacity<IsOkProps>`
   width: 100%;
   height: ${nomalizes[40]}px;
-  background-color: #a0a0a0;
+  border-radius: ${nomalizes[8]}px;
+  background-color: ${props => (props.isOk ? '#FF6258' : '#dfdfdf')};
   display: flex;
   ${cssUtil.doubleCenter};
 `;
-const TText = styled.Text`
+const TText = styled.Text<IsOkProps>`
   font-size: ${nomalizes[14]}px;
   font-family: 'Pretendard';
+  color: ${props => (props.isOk ? '#fff' : '#000')};
 `;
 const Heading = styled.Text`
   font-size: ${nomalizes[16]}px;
@@ -70,25 +72,30 @@ const IImage = styled.Image`
   height: ${nomalizes[66]}px;
 `;
 
+interface IsOkProps {
+  isOk: boolean;
+}
 interface Props {
   GoBack: () => void;
-  GoToHome: () => void;
+  UpdateUser: () => void;
   isProfileLoading: boolean;
   profileLoading: boolean;
   showImagePicker: () => void;
   nickname: string | null;
   setNickname: (value: string) => void;
   profile: string;
+  isOk: boolean;
 }
 
 const InputProfilePresenter = ({
-  GoToHome,
+  UpdateUser,
   isProfileLoading,
   showImagePicker,
   nickname,
   setNickname,
   profile,
   profileLoading,
+  isOk,
 }: Props) => {
   return (
     <Container behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
@@ -118,8 +125,8 @@ const InputProfilePresenter = ({
         />
       </InputContainer>
       <ButtonContainer>
-        <Button onPress={() => GoToHome()}>
-          <TText>확 인</TText>
+        <Button isOk={isOk} onPress={() => UpdateUser()}>
+          <TText isOk={isOk}>확 인</TText>
         </Button>
       </ButtonContainer>
     </Container>

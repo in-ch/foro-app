@@ -1,18 +1,23 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   ImageLibraryOptions,
   launchImageLibrary,
 } from 'react-native-image-picker';
+import {useMutation, useReactiveVar} from '@apollo/client';
+import {Alert} from 'react-native';
 
 import InputProfilePresenter from './InputProfilePresenter';
 import {isAndroid} from '@utills/constants';
-import {API_URL} from '~/apollo/client';
 import {InputProfileProp} from './InputProfile';
-import {Alert} from 'react-native';
+import {UPDATE_USER} from '@services/mutations/user';
+import {API_URL} from '~/apollo/client';
+import {tokenUserNo} from '~/apollo/apollo';
 
 const InputProfileContainer = ({navigation, route}: InputProfileProp) => {
   const [isProfileLoading, setIsProfileLoading] = useState<boolean>(false);
-  const [profileLoading, setProfileLoading] = useState<boolean>(false);
+  const [profileLoading, setProfileLoading] = useState<boolean>(false); // 이미지 스켈레톤용 변수
+  const [isOk, setIsOk] = useState<boolean>(false);
+  const userNo = useReactiveVar(tokenUserNo);
   const [profile, setProfile] = useState<string>(
     'https://fooro.s3.ap-northeast-2.amazonaws.com/Account.png',
   );
@@ -22,10 +27,45 @@ const InputProfileContainer = ({navigation, route}: InputProfileProp) => {
   const GoBack = () => {
     navigation.goBack();
   };
-  const GoToHome = () => {
-    navigation.navigate('Home', {});
+  const UpdateUser = async () => {
+    if (isOk) {
+      await mutationUpdateUser();
+    }
   };
 
+  useEffect(() => {
+    if (
+      String(nickname).length < 2 ||
+      nickname === undefined ||
+      nickname === null
+    ) {
+      setIsOk(false);
+    } else if (
+      profile === 'https://fooro.s3.ap-northeast-2.amazonaws.com/Account.png'
+    ) {
+      setIsOk(false);
+    } else if (profileLoading) {
+      setIsOk(false);
+    } else {
+      setIsOk(true);
+    }
+  }, [profile, nickname, profileLoading]);
+
+  const [mutationUpdateUser] = useMutation(UPDATE_USER, {
+    variables: {
+      user: {
+        profile,
+        nickname,
+      },
+      userNo,
+    },
+    onCompleted: () => {
+      navigation.navigate('Home', {});
+    },
+    onError: e => {
+      console.log('업데이트 에러' + JSON.stringify(e));
+    },
+  });
   // 갤러리에서 이미지 선택
   let options: ImageLibraryOptions = {
     quality: 1.0,
@@ -88,11 +128,12 @@ const InputProfileContainer = ({navigation, route}: InputProfileProp) => {
         isProfileLoading={isProfileLoading}
         profileLoading={profileLoading}
         GoBack={GoBack}
-        GoToHome={GoToHome}
+        UpdateUser={UpdateUser}
         showImagePicker={showImagePicker}
         nickname={nickname}
         setNickname={setNickname}
         profile={profile}
+        isOk={isOk}
       />
     </>
   );

@@ -28,3 +28,12 @@ export const LOGIN = gql`
     }
   }
 `;
+
+export const UPDATE_USER = gql`
+  mutation updateUser($user: UpdateUserInput!, $userNo: Float!) {
+    updateUser(user: $user, userNo: $userNo) {
+      ok
+      error
+    }
+  }
+`;
