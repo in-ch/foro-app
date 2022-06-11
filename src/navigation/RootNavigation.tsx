@@ -54,7 +54,10 @@ export type RootTabParamList = {
   Terms: {};
   PersonalPolicy: {};
   Profile: {};
-  ProfileEdit: {};
+  ProfileEdit: {
+    profile: string;
+    nickname: string;
+  };
   Agenda: {
     selected?: string;
   };

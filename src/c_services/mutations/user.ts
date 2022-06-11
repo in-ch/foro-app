@@ -38,3 +38,11 @@ export const UPDATE_USER = gql`
     }
   }
 `;
+
+export const DEUPLICATENICKNAME = gql`
+  mutation duplicateNickname($nickname: String!) {
+    duplicateNickname(nickname: $nickname) {
+      no
+    }
+  }
+`;

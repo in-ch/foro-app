@@ -5,7 +5,6 @@ import styled from 'styled-components/native';
 
 import Header from '@components/Header/Header';
 import {nomalizes} from '@utills/constants';
-import images from '@assets/images';
 import {cssUtil} from '@utills/cssUtil';
 
 const Container = styled.View`
@@ -56,30 +55,45 @@ const EditText = styled.Text`
   color: #575757;
   font-family: 'Pretendard';
 `;
+const Profile = styled.View`
+  width: ${nomalizes[50]}px;
+  height: ${nomalizes[50]}px;
+  border-radius: ${nomalizes[25]}px;
+  overflow: hidden;
+`;
 interface Props {
   goBack: () => void;
   goToProfileEdit: () => void;
+  profile: string;
+  nickname: string;
 }
 
-const ProfilePresenter = ({goBack, goToProfileEdit}: Props) => {
+const ProfilePresenter = ({
+  goBack,
+  goToProfileEdit,
+  profile,
+  nickname,
+}: Props) => {
   return (
     <Container>
       <Header text="프로필" back={goBack} />
       <ProfileContainer>
-        <Image
-          style={{
-            width: nomalizes[50],
-            height: nomalizes[50],
-          }}
-          source={images.user}
-        />
+        <Profile>
+          <Image
+            style={{
+              width: nomalizes[50],
+              height: nomalizes[50],
+            }}
+            source={{uri: profile}}
+          />
+        </Profile>
         <TextContainer>
           <NicknameContainer
             style={{
               borderBottomColor: '#cacaca',
               borderBottomWidth: 1,
             }}>
-            <Nickname>일이삼사오륙칠팔구십</Nickname>
+            <Nickname>{nickname}</Nickname>
           </NicknameContainer>
           <NicknameContainer>
             <Nim>님</Nim>
