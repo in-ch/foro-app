@@ -17,7 +17,7 @@ import Detail from '@screens/Detail/Detail';
 import Category from '@screens/Category/Category';
 import CategoryAdd from '@screens/Category/page/CategoryAdd';
 import CategoryUpdate from '@screens/Category/page/CategoryUpdate';
-import Neighbor from '@screens/ Neighbor/ Neighbor';
+import Neighbor from '@screens/Neighbor/ Neighbor';
 import Setting from '@screens/Setting/Setting';
 import Terms from '@screens/Setting/pages/Terms';
 import PersonalPolicy from '@screens/Setting/pages/PersonalPolicy';

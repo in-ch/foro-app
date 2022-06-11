@@ -1,12 +1,13 @@
 import React from 'react';
 import styled from 'styled-components/native';
+import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
+
 import HeaderPlus from '@components/Header/HeaderPlus';
 import {SizedBox} from '@components/SizedBox';
 import {nomalizes} from '@utills/constants';
 import {Image, Modal} from 'react-native';
 import images from '@assets/images';
 import {cssUtil} from '@utills/cssUtil';
-import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 
 const Container = styled.View`
   flex: 1;
