@@ -31,6 +31,7 @@ const Storys = () => {
     variables: {
       userNo,
     },
+    fetchPolicy: 'cache-and-network',
   });
   return (
     <Container>

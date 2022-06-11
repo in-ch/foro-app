@@ -185,6 +185,7 @@ const MenuBar = ({
     variables: {
       userNo,
     },
+    fetchPolicy: 'cache-and-network',
   });
   return (
     <>

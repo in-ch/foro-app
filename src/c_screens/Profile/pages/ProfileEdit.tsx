@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useCallback, useRef, useState} from 'react';
-import {Alert, Platform, Text, View} from 'react-native';
+import {Platform, Text, View} from 'react-native';
 import styled from 'styled-components/native';
 import {
   ImageLibraryOptions,
@@ -17,6 +17,7 @@ import {API_URL} from '~/apollo/client';
 import Header from '@components/Header/Header';
 import {DEUPLICATENICKNAME, UPDATE_USER} from '@services/mutations/user';
 import {tokenUserNo} from '~/apollo/apollo';
+import {LOAD_USER} from '~/c_services/queries/user';
 
 const Container = styled.View`
   flex: 1;
@@ -81,11 +82,9 @@ const ProfileEdit = ({navigation, route}: ProfileEditProps) => {
       nickname: text,
     },
     onCompleted: async d => {
-      console.log('유저' + JSON.stringify(d));
-      if (d?.duplicateNickname?.length > 0) {
+      if (d?.duplicateNickname?.length > 0 && cacheText !== text) {
         showToast('중복된 닉네임입니다.');
       } else {
-        console.log('변경 시작');
         await mutationUpdateUser();
       }
     },
@@ -100,12 +99,29 @@ const ProfileEdit = ({navigation, route}: ProfileEditProps) => {
     },
     onCompleted: () => {
       showToast('프로필 편집이 완료되었습니다.');
-      setTimeout(() => {
-        navigation.navigate('Home', {});
-      }, 500);
     },
-    onError: e => {
-      console.log('업데이트 에러' + JSON.stringify(e));
+    update(cache) {
+      let dataUserQuery = cache.readQuery<any>({
+        query: LOAD_USER,
+        variables: {
+          userNo,
+        },
+      });
+      console.log(dataUserQuery);
+      if (dataUserQuery !== undefined) {
+        cache.writeQuery({
+          query: LOAD_USER,
+          variables: {
+            userNo,
+          },
+          data: {
+            loadUser: {
+              nickname: text,
+              profile,
+            },
+          },
+        });
+      }
     },
   });
   const handleSubmit = async () => {
