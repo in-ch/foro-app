@@ -8,6 +8,7 @@ import TextInput from '@components/TextInput';
 import Loading from '@components/Loading';
 import {cHeight, cWidth, nomalizes} from '@utills/constants';
 import {cssUtil} from '@utills/cssUtil';
+import Toast from 'react-native-easy-toast';
 
 const Container = styled.KeyboardAvoidingView`
   display: flex;
@@ -93,6 +94,7 @@ interface Props {
   setNickname: (value: string) => void;
   profile: string;
   isOk: boolean;
+  toastRef: any;
 }
 
 const InputProfilePresenter = ({
@@ -105,6 +107,7 @@ const InputProfilePresenter = ({
   setNickname,
   profile,
   isOk,
+  toastRef,
 }: Props) => {
   return (
     <>
@@ -145,6 +148,12 @@ const InputProfilePresenter = ({
           <ActivityIndicator animating={true} size="small" color="#000" />
         </LoadingContainer>
       )}
+      <Toast
+        ref={toastRef}
+        positionValue={cHeight * 0.5}
+        fadeInDuration={200}
+        fadeOutDuration={1200}
+      />
     </>
   );
 };

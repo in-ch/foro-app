@@ -107,7 +107,6 @@ const ProfileEdit = ({navigation, route}: ProfileEditProps) => {
           userNo,
         },
       });
-      console.log(dataUserQuery);
       if (dataUserQuery !== undefined) {
         cache.writeQuery({
           query: LOAD_USER,

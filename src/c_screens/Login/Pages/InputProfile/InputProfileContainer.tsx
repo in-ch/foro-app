@@ -1,15 +1,14 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {
   ImageLibraryOptions,
   launchImageLibrary,
 } from 'react-native-image-picker';
 import {useMutation, useReactiveVar} from '@apollo/client';
-import {Alert} from 'react-native';
 
 import InputProfilePresenter from './InputProfilePresenter';
 import {isAndroid} from '@utills/constants';
 import {InputProfileProp} from './InputProfile';
-import {UPDATE_USER} from '@services/mutations/user';
+import {DEUPLICATENICKNAME, UPDATE_USER} from '@services/mutations/user';
 import {API_URL} from '~/apollo/client';
 import {tokenUserNo} from '~/apollo/apollo';
 
@@ -21,17 +20,23 @@ const InputProfileContainer = ({navigation, route}: InputProfileProp) => {
   const [profile, setProfile] = useState<string>(
     'https://fooro.s3.ap-northeast-2.amazonaws.com/Account.png',
   );
+  const toastRef = useRef<any>(null);
   const [nickname, setNickname] = useState<null | string>(
     route?.params?.nickname,
   );
+  const [cacheNickname] = useState<null | string>(route?.params?.nickname);
   const GoBack = () => {
     navigation.goBack();
   };
   const UpdateUser = async () => {
     if (isOk) {
-      await mutationUpdateUser();
+      await mutationDuplicateNickname();
     }
   };
+
+  const showToast = useCallback((toast: string) => {
+    toastRef.current.show(toast);
+  }, []);
 
   useEffect(() => {
     if (
@@ -62,10 +67,21 @@ const InputProfileContainer = ({navigation, route}: InputProfileProp) => {
     onCompleted: () => {
       navigation.navigate('Home', {});
     },
-    onError: e => {
-      console.log('업데이트 에러' + JSON.stringify(e));
+  });
+  const [mutationDuplicateNickname] = useMutation(DEUPLICATENICKNAME, {
+    variables: {
+      nickname,
+    },
+    onCompleted: async d => {
+      if (d?.duplicateNickname?.length > 0 && cacheNickname !== nickname) {
+        showToast('중복된 닉네임입니다.');
+        setIsOk(false);
+      } else {
+        await mutationUpdateUser();
+      }
     },
   });
+
   // 갤러리에서 이미지 선택
   let options: ImageLibraryOptions = {
     quality: 1.0,
@@ -109,15 +125,15 @@ const InputProfileContainer = ({navigation, route}: InputProfileProp) => {
             }, 2000);
             setIsProfileLoading(false);
           } catch (error) {
-            Alert.alert('이미지 등록에 오류가 발생했습니다.');
+            showToast('이미지 등록에 오류가 발생했습니다.');
           }
         } else {
-          Alert.alert('이미지 등록에 오류가 발생했습니다.');
+          showToast('이미지 등록에 오류가 발생했습니다.');
           setIsProfileLoading(false);
         }
       });
     } catch (error) {
-      Alert.alert('이미지 등록에 오류가 발생했습니다.');
+      showToast('이미지 등록에 오류가 발생했습니다.');
       throw error;
     }
   };
@@ -135,6 +151,7 @@ const InputProfileContainer = ({navigation, route}: InputProfileProp) => {
         setNickname={setNickname}
         profile={profile}
         isOk={isOk}
+        toastRef={toastRef}
       />
     </>
   );
