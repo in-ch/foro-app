@@ -5,6 +5,8 @@ export const LOAD_USER = gql`
     loadUser(userNo: $userNo) {
       nickname
       profile
+      alarmNeighborShareRequest
+      alarmNeighborFoodSharingNews
     }
   }
 `;
