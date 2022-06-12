@@ -12,7 +12,8 @@ const Container = styled.View`
   height: ${nomalizes[60]}px;
   display: flex;
   flex-direction: column;
-  margin-left: ${nomalizes[10]}px;
+  margin-left: ${nomalizes[9]}px;
+  margin-right: ${nomalizes[1]}px;
 `;
 const Profile = styled.View`
   background-color: #e2e2e2;
