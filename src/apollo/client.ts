@@ -24,7 +24,7 @@ const wsLinkLink = isAndroid
   ? 'ws://3.37.173.215:4000'
   : 'ws://3.37.173.215:4000'; // 웹 소켓용 link
 
-export const API_URL = false ? URL : devURL; // 개발일 때 false, 배포일 때 true
+export const API_URL = true ? URL : devURL; // 개발일 때 false, 배포일 때 true
 
 const wsLink = new WebSocketLink({
   // 웹 소켓용 link 연결 코드

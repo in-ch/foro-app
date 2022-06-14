@@ -24,6 +24,7 @@ import PersonalPolicy from '@screens/Setting/pages/PersonalPolicy';
 import Profile from '@screens/Profile/Profile';
 import ProfileEdit from '@screens/Profile/pages/ProfileEdit';
 import {FoodData} from '~/types/Food';
+import UserAdd from '~/c_screens/UserAdd/UserAdd';
 
 export type RootTabParamList = {
   Home: {};
@@ -64,6 +65,9 @@ export type RootTabParamList = {
   FoodAddInput: {
     food: FoodData;
   };
+  UserAdd: {
+    from: string; // 요청을 보낸 유저 no
+  };
 };
 
 const RootNavigation = () => {
@@ -78,6 +82,13 @@ const RootNavigation = () => {
       <Stack.Screen
         name="Home"
         component={Home}
+        options={{
+          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+        }}
+      />
+      <Stack.Screen
+        name="UserAdd"
+        component={UserAdd}
         options={{
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
         }}

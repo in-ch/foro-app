@@ -62,15 +62,17 @@ interface Props {
   goBack: () => void;
   modalShow: boolean;
   onShowModal: () => void;
+  kakaoshare: () => void;
 }
-const NeighborPresenter = ({goBack, modalShow, onShowModal}: Props) => {
+const NeighborPresenter = ({
+  goBack,
+  modalShow,
+  onShowModal,
+  kakaoshare,
+}: Props) => {
   return (
     <Container>
-      <HeaderPlus
-        text="이웃 관리"
-        back={goBack}
-        button={() => console.warn('ggg')}
-      />
+      <HeaderPlus text="이웃 관리" back={goBack} button={kakaoshare} />
       <SizedBox.Custom margin={nomalizes[15]} />
       <RowBox>
         <Row>
