@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "117535266053",
+    "project_id": "food-zero-6e8db",
+    "storage_bucket": "food-zero-6e8db.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:117535266053:android:a6ee66fa50885e9e63136c",
+        "android_client_info": {
+          "package_name": "com.foro"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "117535266053-4e23al3uugspd45k85t8703dcpe2h0sb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.foro",
+            "certificate_hash": "b5441072ad9c35ae0017ccdc9bcfbe6a43503b1a"
+          }
+        },
+        {
+          "client_id": "117535266053-i1lgbdlvb2t490qbpptff8v13nasprhi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.foro",
+            "certificate_hash": "272e11618c9da01fe188d168903e357b54e271e3"
+          }
+        },
+        {
+          "client_id": "117535266053-ocv6mreegl95618vdkooee7uviko177b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.foro",
+            "certificate_hash": "c57f9b7ed6fdd20736c974d1e34843028f2c8a89"
+          }
+        },
+        {
+          "client_id": "117535266053-q7r1c69g78o5o3vo9go1r6f3esphpr4r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBlauFHrvhWzrth8E6qzfpcnsWtG65kt5s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "117535266053-q7r1c69g78o5o3vo9go1r6f3esphpr4r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
