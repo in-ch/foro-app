@@ -3,7 +3,7 @@
 // @ts-nocheck
 
 import {NavigationProp} from '@react-navigation/native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   KakaoOAuthToken,
   login,
@@ -11,7 +11,11 @@ import {
   KakaoProfileNoneAgreement,
   getProfile as getKakaoProfile,
 } from '@react-native-seoul/kakao-login';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
+
+import auth, {firebase} from '@react-native-firebase/auth';
 import {useMutation} from '@apollo/client';
+import {Alert} from 'react-native';
 
 import {
   LOAD_USER_WITH_TOKEN,
@@ -21,7 +25,6 @@ import {
 import LoginPresenter from './LoginPresenter';
 import {RootTabParamList} from '../../navigation/RootNavigation';
 import {logUserIn} from '../../apollo/apollo';
-import {Alert} from 'react-native';
 interface Props {
   navigation: NavigationProp<RootTabParamList, 'Home'>;
 }
@@ -45,7 +48,6 @@ const LoginContainer = ({navigation}: Props) => {
   const Kakaologin = async (): Promise<void> => {
     await signInWithKakao();
   };
-
   const signInWithKakao = async (): Promise<void> => {
     const token: KakaoOAuthToken = await login();
     setLoading(true);
@@ -67,6 +69,32 @@ const LoginContainer = ({navigation}: Props) => {
   };
 
   // google login
+  const onGoogleButtonPress = async (): Promise<void> => {
+    setLoading(true);
+    try {
+      await GoogleSignin.configure({
+        webClientId:
+          '117535266053-q7r1c69g78o5o3vo9go1r6f3esphpr4r.apps.googleusercontent.com',
+      });
+      const data = await GoogleSignin.signIn();
+      const credential = firebase.auth.GoogleAuthProvider.credential(
+        data.idToken,
+        data.accessToken,
+      );
+      await firebase.auth().signInWithCredential(credential);
+      await setToken(JSON.stringify(data.idToken));
+      await setId(String(data.id));
+      await setType('GOOGLE');
+      await setProfile(data.user.photo);
+      await setNickname(data.user.name);
+      await setGoogleToken(data.idToken);
+      console.log(id, type);
+      console.log(data.user.id, 'GOOGLE');
+      await mutationLoadUserWithToken();
+    } catch (e) {
+      setLoading(false);
+    }
+  };
 
   // apple login
 
@@ -85,8 +113,14 @@ const LoginContainer = ({navigation}: Props) => {
       }
     },
     onError: e => {
+      console.log(id, type);
+      console.log(id, type);
+      console.log(id, type);
+      console.log(id, type);
       Alert.alert('오류가 발생했습니다. 관리자에게 문의해주세요.');
       setLoading(false);
+      console.log('오류 발생');
+      console.log(JSON.stringify(e));
     },
   });
 
@@ -109,6 +143,7 @@ const LoginContainer = ({navigation}: Props) => {
     onError: e => {
       Alert.alert('오류가 발생했습니다. 관리자에게 문의해주세요.');
       setLoading(false);
+      console.log(JSON.stringify(e));
     },
   });
 
@@ -132,6 +167,7 @@ const LoginContainer = ({navigation}: Props) => {
     onError: e => {
       Alert.alert('로그인 오류가 발생했습니다.');
       setLoading(false);
+      console.log(JSON.stringify(e));
     },
   });
   const GoToInputProfilePage = () => {
@@ -145,7 +181,11 @@ const LoginContainer = ({navigation}: Props) => {
 
   return (
     <>
-      <LoginPresenter signInWithKakao={Kakaologin} loading={loading} />
+      <LoginPresenter
+        signInWithKakao={Kakaologin}
+        signInWithGoogle={onGoogleButtonPress}
+        loading={loading}
+      />
     </>
   );
 };

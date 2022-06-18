@@ -68,10 +68,15 @@ const LoadingContainer = styled.View`
 `;
 interface Props {
   signInWithKakao: () => void;
+  signInWithGoogle: () => void;
   loading: boolean;
 }
 
-const LoginPresenter = ({signInWithKakao, loading}: Props) => {
+const LoginPresenter = ({
+  signInWithKakao,
+  signInWithGoogle,
+  loading,
+}: Props) => {
   return (
     <>
       {!loading ? (
@@ -100,10 +105,7 @@ const LoginPresenter = ({signInWithKakao, loading}: Props) => {
                 />
                 <TText>카카오로 로그인</TText>
               </PhoneButton>
-              <PhoneButton
-                onPress={() => {
-                  console.log();
-                }}>
+              <PhoneButton onPress={signInWithGoogle}>
                 <Image
                   style={{
                     width: nomalizes[25],
