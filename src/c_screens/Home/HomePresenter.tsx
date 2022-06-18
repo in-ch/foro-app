@@ -41,6 +41,7 @@ interface Props {
   GoToNeighbor: () => void;
   GoToSetting: () => void;
   GoToProfile: () => void;
+  Logout: () => void;
 }
 
 const HomePresenter = ({
@@ -53,6 +54,7 @@ const HomePresenter = ({
   GoToNeighbor,
   GoToSetting,
   GoToProfile,
+  Logout,
 }: Props) => {
   return (
     <View
@@ -73,6 +75,7 @@ const HomePresenter = ({
         GoToNeighbor={GoToNeighbor}
         GoToSetting={GoToSetting}
         GoToProfile={GoToProfile}
+        Logout={Logout}
       />
       <Storys />
       <CCalendar GoToAgenda={GoToAgenda} GoToDetail={GoToDetail} />

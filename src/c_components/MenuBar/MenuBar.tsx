@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useRef} from 'react';
+import React, {useRef, useState} from 'react';
 import styled from 'styled-components/native';
-import {Animated, Image} from 'react-native';
+import {Animated, Image, Modal} from 'react-native';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import {useQuery, useReactiveVar} from '@apollo/client';
 
@@ -141,6 +141,56 @@ const IImage = styled.Image`
   width: ${nomalizes[50]};
   height: ${nomalizes[50]};
 `;
+const LogoutContainer = styled.View`
+  width: ${cWidth}px;
+  height: ${cHeight + nomalizes[40]}px;
+  background-color: rgba(0, 0, 0, 0.3);
+  display: flex;
+  ${cssUtil.doubleCenter};
+`;
+const LogoutWrapper = styled.View`
+  background-color: #fff;
+  width: ${nomalizes[200]}px;
+  height: ${nomalizes[90]}px;
+  border-radius: ${nomalizes[20]}px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: ${nomalizes[10]}px;
+  position: relative;
+  top: -${nomalizes[20]}px;
+  justify-content: space-between;
+`;
+const LogoutText = styled.Text`
+  color: #333333;
+  font-size: ${nomalizes[12]}px;
+  margin-top: ${nomalizes[5]}px;
+`;
+const SelectButtonWrapper = styled.View`
+  width: 90%;
+  height: ${nomalizes[30]}px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+const CancelButton = styled.TouchableOpacity`
+  width: 48%;
+  height: ${nomalizes[30]}px;
+  background-color: #ff6258;
+  border-radius: ${nomalizes[8]}px;
+  ${cssUtil.doubleCenter};
+`;
+const OkButton = styled.TouchableOpacity`
+  width: 48%;
+  height: ${nomalizes[30]}px;
+  background-color: #dbdbdb;
+  border-radius: ${nomalizes[8]}px;
+  ${cssUtil.doubleCenter};
+`;
+const ButtonText = styled.Text`
+  color: #fff;
+  font-size: ${nomalizes[11]}px;
+`;
 
 const AnimatedContainer = Animated.createAnimatedComponent(SidebarContainer);
 
@@ -151,6 +201,7 @@ interface Props {
   GoToNeighbor: () => void;
   GoToSetting: () => void;
   GoToProfile: () => void;
+  Logout: () => void;
 }
 interface ContainerProps {
   show: boolean;
@@ -163,6 +214,7 @@ const MenuBar = ({
   GoToNeighbor,
   GoToSetting,
   GoToProfile,
+  Logout,
 }: Props) => {
   const animatedValue = useRef(new Animated.Value(0)).current;
   const onShow = () => {
@@ -179,7 +231,12 @@ const MenuBar = ({
       useNativeDriver: false,
     }).start();
   };
-
+  const clickModal = () => {
+    setShow(!show);
+  };
+  const logout = () => {
+    Logout();
+  };
   const userNo = useReactiveVar(tokenUserNo);
   const {data} = useQuery(LOAD_USER, {
     variables: {
@@ -187,6 +244,7 @@ const MenuBar = ({
     },
     fetchPolicy: 'cache-and-network',
   });
+  const [show, setShow] = useState<boolean>(false);
   return (
     <>
       <Container>
@@ -265,7 +323,7 @@ const MenuBar = ({
                 <TextContainer onPress={GoToSetting}>
                   <TText style={{fontSize: nomalizes[14]}}>설정</TText>
                 </TextContainer>
-                <TextContainer>
+                <TextContainer onPress={clickModal}>
                   <TText style={{fontSize: nomalizes[14]}}>로그아웃</TText>
                 </TextContainer>
               </SettingContainer>
@@ -276,6 +334,22 @@ const MenuBar = ({
           </TouchableWithoutFeedback>
         </Wrapper>
       </AnimatedContainer>
+
+      <Modal animationType="fade" visible={show} transparent={true}>
+        <LogoutContainer>
+          <LogoutWrapper>
+            <LogoutText>정말 로그아웃하시나요?</LogoutText>
+            <SelectButtonWrapper>
+              <CancelButton onPress={clickModal}>
+                <ButtonText>취소</ButtonText>
+              </CancelButton>
+              <OkButton onPress={logout}>
+                <ButtonText>확인</ButtonText>
+              </OkButton>
+            </SelectButtonWrapper>
+          </LogoutWrapper>
+        </LogoutContainer>
+      </Modal>
     </>
   );
 };

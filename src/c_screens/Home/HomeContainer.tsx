@@ -1,4 +1,5 @@
 import React from 'react';
+import {logUserIn} from '~/apollo/apollo';
 import {HomeProps} from './Home';
 import HomePresenter from './HomePresenter';
 
@@ -30,6 +31,12 @@ const HomeContainer = ({navigation}: HomeProps) => {
   const GoToProfile = () => {
     navigation.navigate('Profile', {});
   };
+  const Logout = () => {
+    logUserIn(null);
+    navigation.reset({
+      routes: [{name: 'Login', params: {}}],
+    });
+  };
 
   return (
     <>
@@ -43,6 +50,7 @@ const HomeContainer = ({navigation}: HomeProps) => {
         GoToNeighbor={GoToNeighbor}
         GoToSetting={GoToSetting}
         GoToProfile={GoToProfile}
+        Logout={Logout}
       />
     </>
   );

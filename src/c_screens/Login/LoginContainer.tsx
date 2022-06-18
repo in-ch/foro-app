@@ -103,7 +103,6 @@ const LoginContainer = ({navigation}: Props) => {
       type,
     },
     onCompleted: async d => {
-      console.log('결과' + JSON.stringify(d));
       if (d?.loadUserWithToken?.new) {
         await mutationInsertUser();
         return;
@@ -114,12 +113,6 @@ const LoginContainer = ({navigation}: Props) => {
     onError: () => {
       Alert.alert('오류가 발생했습니다. 관리자에게 문의해주세요.');
       setLoading(false);
-      console.log('아이디' + JSON.stringify(id));
-      console.log('아이디' + JSON.stringify(id));
-      console.log('아이디' + JSON.stringify(id));
-      console.log('타입' + JSON.stringify(type));
-      console.log('타입' + JSON.stringify(type));
-      console.log('타입' + JSON.stringify(type));
     },
   });
 
@@ -137,12 +130,6 @@ const LoginContainer = ({navigation}: Props) => {
       },
     },
     onCompleted: async d => {
-      console.log('아이디' + JSON.stringify(id));
-      console.log('아이디' + JSON.stringify(id));
-      console.log('아이디' + JSON.stringify(id));
-      console.log('타입' + JSON.stringify(type));
-      console.log('타입' + JSON.stringify(type));
-      console.log('타입' + JSON.stringify(type));
       await mutationLogin();
     },
     onError: () => {
