@@ -83,13 +83,11 @@ const LoginContainer = ({navigation}: Props) => {
       );
       await firebase.auth().signInWithCredential(credential);
       await setToken(JSON.stringify(data.idToken));
-      await setId(String(data.id));
+      await setId(data.user.id);
       await setType('GOOGLE');
       await setProfile(data.user.photo);
       await setNickname(data.user.name);
       await setGoogleToken(data.idToken);
-      console.log(id, type);
-      console.log(data.user.id, 'GOOGLE');
       await mutationLoadUserWithToken();
     } catch (e) {
       setLoading(false);
@@ -105,6 +103,7 @@ const LoginContainer = ({navigation}: Props) => {
       type,
     },
     onCompleted: async d => {
+      console.log('결과' + JSON.stringify(d));
       if (d?.loadUserWithToken?.new) {
         await mutationInsertUser();
         return;
@@ -112,15 +111,15 @@ const LoginContainer = ({navigation}: Props) => {
         await mutationLogin();
       }
     },
-    onError: e => {
-      console.log(id, type);
-      console.log(id, type);
-      console.log(id, type);
-      console.log(id, type);
+    onError: () => {
       Alert.alert('오류가 발생했습니다. 관리자에게 문의해주세요.');
       setLoading(false);
-      console.log('오류 발생');
-      console.log(JSON.stringify(e));
+      console.log('아이디' + JSON.stringify(id));
+      console.log('아이디' + JSON.stringify(id));
+      console.log('아이디' + JSON.stringify(id));
+      console.log('타입' + JSON.stringify(type));
+      console.log('타입' + JSON.stringify(type));
+      console.log('타입' + JSON.stringify(type));
     },
   });
 
@@ -133,17 +132,22 @@ const LoginContainer = ({navigation}: Props) => {
         google_token: googleToken,
         apple_token: appleToken,
         kakao_id: type === 'KAKAO' ? id : '',
-        google_id: type === 'GOOGLE' ? id : '',
+        google_id: type === 'GOOGLE' ? String(id) : '',
         apple_id: type === 'APPLE' ? id : '',
       },
     },
     onCompleted: async d => {
+      console.log('아이디' + JSON.stringify(id));
+      console.log('아이디' + JSON.stringify(id));
+      console.log('아이디' + JSON.stringify(id));
+      console.log('타입' + JSON.stringify(type));
+      console.log('타입' + JSON.stringify(type));
+      console.log('타입' + JSON.stringify(type));
       await mutationLogin();
     },
-    onError: e => {
+    onError: () => {
       Alert.alert('오류가 발생했습니다. 관리자에게 문의해주세요.');
       setLoading(false);
-      console.log(JSON.stringify(e));
     },
   });
 
@@ -164,10 +168,9 @@ const LoginContainer = ({navigation}: Props) => {
         await GoToHomePage(); // 프로필이 있다면 ..
       }
     },
-    onError: e => {
+    onError: () => {
       Alert.alert('로그인 오류가 발생했습니다.');
       setLoading(false);
-      console.log(JSON.stringify(e));
     },
   });
   const GoToInputProfilePage = () => {
