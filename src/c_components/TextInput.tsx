@@ -6,7 +6,7 @@ import {cssUtil} from '@utills/cssUtil';
 import FFText from './FFText';
 
 const Container = styled.View<ContainerProps>`
-  height: ${nomalizes[35]}px;
+  height: ${nomalizes[34]}px;
   background-color: #fff;
   border: ${props => (props.onlyBottom ? 0 : 1)}px solid #777777;
   border-radius: ${nomalizes[5]}px;
@@ -54,7 +54,7 @@ const TextInput = ({
       onlyBottom={onlyBottom}
       style={{
         borderBottomColor: onlyBottom ? '#DBDBDB' : '',
-        borderBottomWidth: onlyBottom ? 1 : 0,
+        borderBottomWidth: onlyBottom ? 1 : 1,
       }}>
       <TTextInput
         placeholder={placeholder ? placeholder : '닉네임 입력'}

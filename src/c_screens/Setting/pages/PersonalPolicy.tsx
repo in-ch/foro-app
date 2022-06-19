@@ -1,8 +1,8 @@
 import {NavigationProp} from '@react-navigation/native';
 import React from 'react';
-import {Text} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
+
 import Header from '@components/Header/Header';
 import {RootTabParamList} from '@navigation/RootNavigation';
 import {SizedBox} from '@components/SizedBox';
@@ -15,6 +15,10 @@ const Container = styled.View`
 const Wrapper = styled.View`
   width: 90%;
   margin-left: 5%;
+`;
+const TText = styled.Text`
+  color: #272727;
+  margin-top: 20px;
 `;
 
 export interface PersonalPolicyProps {
@@ -31,7 +35,7 @@ const PersonalPolicy = ({navigation}: PersonalPolicyProps) => {
       <Header text="개인정보처리방침" back={goBack} />
       <Wrapper>
         <ScrollView>
-          <Text>{`
+          <TText>{`
 이하 ‘푸로’ 서비스 이용을 위한 개인정보 처리방침입니다.
 
 ***<2HW> ('https://www.notion.so/namu4u/4aa35b51038e4f7ea0af9'이하 '푸로')*은(는) 「개인정보 보호법」 제30조에 따라 정보주체의 개인정보를 보호하고 이와 관련한 고충을 신속하고 원활하게 처리할 수 있도록 하기 위하여 다음과 같이 개인정보 처리방침을 수립·공개합니다.**
@@ -350,7 +354,7 @@ const PersonalPolicy = ({navigation}: PersonalPolicyProps) => {
 
   - 공고일자 : 2022년 6월 30일
   - 시행일자 : 2022년 7월 6일
-          `}</Text>
+          `}</TText>
           <SizedBox.Custom margin={nomalizes[100]} />
         </ScrollView>
       </Wrapper>

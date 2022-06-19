@@ -1,8 +1,8 @@
 import {NavigationProp} from '@react-navigation/native';
 import React from 'react';
-import {Text} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
+
 import Header from '@components/Header/Header';
 import {SizedBox} from '@components/SizedBox';
 import {RootTabParamList} from '@navigation/RootNavigation';
@@ -15,6 +15,10 @@ const Container = styled.View`
 const Wrapper = styled.View`
   width: 90%;
   margin-left: 5%;
+`;
+const TText = styled.Text`
+  color: #272727;
+  margin-top: 20px;
 `;
 
 export interface TermsProps {
@@ -30,7 +34,7 @@ const Terms = ({navigation}: TermsProps) => {
       <Header text="이용약관" back={goBack} />
       <Wrapper>
         <ScrollView>
-          <Text>{`제1장 총칙
+          <TText>{`제1장 총칙
 
 제1조 (목적) 이 약관은 '2HW'(이하 “회사”라 합니다)가 모바일 기기를 통해 제공하는 어플리케이션 서비스 및 이에 부수하는 네트워크, 웹사이트, 기타 서비스(이하 “서비스”라 합니다)의 이용에 대한 회사와 서비스 이용자의 권리ㆍ의무 및 책임사항, 기타 필요한 사항을 규정함을 목적으로 합니다.
 
@@ -243,7 +247,7 @@ const Terms = ({navigation}: TermsProps) => {
 제29조 (회원의 고충처리 및 분쟁해결)
 ① 회사는 회원의 편의를 고려하여 회원의 의견이나 불만을 제시하는 방법을 서비스 내 또는 그 연결화면에 안내합니다. 
 ② 회사는 회원으로부터 제기되는 의견이나 불만이 정당하다고 객관적으로 인정될 경우에는 합리적인 기간 내에 이를 신속하게 처리합니다. 다만, 처리에 장기간이 소요되는 경우에는 회원에게 장기간이 소요되는 사유와 처리일정을 게임서비스 내 공지하거나 제26조 제1항에 따라 통지합니다.
-③ 회사와 회원 간에 분쟁이 발생하여 제3의 분쟁조정기관이 조정할 경우 회사는 이용제한 등 회원에게 조치한 사항을 성실히 증명하고, 조정기관의 조정에 따를 수 있습니다.`}</Text>
+③ 회사와 회원 간에 분쟁이 발생하여 제3의 분쟁조정기관이 조정할 경우 회사는 이용제한 등 회원에게 조치한 사항을 성실히 증명하고, 조정기관의 조정에 따를 수 있습니다.`}</TText>
           <SizedBox.Custom margin={nomalizes[100]} />
         </ScrollView>
       </Wrapper>

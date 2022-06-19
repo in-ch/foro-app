@@ -12,6 +12,7 @@ import {RootTabParamList} from '@navigation/RootNavigation';
 import {SizedBox} from '@components/SizedBox';
 import {FoodData} from '~/types/Food';
 import {foods} from '~/data/FOOD';
+import {ScrollView} from 'react-native-gesture-handler';
 
 const Container = styled.View`
   flex: 1;
@@ -20,9 +21,7 @@ const Container = styled.View`
 const SearchResultBox = styled.TouchableOpacity`
   width: 90%;
   margin-left: 5%;
-  height: ${nomalizes[80]}px;
   margin-top: ${nomalizes[10]}px;
-  padding-bottom: ${nomalizes[10]}px;
   border-bottom-color: #dbdbdb;
 `;
 const SearchResultBoxHeading = styled.Text`
@@ -31,7 +30,6 @@ const SearchResultBoxHeading = styled.Text`
   font-family: 'Pretendard';
 `;
 const SearchResultBoxTextContainer = styled.View`
-  height: ${nomalizes[16]}px;
   margin-top: ${nomalizes[10]}px;
   display: flex;
   font-family: 'Pretendard';
@@ -55,6 +53,7 @@ const HashTag = styled.View`
   background-color: #f5f5f5;
   display: flex;
   margin-right: ${nomalizes[5]}px;
+  margin-bottom: ${nomalizes[10]}px;
   border-radius: ${nomalizes[4]}px;
   ${cssUtil.doubleCenter};
 `;
@@ -81,30 +80,31 @@ const FoodSearchResult = ({navigation, route}: FoodSearchResultProps) => {
     <Container>
       <Header text={route.params.text} back={() => navigation.goBack()} />
       <SizedBox.Custom margin={nomalizes[20]} />
-
-      {results.map((food: FoodData) => {
-        return (
-          <SearchResultBox
-            style={{borderBottomWidth: 1}}
-            onPress={() => GoToFoodAddInput(food)}>
-            <SearchResultBoxHeading>{food.name}</SearchResultBoxHeading>
-            <SizedBox.Custom margin={nomalizes[5]} />
-            <SearchResultBoxTextContainer>
-              <SearchResultBoxText>식품 권장 기한</SearchResultBoxText>
-              <SearchResultBoxNumber>{food.date}일</SearchResultBoxNumber>
-            </SearchResultBoxTextContainer>
-            <SearchResultBoxTextContainer>
-              {food.keyword.map(keyword => {
-                return (
-                  <HashTag>
-                    <HashTagText>{keyword}</HashTagText>
-                  </HashTag>
-                );
-              })}
-            </SearchResultBoxTextContainer>
-          </SearchResultBox>
-        );
-      })}
+      <ScrollView>
+        {results.map((food: FoodData) => {
+          return (
+            <SearchResultBox
+              style={{borderBottomWidth: 1}}
+              onPress={() => GoToFoodAddInput(food)}>
+              <SearchResultBoxHeading>{food.name}</SearchResultBoxHeading>
+              <SizedBox.Custom margin={nomalizes[5]} />
+              <SearchResultBoxTextContainer>
+                <SearchResultBoxText>식품 권장 기한</SearchResultBoxText>
+                <SearchResultBoxNumber>{food.date}일</SearchResultBoxNumber>
+              </SearchResultBoxTextContainer>
+              <SearchResultBoxTextContainer>
+                {food.keyword.map(keyword => {
+                  return (
+                    <HashTag>
+                      <HashTagText>{keyword}</HashTagText>
+                    </HashTag>
+                  );
+                })}
+              </SearchResultBoxTextContainer>
+            </SearchResultBox>
+          );
+        })}
+      </ScrollView>
     </Container>
   );
 };
