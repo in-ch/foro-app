@@ -3,8 +3,8 @@ import styled from 'styled-components/native';
 
 import Header from '@components/Header/Header';
 import SearchInput from '@components/SearchInput';
-import {nomalizes} from '@utills/constants';
-import {SizedBox} from '@components/SizedBox';
+import {cWidth, nomalizes} from '@utills/constants';
+import {FoodData} from '~/types/Food';
 
 const Container = styled.View`
   flex: 1;
@@ -18,15 +18,51 @@ const Heading = styled.Text`
   margin-bottom: ${nomalizes[10]}px;
   color: #000;
 `;
+const SearchResultBoxTextContainer = styled.ScrollView`
+  width: 100%;
+  margin-top: ${nomalizes[10]}px;
+  display: flex;
+  font-family: 'Pretendard';
+  flex-direction: row;
+  padding-left: ${nomalizes[10]}px;
+  padding-right: ${nomalizes[10]}px;
+`;
+const SearchResultBoxTextWrapper = styled.View`
+  display: flex;
+  width: ${cWidth * 0.85}px;
+  height: ${nomalizes[16]}px;
+  margin-bottom: ${nomalizes[10]}px;
+  font-family: 'Pretendard';
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`;
+const SearchResultBoxText = styled.Text`
+  font-size: ${nomalizes[11]}px;
+  color: rgb(50, 50, 50);
+  font-family: 'Pretendard';
+`;
+const SearchResultBoxRemainText = styled.Text`
+  font-size: ${nomalizes[9]}px;
+  color: rgb(109, 109, 109);
+  font-family: 'Pretendard';
+`;
 
 interface Props {
   GoBack: () => void;
   handleSearch: () => void;
   value: string;
-  setValue: (value: string) => void;
+  handleChangeText: (value: string) => void;
+  results: FoodData[];
 }
 
-const FoodAddPresenter = ({GoBack, handleSearch, value, setValue}: Props) => {
+const FoodAddPresenter = ({
+  GoBack,
+  handleSearch,
+  value,
+  handleChangeText,
+  results,
+}: Props) => {
   return (
     <>
       <Header text="식품 추가하기" back={GoBack} />
@@ -34,12 +70,24 @@ const FoodAddPresenter = ({GoBack, handleSearch, value, setValue}: Props) => {
         <Heading>식품명</Heading>
         <SearchInput
           value={value}
-          setValue={(values: string) => setValue(values)}
+          setValue={(values: string) => handleChangeText(values)}
           placeholder="식품명 검색하기"
           width={100}
           onSubmit={handleSearch}
         />
-        <SizedBox.Custom margin={nomalizes[20]} />
+        <SearchResultBoxTextContainer>
+          {results !== [] &&
+            results.map((food: FoodData) => {
+              return (
+                <SearchResultBoxTextWrapper>
+                  <SearchResultBoxText>{food?.name}</SearchResultBoxText>
+                  <SearchResultBoxRemainText>
+                    소비기한: {food?.date}일
+                  </SearchResultBoxRemainText>
+                </SearchResultBoxTextWrapper>
+              );
+            })}
+        </SearchResultBoxTextContainer>
       </Container>
     </>
   );

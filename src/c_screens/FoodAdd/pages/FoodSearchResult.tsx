@@ -2,16 +2,16 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useEffect, useState} from 'react';
 import styled from 'styled-components/native';
+import {NavigationProp, RouteProp} from '@react-navigation/native';
 
 import {nomalizes} from '@utills/constants';
 import {cssUtil} from '@utills/cssUtil';
+import {getListFilter} from '@utills/getListFilter';
 import Header from '@components/Header/Header';
 import {RootTabParamList} from '@navigation/RootNavigation';
-import {NavigationProp, RouteProp} from '@react-navigation/native';
 import {SizedBox} from '@components/SizedBox';
 import {FoodData} from '~/types/Food';
 import {foods} from '~/data/FOOD';
-import {getListFilter} from '~/utills/getListFilter';
 
 const Container = styled.View`
   flex: 1;

@@ -17,7 +17,7 @@ import TextInput from '@components/TextInput';
 import {cssUtil} from '@utills/cssUtil';
 import {CategoryProps} from '~/types/Category';
 import {useQuery} from '@apollo/client';
-import {LOAD_CATEGORY} from '~/c_services/queries/category';
+import {LOAD_CATEGORY} from '@services/queries/category';
 
 const Container = styled.KeyboardAvoidingView`
   flex: 1;

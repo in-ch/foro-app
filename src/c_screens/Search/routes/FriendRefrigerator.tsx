@@ -4,7 +4,7 @@ import styled from 'styled-components/native';
 import SearchInput from '@components/SearchInput';
 import {SizedBox} from '@components/SizedBox';
 import {nomalizes} from '@utills/constants';
-import CCheckBox from '~/c_components/CheckBox';
+import CCheckBox from '@components/CheckBox';
 
 const Wrapper = styled.View`
   width: 90%;
