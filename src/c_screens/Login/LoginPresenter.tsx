@@ -28,23 +28,27 @@ const LoginJon = styled.View`
   margin-top: ${cHeight < 720 ? nomalizes[50] : nomalizes[150]}px;
   position: absolute;
   bottom: ${nomalizes[30]}px;
-  display: flex;
   ${cssUtil.doubleCenter};
 `;
-const PhoneButton = styled.TouchableOpacity`
+const PhoneButton = styled.TouchableOpacity<ButtonProps>`
   width: 80%;
-  height: ${nomalizes[40]}px;
+  height: ${nomalizes[35]}px;
   border-radius: ${nomalizes[10]}px;
-  background-color: #f5f5f5;
+  background-color: ${props => props.background};
   margin-bottom: ${nomalizes[10]}px;
-  border: 1px solid #b1b1b1;
   display: flex;
   flex-direction: row;
-  ${cssUtil.doubleCenter};
+  padding-left: ${nomalizes[20]}px;
+  align-items: center;
 `;
-const TText = styled.Text`
+const TextContainer = styled.View`
+  flex: 1;
+  align-items: center;
+  padding-right: ${nomalizes[45]}px;
+`;
+const TText = styled.Text<TextProps>`
   margin-left: ${nomalizes[10]}px;
-  color: rgb(50, 50, 50);
+  color: ${props => props.color};
   font-family: 'Pretendard';
 `;
 const Heading = styled.Text`
@@ -71,6 +75,12 @@ interface Props {
   signInWithGoogle: () => void;
   loading: boolean;
 }
+interface TextProps {
+  color: string;
+}
+interface ButtonProps {
+  background: string;
+}
 
 const LoginPresenter = ({
   signInWithKakao,
@@ -95,7 +105,7 @@ const LoginPresenter = ({
               <Heading2>이웃과 음식을 나눠 보세요.</Heading2>
             </IntroJon>
             <LoginJon>
-              <PhoneButton onPress={signInWithKakao}>
+              <PhoneButton background={'#FEE501'} onPress={signInWithKakao}>
                 <Image
                   style={{
                     width: nomalizes[25],
@@ -103,9 +113,11 @@ const LoginPresenter = ({
                   }}
                   source={Images.kakao}
                 />
-                <TText>카카오로 로그인</TText>
+                <TextContainer>
+                  <TText color="#272727">카카오로 로그인</TText>
+                </TextContainer>
               </PhoneButton>
-              <PhoneButton onPress={signInWithGoogle}>
+              <PhoneButton background={'#F45A5D'} onPress={signInWithGoogle}>
                 <Image
                   style={{
                     width: nomalizes[25],
@@ -113,9 +125,12 @@ const LoginPresenter = ({
                   }}
                   source={Images.google}
                 />
-                <TText>구글로 로그인</TText>
+                <TextContainer>
+                  <TText color="#fff">구글로 로그인</TText>
+                </TextContainer>
               </PhoneButton>
               <PhoneButton
+                background={'#000'}
                 onPress={() => {
                   console.log();
                 }}>
@@ -126,7 +141,9 @@ const LoginPresenter = ({
                   }}
                   source={Images.apple}
                 />
-                <TText>애플로 로그인</TText>
+                <TextContainer>
+                  <TText color="#fff">애플로 로그인</TText>
+                </TextContainer>
               </PhoneButton>
             </LoginJon>
           </Container>
