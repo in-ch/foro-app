@@ -11,7 +11,6 @@ import MenuBar from '@components/MenuBar/MenuBar';
 import Storys from '@components/Storys/Storys';
 import {cssUtil} from '@utills/cssUtil';
 import images from '@assets/images';
-import {ScrollView} from 'react-native-gesture-handler';
 
 const ModalBackground = styled.View`
   background-color: rgba(0, 0, 0, 0);
@@ -58,44 +57,42 @@ const HomePresenter = ({
   Logout,
 }: Props) => {
   return (
-    <ScrollView>
-      <View
+    <View
+      style={{
+        backgroundColor: '#fff',
+        flex: 1,
+      }}>
+      <SizedBox.Custom
+        margin={statusBarHeight}
         style={{
-          backgroundColor: '#fff',
-          flex: 1,
-        }}>
-        <SizedBox.Custom
-          margin={statusBarHeight}
-          style={{
-            backgroundColor: '#F4F4F4',
-          }}
-        />
-        <MenuBar
-          GoToAlarm={GoToAlarm}
-          GoToSearch={GoToSearch}
-          GoToCategory={GoToCategory}
-          GoToNeighbor={GoToNeighbor}
-          GoToSetting={GoToSetting}
-          GoToProfile={GoToProfile}
-          Logout={Logout}
-        />
-        <Storys />
+          backgroundColor: '#F4F4F4',
+        }}
+      />
+      <MenuBar
+        GoToAlarm={GoToAlarm}
+        GoToSearch={GoToSearch}
+        GoToCategory={GoToCategory}
+        GoToNeighbor={GoToNeighbor}
+        GoToSetting={GoToSetting}
+        GoToProfile={GoToProfile}
+        Logout={Logout}
+      />
+      <Storys />
 
-        <CCalendar GoToAgenda={GoToAgenda} GoToDetail={GoToDetail} />
+      <CCalendar GoToAgenda={GoToAgenda} GoToDetail={GoToDetail} />
 
-        <ModalBackground>
-          <ModalButton onPress={GoToFoodAdd}>
-            <Image
-              style={{
-                width: nomalizes[18],
-                height: nomalizes[18],
-              }}
-              source={images.plusWhite}
-            />
-          </ModalButton>
-        </ModalBackground>
-      </View>
-    </ScrollView>
+      <ModalBackground>
+        <ModalButton onPress={GoToFoodAdd}>
+          <Image
+            style={{
+              width: nomalizes[18],
+              height: nomalizes[18],
+            }}
+            source={images.plusWhite}
+          />
+        </ModalButton>
+      </ModalBackground>
+    </View>
   );
 };
 
