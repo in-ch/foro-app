@@ -1,6 +1,8 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {ApolloProvider} from '@apollo/client';
 import {NavigationContainer} from '@react-navigation/native';
+import {Dimensions} from 'react-native';
+import RNRestart from 'react-native-restart';
 
 import client from './src/apollo/client';
 import RootNavigation from './src/navigation/RootNavigation';
@@ -15,6 +17,12 @@ const linking = {
 };
 
 const App = () => {
+  useEffect(() => {
+    const subscription = Dimensions.addEventListener('change', () => {
+      RNRestart.Restart();
+    });
+    return () => subscription?.remove();
+  });
   return (
     <>
       <ApolloProvider client={client}>
