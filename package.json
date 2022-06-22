@@ -10,11 +10,12 @@
     "lint": "eslint .",
     "pod": "cd ios && arch -arm64 pod install",
     "androidTcp": "adb -s emulator-5554 reverse tcp:3000 tcp:3000",
-    "iosPhone": "react-native run-ios --device '인치의 iPhone'",
+    "iosPhone": "react-native run-ios --device '성인치의 iPad'",
     "build:ios": "react-native bundle --entry-file='index.js' --bundle-output='./ios/main.jsbundle' --dev=false --platform='ios'"
   },
   "dependencies": {
     "@apollo/client": "^3.4.9",
+    "@invertase/react-native-apple-authentication": "^2.2.1",
     "@react-native-community/async-storage": "^1.12.1",
     "@react-native-firebase/app": "^14.11.0",
     "@react-native-firebase/auth": "^14.11.0",

@@ -73,6 +73,7 @@ const LoadingContainer = styled.View`
 interface Props {
   signInWithKakao: () => void;
   signInWithGoogle: () => void;
+  signInWithApple: () => void;
   loading: boolean;
 }
 interface TextProps {
@@ -85,6 +86,7 @@ interface ButtonProps {
 const LoginPresenter = ({
   signInWithKakao,
   signInWithGoogle,
+  signInWithApple,
   loading,
 }: Props) => {
   return (
@@ -129,11 +131,7 @@ const LoginPresenter = ({
                   <TText color="#fff">구글로 로그인</TText>
                 </TextContainer>
               </PhoneButton>
-              <PhoneButton
-                background={'#000'}
-                onPress={() => {
-                  console.log();
-                }}>
+              <PhoneButton background={'#000'} onPress={signInWithApple}>
                 <Image
                   style={{
                     width: nomalizes[25],

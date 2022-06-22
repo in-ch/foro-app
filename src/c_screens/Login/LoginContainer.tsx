@@ -3,7 +3,7 @@
 // @ts-nocheck
 
 import {NavigationProp} from '@react-navigation/native';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {
   KakaoOAuthToken,
   login,
@@ -12,8 +12,9 @@ import {
   getProfile as getKakaoProfile,
 } from '@react-native-seoul/kakao-login';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import {appleAuth} from '@invertase/react-native-apple-authentication';
 
-import auth, {firebase} from '@react-native-firebase/auth';
+import {firebase} from '@react-native-firebase/auth';
 import {useMutation} from '@apollo/client';
 import {Alert} from 'react-native';
 
@@ -95,6 +96,32 @@ const LoginContainer = ({navigation}: Props) => {
   };
 
   // apple login
+  const onAppleButtonPress = async () => {
+    const appleAuthRequestResponse = await appleAuth.performRequest({
+      requestedOperation: appleAuth.Operation.LOGIN,
+      requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
+    });
+
+    const credentialState = await appleAuth.getCredentialStateForUser(
+      appleAuthRequestResponse.user,
+    );
+
+    if (credentialState === appleAuth.State.AUTHORIZED) {
+      // 애플 로그인 인증 완료
+      await setToken(appleAuthRequestResponse.identityToken);
+      await setId(appleAuthRequestResponse.user);
+      await setAppleToken(appleAuthRequestResponse.identityToken);
+      await setType('APPLE');
+      await setNickname(
+        appleAuthRequestResponse.fullName?.nickname
+          ? appleAuthRequestResponse.fullName?.nickname
+          : `User${Math.floor(Math.random() * 1000000)}`,
+      );
+      await mutationLoadUserWithToken();
+    } else {
+      Alert.alert('로그인에 실패하였습니다.');
+    }
+  };
 
   const [mutationLoadUserWithToken] = useMutation(LOAD_USER_WITH_TOKEN, {
     // 유저가 있었는지 여부
@@ -110,8 +137,10 @@ const LoginContainer = ({navigation}: Props) => {
         await mutationLogin();
       }
     },
-    onError: () => {
+    onError: e => {
       Alert.alert('오류가 발생했습니다. 관리자에게 문의해주세요.');
+      console.log('하-잉');
+      console.log(JSON.stringify(e));
       setLoading(false);
     },
   });
@@ -132,8 +161,9 @@ const LoginContainer = ({navigation}: Props) => {
     onCompleted: async d => {
       await mutationLogin();
     },
-    onError: () => {
+    onError: e => {
       Alert.alert('오류가 발생했습니다. 관리자에게 문의해주세요.');
+      setLoading(false);
       setLoading(false);
     },
   });
@@ -174,6 +204,7 @@ const LoginContainer = ({navigation}: Props) => {
       <LoginPresenter
         signInWithKakao={Kakaologin}
         signInWithGoogle={onGoogleButtonPress}
+        signInWithApple={onAppleButtonPress}
         loading={loading}
       />
     </>
