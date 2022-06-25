@@ -6,6 +6,7 @@ import RNRestart from 'react-native-restart';
 
 import client from './src/apollo/client';
 import RootNavigation from './src/navigation/RootNavigation';
+import testPush from '~/hooks/Notification';
 
 const linking = {
   prefixes: ['kakao8e1ff68c09e6b4bb069c110e76d314df://'],
@@ -23,6 +24,10 @@ const App = () => {
     });
     return () => subscription?.remove();
   });
+
+  useEffect(() => {
+    testPush();
+  }, []);
   return (
     <>
       <ApolloProvider client={client}>

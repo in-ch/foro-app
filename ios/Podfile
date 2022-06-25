@@ -12,6 +12,8 @@ target 'foro' do
     :hermes_enabled => false
   )
 
+  pod 'RNCPushNotificationIOS', :path => '../node_modules/@react-native-community/push-notification-ios'
+
   target 'foroTests' do
     inherit! :complete
     # Pods for testing
