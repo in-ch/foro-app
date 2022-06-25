@@ -22,12 +22,12 @@ PushNotification.configure({
   requestPermissions: true,
 });
 
-PushNotification.channelExists('testPush', function (exists) {
+PushNotification.channelExists('notification', function (exists) {
   if (!exists) {
-    // testPush 권한(채널)이 없으면 생성해 준다.
+    // notification 권한(채널)이 없으면 생성해 준다.
     PushNotification.createChannel(
       {
-        channelId: 'testPush', // (required)
+        channelId: 'notification', // (required)
         channelName: 'teshPush', // (required)
         playSound: false,
         soundName: 'default',
@@ -39,12 +39,12 @@ PushNotification.channelExists('testPush', function (exists) {
   }
 });
 
-export const testPush = () => {
+export const notification = (title: string | undefined, message: string) => {
   PushNotification.localNotification({
-    channelId: 'testPush',
-    title: '메시지', // (optional)
-    message: '메시지 보냄', // (required)
+    channelId: 'notification',
+    title, // (optional)
+    message, // (required)
   });
 };
 
-export default testPush;
+export default notification;

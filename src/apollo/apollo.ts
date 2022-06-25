@@ -33,7 +33,7 @@ const usedToken = async () => {
   // 토크닝 있으면 값을 여기다가 넣어줌.
   const to: any = await AsyncStorage.getItem(TOKEN);
   if (to) {
-    isLoggedInVar(true);
+    // isLoggedInVar(true);
     tokenVar(to);
     const decoded: any = decode(to);
     tokenUserNo(decoded.id);
