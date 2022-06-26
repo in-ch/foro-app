@@ -6,7 +6,6 @@ import RNRestart from 'react-native-restart';
 
 import client from './src/apollo/client';
 import RootNavigation from './src/navigation/RootNavigation';
-import Pushinit from '~/utills/notification';
 
 const linking = {
   prefixes: ['kakao8e1ff68c09e6b4bb069c110e76d314df://'],
@@ -18,8 +17,6 @@ const linking = {
 };
 
 const App = () => {
-  Pushinit(); // 푸쉬 관련 코드
-
   useEffect(() => {
     // 화면 크기 변할 시 새로고침
     const subscription = Dimensions.addEventListener('change', () => {

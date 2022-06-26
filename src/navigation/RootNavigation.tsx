@@ -3,6 +3,7 @@ import {
   CardStyleInterpolators,
   createStackNavigator,
 } from '@react-navigation/stack';
+
 import Home from '@screens/Home/Home';
 import Login from '@screens/Login/Login';
 import InputProfile from '@screens/Login/Pages/InputProfile/InputProfile';
@@ -24,7 +25,7 @@ import PersonalPolicy from '@screens/Setting/pages/PersonalPolicy';
 import Profile from '@screens/Profile/Profile';
 import ProfileEdit from '@screens/Profile/pages/ProfileEdit';
 import {FoodData} from '~/types/Food';
-import UserAdd from '~/c_screens/UserAdd/UserAdd';
+import UserAdd from '@screens/UserAdd/UserAdd';
 
 export type RootTabParamList = {
   Home: {};

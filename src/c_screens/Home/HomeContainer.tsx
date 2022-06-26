@@ -1,5 +1,9 @@
-import React from 'react';
-import {logUserIn} from '~/apollo/apollo';
+import {useMutation, useReactiveVar} from '@apollo/client';
+import React, {useEffect} from 'react';
+
+import {logUserIn, tokenUserNo} from '~/apollo/apollo';
+import {UPDATE_USER} from '@services/mutations/user';
+import Pushinit from '@utills/notification';
 import {HomeProps} from './Home';
 import HomePresenter from './HomePresenter';
 
@@ -37,6 +41,30 @@ const HomeContainer = ({navigation}: HomeProps) => {
       routes: [{name: 'Login', params: {}}],
     });
   };
+
+  const userNo = useReactiveVar(tokenUserNo);
+  const [mutationUpdateUser] = useMutation(UPDATE_USER);
+  const token = Pushinit(); // 푸쉬 관련 코드
+
+  useEffect(() => {
+    if (userNo !== null || userNo !== undefined) {
+      mutationUpdateUser({
+        variables: {
+          user: {
+            pushToken: token,
+          },
+          userNo,
+        },
+        onCompleted: d => {
+          console.log(JSON.stringify(d));
+        },
+        onError: e => {
+          console.log(JSON.stringify(e));
+          console.log('유저 넘버: ' + JSON.stringify(userNo));
+        },
+      });
+    }
+  }, [token, mutationUpdateUser, userNo]);
 
   return (
     <>

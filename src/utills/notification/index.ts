@@ -1,6 +1,6 @@
 import {useAsyncStorage} from '@react-native-community/async-storage';
 import messaging from '@react-native-firebase/messaging';
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import {Alert, Platform} from 'react-native';
 import {Linking} from 'react-native';
 
@@ -19,6 +19,7 @@ export async function requestUserPermission() {
 }
 
 const Pushinit = () => {
+  const [token, setToken] = useState('');
   const {getItem: getFcmItem, setItem: setFcmItem} =
     useAsyncStorage('fcmToken');
 
@@ -30,8 +31,7 @@ const Pushinit = () => {
         setFcmItem(fcmToken); // 회원가입, 로그인할 때 활용
       }
       await userDeviceToken(fcmToken);
-      const deviceToken = userDeviceToken(fcmToken);
-      console.log('🚒fcm token::', deviceToken);
+      await setToken(fcmToken);
     };
 
     requestUserPermission();
@@ -46,6 +46,8 @@ const Pushinit = () => {
     });
     return unsubscribe;
   }, [getFcmItem, setFcmItem]);
+
+  return token;
 };
 
 export default Pushinit;
