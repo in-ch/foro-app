@@ -44,6 +44,7 @@ const TextContainer = styled.View`
 
 const TTextInput = styled.TextInput`
   flex: 1;
+  color: rgb(50, 50, 50);
 `;
 const ImageContainer = styled.TouchableOpacity`
   width: ${nomalizes[66]}px;
