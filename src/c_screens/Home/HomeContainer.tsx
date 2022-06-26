@@ -55,13 +55,6 @@ const HomeContainer = ({navigation}: HomeProps) => {
           },
           userNo,
         },
-        onCompleted: d => {
-          console.log(JSON.stringify(d));
-        },
-        onError: e => {
-          console.log(JSON.stringify(e));
-          console.log('유저 넘버: ' + JSON.stringify(userNo));
-        },
       });
     }
   }, [token, mutationUpdateUser, userNo]);
