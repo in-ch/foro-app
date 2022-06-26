@@ -1,18 +1,21 @@
 import {useAsyncStorage} from '@react-native-community/async-storage';
 import messaging from '@react-native-firebase/messaging';
 import {useEffect} from 'react';
-import {Alert} from 'react-native';
+import {Alert, Platform} from 'react-native';
+import {Linking} from 'react-native';
+
 import {userDeviceToken} from '~/apollo/apollo';
 import {notification} from '~/hooks/Notification';
 
 export async function requestUserPermission() {
   const authStatus = await messaging().requestPermission();
-  console.log('권한 : ' + JSON.stringify(authStatus));
   if (!(authStatus === 1)) {
     // 권한 실행이 안되어 있을 경우.
     Alert.alert('알림 권한 설정이 필요합니다.');
+    if (Platform.OS === 'ios') {
+      Linking.openURL('App-Prefs:root');
+    }
   }
-  console.log('알림 권한 : ' + authStatus);
 }
 
 const Pushinit = () => {
