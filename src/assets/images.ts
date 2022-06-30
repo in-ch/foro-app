@@ -20,6 +20,7 @@ const images = {
   close: require('./icons/close-icon.png'),
   loading: require('./icons/loading.gif'),
   list: require('./icons/list-icon.png'),
+  intro1: require('./intros/intro1.png'),
 };
 
 export default images;

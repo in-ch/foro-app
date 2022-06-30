@@ -11,6 +11,7 @@ import MenuBar from '@components/MenuBar/MenuBar';
 import Storys from '@components/Storys/Storys';
 import {cssUtil} from '@utills/cssUtil';
 import images from '@assets/images';
+import IntroApp from '~/c_components/Intro/IntroApp';
 
 const ModalBackground = styled.View`
   background-color: rgba(0, 0, 0, 0);
@@ -62,6 +63,7 @@ const HomePresenter = ({
         backgroundColor: '#fff',
         flex: 1,
       }}>
+      <IntroApp />
       <SizedBox.Custom
         margin={statusBarHeight}
         style={{
