@@ -43,6 +43,7 @@ interface Props {
   GoToSetting: () => void;
   GoToProfile: () => void;
   Logout: () => void;
+  inTroskip: null | boolean | string;
 }
 
 const HomePresenter = ({
@@ -56,6 +57,7 @@ const HomePresenter = ({
   GoToSetting,
   GoToProfile,
   Logout,
+  inTroskip,
 }: Props) => {
   return (
     <View
@@ -63,7 +65,7 @@ const HomePresenter = ({
         backgroundColor: '#fff',
         flex: 1,
       }}>
-      <IntroApp />
+      {inTroskip === false && <IntroApp />}
       <SizedBox.Custom
         margin={statusBarHeight}
         style={{

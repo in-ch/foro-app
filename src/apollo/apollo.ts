@@ -41,14 +41,14 @@ const usedToken = async () => {
 };
 
 // 인트로 관련
-export const IntroSkip = makeVar<string | null>(null);
+export const IntroSkip = makeVar<boolean>(false);
 
 const skipIntro = async () => {
   // 스킵 토큰이 있는 지 없는지
   const sk: any = await AsyncStorage.getItem(SKIP);
   if (sk) {
     // await AsyncStorage.removeItem(SKIP);
-    IntroSkip('true');
+    IntroSkip(true);
   }
 };
 export const doIntroSkip = async () => {

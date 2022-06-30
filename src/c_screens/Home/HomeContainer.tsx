@@ -1,7 +1,7 @@
 import {useMutation, useReactiveVar} from '@apollo/client';
 import React, {useEffect} from 'react';
 
-import {logUserIn, tokenUserNo} from '~/apollo/apollo';
+import {IntroSkip, logUserIn, tokenUserNo} from '~/apollo/apollo';
 import {UPDATE_USER} from '@services/mutations/user';
 import Pushinit from '@utills/notification';
 import {HomeProps} from './Home';
@@ -45,6 +45,7 @@ const HomeContainer = ({navigation}: HomeProps) => {
   const userNo = useReactiveVar(tokenUserNo);
   const [mutationUpdateUser] = useMutation(UPDATE_USER);
   const token = Pushinit(); // 푸쉬 관련 코드
+  const inTroskip = useReactiveVar(IntroSkip);
 
   useEffect(() => {
     if (userNo !== null || userNo !== undefined) {
@@ -72,6 +73,7 @@ const HomeContainer = ({navigation}: HomeProps) => {
         GoToSetting={GoToSetting}
         GoToProfile={GoToProfile}
         Logout={Logout}
+        inTroskip={inTroskip}
       />
     </>
   );

@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
-import {useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import React from 'react';
 import {
   Dimensions,
@@ -8,6 +9,7 @@ import {
   StatusBar,
   StyleSheet,
   View,
+  Animated,
 } from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
@@ -23,6 +25,7 @@ const Container = styled.View<Props>`
   z-index: 999999999998;
   display: ${(props: any) => (props.hide ? 'flex' : 'none')};
 `;
+const AnimatedContainer = Animated.createAnimatedComponent(Container);
 
 const ButtonContainer = styled.TouchableOpacity`
   width: ${cWidth * 0.9}px;
@@ -75,6 +78,22 @@ interface HighlightProps {
 }
 
 const IntroApp = () => {
+  const animatedValue = useRef(new Animated.Value(0)).current;
+  const onShow = () => {
+    Animated.timing(animatedValue, {
+      toValue: 1,
+      duration: 500,
+      useNativeDriver: false,
+    }).start();
+  };
+  const onHide = () => {
+    Animated.timing(animatedValue, {
+      toValue: 0,
+      duration: 500,
+      useNativeDriver: false,
+    }).start();
+  };
+
   const [sliderState, setSliderState] = useState({currentPage: 0});
   const [hide, setHide] = useState(true);
 
@@ -94,13 +113,20 @@ const IntroApp = () => {
 
   const sktip = async () => {
     await doIntroSkip();
-    setHide(false);
+    onHide();
+    setTimeout(() => {
+      setHide(false);
+    }, 501);
   };
+
+  useEffect(() => {
+    onShow();
+  }, []);
 
   const {currentPage: pageIndex} = sliderState;
 
   return (
-    <Container hide={hide}>
+    <AnimatedContainer hide={hide} style={{opacity: animatedValue}}>
       <StatusBar barStyle="dark-content" />
       <ScrollView
         style={{flex: 1}}
@@ -174,7 +200,7 @@ const IntroApp = () => {
           </SkipButtonContainer>
         </ButtonContainer>
       </View>
-    </Container>
+    </AnimatedContainer>
   );
 };
 
