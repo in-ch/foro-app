@@ -29,11 +29,11 @@ const AnimatedContainer = Animated.createAnimatedComponent(Container);
 
 const ButtonContainer = styled.TouchableOpacity`
   width: ${cWidth * 0.9}px;
-  height: ${cHeight * 0.3}px;
+  height: ${cHeight * 0.4}px;
   position: absolute;
   border-radius: ${nomalizes[15]}px;
   right: ${cWidth * 0.05}px;
-  top: ${cHeight * 0.7}px;
+  top: ${cHeight * 0.6}px;
   z-index: 999999999999;
   display: flex;
   ${cssUtil.doubleCenter};
@@ -102,7 +102,7 @@ const IntroApp = () => {
   const setSliderPage = (event: any) => {
     const {currentPage} = sliderState;
     const {x} = event.nativeEvent.contentOffset;
-    const indexOfNextScreen = Math.floor((x / width) * 1);
+    const indexOfNextScreen = Math.floor((x / width) * 1.1);
     if (indexOfNextScreen !== currentPage) {
       setSliderState({
         ...sliderState,
@@ -122,8 +122,6 @@ const IntroApp = () => {
   useEffect(() => {
     onShow();
   }, []);
-
-  const {currentPage: pageIndex} = sliderState;
 
   return (
     <AnimatedContainer hide={hide} style={{opacity: animatedValue}}>
@@ -175,15 +173,6 @@ const IntroApp = () => {
         </View>
       </ScrollView>
       <View style={styles.paginationWrapper}>
-        {Array.from(Array(3).keys()).map((key, index) => (
-          <View
-            style={[
-              styles.paginationDots,
-              {opacity: pageIndex === index ? 1 : 0.2},
-            ]}
-            key={index}
-          />
-        ))}
         <ButtonContainer>
           <Balls>
             <Ball highlight={sliderState.currentPage === 0} />
