@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		005E6EE97C8E496E9458256C /* Pretendard-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 32FAA7D84DDB473491EA49C4 /* Pretendard-Thin.ttf */; };
 		00E356F31AD99517003FC87E /* foroTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* foroTests.m */; };
+		08753BAC2871BC7100ACB47A /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 08753BAB2871BC7100ACB47A /* SplashScreen.storyboard */; };
 		08BD4FA22867526E00AE932D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 08BD4FA12867526E00AE932D /* GoogleService-Info.plist */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
@@ -41,6 +42,7 @@
 		00E356EE1AD99517003FC87E /* foroTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = foroTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* foroTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = foroTests.m; sourceTree = "<group>"; };
+		08753BAB2871BC7100ACB47A /* SplashScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SplashScreen.storyboard; sourceTree = "<group>"; };
 		08A959AE286357B900B4BFA1 /* foro.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = foro.entitlements; path = foro/foro.entitlements; sourceTree = "<group>"; };
 		08BD4FA12867526E00AE932D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* foro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = foro.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -169,6 +171,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				08753BAB2871BC7100ACB47A /* SplashScreen.storyboard */,
 				13B07FAE1A68108700A75B9A /* foro */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* foroTests */,
@@ -299,6 +302,7 @@
 				81E16F4D7C844515B218C619 /* Pretendard-SemiBold.ttf in Resources */,
 				005E6EE97C8E496E9458256C /* Pretendard-Thin.ttf in Resources */,
 				FF3B26DD32D84827B9A2E958 /* PretendardR.ttf in Resources */,
+				08753BAC2871BC7100ACB47A /* SplashScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
