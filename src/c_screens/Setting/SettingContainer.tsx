@@ -26,6 +26,9 @@ const SettingContainer = ({navigation}: SettingProps) => {
       );
       setLoading(false);
     },
+    onError: () => {
+      setLoading(false);
+    },
   });
 
   const goBack = () => {
