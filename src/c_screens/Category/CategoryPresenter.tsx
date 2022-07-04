@@ -80,6 +80,13 @@ const Hr = styled.View`
   width: 90%;
   height: 2px;
 `;
+const WideHr = styled.View`
+  background-color: #f5f5f5;
+  width: 100%;
+  margin-top: ${nomalizes[5]}px;
+  margin-bottom: ${nomalizes[5]}px;
+  height: ${nomalizes[10]}px;
+`;
 interface Props {
   goBack: () => void;
   goToCategoryAdd: () => void;
@@ -87,6 +94,7 @@ interface Props {
   modalShow: boolean;
   onShowModal: (value: number) => void;
   data: CategoryData[];
+  defaultCategory: CategoryData[];
   categoryNo: number;
   handleDeleteCategory: () => void;
   toastRef: any;
@@ -105,6 +113,7 @@ const CategoryPresenter = ({
   data,
   handleDeleteCategory,
   toastRef,
+  defaultCategory,
 }: Props) => {
   const goToUpdate = (no: number) => {
     onShowModal(no);
@@ -121,6 +130,27 @@ const CategoryPresenter = ({
           buttonStyle={true}
         />
         <SizedBox.Custom margin={nomalizes[10]} />
+        {defaultCategory?.map((category: CategoryData) => {
+          return (
+            <Box>
+              <Row>
+                <Mark color={category?.color} />
+                <TText>{category?.name}</TText>
+              </Row>
+              <RowRight onPress={() => onShowModal(category?.no)}>
+                <Image
+                  style={{
+                    width: nomalizes[16],
+                    height: nomalizes[16],
+                  }}
+                  source={images.setting}
+                />
+              </RowRight>
+            </Box>
+          );
+        })}
+
+        <WideHr />
 
         {data?.map((category: CategoryData) => {
           return (
