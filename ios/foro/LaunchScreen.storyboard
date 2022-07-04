@@ -23,7 +23,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" misplaced="YES" image="SplashIcon" translatesAutoresizingMaskIntoConstraints="NO" id="jh6-4C-qZA">
-                                <rect key="frame" x="96" y="117" width="183" height="213"/>
+                                <rect key="frame" x="111" y="154" width="142" height="138"/>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Bcu-3y-fUS"/>

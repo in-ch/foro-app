@@ -1,13 +1,14 @@
 import PushNotification, {Importance} from 'react-native-push-notification';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
-import {Alert} from 'react-native';
 
 PushNotification.configure({
   onRegister: function (token) {
     console.log('🥰 TOKEN:', token);
   },
   onNotification: function (notification) {
-    Alert.alert(String(notification.message));
+    console.log(
+      'notification 클릭 시 이벤트 : ' + JSON.stringify(notification),
+    );
     notification.finish(PushNotificationIOS.FetchResult.NoData);
   },
   onAction: function () {},
