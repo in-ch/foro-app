@@ -12,14 +12,14 @@ const images = {
   arrowDown: require('./icons/arrow-down-icon.png'),
   calendar: require('./icons/calendar-icon.png'),
   account: require('./icons/account-icon.png'),
-  uploadAccount: require('./icons/account.png'),
+  uploadAccount: require('./icons/user-icon.png'),
   plus: require('./icons/plus-icon.png'),
   bigPlus: require('./icons/big-plus-icon.png'),
   setting: require('./icons/setting-icon.png'),
   plusWhite: require('./icons/plus-white-icon.png'),
   close: require('./icons/close-icon.png'),
   loading: require('./icons/loading.gif'),
-  list: require('./icons/list-icon.png'),
+  list: require('./icons/calendar-icon.png'),
   intro1: require('./intros/intro1.png'),
 };
 

@@ -258,7 +258,8 @@ const MenuBar = ({
           <TouchableWithoutFeedback onPress={GoToAlarm}>
             <Img
               style={{
-                marginRight: nomalizes[5],
+                marginRight: nomalizes[7],
+                marginTop: nomalizes[3],
               }}
               source={Images.alarm}
             />
