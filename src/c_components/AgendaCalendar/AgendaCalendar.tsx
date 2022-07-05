@@ -1,5 +1,12 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, View, Image, TouchableNativeFeedback} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Image,
+  TouchableNativeFeedback,
+  Text,
+} from 'react-native';
 import {
   Agenda,
   DateData,
@@ -11,13 +18,13 @@ import styled from 'styled-components/native';
 import {useIsFocused} from '@react-navigation/native';
 
 import images from '@assets/images';
-import {nomalizes} from '@utills/constants';
+import {cWidth, nomalizes} from '@utills/constants';
 import {cssUtil} from '@utills/cssUtil';
 import {LOAD_FOOD} from '@services/queries/food';
 import {useQuery} from '@apollo/client';
 import {getDateListFilter} from '@utills/getListFilter';
 import {FoodData} from '~/types/Food';
-
+import {SizedBox} from '../SizedBox';
 const Heading = styled.Text`
   font-weight: bold;
   font-size: ${nomalizes[12]}px;
@@ -89,6 +96,12 @@ const ModalButton = styled.TouchableOpacity`
   background-color: #ff6c63;
   ${cssUtil.doubleCenter};
 `;
+const NoneContainer = styled.View`
+  width: ${cWidth}px;
+  height: ${nomalizes[400]}px;
+  display: flex;
+  ${cssUtil.doubleCenter};
+`;
 
 const testIDs = {
   menu: {
@@ -147,7 +160,12 @@ const AgendaScreen = ({selected, goToDetail, GoToFoodAdd}: Props) => {
       refetch();
     }
   }, [isFocused, refetch]);
+
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
   const [iitems, setIitems] = useState<AgendaSchedule | undefined>();
+
   const loadItems = (day: DateData) => {
     const itemsValue = iitems || {};
     for (let i = -15; i < 85; i++) {
@@ -245,24 +263,44 @@ const AgendaScreen = ({selected, goToDetail, GoToFoodAdd}: Props) => {
 
   const CAgenda = () => {
     return (
-      <Agenda
-        testID={testIDs.agenda.CONTAINER}
-        items={iitems}
-        loadItemsForMonth={loadItems}
-        selected={selectedValue}
-        renderItem={(item: any) => renderItem(item)}
-        renderEmptyDate={renderEmptyDate}
-        rowHasChanged={rowHasChanged}
-        disabledByDefault={false}
-        showClosingKnob={false}
-        theme={{
-          agendaDayNumColor: '#000',
-          agendaTodayColor: '#FF6C63',
-          agendaKnobColor: '#e4e4e4',
-          dotColor: '#FF6C63',
-          selectedDayBackgroundColor: '#FF6C63',
-        }}
-      />
+      <>
+        {data?.loadFood?.length === undefined || data?.loadFood?.length < 1 ? (
+          <NoneContainer>
+            <Image
+              style={{
+                width: nomalizes[80],
+                height: nomalizes[80],
+              }}
+              source={images.bigSearch}
+            />
+            <SizedBox.Custom margin={nomalizes[20]} />
+            <Text style={{fontSize: nomalizes[12], color: '#797979'}}>
+              등록한 식품이 없습니다.
+            </Text>
+          </NoneContainer>
+        ) : (
+          <>
+            <Agenda
+              testID={testIDs.agenda.CONTAINER}
+              items={iitems}
+              loadItemsForMonth={loadItems}
+              selected={selectedValue}
+              renderItem={(item: any) => renderItem(item)}
+              renderEmptyDate={renderEmptyDate}
+              rowHasChanged={rowHasChanged}
+              disabledByDefault={false}
+              showClosingKnob={false}
+              theme={{
+                agendaDayNumColor: '#000',
+                agendaTodayColor: '#FF6C63',
+                agendaKnobColor: '#e4e4e4',
+                dotColor: '#FF6C63',
+                selectedDayBackgroundColor: '#FF6C63',
+              }}
+            />
+          </>
+        )}
+      </>
     );
   };
 

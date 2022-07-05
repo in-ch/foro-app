@@ -5,6 +5,7 @@ const images = {
   logo: require('./imgs/logo.png'),
   back: require('./icons/back-icon.png'),
   search: require('./icons/search-icon.png'),
+  bigSearch: require('./icons/big-search.png'),
   alarm: require('./icons/alarm-icon.png'),
   hamber: require('./icons/hamber-icon.png'),
   user: require('./icons/user-icon.png'),
