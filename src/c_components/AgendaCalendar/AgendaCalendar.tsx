@@ -253,6 +253,7 @@ const AgendaScreen = ({selected, goToDetail, GoToFoodAdd}: Props) => {
         renderItem={(item: any) => renderItem(item)}
         renderEmptyDate={renderEmptyDate}
         rowHasChanged={rowHasChanged}
+        disabledByDefault={false}
         showClosingKnob={false}
         theme={{
           agendaDayNumColor: '#000',
@@ -293,9 +294,7 @@ const styles = StyleSheet.create({
     marginTop: 17,
   },
   emptyDate: {
-    height: 15,
-    flex: 1,
-    paddingTop: 30,
+    height: 1,
   },
 });
 

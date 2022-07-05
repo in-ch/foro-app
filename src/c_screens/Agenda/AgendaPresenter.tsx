@@ -12,6 +12,7 @@ interface Props {
   GoBack: () => void;
   goToDetail: (value: number) => void;
   selected?: string;
+  nickname: string;
   GoToFoodAdd: () => void;
 }
 const AgendaPresenter = ({
@@ -19,10 +20,11 @@ const AgendaPresenter = ({
   selected,
   goToDetail,
   GoToFoodAdd,
+  nickname,
 }: Props) => {
   return (
     <Container>
-      <Header text="아젠다" back={GoBack} />
+      <Header text={`${nickname}님의 리스트`} back={GoBack} />
       <AgendaCalendar
         selected={selected}
         goToDetail={goToDetail}

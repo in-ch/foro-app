@@ -36,10 +36,10 @@ const HomeContainer = ({navigation}: HomeProps) => {
     navigation.navigate('FoodAdd', {});
   };
   const GoToAgenda = () => {
-    navigation.navigate('newAgenda', {userId: Number(userNo)});
+    navigation.navigate('Agenda', {userId: Number(userNo)});
   };
   const GoToDetail = (selected: string) => {
-    navigation.navigate('newAgenda', {selected, userId: Number(userNo)});
+    navigation.navigate('Agenda', {selected, userId: Number(userNo)});
   };
   const GoToCategory = () => {
     navigation.navigate('Category', {});
