@@ -8,6 +8,24 @@ import {HomeProps} from './Home';
 import HomePresenter from './HomePresenter';
 
 const HomeContainer = ({navigation}: HomeProps) => {
+  const userNo = useReactiveVar(tokenUserNo);
+  const [mutationUpdateUser] = useMutation(UPDATE_USER);
+  const token = Pushinit(); // 푸쉬 관련 코드
+  const inTroskip = useReactiveVar(IntroSkip);
+
+  useEffect(() => {
+    if (userNo !== null || userNo !== undefined) {
+      mutationUpdateUser({
+        variables: {
+          user: {
+            pushToken: token,
+          },
+          userNo,
+        },
+      });
+    }
+  }, [token, mutationUpdateUser, userNo]);
+
   const GoToAlarm = () => {
     navigation.navigate('Alarm', {});
   };
@@ -18,10 +36,10 @@ const HomeContainer = ({navigation}: HomeProps) => {
     navigation.navigate('FoodAdd', {});
   };
   const GoToAgenda = () => {
-    navigation.navigate('Agenda', {});
+    navigation.navigate('newAgenda', {userId: Number(userNo)});
   };
   const GoToDetail = (selected: string) => {
-    navigation.navigate('Agenda', {selected});
+    navigation.navigate('newAgenda', {selected, userId: Number(userNo)});
   };
   const GoToCategory = () => {
     navigation.navigate('Category', {});
@@ -41,24 +59,6 @@ const HomeContainer = ({navigation}: HomeProps) => {
       routes: [{name: 'Login', params: {}}],
     });
   };
-
-  const userNo = useReactiveVar(tokenUserNo);
-  const [mutationUpdateUser] = useMutation(UPDATE_USER);
-  const token = Pushinit(); // 푸쉬 관련 코드
-  const inTroskip = useReactiveVar(IntroSkip);
-
-  useEffect(() => {
-    if (userNo !== null || userNo !== undefined) {
-      mutationUpdateUser({
-        variables: {
-          user: {
-            pushToken: token,
-          },
-          userNo,
-        },
-      });
-    }
-  }, [token, mutationUpdateUser, userNo]);
 
   return (
     <>
