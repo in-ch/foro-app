@@ -27,6 +27,7 @@ import ProfileEdit from '@screens/Profile/pages/ProfileEdit';
 import UserAdd from '@screens/UserAdd/UserAdd';
 
 import {FoodData} from '~/types/Food';
+import AgendaNew from '~/c_screens/AgendaNew/AgendaNew';
 
 export type RootTabParamList = {
   Home: {};
@@ -65,6 +66,10 @@ export type RootTabParamList = {
     selected?: string;
     userId: number;
   };
+  AgendaNew: {
+    selected?: string;
+    userId: number;
+  };
   FoodAddInput: {
     food: FoodData;
   };
@@ -99,6 +104,13 @@ const RootNavigation = () => {
       <Stack.Screen
         name="Agenda"
         component={Agenda}
+        options={{
+          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+        }}
+      />
+      <Stack.Screen
+        name="AgendaNew"
+        component={AgendaNew}
         options={{
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
         }}

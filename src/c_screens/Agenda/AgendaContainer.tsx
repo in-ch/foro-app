@@ -5,7 +5,6 @@ import {useQuery} from '@apollo/client';
 import {LOAD_USER} from '~/c_services/queries/user';
 
 const AgendaContainer = ({navigation, route}: AgendaProps) => {
-  console.log(route?.params?.userId);
   const GoBack = () => {
     navigation.goBack();
   };
