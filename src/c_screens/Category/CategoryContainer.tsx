@@ -39,7 +39,7 @@ const CategoryContainer = ({navigation}: CategoryProps) => {
     await setCategoryNo(value);
   };
 
-  const {data, refetch} = useQuery(LOAD_CATEGORY, {
+  const {data, refetch, loading} = useQuery(LOAD_CATEGORY, {
     variables: {
       userNo,
     },
@@ -89,6 +89,7 @@ const CategoryContainer = ({navigation}: CategoryProps) => {
       handleDeleteCategory={mutationDeleteCategory}
       toastRef={toastRef}
       defaultCategory={defaultCategory?.loadCategory}
+      loading={loading}
     />
   );
 };

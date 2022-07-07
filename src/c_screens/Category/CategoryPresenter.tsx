@@ -87,6 +87,15 @@ const WideHr = styled.View`
   margin-bottom: ${nomalizes[5]}px;
   height: ${nomalizes[10]}px;
 `;
+const NoResultContainer = styled.View`
+  position: relative;
+  top: -${nomalizes[40]}px;
+`;
+const Skeleton = styled.View`
+  width: ${nomalizes[60]}px;
+  height: ${nomalizes[15]}px;
+  background-color: #dddddd;
+`;
 interface Props {
   goBack: () => void;
   goToCategoryAdd: () => void;
@@ -98,6 +107,7 @@ interface Props {
   categoryNo: number;
   handleDeleteCategory: () => void;
   toastRef: any;
+  loading: boolean;
 }
 interface ColorProps {
   color: string;
@@ -114,6 +124,7 @@ const CategoryPresenter = ({
   handleDeleteCategory,
   toastRef,
   defaultCategory,
+  loading,
 }: Props) => {
   const goToUpdate = (no: number) => {
     onShowModal(no);
@@ -130,25 +141,87 @@ const CategoryPresenter = ({
           buttonStyle={true}
         />
         <SizedBox.Custom margin={nomalizes[10]} />
-        {defaultCategory?.map((category: CategoryData) => {
-          return (
+        {loading ? (
+          <>
             <Box>
               <Row>
-                <Mark color={category?.color} />
-                <TText>{category?.name}</TText>
+                <Mark color="#dddddd" />
+                <Skeleton />
               </Row>
-              <RowRight onPress={() => onShowModal(category?.no)}>
-                <Image
-                  style={{
-                    width: nomalizes[16],
-                    height: nomalizes[16],
-                  }}
-                  source={images.setting}
-                />
-              </RowRight>
             </Box>
-          );
-        })}
+            <Box>
+              <Row>
+                <Mark color="#dddddd" />
+                <Skeleton />
+              </Row>
+            </Box>
+            <Box>
+              <Row>
+                <Mark color="#dddddd" />
+                <Skeleton />
+              </Row>
+            </Box>
+            <Box>
+              <Row>
+                <Mark color="#dddddd" />
+                <Skeleton />
+              </Row>
+            </Box>
+            <Box>
+              <Row>
+                <Mark color="#dddddd" />
+                <Skeleton />
+              </Row>
+            </Box>
+            <Box>
+              <Row>
+                <Mark color="#dddddd" />
+                <Skeleton />
+              </Row>
+            </Box>
+            <Box>
+              <Row>
+                <Mark color="#dddddd" />
+                <Skeleton />
+              </Row>
+            </Box>
+            <Box>
+              <Row>
+                <Mark color="#dddddd" />
+                <Skeleton />
+              </Row>
+            </Box>
+            <Box>
+              <Row>
+                <Mark color="#dddddd" />
+                <Skeleton />
+              </Row>
+            </Box>
+            <Box>
+              <Row>
+                <Mark color="#dddddd" />
+                <Skeleton />
+              </Row>
+            </Box>
+            <Box>
+              <Row>
+                <Mark color="#dddddd" />
+                <Skeleton />
+              </Row>
+            </Box>
+          </>
+        ) : (
+          defaultCategory?.map((category: CategoryData) => {
+            return (
+              <Box>
+                <Row>
+                  <Mark color={category?.color} />
+                  <TText>{category?.name}</TText>
+                </Row>
+              </Box>
+            );
+          })
+        )}
 
         <WideHr />
 
@@ -172,7 +245,11 @@ const CategoryPresenter = ({
           );
         })}
 
-        {data?.length < 1 && <NoResult text="카테고리가 없습니다." />}
+        {data?.length < 1 && (
+          <NoResultContainer>
+            <NoResult text="카테고리가 없습니다." />
+          </NoResultContainer>
+        )}
 
         <Modal animationType="fade" visible={modalShow} transparent={true}>
           <Wrapper>
