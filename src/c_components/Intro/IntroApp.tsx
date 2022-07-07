@@ -22,10 +22,23 @@ import images from '@assets/images';
 const Container = styled.View<Props>`
   width: 100%;
   height: ${cHeight + nomalizes[50]}px;
-  z-index: 999999999998;
+  z-index: 9999999999998;
+  background-color: white;
   display: ${(props: any) => (props.hide ? 'flex' : 'none')};
 `;
 const AnimatedContainer = Animated.createAnimatedComponent(Container);
+
+const TopContainer = styled.TouchableOpacity`
+  width: ${cWidth * 0.9}px;
+  height: ${cHeight * 0.2}px;
+  position: absolute;
+  border-radius: ${nomalizes[15]}px;
+  right: ${cWidth * 0.05}px;
+  top: ${cHeight * 0}.1px;
+  z-index: 999999999999;
+  display: flex;
+  ${cssUtil.doubleCenter};
+`;
 
 const ButtonContainer = styled.TouchableOpacity`
   width: ${cWidth * 0.9}px;
@@ -37,6 +50,17 @@ const ButtonContainer = styled.TouchableOpacity`
   z-index: 999999999999;
   display: flex;
   ${cssUtil.doubleCenter};
+`;
+const SkipContainer = styled.TouchableOpacity`
+  width: ${cWidth * 0.9}px;
+  height: ${cHeight * 0.5}px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  padding-right: ${nomalizes[15]}px;
+`;
+const SkipText = styled.Text`
+  color: #000;
 `;
 const Balls = styled.View`
   width: ${nomalizes[120]}px;
@@ -55,7 +79,7 @@ const Ball = styled.View<HighlightProps>`
 const SkipButtonContainer = styled.View`
   width: 100%;
   height: ${nomalizes[50]}px;
-  margin-top: ${nomalizes[10]}px;
+  margin-top: ${nomalizes[100]}px;
 `;
 const SkipButton = styled.TouchableOpacity`
   width: 100%;
@@ -69,7 +93,27 @@ const TText = styled.Text`
   color: white;
   font-size: ${nomalizes[14]}px;
 `;
-
+const ImageView = styled.View`
+  width: ${cWidth};
+  height: ${nomalizes[370]}px;
+  margin-top: ${nomalizes[130]}px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+const Heading = styled.Text`
+  font-size: ${nomalizes[16]}px;
+  font-weight: bold;
+  color: #ff6258;
+  margin-top: ${nomalizes[10]}px;
+  margin-bottom: ${nomalizes[10]}px;
+`;
+const SubText = styled.Text`
+  font-size: ${nomalizes[11]}px;
+  color: #ff6258;
+  margin-top: ${nomalizes[5]}px;
+  color: #000;
+`;
 interface Props {
   hide: boolean;
 }
@@ -97,7 +141,7 @@ const IntroApp = () => {
   const [sliderState, setSliderState] = useState({currentPage: 0});
   const [hide, setHide] = useState(true);
 
-  const {width, height} = Dimensions.get('window');
+  const {width} = Dimensions.get('window');
 
   const setSliderPage = (event: any) => {
     const {currentPage} = sliderState;
@@ -126,6 +170,14 @@ const IntroApp = () => {
   return (
     <AnimatedContainer hide={hide} style={{opacity: animatedValue}}>
       <StatusBar barStyle="dark-content" />
+      <TopContainer>
+        <Balls>
+          <Ball highlight={sliderState.currentPage === 0} />
+          <Ball highlight={sliderState.currentPage === 1} />
+          <Ball highlight={sliderState.currentPage === 2} />
+          <Ball highlight={sliderState.currentPage === 3} />
+        </Balls>
+      </TopContainer>
       <ScrollView
         style={{flex: 1}}
         horizontal={true}
@@ -135,7 +187,7 @@ const IntroApp = () => {
         onScroll={(event: any) => {
           setSliderPage(event);
         }}>
-        <View style={{width, height}}>
+        <ImageView>
           <Image
             source={images.intro1}
             style={{
@@ -143,8 +195,13 @@ const IntroApp = () => {
               height: '100%',
             }}
           />
-        </View>
-        <View style={{width, height}}>
+          <Heading>식품 달력</Heading>
+          <SubText>달력을 통해 식품 정보를 한 눈에 파악할 수 있어요!</SubText>
+          <SubText>
+            마지막까지 소비할 수 있는 식품 소비 기한이 표시됩니다
+          </SubText>
+        </ImageView>
+        <ImageView>
           <Image
             source={images.intro2}
             style={{
@@ -152,8 +209,12 @@ const IntroApp = () => {
               height: '100%',
             }}
           />
-        </View>
-        <View style={{width, height}}>
+          <Heading>이웃과의 식품 공유</Heading>
+          <SubText>이웃을 넘나들며 서로의 식품창고를 구경해보세요!</SubText>
+          <SubText>마음에 드는 먹거리가 보인다면?</SubText>
+          <SubText>공유를 부탁해보세요</SubText>
+        </ImageView>
+        <ImageView>
           <Image
             source={images.intro3}
             style={{
@@ -161,8 +222,11 @@ const IntroApp = () => {
               height: '100%',
             }}
           />
-        </View>
-        <View style={{width, height}}>
+          <Heading>소비 기한 알림</Heading>
+          <SubText>언제까지 먹을 수 있더라? 잊지않도록!</SubText>
+          <SubText>먹거리를 기록해볼까요?</SubText>
+        </ImageView>
+        <ImageView>
           <Image
             source={images.intro4}
             style={{
@@ -170,21 +234,24 @@ const IntroApp = () => {
               height: '100%',
             }}
           />
-        </View>
+          <Heading>식품 등록</Heading>
+          <SubText>
+            원하는 식품을 검색하면 자동으로 식품 권장 기한이 입력됩니다!
+          </SubText>
+          <SubText>유의 사항도 같이 확인해보세요~!</SubText>
+        </ImageView>
       </ScrollView>
       <View style={styles.paginationWrapper}>
         <ButtonContainer>
-          <Balls>
-            <Ball highlight={sliderState.currentPage === 0} />
-            <Ball highlight={sliderState.currentPage === 1} />
-            <Ball highlight={sliderState.currentPage === 2} />
-            <Ball highlight={sliderState.currentPage === 3} />
-          </Balls>
           <SkipButtonContainer>
-            {sliderState.currentPage === 3 && (
+            {sliderState.currentPage === 3 ? (
               <SkipButton onPress={sktip}>
                 <TText>시작하기</TText>
               </SkipButton>
+            ) : (
+              <SkipContainer onPress={sktip}>
+                <SkipText>Skip</SkipText>
+              </SkipContainer>
             )}
           </SkipButtonContainer>
         </ButtonContainer>
