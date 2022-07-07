@@ -22,6 +22,9 @@ const images = {
   loading: require('./icons/loading.gif'),
   list: require('./icons/calendar-icon.png'),
   intro1: require('./intros/intro1.png'),
+  intro2: require('./intros/intro2.png'),
+  intro3: require('./intros/intro3.png'),
+  intro4: require('./intros/intro4.png'),
 };
 
 export default images;

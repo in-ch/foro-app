@@ -29,7 +29,7 @@ const AnimatedContainer = Animated.createAnimatedComponent(Container);
 
 const ButtonContainer = styled.TouchableOpacity`
   width: ${cWidth * 0.9}px;
-  height: ${cHeight * 0.4}px;
+  height: ${cHeight * 0.5}px;
   position: absolute;
   border-radius: ${nomalizes[15]}px;
   right: ${cWidth * 0.05}px;
@@ -50,7 +50,7 @@ const Ball = styled.View<HighlightProps>`
   width: ${nomalizes[8]}px;
   height: ${nomalizes[8]}px;
   border-radius: ${nomalizes[4]}px;
-  background-color: ${props => (props.highlight ? '#FF6258' : '#fff')};
+  background-color: ${props => (props.highlight ? '#FF6258' : '#a8a8a8')};
 `;
 const SkipButtonContainer = styled.View`
   width: 100%;
@@ -146,7 +146,7 @@ const IntroApp = () => {
         </View>
         <View style={{width, height}}>
           <Image
-            source={images.intro1}
+            source={images.intro2}
             style={{
               width: '100%',
               height: '100%',
@@ -155,7 +155,7 @@ const IntroApp = () => {
         </View>
         <View style={{width, height}}>
           <Image
-            source={images.intro1}
+            source={images.intro3}
             style={{
               width: '100%',
               height: '100%',
@@ -164,7 +164,7 @@ const IntroApp = () => {
         </View>
         <View style={{width, height}}>
           <Image
-            source={images.intro1}
+            source={images.intro4}
             style={{
               width: '100%',
               height: '100%',
