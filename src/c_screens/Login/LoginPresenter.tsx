@@ -11,7 +11,7 @@ import Images from 'assets';
 const Container = styled.View`
   display: flex;
   flex-direction: column;
-  background-color: #fff;
+  background-color: #ff6258;
   flex: 1;
   position: relative;
 `;
@@ -19,7 +19,7 @@ const IntroJon = styled.View`
   width: 100%;
   height: ${nomalizes[200]}px;
   display: flex;
-  top: ${nomalizes[30]}px;
+  top: ${nomalizes[50]}px;
   ${cssUtil.doubleCenter};
 `;
 const LoginJon = styled.View`
@@ -49,18 +49,6 @@ const TextContainer = styled.View`
 const TText = styled.Text<TextProps>`
   margin-left: ${nomalizes[10]}px;
   color: ${props => props.color};
-  font-family: 'Pretendard';
-`;
-const Heading = styled.Text`
-  color: #8f8f8f;
-  font-size: ${nomalizes[12]}px;
-  margin-top: ${nomalizes[20]}px;
-  font-family: 'Pretendard';
-`;
-const Heading2 = styled.Text`
-  font-size: ${nomalizes[14]}px;
-  margin-top: ${nomalizes[3]}px;
-  color: #4d4d4d;
   font-family: 'Pretendard';
 `;
 const LoadingContainer = styled.View`
@@ -98,13 +86,11 @@ const LoginPresenter = ({
             <IntroJon>
               <Image
                 style={{
-                  width: nomalizes[50],
-                  height: nomalizes[50],
+                  width: nomalizes[90],
+                  height: nomalizes[120],
                 }}
                 source={Images.logo}
               />
-              <Heading>푸드 제로</Heading>
-              <Heading2>이웃과 음식을 나눠 보세요.</Heading2>
             </IntroJon>
             <LoginJon>
               <PhoneButton background={'#FEE501'} onPress={signInWithKakao}>
@@ -119,7 +105,7 @@ const LoginPresenter = ({
                   <TText color="#272727">카카오로 로그인</TText>
                 </TextContainer>
               </PhoneButton>
-              <PhoneButton background={'#F45A5D'} onPress={signInWithGoogle}>
+              <PhoneButton background={'#fff'} onPress={signInWithGoogle}>
                 <Image
                   style={{
                     width: nomalizes[25],
@@ -128,7 +114,7 @@ const LoginPresenter = ({
                   source={Images.google}
                 />
                 <TextContainer>
-                  <TText color="#fff">구글로 로그인</TText>
+                  <TText color="#F45A5D">구글로 로그인</TText>
                 </TextContainer>
               </PhoneButton>
               <PhoneButton background={'#000'} onPress={signInWithApple}>
