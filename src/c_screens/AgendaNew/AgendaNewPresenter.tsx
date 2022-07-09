@@ -1,13 +1,14 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import moment from 'moment';
-import {Image, Modal, TouchableNativeFeedback} from 'react-native';
+import {Image, Modal, Text, TouchableNativeFeedback} from 'react-native';
 
 import Header from '@components/Header/Header';
 import {cHeight, cWidth, nomalizes} from '@utills/constants';
 import {cssUtil} from '@utills/cssUtil';
 import images from '@assets/images';
 import {SizedBox} from '@components/SizedBox';
+import {ScrollView} from 'react-native-gesture-handler';
 
 const Container = styled.View`
   background-color: #fff;
@@ -104,7 +105,7 @@ const RenderFlexOne = styled.View`
   height: ${nomalizes[20]}px;
   align-items: center;
 `;
-const Row = styled.View`
+const Row = styled.TouchableOpacity`
   display: flex;
   flex-direction: row;
   ${cssUtil.doubleCenter};
@@ -151,6 +152,13 @@ const ModalBackground = styled.View`
   height: ${cHeight + nomalizes[40]}px;
   justify-content: flex-end;
   align-items: flex-end;
+`;
+const ModalBackgroundExtra = styled.View`
+  width: ${cWidth}px;
+  height: ${cHeight - nomalizes[150]}px;
+  position: absolute;
+  top: 0px;
+  left: 0px;
 `;
 const ModalButtonContainer = styled.View`
   width: ${cWidth}px;
@@ -209,6 +217,9 @@ interface Props {
   selected?: string;
   nickname: string;
   GoToFoodAdd: () => void;
+  selectedShow: (id: number) => void;
+  showModal: boolean;
+  foodData: any;
 }
 
 const AgendaNewPresenter = ({
@@ -217,6 +228,9 @@ const AgendaNewPresenter = ({
   goToDetail,
   GoToFoodAdd,
   nickname,
+  selectedShow,
+  showModal,
+  foodData,
 }: Props) => {
   return (
     <>
@@ -281,131 +295,80 @@ const AgendaNewPresenter = ({
           </AgendaHeaderWrapperView>
         </AgendaHeader>
         <Body>
-          <ContentContainer>
-            <ContentContainerHeadingView>
-              <ContentContainerHeadingViewHeading>
-                FRI
-              </ContentContainerHeadingViewHeading>
-              <ContentContainerHeadingViewText>
-                1
-              </ContentContainerHeadingViewText>
-            </ContentContainerHeadingView>
-            <ContentContainerMainView>
-              <MainContent>
-                <TouchableNativeFeedback onPress={() => goToDetail(10)}>
-                  <Heading>과일</Heading>
-                </TouchableNativeFeedback>
-                <RenderContainer>
-                  <RenderFlexOne>
-                    <TouchableNativeFeedback onPress={() => goToDetail(10)}>
-                      <Row>
-                        <Mark background="#000" />
-                        <FruitText>카테고리</FruitText>
-                      </Row>
-                    </TouchableNativeFeedback>
-                    <Row>
-                      {true && (
-                        <ConsumeDone>
-                          <ConsumeDoneText>소비 완료</ConsumeDoneText>
-                        </ConsumeDone>
-                      )}
-                      <Image
-                        style={{
-                          width: nomalizes[10],
-                          height: nomalizes[10],
-                        }}
-                        source={images.setting}
-                      />
-                    </Row>
-                  </RenderFlexOne>
-                  <RenderFlexOne>
-                    <ConsumeDoneDate>
-                      {moment(new Date('2022-07-30')).format('YYYY-MM-DD')} ~{' '}
-                      2022-07-30
-                    </ConsumeDoneDate>
-                    <ConsumeDoneDate>비공개</ConsumeDoneDate>
-                  </RenderFlexOne>
-                </RenderContainer>
-              </MainContent>
-              <MainContent>
-                <TouchableNativeFeedback onPress={() => goToDetail(10)}>
-                  <Heading>과일</Heading>
-                </TouchableNativeFeedback>
-                <RenderContainer>
-                  <RenderFlexOne>
-                    <TouchableNativeFeedback onPress={() => goToDetail(10)}>
-                      <Row>
-                        <Mark background="#000" />
-                        <FruitText>카테고리</FruitText>
-                      </Row>
-                    </TouchableNativeFeedback>
-                    <Row>
-                      {true && (
-                        <ConsumeDone>
-                          <ConsumeDoneText>소비 완료</ConsumeDoneText>
-                        </ConsumeDone>
-                      )}
-                      <Image
-                        style={{
-                          width: nomalizes[10],
-                          height: nomalizes[10],
-                        }}
-                        source={images.setting}
-                      />
-                    </Row>
-                  </RenderFlexOne>
-                  <RenderFlexOne>
-                    <ConsumeDoneDate>
-                      {moment(new Date('2022-07-30')).format('YYYY-MM-DD')} ~{' '}
-                      2022-07-30
-                    </ConsumeDoneDate>
-                    <ConsumeDoneDate>비공개</ConsumeDoneDate>
-                  </RenderFlexOne>
-                </RenderContainer>
-              </MainContent>
-              <MainContent>
-                <TouchableNativeFeedback onPress={() => goToDetail(10)}>
-                  <Heading>과일</Heading>
-                </TouchableNativeFeedback>
-                <RenderContainer>
-                  <RenderFlexOne>
-                    <TouchableNativeFeedback onPress={() => goToDetail(10)}>
-                      <Row>
-                        <Mark background="#000" />
-                        <FruitText>카테고리</FruitText>
-                      </Row>
-                    </TouchableNativeFeedback>
-                    <Row>
-                      {true && (
-                        <ConsumeDone>
-                          <ConsumeDoneText>소비 완료</ConsumeDoneText>
-                        </ConsumeDone>
-                      )}
-                      <Image
-                        style={{
-                          width: nomalizes[10],
-                          height: nomalizes[10],
-                        }}
-                        source={images.setting}
-                      />
-                    </Row>
-                  </RenderFlexOne>
-                  <RenderFlexOne>
-                    <ConsumeDoneDate>
-                      {moment(new Date('2022-07-30')).format('YYYY-MM-DD')} ~{' '}
-                      2022-07-30
-                    </ConsumeDoneDate>
-                    <ConsumeDoneDate>비공개</ConsumeDoneDate>
-                  </RenderFlexOne>
-                </RenderContainer>
-              </MainContent>
-            </ContentContainerMainView>
-          </ContentContainer>
+          <ScrollView>
+            {Object.keys(foodData).length > 0 &&
+              Object.keys(foodData)?.map((foodKey: string) => {
+                return (
+                  <ContentContainer>
+                    <ContentContainerHeadingView>
+                      <ContentContainerHeadingViewHeading>
+                        FRI
+                      </ContentContainerHeadingViewHeading>
+                      <ContentContainerHeadingViewText>
+                        {foodKey}
+                      </ContentContainerHeadingViewText>
+                    </ContentContainerHeadingView>
+                    <ContentContainerMainView>
+                      {foodData[foodKey]?.map((food: any) => {
+                        return (
+                          <MainContent>
+                            <TouchableNativeFeedback
+                              onPress={() => goToDetail(food.no)}>
+                              <Heading>{food.name}</Heading>
+                            </TouchableNativeFeedback>
+                            <RenderContainer>
+                              <RenderFlexOne>
+                                <TouchableNativeFeedback
+                                  onPress={() => goToDetail(10)}>
+                                  <Row>
+                                    <Mark background="#000" />
+                                    <FruitText>{food.category.name}</FruitText>
+                                  </Row>
+                                </TouchableNativeFeedback>
+                                <Row onPress={() => selectedShow(1)}>
+                                  {true && (
+                                    <ConsumeDone>
+                                      <ConsumeDoneText>
+                                        소비 완료
+                                      </ConsumeDoneText>
+                                    </ConsumeDone>
+                                  )}
+                                  <Image
+                                    style={{
+                                      width: nomalizes[10],
+                                      height: nomalizes[10],
+                                    }}
+                                    source={images.setting}
+                                  />
+                                </Row>
+                              </RenderFlexOne>
+                              <RenderFlexOne>
+                                <ConsumeDoneDate>
+                                  {moment(new Date('2022-07-30')).format(
+                                    'YYYY-MM-DD',
+                                  )}{' '}
+                                  ~ 2022-07-30
+                                </ConsumeDoneDate>
+                                <ConsumeDoneDate>비공개</ConsumeDoneDate>
+                              </RenderFlexOne>
+                            </RenderContainer>
+                          </MainContent>
+                        );
+                      })}
+                    </ContentContainerMainView>
+                  </ContentContainer>
+                );
+              })}
+            <SizedBox.Custom margin={nomalizes[150]} />
+          </ScrollView>
         </Body>
       </Container>
 
-      <Modal animationType="fade" visible={true} transparent={true}>
+      <Modal animationType="fade" visible={showModal} transparent={true}>
         <ModalBackground>
+          <TouchableNativeFeedback onPress={() => selectedShow(1)}>
+            <ModalBackgroundExtra />
+          </TouchableNativeFeedback>
           <ModalButtonContainer>
             <ModalButtonWrapper>
               <ModalButtonContainerFlexRow>
