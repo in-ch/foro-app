@@ -1,12 +1,13 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import moment from 'moment';
-import {Image, TouchableNativeFeedback} from 'react-native';
+import {Image, Modal, TouchableNativeFeedback} from 'react-native';
 
 import Header from '@components/Header/Header';
 import {cHeight, cWidth, nomalizes} from '@utills/constants';
 import {cssUtil} from '@utills/cssUtil';
 import images from '@assets/images';
+import {SizedBox} from '@components/SizedBox';
 
 const Container = styled.View`
   background-color: #fff;
@@ -140,24 +141,62 @@ const Mark = styled.View<MarkProps>`
     props.background ? props.background : '#637cff'};
 `;
 const ModalBackground = styled.View`
-  background-color: rgba(0, 0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.2);
   padding: ${nomalizes[30]}px;
   position: absolute;
-  bottom: 0px;
+  top: 0px;
   right: 0px;
   flex-direction: row;
+  width: ${cWidth}px;
+  height: ${cHeight + nomalizes[40]}px;
   justify-content: flex-end;
   align-items: flex-end;
 `;
-const ModalButton = styled.TouchableOpacity`
-  width: ${nomalizes[40]}px;
-  height: ${nomalizes[40]}px;
-  border-radius: ${nomalizes[20]}px;
+const ModalButtonContainer = styled.View`
+  width: ${cWidth}px;
+  height: ${nomalizes[200]}px;
+  border-top-left-radius: ${nomalizes[25]}px;
+  border-top-right-radius: ${nomalizes[25]}px;
+  background-color: #fff;
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
   display: flex;
-  background-color: #ff6c63;
-  ${cssUtil.doubleCenter};
+  padding-top: ${nomalizes[30]}px;
+`;
+const ModalButtonWrapper = styled.View`
+  width: 100%;
+  padding-left: ${nomalizes[10]}px;
+  padding-right: ${nomalizes[10]}px;
+  height: ${nomalizes[150]}px;
+`;
+const ModalButtonContainerFlexRow = styled.TouchableOpacity`
+  display: flex;
+  flex-direction: row;
+  height: ${nomalizes[50]}px;
+`;
+const ModalButtonContainerFlexColumn = styled.TouchableOpacity`
+  display: flex;
+  flex-direction: column;
+  margin-top: ${nomalizes[10]}px;
+  height: ${nomalizes[80]}px;
 `;
 
+const ModalButton = styled.TouchableOpacity`
+  display: flex;
+  flex-direction: column;
+  background-color: #f0f0f0;
+  height: 100%;
+  margin-left: ${nomalizes[5]}px;
+  margin-right: ${nomalizes[5]}px;
+  flex: 1;
+  border-radius: ${nomalizes[10]}px;
+  ${cssUtil.doubleCenter};
+`;
+const ModalButtonText = styled.Text`
+  font-size: ${nomalizes[10]}px;
+  color: #000;
+`;
 interface MarkProps {
   background: string;
 }
@@ -365,17 +404,58 @@ const AgendaNewPresenter = ({
         </Body>
       </Container>
 
-      <ModalBackground>
-        <ModalButton onPress={GoToFoodAdd}>
-          <Image
-            style={{
-              width: nomalizes[18],
-              height: nomalizes[18],
-            }}
-            source={images.plusWhite}
-          />
-        </ModalButton>
-      </ModalBackground>
+      <Modal animationType="fade" visible={true} transparent={true}>
+        <ModalBackground>
+          <ModalButtonContainer>
+            <ModalButtonWrapper>
+              <ModalButtonContainerFlexRow>
+                <ModalButton>
+                  <Image
+                    style={{
+                      width: nomalizes[16],
+                      height: nomalizes[16],
+                    }}
+                    source={images.share}
+                  />
+                  <SizedBox.Custom margin={nomalizes[5]} />
+                  <ModalButtonText>공유</ModalButtonText>
+                </ModalButton>
+                <ModalButton>
+                  <Image
+                    style={{
+                      width: nomalizes[16],
+                      height: nomalizes[16],
+                    }}
+                    source={images.consumed}
+                  />
+                  <SizedBox.Custom margin={nomalizes[5]} />
+                  <ModalButtonText>소비완료</ModalButtonText>
+                </ModalButton>
+                <ModalButton>
+                  <Image
+                    style={{
+                      width: nomalizes[16],
+                      height: nomalizes[16],
+                    }}
+                    source={images.public}
+                  />
+                  <SizedBox.Custom margin={nomalizes[5]} />
+                  <ModalButtonText>공개전환</ModalButtonText>
+                </ModalButton>
+              </ModalButtonContainerFlexRow>
+              <ModalButtonContainerFlexColumn>
+                <ModalButton>
+                  <ModalButtonText>수정</ModalButtonText>
+                </ModalButton>
+                <SizedBox.Custom margin={nomalizes[10]} />
+                <ModalButton>
+                  <ModalButtonText>삭제</ModalButtonText>
+                </ModalButton>
+              </ModalButtonContainerFlexColumn>
+            </ModalButtonWrapper>
+          </ModalButtonContainer>
+        </ModalBackground>
+      </Modal>
     </>
   );
 };

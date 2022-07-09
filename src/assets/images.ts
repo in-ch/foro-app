@@ -25,6 +25,9 @@ const images = {
   intro2: require('./intros/intro2.png'),
   intro3: require('./intros/intro3.png'),
   intro4: require('./intros/intro4.png'),
+  consumed: require('./icons/consumed-icon.png'),
+  share: require('./icons/share-icon.png'),
+  public: require('./icons/public-icon.png'),
 };
 
 export default images;
