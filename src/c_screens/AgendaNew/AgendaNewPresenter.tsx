@@ -3,7 +3,10 @@ import React from 'react';
 import styled from 'styled-components/native';
 import moment from 'moment';
 import {Image, Modal, Text, TouchableNativeFeedback} from 'react-native';
-import {ScrollView} from 'react-native-gesture-handler';
+import {
+  ScrollView,
+  TouchableWithoutFeedback,
+} from 'react-native-gesture-handler';
 import Toast from 'react-native-easy-toast';
 
 import Header from '@components/Header/Header';
@@ -110,7 +113,7 @@ const RenderFlexOne = styled.View`
   height: ${nomalizes[20]}px;
   align-items: center;
 `;
-const Row = styled.TouchableOpacity`
+const Row = styled.View`
   display: flex;
   flex-direction: row;
   ${cssUtil.doubleCenter};
@@ -380,7 +383,7 @@ const AgendaNewPresenter = ({
                               </TouchableNativeFeedback>
                               <RenderContainer>
                                 <RenderFlexOne>
-                                  <TouchableNativeFeedback
+                                  <TouchableWithoutFeedback
                                     onPress={() => goToDetail(food.no)}>
                                     <Row>
                                       <Mark
@@ -390,23 +393,26 @@ const AgendaNewPresenter = ({
                                         {food.category.name}
                                       </FruitText>
                                     </Row>
-                                  </TouchableNativeFeedback>
-                                  <Row onPress={() => selectedShow(food.no)}>
-                                    {food.consumed && (
-                                      <ConsumeDone>
-                                        <ConsumeDoneText>
-                                          소비 완료
-                                        </ConsumeDoneText>
-                                      </ConsumeDone>
-                                    )}
-                                    <Image
-                                      style={{
-                                        width: nomalizes[10],
-                                        height: nomalizes[10],
-                                      }}
-                                      source={images.setting}
-                                    />
-                                  </Row>
+                                  </TouchableWithoutFeedback>
+                                  <TouchableWithoutFeedback
+                                    onPress={() => selectedShow(food.no)}>
+                                    <Row>
+                                      {food.consumed && (
+                                        <ConsumeDone>
+                                          <ConsumeDoneText>
+                                            소비 완료
+                                          </ConsumeDoneText>
+                                        </ConsumeDone>
+                                      )}
+                                      <Image
+                                        style={{
+                                          width: nomalizes[10],
+                                          height: nomalizes[10],
+                                        }}
+                                        source={images.setting}
+                                      />
+                                    </Row>
+                                  </TouchableWithoutFeedback>
                                 </RenderFlexOne>
                                 <RenderFlexOne>
                                   <ConsumeDoneDate>
