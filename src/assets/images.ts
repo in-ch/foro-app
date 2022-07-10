@@ -28,6 +28,8 @@ const images = {
   consumed: require('./icons/consumed-icon.png'),
   share: require('./icons/share-icon.png'),
   public: require('./icons/public-icon.png'),
+  kakaoShare: require('./icons/kakao-button-icon.png'),
+  pinkShare: require('./icons/pink-share-icon.png'),
 };
 
 export default images;

@@ -25,9 +25,10 @@ import PersonalPolicy from '@screens/Setting/pages/PersonalPolicy';
 import Profile from '@screens/Profile/Profile';
 import ProfileEdit from '@screens/Profile/pages/ProfileEdit';
 import UserAdd from '@screens/UserAdd/UserAdd';
+import AgendaNew from '@screens/AgendaNew/AgendaNew';
+import Share from '@screens/Share/Share';
 
 import {FoodData} from '~/types/Food';
-import AgendaNew from '~/c_screens/AgendaNew/AgendaNew';
 
 export type RootTabParamList = {
   Home: {};
@@ -75,6 +76,9 @@ export type RootTabParamList = {
   };
   UserAdd: {
     from: string; // 요청을 보낸 유저 no
+  };
+  Share: {
+    foodNo: number;
   };
 };
 
@@ -237,6 +241,13 @@ const RootNavigation = () => {
       <Stack.Screen
         name="InputProfile"
         component={InputProfile}
+        options={{
+          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+        }}
+      />
+      <Stack.Screen
+        name="Share"
+        component={Share}
         options={{
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
         }}

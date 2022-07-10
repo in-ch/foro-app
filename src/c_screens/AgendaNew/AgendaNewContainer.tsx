@@ -20,7 +20,9 @@ const AgendaNewContainer = ({navigation, route}: AgendaProps) => {
   const GoToFoodAdd = () => {
     navigation.navigate('FoodAdd', {});
   };
-
+  const GoToShare = () => {
+    navigation.navigate('Share', {foodNo: selectedNo});
+  };
   const {data} = useQuery(LOAD_USER, {
     variables: {
       userNo: route?.params?.userId,
@@ -114,6 +116,7 @@ const AgendaNewContainer = ({navigation, route}: AgendaProps) => {
 
   const handleEvent = () => {
     if (selectModalText === '해당 식품을 공유하시겠습니까?') {
+      GoToShare();
     } else if (selectModalText === '해당 식품을 소비 완료하시겠습니까?') {
       mutationUpdateFood({
         variables: {
