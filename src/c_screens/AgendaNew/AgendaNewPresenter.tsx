@@ -1,14 +1,17 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import styled from 'styled-components/native';
 import moment from 'moment';
 import {Image, Modal, Text, TouchableNativeFeedback} from 'react-native';
+import {ScrollView} from 'react-native-gesture-handler';
 
 import Header from '@components/Header/Header';
+import Loading from '@components/Loading';
+import {SizedBox} from '@components/SizedBox';
 import {cHeight, cWidth, nomalizes} from '@utills/constants';
 import {cssUtil} from '@utills/cssUtil';
 import images from '@assets/images';
-import {SizedBox} from '@components/SizedBox';
-import {ScrollView} from 'react-native-gesture-handler';
+import {getWeek} from '@utills/getWeek';
 
 const Container = styled.View`
   background-color: #fff;
@@ -39,7 +42,7 @@ const AgendaHeaderWrapperViewTextWrapper = styled.View<WeekHighliteProps>`
   width: ${nomalizes[24]}px;
   height: ${nomalizes[24]}px;
   border-radius: ${nomalizes[12]}px;
-  background-color: ${props => (props.highlite ? '#ff6258' : '#000')};
+  background-color: ${props => (props.highlite ? '#ff6258' : '#fff')};
   ${cssUtil.doubleCenter};
 `;
 const AgendaHeaderWrapperViewText = styled.Text<WeekHighliteProps>`
@@ -65,7 +68,8 @@ const ContentContainerHeadingView = styled.View`
   display: flex;
   flex-direction: column;
   align-items: center;
-  flex: 1.5;
+  flex: 1.8;
+  margin-right: ${nomalizes[15]}px;
 `;
 const ContentContainerHeadingViewHeading = styled.Text`
   font-size: ${nomalizes[11]}px;
@@ -81,7 +85,7 @@ const ContentContainerHeadingViewText = styled.Text`
 const ContentContainerMainView = styled.View`
   border-radius: ${nomalizes[10]}px;
   background-color: white;
-  flex: 8.5;
+  flex: 8.2;
   padding: ${nomalizes[20]}px;
   padding-top: ${nomalizes[10]}px;
 `;
@@ -205,6 +209,25 @@ const ModalButtonText = styled.Text`
   font-size: ${nomalizes[10]}px;
   color: #000;
 `;
+const PlushButton = styled.TouchableOpacity`
+  position: absolute;
+  z-index: 99;
+  background-color: #ff6258;
+  bottom: ${nomalizes[30]}px;
+  right: ${nomalizes[30]}px;
+  width: ${nomalizes[40]}px;
+  height: ${nomalizes[40]}px;
+  border-radius: ${nomalizes[20]}px;
+  display: flex;
+  ${cssUtil.doubleCenter};
+`;
+const NoneContainer = styled.View`
+  width: ${cWidth}px;
+  height: ${nomalizes[400]}px;
+  display: flex;
+  padding-right: ${cWidth * 0.1}px;
+  ${cssUtil.doubleCenter};
+`;
 interface MarkProps {
   background: string;
 }
@@ -214,154 +237,147 @@ interface WeekHighliteProps {
 interface Props {
   GoBack: () => void;
   goToDetail: (value: number) => void;
-  selected?: string;
   nickname: string;
   GoToFoodAdd: () => void;
   selectedShow: (id: number) => void;
   showModal: boolean;
   foodData: any;
+  thisWeek: string[];
+  thisDay: string;
+  weekData: string[];
+  loading: boolean;
 }
 
 const AgendaNewPresenter = ({
   GoBack,
-  selected,
   goToDetail,
   GoToFoodAdd,
   nickname,
   selectedShow,
   showModal,
   foodData,
+  thisWeek,
+  thisDay,
+  weekData,
+  loading,
 }: Props) => {
   return (
     <>
       <Container>
         <Header text={`${nickname}님의 리스트`} back={GoBack} />
         <AgendaHeader>
-          <AgendaHeaderWrapperView>
-            <AgendaHeaderWrapperViewHeading>일</AgendaHeaderWrapperViewHeading>
-            <AgendaHeaderWrapperViewTextWrapper highlite={true}>
-              <AgendaHeaderWrapperViewText highlite={true}>
-                11
-              </AgendaHeaderWrapperViewText>
-            </AgendaHeaderWrapperViewTextWrapper>
-          </AgendaHeaderWrapperView>
-          <AgendaHeaderWrapperView>
-            <AgendaHeaderWrapperViewHeading>월</AgendaHeaderWrapperViewHeading>
-            <AgendaHeaderWrapperViewTextWrapper highlite={true}>
-              <AgendaHeaderWrapperViewText highlite={true}>
-                11
-              </AgendaHeaderWrapperViewText>
-            </AgendaHeaderWrapperViewTextWrapper>
-          </AgendaHeaderWrapperView>
-          <AgendaHeaderWrapperView>
-            <AgendaHeaderWrapperViewHeading>화</AgendaHeaderWrapperViewHeading>
-            <AgendaHeaderWrapperViewTextWrapper highlite={true}>
-              <AgendaHeaderWrapperViewText highlite={true}>
-                11
-              </AgendaHeaderWrapperViewText>
-            </AgendaHeaderWrapperViewTextWrapper>
-          </AgendaHeaderWrapperView>
-          <AgendaHeaderWrapperView>
-            <AgendaHeaderWrapperViewHeading>수</AgendaHeaderWrapperViewHeading>
-            <AgendaHeaderWrapperViewTextWrapper highlite={true}>
-              <AgendaHeaderWrapperViewText highlite={true}>
-                11
-              </AgendaHeaderWrapperViewText>
-            </AgendaHeaderWrapperViewTextWrapper>
-          </AgendaHeaderWrapperView>
-          <AgendaHeaderWrapperView>
-            <AgendaHeaderWrapperViewHeading>목</AgendaHeaderWrapperViewHeading>
-            <AgendaHeaderWrapperViewTextWrapper highlite={true}>
-              <AgendaHeaderWrapperViewText highlite={true}>
-                11
-              </AgendaHeaderWrapperViewText>
-            </AgendaHeaderWrapperViewTextWrapper>
-          </AgendaHeaderWrapperView>
-          <AgendaHeaderWrapperView>
-            <AgendaHeaderWrapperViewHeading>금</AgendaHeaderWrapperViewHeading>
-            <AgendaHeaderWrapperViewTextWrapper highlite={true}>
-              <AgendaHeaderWrapperViewText highlite={true}>
-                11
-              </AgendaHeaderWrapperViewText>
-            </AgendaHeaderWrapperViewTextWrapper>
-          </AgendaHeaderWrapperView>
-          <AgendaHeaderWrapperView>
-            <AgendaHeaderWrapperViewHeading>토</AgendaHeaderWrapperViewHeading>
-            <AgendaHeaderWrapperViewTextWrapper highlite={true}>
-              <AgendaHeaderWrapperViewText highlite={true}>
-                11
-              </AgendaHeaderWrapperViewText>
-            </AgendaHeaderWrapperViewTextWrapper>
-          </AgendaHeaderWrapperView>
+          {thisWeek.map((week: string, index: number) => {
+            return (
+              <AgendaHeaderWrapperView>
+                <AgendaHeaderWrapperViewHeading>
+                  {weekData[index]}
+                </AgendaHeaderWrapperViewHeading>
+                <AgendaHeaderWrapperViewTextWrapper
+                  highlite={index === Number(thisDay)}>
+                  <AgendaHeaderWrapperViewText
+                    highlite={index === Number(thisDay)}>
+                    {week.substr(8)}
+                  </AgendaHeaderWrapperViewText>
+                </AgendaHeaderWrapperViewTextWrapper>
+              </AgendaHeaderWrapperView>
+            );
+          })}
         </AgendaHeader>
-        <Body>
-          <ScrollView>
-            {Object.keys(foodData).length > 0 &&
-              Object.keys(foodData)?.map((foodKey: string) => {
-                return (
-                  <ContentContainer>
-                    <ContentContainerHeadingView>
-                      <ContentContainerHeadingViewHeading>
-                        FRI
-                      </ContentContainerHeadingViewHeading>
-                      <ContentContainerHeadingViewText>
-                        {foodKey}
-                      </ContentContainerHeadingViewText>
-                    </ContentContainerHeadingView>
-                    <ContentContainerMainView>
-                      {foodData[foodKey]?.map((food: any) => {
-                        return (
-                          <MainContent>
-                            <TouchableNativeFeedback
-                              onPress={() => goToDetail(food.no)}>
-                              <Heading>{food.name}</Heading>
-                            </TouchableNativeFeedback>
-                            <RenderContainer>
-                              <RenderFlexOne>
-                                <TouchableNativeFeedback
-                                  onPress={() => goToDetail(10)}>
-                                  <Row>
-                                    <Mark background="#000" />
-                                    <FruitText>{food.category.name}</FruitText>
+
+        {loading ? (
+          <Loading />
+        ) : (
+          <Body>
+            <ScrollView>
+              {foodData !== undefined ? (
+                Object.keys(foodData)?.map((foodKey: string) => {
+                  return (
+                    <ContentContainer>
+                      <ContentContainerHeadingView>
+                        <ContentContainerHeadingViewHeading>
+                          {getWeek(foodKey)}
+                        </ContentContainerHeadingViewHeading>
+                        <ContentContainerHeadingViewText>
+                          {foodKey.substr(8)}
+                        </ContentContainerHeadingViewText>
+                      </ContentContainerHeadingView>
+                      <ContentContainerMainView>
+                        {foodData[foodKey]?.map((food: any) => {
+                          return (
+                            <MainContent>
+                              <TouchableNativeFeedback
+                                onPress={() => goToDetail(food.no)}>
+                                <Heading>{food.name}</Heading>
+                              </TouchableNativeFeedback>
+                              <RenderContainer>
+                                <RenderFlexOne>
+                                  <TouchableNativeFeedback
+                                    onPress={() => goToDetail(food.no)}>
+                                    <Row>
+                                      <Mark
+                                        background={food.category.categoryColor}
+                                      />
+                                      <FruitText>
+                                        {food.category.name}
+                                      </FruitText>
+                                    </Row>
+                                  </TouchableNativeFeedback>
+                                  <Row onPress={() => selectedShow(food.no)}>
+                                    {food.consumed && (
+                                      <ConsumeDone>
+                                        <ConsumeDoneText>
+                                          소비 완료
+                                        </ConsumeDoneText>
+                                      </ConsumeDone>
+                                    )}
+                                    <Image
+                                      style={{
+                                        width: nomalizes[10],
+                                        height: nomalizes[10],
+                                      }}
+                                      source={images.setting}
+                                    />
                                   </Row>
-                                </TouchableNativeFeedback>
-                                <Row onPress={() => selectedShow(1)}>
-                                  {true && (
-                                    <ConsumeDone>
-                                      <ConsumeDoneText>
-                                        소비 완료
-                                      </ConsumeDoneText>
-                                    </ConsumeDone>
-                                  )}
-                                  <Image
-                                    style={{
-                                      width: nomalizes[10],
-                                      height: nomalizes[10],
-                                    }}
-                                    source={images.setting}
-                                  />
-                                </Row>
-                              </RenderFlexOne>
-                              <RenderFlexOne>
-                                <ConsumeDoneDate>
-                                  {moment(new Date('2022-07-30')).format(
-                                    'YYYY-MM-DD',
-                                  )}{' '}
-                                  ~ 2022-07-30
-                                </ConsumeDoneDate>
-                                <ConsumeDoneDate>비공개</ConsumeDoneDate>
-                              </RenderFlexOne>
-                            </RenderContainer>
-                          </MainContent>
-                        );
-                      })}
-                    </ContentContainerMainView>
-                  </ContentContainer>
-                );
-              })}
-            <SizedBox.Custom margin={nomalizes[150]} />
-          </ScrollView>
-        </Body>
+                                </RenderFlexOne>
+                                <RenderFlexOne>
+                                  <ConsumeDoneDate>
+                                    {moment(new Date('2022-07-30')).format(
+                                      'YYYY-MM-DD',
+                                    )}{' '}
+                                    ~ {food.dday}
+                                  </ConsumeDoneDate>
+                                  <ConsumeDoneDate>비공개</ConsumeDoneDate>
+                                </RenderFlexOne>
+                              </RenderContainer>
+                            </MainContent>
+                          );
+                        })}
+                      </ContentContainerMainView>
+                    </ContentContainer>
+                  );
+                })
+              ) : (
+                <NoneContainer>
+                  <Image
+                    style={{
+                      width: nomalizes[80],
+                      height: nomalizes[80],
+                    }}
+                    source={images.bigSearch}
+                  />
+                  <SizedBox.Custom margin={nomalizes[20]} />
+                  <Text style={{fontSize: nomalizes[12], color: '#797979'}}>
+                    등록된 식품이 없습니다.
+                  </Text>
+                  <Text style={{fontSize: nomalizes[12], color: '#797979'}}>
+                    상품을 추가해보세요.
+                  </Text>
+                </NoneContainer>
+              )}
+              <SizedBox.Custom margin={nomalizes[150]} />
+            </ScrollView>
+          </Body>
+        )}
       </Container>
 
       <Modal animationType="fade" visible={showModal} transparent={true}>
@@ -419,6 +435,16 @@ const AgendaNewPresenter = ({
           </ModalButtonContainer>
         </ModalBackground>
       </Modal>
+
+      <PlushButton onPress={GoToFoodAdd}>
+        <Image
+          style={{
+            width: nomalizes[18],
+            height: nomalizes[18],
+          }}
+          source={images.plusWhite}
+        />
+      </PlushButton>
     </>
   );
 };
