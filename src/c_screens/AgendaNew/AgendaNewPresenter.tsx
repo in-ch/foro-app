@@ -57,7 +57,7 @@ const AgendaHeaderWrapperViewText = styled.Text<WeekHighliteProps>`
 const Body = styled.View`
   background-color: #f1f1f1;
   width: ${cWidth}px;
-  height: ${cHeight}px;
+  height: ${cHeight - nomalizes[120]}px;
   padding-left: ${nomalizes[20]}px;
   padding-right: ${nomalizes[20]}px;
 `;
@@ -115,13 +115,15 @@ const RenderFlexOne = styled.View`
 `;
 const Row = styled.View`
   display: flex;
+  height: ${nomalizes[30]}px;
+  padding-right: ${nomalizes[5]}px;
   flex-direction: row;
   ${cssUtil.doubleCenter};
 `;
 const FruitText = styled.Text`
   margin-left: ${nomalizes[5]}px;
   font-size: ${nomalizes[12]}px;
-  color: RGB(50, 50, 50);
+  color: #000;
   font-family: 'Pretendard';
 `;
 const ConsumeDone = styled.View`
@@ -170,7 +172,7 @@ const ModalBackgroundExtra = styled.View`
 `;
 const ModalButtonContainer = styled.View`
   width: ${cWidth}px;
-  height: ${nomalizes[200]}px;
+  height: ${nomalizes[270]}px;
   border-top-left-radius: ${nomalizes[25]}px;
   border-top-right-radius: ${nomalizes[25]}px;
   background-color: #fff;
@@ -213,7 +215,7 @@ const ModalButtonText = styled.Text`
   font-size: ${nomalizes[10]}px;
   color: #000;
 `;
-const PlushButton = styled.TouchableOpacity`
+const PlusButton = styled.TouchableOpacity`
   position: absolute;
   z-index: 99;
   background-color: #ff6258;
@@ -525,7 +527,7 @@ const AgendaNewPresenter = ({
         </ModalBackground>
       </Modal>
 
-      <PlushButton onPress={GoToFoodAdd}>
+      <PlusButton onPress={GoToFoodAdd}>
         <Image
           style={{
             width: nomalizes[18],
@@ -533,7 +535,7 @@ const AgendaNewPresenter = ({
           }}
           source={images.plusWhite}
         />
-      </PlushButton>
+      </PlusButton>
 
       <Toast
         ref={toastRef}
