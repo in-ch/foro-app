@@ -1,10 +1,12 @@
-import {useQuery} from '@apollo/client';
-import React, {useState} from 'react';
+import {useMutation, useQuery} from '@apollo/client';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
+import {useIsFocused} from '@react-navigation/native';
 
-import {LOAD_USER} from '@services/queries/user';
 import {AgendaProps} from './AgendaNew';
 import AgendaNewPresenter from './AgendaNewPresenter';
+import {LOAD_USER} from '@services/queries/user';
 import {LOAD_FOOD} from '@services/queries/food';
+import {DELETE_FOOD, UPDATE_FOOD} from '@services/mutations/food';
 import {groupBy, sortByGroup} from '@utills/groupBy';
 import {thisWeek} from '@utills/thisWeek';
 
@@ -35,15 +37,52 @@ const AgendaNewContainer = ({navigation, route}: AgendaProps) => {
     },
     fetchPolicy: 'network-only',
   });
+  // const [lazyFoodData] = useLazyQuery(LOAD_FOOD_DATA, {
+  //   onCompleted: d => {
+  //     console.log(d);
+  //   },
+  //   onError: e => {
+  //     console.log(JSON.stringify(e));
+  //   },
+  //   fetchPolicy: 'network-only',
+  // });
+  const [mutationUpdateFood] = useMutation(UPDATE_FOOD, {
+    onCompleted: () => {
+      refetch();
+    },
+  });
+  const [mutationDeleteFood] = useMutation(DELETE_FOOD, {
+    onCompleted: () => {
+      refetch();
+    },
+  });
 
   const [showModal, setShowModal] = useState<boolean>(false);
   const [selectedNo, setSelectedNo] = useState<number>(0);
-  const selectedShow = (id: number) => {
-    setSelectedNo(id);
+  const toastRef = useRef<any>(null);
+  const isFocused = useIsFocused();
+
+  useEffect(() => {
+    if (isFocused) {
+      refetch();
+    }
+  }, [isFocused, refetch]);
+
+  const selectedShow = async (id: number) => {
+    await setSelectedNo(id);
     setShowModal(!showModal);
     if (id === 1) {
+      // 1이면 사라져야함.
       setSelectModal(false);
     }
+    // } else {
+    //   console.log(selectedNo);
+    //   lazyFoodData({
+    //     variables: {
+    //       foodNo: selectedNo,
+    //     },
+    //   });
+    // }
   };
   const [selectModal, setSelectModal] = useState<boolean>(false);
   const [selectModalText, setSelectModalText] = useState<string>('');
@@ -72,15 +111,53 @@ const AgendaNewContainer = ({navigation, route}: AgendaProps) => {
     setSelectModalText('해당 식품을 삭제하시겠습니까?');
     setSelectModal(true);
   };
+
   const handleEvent = () => {
     if (selectModalText === '해당 식품을 공유하시겠습니까?') {
     } else if (selectModalText === '해당 식품을 소비 완료하시겠습니까?') {
+      mutationUpdateFood({
+        variables: {
+          food: {
+            no: selectedNo,
+            consumed: true,
+          },
+        },
+        onCompleted: () => {
+          showToast('식품이 수정되었습니다.');
+        },
+      });
     } else if (selectModalText === '해당 식품을 공개하시겠습니까?') {
+      mutationUpdateFood({
+        variables: {
+          food: {
+            no: selectedNo,
+            onlyMe: false,
+          },
+        },
+        onCompleted: () => {
+          showToast('식품이 수정되었습니다.');
+        },
+      });
     } else if (selectModalText === '해당 식품을 삭제하시겠습니까?') {
+      mutationDeleteFood({
+        variables: {
+          foodNo: selectedNo,
+        },
+        onCompleted: () => {
+          showToast('삭제가 완료되었습니다.');
+        },
+      });
     } else {
       return;
     }
+    setSelectModal(false);
+    setShowModal(false);
   };
+
+  const showToast = useCallback((text: string) => {
+    toastRef.current.show(text);
+  }, []);
+
   return (
     <AgendaNewPresenter
       GoBack={GoBack}
@@ -106,6 +183,7 @@ const AgendaNewContainer = ({navigation, route}: AgendaProps) => {
       selectModal={selectModal}
       selectModalText={selectModalText}
       handleEvent={handleEvent}
+      toastRef={toastRef}
     />
   );
 };

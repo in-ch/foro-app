@@ -4,6 +4,7 @@ import styled from 'styled-components/native';
 import moment from 'moment';
 import {Image, Modal, Text, TouchableNativeFeedback} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
+import Toast from 'react-native-easy-toast';
 
 import Header from '@components/Header/Header';
 import Loading from '@components/Loading';
@@ -303,6 +304,7 @@ interface Props {
   cancelSelectModal: () => void;
   selectModalText: string;
   handleEvent: () => void;
+  toastRef: any;
 }
 
 const AgendaNewPresenter = ({
@@ -326,6 +328,7 @@ const AgendaNewPresenter = ({
   cancelSelectModal,
   selectModalText,
   handleEvent,
+  toastRef,
 }: Props) => {
   return (
     <>
@@ -412,7 +415,9 @@ const AgendaNewPresenter = ({
                                     )}{' '}
                                     ~ {food.dday}
                                   </ConsumeDoneDate>
-                                  <ConsumeDoneDate>비공개</ConsumeDoneDate>
+                                  {food.onlyMe && (
+                                    <ConsumeDoneDate>비공개</ConsumeDoneDate>
+                                  )}
                                 </RenderFlexOne>
                               </RenderContainer>
                             </MainContent>
@@ -523,6 +528,13 @@ const AgendaNewPresenter = ({
           source={images.plusWhite}
         />
       </PlushButton>
+
+      <Toast
+        ref={toastRef}
+        positionValue={cHeight * 0.1}
+        fadeInDuration={400}
+        fadeOutDuration={1200}
+      />
     </>
   );
 };
