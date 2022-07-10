@@ -228,11 +228,59 @@ const NoneContainer = styled.View`
   padding-right: ${cWidth * 0.1}px;
   ${cssUtil.doubleCenter};
 `;
+const AlertWrapper = styled.View<SelectModalProps>`
+  background-color: #fff;
+  width: ${nomalizes[200]}px;
+  height: ${nomalizes[90]}px;
+  border-radius: ${nomalizes[20]}px;
+  display: ${props => (props.selectModal ? 'flex' : 'none')};
+  flex-direction: column;
+  align-items: center;
+  padding: ${nomalizes[10]}px;
+  position: absolute;
+  top: ${cHeight / 2 - nomalizes[45]}px;
+  left: ${cWidth / 2 - nomalizes[100]}px;
+  justify-content: space-between;
+`;
+const AlertText = styled.Text`
+  color: #333333;
+  font-size: ${nomalizes[12]}px;
+  margin-top: ${nomalizes[5]}px;
+`;
+const SelectButtonWrapper = styled.View`
+  width: 90%;
+  height: ${nomalizes[30]}px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+const CancelButton = styled.TouchableOpacity`
+  width: 48%;
+  height: ${nomalizes[30]}px;
+  background-color: #ff6258;
+  border-radius: ${nomalizes[8]}px;
+  ${cssUtil.doubleCenter};
+`;
+const OkButton = styled.TouchableOpacity`
+  width: 48%;
+  height: ${nomalizes[30]}px;
+  background-color: #dbdbdb;
+  border-radius: ${nomalizes[8]}px;
+  ${cssUtil.doubleCenter};
+`;
+const ButtonText = styled.Text`
+  color: #fff;
+  font-size: ${nomalizes[11]}px;
+`;
+
 interface MarkProps {
   background: string;
 }
 interface WeekHighliteProps {
   highlite: boolean;
+}
+interface SelectModalProps {
+  selectModal: boolean;
 }
 interface Props {
   GoBack: () => void;
@@ -246,6 +294,15 @@ interface Props {
   thisDay: string;
   weekData: string[];
   loading: boolean;
+  shareFood: () => void;
+  consumeFood: () => void;
+  publicFood: () => void;
+  updateFood: () => void;
+  deleteFood: () => void;
+  selectModal: boolean;
+  cancelSelectModal: () => void;
+  selectModalText: string;
+  handleEvent: () => void;
 }
 
 const AgendaNewPresenter = ({
@@ -260,6 +317,15 @@ const AgendaNewPresenter = ({
   thisDay,
   weekData,
   loading,
+  shareFood,
+  consumeFood,
+  publicFood,
+  updateFood,
+  deleteFood,
+  selectModal,
+  cancelSelectModal,
+  selectModalText,
+  handleEvent,
 }: Props) => {
   return (
     <>
@@ -388,7 +454,7 @@ const AgendaNewPresenter = ({
           <ModalButtonContainer>
             <ModalButtonWrapper>
               <ModalButtonContainerFlexRow>
-                <ModalButton>
+                <ModalButton onPress={shareFood}>
                   <Image
                     style={{
                       width: nomalizes[16],
@@ -399,7 +465,7 @@ const AgendaNewPresenter = ({
                   <SizedBox.Custom margin={nomalizes[5]} />
                   <ModalButtonText>공유</ModalButtonText>
                 </ModalButton>
-                <ModalButton>
+                <ModalButton onPress={consumeFood}>
                   <Image
                     style={{
                       width: nomalizes[16],
@@ -410,7 +476,7 @@ const AgendaNewPresenter = ({
                   <SizedBox.Custom margin={nomalizes[5]} />
                   <ModalButtonText>소비완료</ModalButtonText>
                 </ModalButton>
-                <ModalButton>
+                <ModalButton onPress={publicFood}>
                   <Image
                     style={{
                       width: nomalizes[16],
@@ -423,16 +489,28 @@ const AgendaNewPresenter = ({
                 </ModalButton>
               </ModalButtonContainerFlexRow>
               <ModalButtonContainerFlexColumn>
-                <ModalButton>
+                <ModalButton onPress={updateFood}>
                   <ModalButtonText>수정</ModalButtonText>
                 </ModalButton>
                 <SizedBox.Custom margin={nomalizes[10]} />
-                <ModalButton>
+                <ModalButton onPress={deleteFood}>
                   <ModalButtonText>삭제</ModalButtonText>
                 </ModalButton>
               </ModalButtonContainerFlexColumn>
             </ModalButtonWrapper>
           </ModalButtonContainer>
+
+          <AlertWrapper selectModal={selectModal}>
+            <AlertText>{selectModalText}</AlertText>
+            <SelectButtonWrapper>
+              <CancelButton onPress={cancelSelectModal}>
+                <ButtonText>취소</ButtonText>
+              </CancelButton>
+              <OkButton onPress={handleEvent}>
+                <ButtonText>확인</ButtonText>
+              </OkButton>
+            </SelectButtonWrapper>
+          </AlertWrapper>
         </ModalBackground>
       </Modal>
 

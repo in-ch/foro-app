@@ -12,7 +12,7 @@ export const groupBy = (xs, key) => {
 export const sortByGroup = (unordered, selected) => {
   let selectedData;
   if (selected === undefined) {
-    selectedData = '2023-00-00';
+    selectedData = '0000-00-00';
   } else {
     selectedData = selected;
   }

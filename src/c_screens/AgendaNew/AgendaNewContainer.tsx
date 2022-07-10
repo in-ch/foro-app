@@ -41,8 +41,46 @@ const AgendaNewContainer = ({navigation, route}: AgendaProps) => {
   const selectedShow = (id: number) => {
     setSelectedNo(id);
     setShowModal(!showModal);
+    if (id === 1) {
+      setSelectModal(false);
+    }
   };
+  const [selectModal, setSelectModal] = useState<boolean>(false);
+  const [selectModalText, setSelectModalText] = useState<string>('');
   const week = ['일', '월', '화', '수', '목', '금', '토'];
+
+  const cancelSelectModal = () => {
+    setSelectModal(false);
+  };
+  const shareFood = () => {
+    setSelectModal(true);
+    setSelectModalText('해당 식품을 공유하시겠습니까?');
+  };
+  const consumeFood = () => {
+    setSelectModal(true);
+    setSelectModalText('해당 식품을 소비 완료하시겠습니까?');
+  };
+  const publicFood = () => {
+    setSelectModalText('해당 식품을 공개하시겠습니까?');
+    setSelectModal(true);
+  };
+  const updateFood = () => {
+    navigation.navigate('Detail', {no: selectedNo});
+    setShowModal(!showModal);
+  };
+  const deleteFood = () => {
+    setSelectModalText('해당 식품을 삭제하시겠습니까?');
+    setSelectModal(true);
+  };
+  const handleEvent = () => {
+    if (selectModalText === '해당 식품을 공유하시겠습니까?') {
+    } else if (selectModalText === '해당 식품을 소비 완료하시겠습니까?') {
+    } else if (selectModalText === '해당 식품을 공개하시겠습니까?') {
+    } else if (selectModalText === '해당 식품을 삭제하시겠습니까?') {
+    } else {
+      return;
+    }
+  };
   return (
     <AgendaNewPresenter
       GoBack={GoBack}
@@ -59,6 +97,15 @@ const AgendaNewContainer = ({navigation, route}: AgendaProps) => {
       weekData={week}
       thisDay={String(new Date().getDay())}
       loading={loading}
+      shareFood={shareFood}
+      consumeFood={consumeFood}
+      publicFood={publicFood}
+      updateFood={updateFood}
+      deleteFood={deleteFood}
+      cancelSelectModal={cancelSelectModal}
+      selectModal={selectModal}
+      selectModalText={selectModalText}
+      handleEvent={handleEvent}
     />
   );
 };
