@@ -27,7 +27,7 @@ const SearchResultBoxTextContainer = styled.ScrollView`
   padding-left: ${nomalizes[10]}px;
   padding-right: ${nomalizes[10]}px;
 `;
-const SearchResultBoxTextWrapper = styled.View`
+const SearchResultBoxTextWrapper = styled.TouchableOpacity`
   display: flex;
   width: ${cWidth * 0.85}px;
   height: ${nomalizes[16]}px;
@@ -53,6 +53,7 @@ interface Props {
   handleSearch: () => void;
   value: string;
   handleChangeText: (value: string) => void;
+  handleKeywordClick: (value: string) => void;
   results: FoodData[];
 }
 
@@ -61,6 +62,7 @@ const FoodAddPresenter = ({
   handleSearch,
   value,
   handleChangeText,
+  handleKeywordClick,
   results,
 }: Props) => {
   return (
@@ -79,7 +81,8 @@ const FoodAddPresenter = ({
           {results !== [] &&
             results.map((food: FoodData) => {
               return (
-                <SearchResultBoxTextWrapper>
+                <SearchResultBoxTextWrapper
+                  onPress={() => handleKeywordClick(food?.name)}>
                   <SearchResultBoxText>{food?.name}</SearchResultBoxText>
                   <SearchResultBoxRemainText>
                     소비기한: {food?.date}일

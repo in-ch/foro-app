@@ -19,10 +19,12 @@ const FoodAddContainer = ({navigation}: FoodAddProps) => {
       GoToFoodSearchResult();
     }
   };
+  const handleKeywordClick = (value: string) => {
+    navigation.navigate('FoodSearchResult', {text: value.trim()});
+  };
   const handleChangeText = async (text: string) => {
     setText(text);
     await setResults(getListFilter(foods, text));
-    console.log(results);
   };
   return (
     <FoodAddPresenter
@@ -30,6 +32,7 @@ const FoodAddContainer = ({navigation}: FoodAddProps) => {
       handleSearch={handleSearch}
       value={text}
       handleChangeText={handleChangeText}
+      handleKeywordClick={handleKeywordClick}
       results={results}
     />
   );

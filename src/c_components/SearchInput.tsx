@@ -25,7 +25,7 @@ const TTextInput = styled.TextInput`
   font-size: ${nomalizes[14]}px;
   color: RGB(50, 50, 50);
 `;
-const LengthContainer = styled.View`
+const LengthContainer = styled.TouchableOpacity`
   flex: 1;
   height: ${nomalizes[40]}px;
   padding-right: ${nomalizes[10]}px;
@@ -60,12 +60,12 @@ const SearchInput = ({
         onChangeText={(text: string) => setValue(text)}
         value={value}
         maxLength={20}
-        onBlur={onSubmit}
+        onSubmitEditing={onSubmit}
         style={{
           color: '#000',
         }}
       />
-      <LengthContainer>
+      <LengthContainer onPress={onSubmit}>
         <Image
           style={{
             width: nomalizes[20],
