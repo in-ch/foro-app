@@ -96,10 +96,11 @@ const ContentContainerMainView = styled.View`
 const MainContent = styled.View`
   margin-top: ${nomalizes[10]}px;
 `;
-const Heading = styled.Text`
+const Heading = styled.Text<LineThroughProps>`
   font-size: ${nomalizes[14]}px;
   color: rgb(50, 50, 50);
   font-weight: bold;
+  text-decoration: ${props => (props.line ? 'line-through' : 'none')};
 `;
 const RenderContainer = styled.View`
   height: ${nomalizes[40]}px;
@@ -120,11 +121,12 @@ const Row = styled.View`
   flex-direction: row;
   ${cssUtil.doubleCenter};
 `;
-const FruitText = styled.Text`
+const FruitText = styled.Text<LineThroughProps>`
   margin-left: ${nomalizes[5]}px;
   font-size: ${nomalizes[12]}px;
   color: #000;
   font-family: 'Pretendard';
+  text-decoration: ${props => (props.line ? 'line-through' : 'none')};
 `;
 const ConsumeDone = styled.View`
   width: ${nomalizes[26]}px;
@@ -288,6 +290,9 @@ interface WeekHighliteProps {
 interface SelectModalProps {
   selectModal: boolean;
 }
+interface LineThroughProps {
+  line: boolean;
+}
 interface Props {
   GoBack: () => void;
   goToDetail: (value: number) => void;
@@ -381,7 +386,9 @@ const AgendaNewPresenter = ({
                             <MainContent>
                               <TouchableNativeFeedback
                                 onPress={() => goToDetail(food.no)}>
-                                <Heading>{food.name}</Heading>
+                                <Heading line={food.consumed}>
+                                  {food.name}
+                                </Heading>
                               </TouchableNativeFeedback>
                               <RenderContainer>
                                 <RenderFlexOne>
@@ -391,7 +398,7 @@ const AgendaNewPresenter = ({
                                       <Mark
                                         background={food.category.categoryColor}
                                       />
-                                      <FruitText>
+                                      <FruitText line={food.consumed}>
                                         {food.category.name}
                                       </FruitText>
                                     </Row>
