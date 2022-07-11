@@ -395,9 +395,7 @@ const AgendaNewPresenter = ({
                                   <TouchableWithoutFeedback
                                     onPress={() => goToDetail(food.no)}>
                                     <Row>
-                                      <Mark
-                                        background={food.category.categoryColor}
-                                      />
+                                      <Mark background={food.category.color} />
                                       <FruitText line={food.consumed}>
                                         {food.category.name}
                                       </FruitText>
