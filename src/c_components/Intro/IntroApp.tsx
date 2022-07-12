@@ -196,9 +196,9 @@ const IntroApp = () => {
             }}
           />
           <Heading>식품 달력</Heading>
-          <SubText>달력을 통해 식품 정보를 한 눈에 파악할 수 있어요!</SubText>
+          <SubText>달력을 통해 식품 정보를 한눈에 파악할 수 있어요!</SubText>
           <SubText>
-            마지막까지 소비할 수 있는 식품 소비 기한이 표시됩니다
+            마지막까지 소비할 수 있는 식품 소비 기한이 표시됩니다.
           </SubText>
         </ImageView>
         <ImageView>
@@ -209,10 +209,9 @@ const IntroApp = () => {
               height: '100%',
             }}
           />
-          <Heading>이웃과의 식품 공유</Heading>
-          <SubText>이웃을 넘나들며 서로의 식품창고를 구경해보세요!</SubText>
+          <Heading>이웃을 넘나들며 서로의 식품창고를 구경해 보세요!</Heading>
           <SubText>마음에 드는 먹거리가 보인다면?</SubText>
-          <SubText>공유를 부탁해보세요</SubText>
+          <SubText>공유를 부탁해 보세요</SubText>
         </ImageView>
         <ImageView>
           <Image
@@ -223,8 +222,8 @@ const IntroApp = () => {
             }}
           />
           <Heading>소비 기한 알림</Heading>
-          <SubText>언제까지 먹을 수 있더라? 잊지않도록!</SubText>
-          <SubText>먹거리를 기록해볼까요?</SubText>
+          <SubText>언제까지 먹을 수 있더라? 잊지 않도록!</SubText>
+          <SubText>먹거리를 기록해 볼까요?</SubText>
         </ImageView>
         <ImageView>
           <Image
@@ -238,7 +237,7 @@ const IntroApp = () => {
           <SubText>
             원하는 식품을 검색하면 자동으로 식품 권장 기한이 입력됩니다!
           </SubText>
-          <SubText>유의 사항도 같이 확인해보세요~!</SubText>
+          <SubText>유의 사항도 같이 확인해 보세요~!</SubText>
         </ImageView>
       </ScrollView>
       <View style={styles.paginationWrapper}>
