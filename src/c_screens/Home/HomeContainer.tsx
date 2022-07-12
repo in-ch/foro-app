@@ -1,5 +1,6 @@
 import {useMutation, useReactiveVar} from '@apollo/client';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
+import {BackHandler} from 'react-native';
 
 import {IntroSkip, logUserIn, tokenUserNo} from '~/apollo/apollo';
 import {UPDATE_USER} from '@services/mutations/user';
@@ -12,6 +13,7 @@ const HomeContainer = ({navigation}: HomeProps) => {
   const [mutationUpdateUser] = useMutation(UPDATE_USER);
   const token = Pushinit(); // 푸쉬 관련 코드
   const inTroskip = useReactiveVar(IntroSkip);
+  const [exitApp, setExitApp] = useState(0);
 
   useEffect(() => {
     if (userNo !== null || userNo !== undefined) {
@@ -25,6 +27,25 @@ const HomeContainer = ({navigation}: HomeProps) => {
       });
     }
   }, [token, mutationUpdateUser, userNo]);
+
+  const backAction = () => {
+    if (exitApp === 0) {
+      setExitApp(exitApp + 1);
+    } else if (exitApp === 1) {
+      BackHandler.exitApp();
+    }
+    setTimeout(() => {
+      setExitApp(0);
+    }, 2000);
+    return true;
+  };
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction,
+    );
+    return () => backHandler.remove();
+  });
 
   const GoToAlarm = () => {
     navigation.navigate('Alarm', {});
@@ -74,6 +95,7 @@ const HomeContainer = ({navigation}: HomeProps) => {
         GoToProfile={GoToProfile}
         Logout={Logout}
         inTroskip={inTroskip}
+        exitApp={exitApp}
       />
     </>
   );
