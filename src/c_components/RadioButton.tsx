@@ -12,6 +12,7 @@ export interface RadioGroupProps {
   options: Array<string>;
   activeButton: string;
   onChange: Function;
+  activated: boolean;
   containerOptions?: ScrollViewProps;
   buttonStyle?: ViewStyle;
   labelStyle?: TextStyle;
@@ -24,6 +25,7 @@ export interface RadioButtonProps {
   activeButton: string;
   labelStyle?: TextStyle;
   radioSize?: number;
+  activated: boolean;
 }
 
 const RadioGroup: React.FC<RadioGroupProps> = props => {
@@ -37,6 +39,7 @@ const RadioGroup: React.FC<RadioGroupProps> = props => {
             buttonStyle={props.buttonStyle}
             onChange={props.onChange}
             radioSize={props.radioSize}
+            activated={props.activated}
           />
         );
       })}
@@ -61,7 +64,7 @@ const RadioButton: React.FC<RadioButtonProps> = props => {
               }
             : null,
         ]}>
-        {props.activeButton === props.label ? (
+        {props.activated ? (
           <View
             style={[
               styles.fill,
