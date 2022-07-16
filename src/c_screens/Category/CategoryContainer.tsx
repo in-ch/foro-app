@@ -11,7 +11,7 @@ import {CategoryProps} from './Category';
 import {LOAD_CATEGORY} from '@services/queries/category';
 import {DELETE_CATEGORY} from '@services/mutations/category';
 import {useIsFocused} from '@react-navigation/native';
-import {tokenUserNo} from '~/apollo/apollo';
+import {tokenUserNo} from '~/apollo/client';
 
 const CategoryContainer = ({navigation}: CategoryProps) => {
   const [modalShow, setModalShow] = useState<boolean>(false);

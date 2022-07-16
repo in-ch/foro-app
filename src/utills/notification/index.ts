@@ -4,7 +4,7 @@ import {useEffect, useState} from 'react';
 import {Alert, Platform} from 'react-native';
 import {Linking} from 'react-native';
 
-import {userDeviceToken} from '~/apollo/apollo';
+import {userDeviceToken} from '~/apollo/client';
 import {notification} from '~/hooks/Notification';
 
 export async function requestUserPermission() {

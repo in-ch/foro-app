@@ -1,7 +1,7 @@
 import {useMutation, useReactiveVar} from '@apollo/client';
 import React, {useEffect} from 'react';
 
-import {IntroSkip, logUserIn, tokenUserNo} from '~/apollo/apollo';
+import {IntroSkip, logUserOut, tokenUserNo} from '~/apollo/client';
 import {UPDATE_USER} from '@services/mutations/user';
 import Pushinit from '@utills/notification';
 import {HomeProps} from './Home';
@@ -54,7 +54,7 @@ const HomeContainer = ({navigation}: HomeProps) => {
     navigation.navigate('Profile', {});
   };
   const Logout = () => {
-    logUserIn(null);
+    logUserOut();
     navigation.reset({
       routes: [{name: 'Login', params: {}}],
     });

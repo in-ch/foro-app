@@ -14,7 +14,7 @@ import {
 import {ScrollView} from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
 
-import {doIntroSkip} from '~/apollo/apollo';
+import {doIntroSkip} from '~/apollo/client';
 import {cHeight, cWidth, nomalizes} from '@utills/constants';
 import {cssUtil} from '@utills/cssUtil';
 import images from '@assets/images';

@@ -6,7 +6,7 @@ import {nomalizes} from '@utills/constants';
 import Story from './Story';
 import {useQuery, useReactiveVar} from '@apollo/client';
 import {LOAD_USER} from '@services/queries/user';
-import {tokenUserNo} from '~/apollo/apollo';
+import {tokenUserNo} from '~/apollo/client';
 
 const Container = styled.View`
   height: ${nomalizes[75]}px;

@@ -16,8 +16,8 @@ import {RootTabParamList} from '@navigation/RootNavigation';
 import {API_URL} from '~/apollo/client';
 import Header from '@components/Header/Header';
 import {DEUPLICATENICKNAME, UPDATE_USER} from '@services/mutations/user';
-import {tokenUserNo} from '~/apollo/apollo';
-import {LOAD_USER} from '~/c_services/queries/user';
+import {tokenUserNo} from '~/apollo/client';
+import {LOAD_USER} from '@services/queries/user';
 
 const Container = styled.View`
   flex: 1;

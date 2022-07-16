@@ -9,7 +9,7 @@ import {cHeight, cWidth, nomalizes} from '@utills/constants';
 import {cssUtil} from '@utills/cssUtil';
 import Images from 'assets';
 import FFText from '../FFText';
-import {tokenUserNo} from '~/apollo/apollo';
+import {tokenUserNo} from '~/apollo/client';
 import {LOAD_USER} from '@services/queries/user';
 
 const Container = styled.View`

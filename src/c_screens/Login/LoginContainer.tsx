@@ -1,9 +1,10 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-shadow */
 // @ts-nocheck
 
 import {NavigationProp} from '@react-navigation/native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   KakaoOAuthToken,
   login,
@@ -15,7 +16,7 @@ import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {appleAuth} from '@invertase/react-native-apple-authentication';
 
 import {firebase} from '@react-native-firebase/auth';
-import {useMutation} from '@apollo/client';
+import {useMutation, useReactiveVar} from '@apollo/client';
 import {Alert} from 'react-native';
 
 import {
@@ -25,7 +26,7 @@ import {
 } from '@services/mutations/user';
 import LoginPresenter from './LoginPresenter';
 import {RootTabParamList} from '../../navigation/RootNavigation';
-import {logUserIn} from '../../apollo/apollo';
+import {logUserIn, tokenUserNo} from '../../apollo/client';
 interface Props {
   navigation: NavigationProp<RootTabParamList, 'Home'>;
 }
@@ -44,6 +45,8 @@ const LoginContainer = ({navigation}: Props) => {
   const [googleToken, setGoogleToken] = useState<string>(''); // 구글 토큰
   const [appleToken, setAppleToken] = useState<string>(''); // 애플 토큰
   const [id, setId] = useState<string>(''); // 고유값
+
+  const userNo = useReactiveVar(tokenUserNo);
 
   // kakao login
   const Kakaologin = async (): Promise<void> => {
@@ -139,7 +142,6 @@ const LoginContainer = ({navigation}: Props) => {
     },
     onError: e => {
       Alert.alert('오류가 발생했습니다. 관리자에게 문의해주세요.');
-      console.log('하-잉');
       console.log(JSON.stringify(e));
       setLoading(false);
     },
@@ -198,6 +200,12 @@ const LoginContainer = ({navigation}: Props) => {
   const GoToHomePage = () => {
     navigation.reset({routes: [{name: 'Home', params: {}}]});
   };
+
+  // useEffect(() => {
+  //   if (userNo !== null) {
+  //     GoToHomePage();
+  //   }
+  // }, [userNo]);
 
   return (
     <>

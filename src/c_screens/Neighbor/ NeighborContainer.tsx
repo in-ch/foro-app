@@ -3,7 +3,7 @@ import KakaoShareLink from 'react-native-kakao-share-link';
 
 import {NeighborProp} from './ Neighbor';
 import NeighborPresenter from './ NeighborPresenter';
-import {tokenUserNo} from '~/apollo/apollo';
+import {tokenUserNo} from '~/apollo/client';
 import {useReactiveVar} from '@apollo/client';
 
 const NeighborContainer = ({navigation}: NeighborProp) => {

@@ -1,6 +1,6 @@
 import {useQuery, useReactiveVar} from '@apollo/client';
 import React from 'react';
-import {tokenUserNo} from '~/apollo/apollo';
+import {tokenUserNo} from '~/apollo/client';
 import {LOAD_USER} from '@services/queries/user';
 import {ProfileProps} from './Profile';
 import ProfilePresenter from './ProfilePresenter';
