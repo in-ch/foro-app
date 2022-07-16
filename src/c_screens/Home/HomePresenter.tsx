@@ -5,7 +5,7 @@ import {Image, View} from 'react-native';
 import styled from 'styled-components/native';
 
 import CCalendar from '@components/Calendar/Calendar';
-import {cWidth, nomalizes, statusBarHeight} from '@utills/constants';
+import {nomalizes, statusBarHeight} from '@utills/constants';
 import {SizedBox} from '@components/SizedBox';
 import MenuBar from '@components/MenuBar/MenuBar';
 import Storys from '@components/Storys/Storys';
@@ -31,22 +31,6 @@ const ModalButton = styled.TouchableOpacity`
   background-color: #ff6c63;
   ${cssUtil.doubleCenter};
 `;
-const Toast = styled.View<DisplayProps>`
-  width: ${cWidth * 0.6}px;
-  height: ${nomalizes[40]}px;
-  border-radius: ${nomalizes[20]}px;
-  position: absolute;
-  background-color: #868686;
-  left: ${cWidth * 0.2}px;
-  bottom: ${nomalizes[40]}px;
-  display: ${props => (props.display ? 'flex' : 'none')};
-  ${cssUtil.doubleCenter};
-`;
-const ToastText = styled.Text`
-  font-size: ${nomalizes[12]}px;
-  color: #fff;
-`;
-
 interface Props {
   GoToAlarm: () => void;
   GoToSearch: () => void;
@@ -59,7 +43,6 @@ interface Props {
   GoToProfile: () => void;
   Logout: () => void;
   inTroskip: null | boolean | string;
-  exitApp: number;
 }
 
 interface DisplayProps {
@@ -78,7 +61,6 @@ const HomePresenter = ({
   GoToProfile,
   Logout,
   inTroskip,
-  exitApp,
 }: Props) => {
   return (
     <View
@@ -117,9 +99,6 @@ const HomePresenter = ({
           />
         </ModalButton>
       </ModalBackground>
-      <Toast display={exitApp === 1}>
-        <ToastText>뒤로 가기 버튼을 한 번 더 누르면 종료됩니다.</ToastText>
-      </Toast>
     </View>
   );
 };
