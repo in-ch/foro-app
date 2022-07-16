@@ -69,7 +69,7 @@ const SettingPresenter = ({
       <Container>
         <Header text="설정" back={GoBack} />
         <Wrapper>
-          <Heading>알림</Heading>
+          {/* <Heading>알림</Heading>
           <Row>
             <TText>이웃의 나눔 요청 받기</TText>
             <Switch
@@ -89,7 +89,7 @@ const SettingPresenter = ({
               value={neighborShareNewsAbled}
               onValueChange={handleNeighborShareNewsAbled}
             />
-          </Row>
+          </Row> */}
           <TouchableNativeFeedback onPress={goToPersonalPolicy}>
             <Heading>개인 정보 처리 방침</Heading>
           </TouchableNativeFeedback>

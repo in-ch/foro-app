@@ -472,7 +472,7 @@ const AgendaNewPresenter = ({
           <ModalButtonContainer>
             <ModalButtonWrapper>
               <ModalButtonContainerFlexRow>
-                <ModalButton onPress={shareFood}>
+                {/* <ModalButton onPress={shareFood}>
                   <Image
                     style={{
                       width: nomalizes[16],
@@ -482,7 +482,7 @@ const AgendaNewPresenter = ({
                   />
                   <SizedBox.Custom margin={nomalizes[5]} />
                   <ModalButtonText>공유</ModalButtonText>
-                </ModalButton>
+                </ModalButton> */}
                 <ModalButton onPress={consumeFood}>
                   <Image
                     style={{

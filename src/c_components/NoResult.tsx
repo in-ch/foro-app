@@ -17,7 +17,7 @@ interface Props {
 const NoResult = ({text}: Props) => {
   return (
     <Container>
-      <FFText color="TText">{text}</FFText>
+      <FFText color="#000">{text}</FFText>
     </Container>
   );
 };

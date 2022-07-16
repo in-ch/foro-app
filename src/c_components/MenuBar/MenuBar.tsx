@@ -255,7 +255,7 @@ const MenuBar = ({
           Fooro
         </FFText>
         <SearchAlarmContainer>
-          <TouchableWithoutFeedback onPress={GoToAlarm}>
+          {/* <TouchableWithoutFeedback onPress={GoToAlarm}>
             <Img
               style={{
                 marginRight: nomalizes[7],
@@ -263,7 +263,7 @@ const MenuBar = ({
               }}
               source={Images.alarm}
             />
-          </TouchableWithoutFeedback>
+          </TouchableWithoutFeedback> */}
           <TouchableWithoutFeedback onPress={GoToSearch}>
             <Img source={Images.search} />
           </TouchableWithoutFeedback>
@@ -297,7 +297,7 @@ const MenuBar = ({
                   borderBottomColor: '#000',
                   borderBottomWidth: 1,
                 }}>
-                <TextContainer onPress={GoToNeighbor}>
+                {/* <TextContainer onPress={GoToNeighbor}>
                   <TText style={{fontSize: nomalizes[14]}}>이웃 관리</TText>
                   <Image
                     style={{
@@ -307,7 +307,7 @@ const MenuBar = ({
                     }}
                     source={Images.arrowLeft}
                   />
-                </TextContainer>
+                </TextContainer> */}
                 <TextContainer onPress={GoToCategory}>
                   <TText style={{fontSize: nomalizes[14]}}>카테고리 관리</TText>
                   <Image
