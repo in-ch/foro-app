@@ -3,7 +3,13 @@ import {ActivityIndicator, Image} from 'react-native';
 import styled from 'styled-components/native';
 
 import {SizedBox} from '@components/SizedBox';
-import {cHeight, cWidth, nomalizes, statusBarHeight} from '@utills/constants';
+import {
+  cHeight,
+  cWidth,
+  isIOS,
+  nomalizes,
+  statusBarHeight,
+} from '@utills/constants';
 import {cssUtil} from '@utills/cssUtil';
 
 import Images from 'assets';
@@ -117,18 +123,21 @@ const LoginPresenter = ({
                   <TText color="#F45A5D">구글로 로그인</TText>
                 </TextContainer>
               </PhoneButton>
-              <PhoneButton background={'#000'} onPress={signInWithApple}>
-                <Image
-                  style={{
-                    width: nomalizes[25],
-                    height: nomalizes[25],
-                  }}
-                  source={Images.apple}
-                />
-                <TextContainer>
-                  <TText color="#fff">애플로 로그인</TText>
-                </TextContainer>
-              </PhoneButton>
+
+              {isIOS && (
+                <PhoneButton background={'#000'} onPress={signInWithApple}>
+                  <Image
+                    style={{
+                      width: nomalizes[25],
+                      height: nomalizes[25],
+                    }}
+                    source={Images.apple}
+                  />
+                  <TextContainer>
+                    <TText color="#fff">애플로 로그인</TText>
+                  </TextContainer>
+                </PhoneButton>
+              )}
             </LoginJon>
           </Container>
         </>
