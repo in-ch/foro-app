@@ -14,11 +14,12 @@ import {nomalizes} from '@utills/constants';
 import {cssUtil} from '@utills/cssUtil';
 import {getDateListFilter} from '@utills/getListFilter';
 import {LOAD_FOOD} from '@services/queries/food';
-import {useQuery} from '@apollo/client';
+import {useQuery, useReactiveVar} from '@apollo/client';
 import {textOverflow} from '@utills/textOverflow';
 import {DateToString} from '@utills/dateToString';
 import {FoodData} from '~/types/Food';
 import {useIsFocused} from '@react-navigation/native';
+import {tokenUserNo} from '~/apollo/client';
 
 const TextContainer = styled.View<TextContainerProps>`
   padding-left: ${nomalizes[3]}px;
@@ -81,10 +82,10 @@ const CCalendar = ({GoToAgenda, GoToDetail}: Props) => {
   const [currentDay] = useState(
     String(moment(new Date()).format('YYYY-MM-DD')),
   ); // today를 고정시키기 위한 값.
-
+  const userNo = useReactiveVar(tokenUserNo);
   const {data, refetch} = useQuery(LOAD_FOOD, {
     variables: {
-      userNo: 1,
+      userNo,
     },
     fetchPolicy: 'network-only',
   });

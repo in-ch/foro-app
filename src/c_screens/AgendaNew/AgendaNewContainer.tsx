@@ -35,7 +35,7 @@ const AgendaNewContainer = ({navigation, route}: AgendaProps) => {
     loading,
   } = useQuery(LOAD_FOOD, {
     variables: {
-      userNo: 1,
+      userNo: route?.params?.userId,
     },
     fetchPolicy: 'network-only',
   });

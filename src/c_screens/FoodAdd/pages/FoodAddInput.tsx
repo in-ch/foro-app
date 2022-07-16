@@ -16,8 +16,9 @@ import DDatePicker from '@components/DatePicker';
 import TextInput from '@components/TextInput';
 import {cssUtil} from '@utills/cssUtil';
 import {CategoryProps} from '~/types/Category';
-import {useQuery} from '@apollo/client';
+import {useQuery, useReactiveVar} from '@apollo/client';
 import {LOAD_CATEGORY} from '@services/queries/category';
+import {tokenUserNo} from '~/apollo/client';
 
 const Container = styled.KeyboardAvoidingView`
   flex: 1;
@@ -84,6 +85,7 @@ const FoodAddInput = ({navigation, route}: FoodSearchResultProps) => {
   const [alarmDay, setAlarmDay] = useState(
     moment(new Date()).add(Number(date) - Number(2), 'days'),
   );
+  const userNo = useReactiveVar(tokenUserNo);
 
   useEffect(() => {
     setAlarmDay(moment(dday).add(-Number(2), 'days'));
@@ -91,7 +93,7 @@ const FoodAddInput = ({navigation, route}: FoodSearchResultProps) => {
 
   const {data: Category} = useQuery(LOAD_CATEGORY, {
     variables: {
-      userNo: 1,
+      userNo,
     },
     onCompleted: d => {
       console.log(JSON.stringify(d));
@@ -175,7 +177,7 @@ const FoodAddInput = ({navigation, route}: FoodSearchResultProps) => {
               thumbColor={onlyMe ? '#fff' : '#f4f3f4'}
               ios_backgroundColor="#3e3e3e"
               onValueChange={() => setOnlyMe(!onlyMe)}
-              value={onlyMe}
+              value={!onlyMe}
               style={{marginLeft: nomalizes[50]}}
             />
           </RowBox>

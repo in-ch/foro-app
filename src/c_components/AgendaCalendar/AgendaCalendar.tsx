@@ -21,10 +21,11 @@ import images from '@assets/images';
 import {cWidth, nomalizes} from '@utills/constants';
 import {cssUtil} from '@utills/cssUtil';
 import {LOAD_FOOD} from '@services/queries/food';
-import {useQuery} from '@apollo/client';
+import {useQuery, useReactiveVar} from '@apollo/client';
 import {getDateListFilter} from '@utills/getListFilter';
 import {FoodData} from '~/types/Food';
 import {SizedBox} from '../SizedBox';
+import {tokenUserNo} from '~/apollo/client';
 const Heading = styled.Text`
   font-weight: bold;
   font-size: ${nomalizes[12]}px;
@@ -144,9 +145,10 @@ const AgendaScreen = ({selected, goToDetail, GoToFoodAdd}: Props) => {
   );
   const [loading, setLoading] = useState<boolean>(true);
   const isFocused = useIsFocused();
+  const userNo = useReactiveVar(tokenUserNo);
   const {data, refetch} = useQuery(LOAD_FOOD, {
     variables: {
-      userNo: 1,
+      userNo,
     },
     fetchPolicy: 'network-only',
     onCompleted: d => {

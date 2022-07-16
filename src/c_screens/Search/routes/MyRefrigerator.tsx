@@ -7,9 +7,10 @@ import moment from 'moment';
 import SearchInput from '@components/SearchInput';
 import {nomalizes} from '@utills/constants';
 import {SizedBox} from '@components/SizedBox';
-import {useMutation} from '@apollo/client';
+import {useMutation, useReactiveVar} from '@apollo/client';
 import {SEARCH_FOOD_USER} from '@services/mutations/food';
 import {numberToWeek} from '@utills/numberToWeek';
+import {tokenUserNo} from '~/apollo/client';
 
 const Container = styled.View``;
 const ResultContainer = styled.View`
@@ -45,10 +46,11 @@ interface Props {
 const MyRefrigerator = ({goToDetail}: Props) => {
   const [text, setText] = useState<string>('');
   const [mutationSearchFoodUser, {data}] = useMutation(SEARCH_FOOD_USER);
+  const userNo = useReactiveVar(tokenUserNo);
   const Search = () => {
     mutationSearchFoodUser({
       variables: {
-        userNo: 1,
+        userNo,
         keyword: text.trim(),
       },
     });

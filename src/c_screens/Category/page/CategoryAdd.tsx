@@ -1,7 +1,7 @@
 import React, {useCallback, useRef, useState} from 'react';
 import {NavigationProp} from '@react-navigation/native';
 import styled from 'styled-components/native';
-import {useMutation} from '@apollo/client';
+import {useMutation, useReactiveVar} from '@apollo/client';
 import Toast from 'react-native-easy-toast';
 
 import {RootTabParamList} from '@navigation/RootNavigation';
@@ -12,6 +12,7 @@ import SearchInputOneLine from '@components/SearchInputOneLine';
 import SelectInputNoBorder from '@components/SelectInputNoBorder';
 import HeaderPlus from '@components/Header/HeaderPlus';
 import {SizedBox} from '@components/SizedBox';
+import {tokenUserNo} from '~/apollo/client';
 export interface CategoryAddProps {
   navigation: NavigationProp<RootTabParamList, 'CategoryAdd'>;
 }
@@ -37,7 +38,7 @@ const CategoryAdd = ({navigation}: CategoryAddProps) => {
   const [value, setValue] = useState('');
   const [color, setColor] = useState('#43419A');
   const toastRef = useRef<any>(null);
-
+  const userNo = useReactiveVar(tokenUserNo);
   const showToast = useCallback((text: string) => {
     toastRef.current.show(text);
   }, []);
@@ -55,7 +56,7 @@ const CategoryAdd = ({navigation}: CategoryAddProps) => {
     } else {
       mutationCategoryAdd({
         variables: {
-          userNo: 1,
+          userNo,
           category: {
             name: vvalue,
             color: color,
@@ -76,14 +77,14 @@ const CategoryAdd = ({navigation}: CategoryAddProps) => {
       let dataCategoryQuery = cache.readQuery<any>({
         query: LOAD_CATEGORY,
         variables: {
-          userNo: 1,
+          userNo,
         },
       });
       const newData = [data.insertCategory, ...dataCategoryQuery.loadCategory];
       cache.writeQuery({
         query: LOAD_CATEGORY,
         variables: {
-          userNo: 1,
+          userNo,
         },
         data: {
           loadCategory: newData,

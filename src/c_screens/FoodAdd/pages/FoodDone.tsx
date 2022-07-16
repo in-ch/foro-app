@@ -4,7 +4,7 @@
 import React, {useEffect} from 'react';
 import {Switch, View} from 'react-native';
 import {NavigationProp, RouteProp} from '@react-navigation/native';
-import {useMutation} from '@apollo/client';
+import {useMutation, useReactiveVar} from '@apollo/client';
 import styled from 'styled-components/native';
 import moment from 'moment';
 
@@ -14,6 +14,7 @@ import {INSERT_FOOD} from '@services/mutations/food';
 import {nomalizes} from '@utills/constants';
 import {cssUtil} from '@utills/cssUtil';
 import {RootTabParamList} from '@navigation/RootNavigation';
+import {tokenUserNo} from '~/apollo/client';
 
 export interface FoodAddResultProps {
   navigation: NavigationProp<RootTabParamList, 'FoodDone'>;
@@ -100,11 +101,12 @@ interface ColorProps {
 const FoodDone = ({navigation, route}: FoodAddResultProps) => {
   const {category, dday, keyword, name, onlyMe, memo} =
     route.params.foodAddParams;
+  const userNo = useReactiveVar(tokenUserNo);
   const [mutationInsertFood] = useMutation(INSERT_FOOD);
   const handleInsertFood = () => {
     mutationInsertFood({
       variables: {
-        userNo: 1,
+        userNo,
         food: {
           name,
           dday: moment(new Date(`${dday}`)).format('YYYY-MM-DD'),
@@ -169,7 +171,7 @@ const FoodDone = ({navigation, route}: FoodAddResultProps) => {
             trackColor={{false: '#767577', true: '#FF6C63'}}
             thumbColor={onlyMe ? '#fff' : '#f4f3f4'}
             ios_backgroundColor="#3e3e3e"
-            value={onlyMe}
+            value={!onlyMe}
             style={{marginLeft: 10}}
           />
         </RowBoxSwitch>
