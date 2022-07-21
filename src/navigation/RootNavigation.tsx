@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {
   CardStyleInterpolators,
   createStackNavigator,
@@ -31,6 +31,7 @@ import Share from '@screens/Share/Share';
 import {FoodData} from '~/types/Food';
 import {isLoggedInVar} from '~/apollo/client';
 import {useReactiveVar} from '@apollo/client';
+import FriendAdd from '~/c_screens/FriendAdd/FriendAdd';
 
 export type RootTabParamList = {
   Home: {};
@@ -79,6 +80,7 @@ export type RootTabParamList = {
   UserAdd: {
     from: string; // 요청을 보낸 유저 no
   };
+  FriendAdd: {};
   Share: {
     foodNo: number;
   };
@@ -89,9 +91,6 @@ const RootNavigation = () => {
 
   const isLoggedIn = useReactiveVar(isLoggedInVar);
 
-  useEffect(() => {
-    console.log(isLoggedIn);
-  }, []);
   return (
     <Stack.Navigator
       // initialRouteName="Home"
@@ -151,6 +150,13 @@ const RootNavigation = () => {
       <Stack.Screen
         name="FoodAdd"
         component={FoodAdd}
+        options={{
+          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+        }}
+      />
+      <Stack.Screen
+        name="FriendAdd"
+        component={FriendAdd}
         options={{
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
         }}

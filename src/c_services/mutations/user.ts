@@ -46,3 +46,14 @@ export const DEUPLICATENICKNAME = gql`
     }
   }
 `;
+
+export const LOAD_USER_BY_NAME = gql`
+  mutation loadUserByName($nickname: String!) {
+    loadUserByName(nickname: $nickname) {
+      no
+      nickname
+      createdAt
+      profile
+    }
+  }
+`;

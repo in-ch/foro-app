@@ -7,6 +7,7 @@ import Story from './Story';
 import {useQuery, useReactiveVar} from '@apollo/client';
 import {LOAD_USER} from '@services/queries/user';
 import {tokenUserNo} from '~/apollo/client';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
 const Container = styled.View`
   height: ${nomalizes[75]}px;
@@ -24,8 +25,10 @@ const Wrapper = styled.View`
   padding-left: ${nomalizes[9]}px;
   margin-top: ${nomalizes[5]}px;
 `;
-
-const Storys = () => {
+interface Props {
+  GoToFriendAdd: () => void;
+}
+const Storys = ({GoToFriendAdd}: Props) => {
   const userNo = useReactiveVar(tokenUserNo);
   const {data} = useQuery(LOAD_USER, {
     variables: {
@@ -42,7 +45,9 @@ const Storys = () => {
             profile={data?.loadUser?.profile}
           />
           <Story />
-          <Story isPlus={true} />
+          <TouchableOpacity onPress={GoToFriendAdd}>
+            <Story isPlus={true} />
+          </TouchableOpacity>
           <View style={{width: nomalizes[5]}} />
         </Wrapper>
       </SScrollView>

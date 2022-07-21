@@ -41,6 +41,7 @@ interface Props {
   GoToNeighbor: () => void;
   GoToSetting: () => void;
   GoToProfile: () => void;
+  GoToFriendAdd: () => void;
   Logout: () => void;
   inTroskip: null | boolean | string;
 }
@@ -59,6 +60,7 @@ const HomePresenter = ({
   GoToNeighbor,
   GoToSetting,
   GoToProfile,
+  GoToFriendAdd,
   Logout,
   inTroskip,
 }: Props) => {
@@ -84,7 +86,7 @@ const HomePresenter = ({
         GoToProfile={GoToProfile}
         Logout={Logout}
       />
-      <Storys />
+      <Storys GoToFriendAdd={GoToFriendAdd} />
 
       <CCalendar GoToAgenda={GoToAgenda} GoToDetail={GoToDetail} />
 
