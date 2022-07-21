@@ -41,11 +41,8 @@ const Storys = () => {
             nickname={data?.loadUser?.nickname}
             profile={data?.loadUser?.profile}
           />
-          {/* <Story />
           <Story />
-          <Story />
-          <Story />
-          <Story isPlus={true} /> */}
+          <Story isPlus={true} />
           <View style={{width: nomalizes[5]}} />
         </Wrapper>
       </SScrollView>

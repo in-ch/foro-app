@@ -50,8 +50,8 @@ const Story = ({isPlus, profile, nickname}: Props) => {
         {isPlus ? (
           <Image
             style={{
-              width: nomalizes[8],
-              height: nomalizes[8],
+              width: nomalizes[10],
+              height: nomalizes[10],
             }}
             source={images.plus}
           />
@@ -63,23 +63,26 @@ const Story = ({isPlus, profile, nickname}: Props) => {
           </SkeletonPlaceholder>
         )}
       </Profile>
-      <NameContainer>
-        <FFText fontSize={nomalizes[10]}>
-          {nickname ? (
-            nickname
-          ) : (
-            <SkeletonPlaceholder speed={1800}>
-              <View
-                style={{
-                  width: nomalizes[40],
-                  height: nomalizes[12],
-                  marginTop: nomalizes[5],
-                }}
-              />
-            </SkeletonPlaceholder>
-          )}
-        </FFText>
-      </NameContainer>
+
+      {!isPlus && (
+        <NameContainer>
+          <FFText fontSize={nomalizes[10]}>
+            {nickname ? (
+              nickname
+            ) : (
+              <SkeletonPlaceholder speed={1800}>
+                <View
+                  style={{
+                    width: nomalizes[40],
+                    height: nomalizes[12],
+                    marginTop: nomalizes[5],
+                  }}
+                />
+              </SkeletonPlaceholder>
+            )}
+          </FFText>
+        </NameContainer>
+      )}
     </Container>
   );
 };
