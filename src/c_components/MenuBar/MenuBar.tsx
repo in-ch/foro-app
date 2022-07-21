@@ -255,15 +255,15 @@ const MenuBar = ({
           Fooro
         </FFText>
         <SearchAlarmContainer>
-          {/* <TouchableWithoutFeedback onPress={GoToAlarm}>
+          <TouchableWithoutFeedback onPress={GoToAlarm}>
             <Img
               style={{
                 marginRight: nomalizes[7],
-                marginTop: nomalizes[3],
+                marginTop: nomalizes[2.5],
               }}
               source={Images.alarm}
             />
-          </TouchableWithoutFeedback> */}
+          </TouchableWithoutFeedback>
           <TouchableWithoutFeedback onPress={GoToSearch}>
             <Img source={Images.search} />
           </TouchableWithoutFeedback>

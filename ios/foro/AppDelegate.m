@@ -1,4 +1,5 @@
 #import <Firebase.h>
+#import <RNKakaoLogins.h>
 #import "AppDelegate.h"
 
 #import <React/RCTBridge.h>
@@ -16,7 +17,6 @@
 #import <FlipperKitNetworkPlugin/FlipperKitNetworkPlugin.h>
 #import <SKIOSNetworkPlugin/SKIOSNetworkAdapter.h>
 #import <FlipperKitReactPlugin/FlipperKitReactPlugin.h>
-#import <RNKakaoLogins.h>
 
 static void InitializeFlipper(UIApplication *application) {
   FlipperClient *client = [FlipperClient sharedClient];

@@ -28,7 +28,7 @@ const SearchPresenter = ({GoBack, goToDetail}: Props) => {
   const layout = useWindowDimensions();
   const [routes] = useState([
     {key: 'first', title: '나의 냉장고'},
-    // {key: 'second', title: '이웃 냉장고'},
+    {key: 'second', title: '이웃 냉장고'},
   ]);
 
   const renderTabBar = (props: any) => (
@@ -37,8 +37,8 @@ const SearchPresenter = ({GoBack, goToDetail}: Props) => {
       style={{backgroundColor: '#fff', height: nomalizes[35]}}
       indicatorStyle={{
         backgroundColor: '#FF6258',
-        // width: '40%',
-        width: '90%',
+        width: '40%',
+        // width: '90%',
         marginLeft: '5%',
         height: 2,
       }}
@@ -61,8 +61,8 @@ const SearchPresenter = ({GoBack, goToDetail}: Props) => {
     switch (route.key) {
       case 'first':
         return <MyRefrigerator goToDetail={goToDetail} />;
-      // case 'second':
-      //   return <FriendRefrigerator />;
+      case 'second':
+        return <FriendRefrigerator />;
       default:
         return null;
     }
