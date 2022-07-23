@@ -3,17 +3,18 @@ import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {Image, Modal} from 'react-native';
 import styled from 'styled-components/native';
 import {ScrollView} from 'react-native-gesture-handler';
-import {useMutation} from '@apollo/client';
+import {useMutation, useReactiveVar} from '@apollo/client';
 import Toast from 'react-native-easy-toast';
 
 import {RootTabParamList} from 'navigation/RootNavigation';
 import Header from '@components/Header/Header';
+import {SizedBox} from '@components/SizedBox';
 import {cHeight, cWidth, nomalizes} from '@utills/constants';
 import {cssUtil} from '@utills/cssUtil';
-import {SizedBox} from '@components/SizedBox';
 import {UserSearchData} from 'types/User';
 import {LOAD_USER_BY_NAME} from '@services/mutations/user';
-import images from '~/assets/images';
+import images from '@assets/images';
+import {tokenUserNo} from 'apollo/client';
 
 const Container = styled.View`
   flex: 1;
@@ -137,11 +138,13 @@ interface SelectModalProps {
 const FriendAddResult = ({navigation, route}: FriendAddResultProps) => {
   const [userData, setUserData] = useState<UserSearchData[]>([]);
   const [selectModal, setSelectModal] = useState<boolean>(false);
+  const userNo = useReactiveVar(tokenUserNo);
 
   const [selectedUserName, setSelectedUserName] = useState<string>('');
   const [mutationLoadUserByName] = useMutation(LOAD_USER_BY_NAME, {
     variables: {
       nickname: route.params.foodText,
+      userNo,
     },
     onCompleted: d => {
       setUserData(d?.loadUserByName);

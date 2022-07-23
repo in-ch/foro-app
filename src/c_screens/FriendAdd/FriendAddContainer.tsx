@@ -1,15 +1,17 @@
-import {useMutation} from '@apollo/client';
+import {useMutation, useReactiveVar} from '@apollo/client';
 import React, {useCallback, useRef, useState} from 'react';
 
 import {FriendAddProps} from './FriendAdd';
 import FriendAddPresenter from './FriendAddPresenter';
-import {LOAD_USER_BY_NAME} from '@services/mutations/user';
 import {UserSearchData} from '~/types/User';
+import {tokenUserNo} from '~/apollo/client';
+import {LOAD_USER_BY_NAME} from '@services/mutations/user';
 
 const FriendAddContainer = ({navigation}: FriendAddProps) => {
   const [text, setText] = useState<string>('');
   const [userData, setUserData] = useState<UserSearchData[]>([]);
   const [selectModal, setSelectModal] = useState<boolean>(false);
+  const userNo = useReactiveVar(tokenUserNo);
 
   const [selectedUserName, setSelectedUserName] = useState<string>('');
   const onClickUser = (userName: string) => {
@@ -30,6 +32,7 @@ const FriendAddContainer = ({navigation}: FriendAddProps) => {
   const [mutationLoadUserByName] = useMutation(LOAD_USER_BY_NAME, {
     variables: {
       nickname: text,
+      userNo,
     },
     onCompleted: d => {
       setUserData(d?.loadUserByName);

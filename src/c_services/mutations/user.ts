@@ -48,8 +48,8 @@ export const DEUPLICATENICKNAME = gql`
 `;
 
 export const LOAD_USER_BY_NAME = gql`
-  mutation loadUserByName($nickname: String!) {
-    loadUserByName(nickname: $nickname) {
+  mutation loadUserByName($nickname: String!, $userNo: Float!) {
+    loadUserByName(nickname: $nickname, userNo: $userNo) {
       no
       nickname
       createdAt
