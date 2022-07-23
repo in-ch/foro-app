@@ -1,5 +1,5 @@
 import {useMutation} from '@apollo/client';
-import React, {useState} from 'react';
+import React, {useCallback, useRef, useState} from 'react';
 
 import {FriendAddProps} from './FriendAdd';
 import FriendAddPresenter from './FriendAddPresenter';
@@ -9,11 +9,18 @@ import {UserSearchData} from '~/types/User';
 const FriendAddContainer = ({navigation}: FriendAddProps) => {
   const [text, setText] = useState<string>('');
   const [userData, setUserData] = useState<UserSearchData[]>([]);
+  const [selectModal, setSelectModal] = useState<boolean>(false);
+
+  const [selectedUserName, setSelectedUserName] = useState<string>('');
+  const onClickUser = (userName: string) => {
+    setSelectedUserName(userName);
+    setSelectModal(true);
+  };
+
   const goBack = () => {
     navigation.goBack();
   };
   const handleChangeText = async (value: string) => {
-    console.log(value);
     setText(value);
     if (value.length > 1) {
       mutationLoadUserByName();
@@ -25,16 +32,38 @@ const FriendAddContainer = ({navigation}: FriendAddProps) => {
       nickname: text,
     },
     onCompleted: d => {
-      console.log(JSON.stringify(d));
       setUserData(d?.loadUserByName);
     },
   });
+
+  const toastRef = useRef<any>(null);
+  const showToast = useCallback((modalText: string) => {
+    toastRef.current.show(modalText);
+  }, []);
+  const cancelSelectModal = () => {
+    setSelectModal(false);
+  };
+  const handleEvent = () => {
+    showToast('이웃추가 요청을 보냈습니다.');
+    setSelectModal(false);
+  };
+  const goToFriendAddResult = () => {
+    navigation.navigate('FriendAddResult', {foodText: text});
+  };
   return (
     <FriendAddPresenter
       goBack={goBack}
       text={text}
       setText={handleChangeText}
       userData={userData}
+      toastRef={toastRef}
+      selectModal={selectModal}
+      setSelectModal={setSelectModal}
+      cancelSelectModal={cancelSelectModal}
+      handleEvent={handleEvent}
+      selectedUserName={selectedUserName}
+      onClickUser={onClickUser}
+      goToFriendAddResult={goToFriendAddResult}
     />
   );
 };
