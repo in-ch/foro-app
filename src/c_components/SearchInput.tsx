@@ -59,7 +59,7 @@ const SearchInput = ({
         placeholderTextColor="#646464"
         onChangeText={(text: string) => setValue(text)}
         value={value}
-        maxLength={20}
+        maxLength={15}
         onSubmitEditing={onSubmit}
         style={{
           color: '#000',

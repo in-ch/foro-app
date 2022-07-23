@@ -168,6 +168,9 @@ const FriendAddResult = ({navigation, route}: FriendAddResultProps) => {
   const handleEvent = () => {
     showToast('이웃추가 요청을 보냈습니다.');
     setSelectModal(false);
+    setTimeout(() => {
+      navigation.goBack();
+    }, 500);
   };
 
   return (
@@ -233,7 +236,7 @@ const FriendAddResult = ({navigation, route}: FriendAddResultProps) => {
         </Modal>
         <Toast
           ref={toastRef}
-          positionValue={cHeight * 0.1}
+          positionValue={cHeight * 0.25}
           fadeInDuration={400}
           fadeOutDuration={1200}
         />
