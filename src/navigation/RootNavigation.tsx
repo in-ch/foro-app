@@ -32,6 +32,7 @@ import {FoodData} from '~/types/Food';
 import {isLoggedInVar} from '~/apollo/client';
 import {useReactiveVar} from '@apollo/client';
 import FriendAdd from '~/c_screens/FriendAdd/FriendAdd';
+import FriendAddResult from '~/c_screens/FriendAdd/page/FriendAddResult';
 
 export type RootTabParamList = {
   Home: {};
@@ -81,6 +82,9 @@ export type RootTabParamList = {
     from: string; // 요청을 보낸 유저 no
   };
   FriendAdd: {};
+  FriendAddResult: {
+    foodText: string;
+  };
   Share: {
     foodNo: number;
   };
@@ -150,6 +154,13 @@ const RootNavigation = () => {
       <Stack.Screen
         name="FoodAdd"
         component={FoodAdd}
+        options={{
+          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+        }}
+      />
+      <Stack.Screen
+        name="FriendAddResult"
+        component={FriendAddResult}
         options={{
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
         }}
