@@ -27,12 +27,12 @@ import ProfileEdit from '@screens/Profile/pages/ProfileEdit';
 import UserAdd from '@screens/UserAdd/UserAdd';
 import AgendaNew from '@screens/AgendaNew/AgendaNew';
 import Share from '@screens/Share/Share';
+import FriendAdd from '@screens/FriendAdd/FriendAdd';
+import FriendAddResult from '@screens/FriendAdd/page/FriendAddResult';
 
 import {FoodData} from '~/types/Food';
 import {isLoggedInVar} from '~/apollo/client';
 import {useReactiveVar} from '@apollo/client';
-import FriendAdd from '~/c_screens/FriendAdd/FriendAdd';
-import FriendAddResult from '~/c_screens/FriendAdd/page/FriendAddResult';
 
 export type RootTabParamList = {
   Home: {};
@@ -97,10 +97,7 @@ const RootNavigation = () => {
 
   return (
     <Stack.Navigator
-      // initialRouteName="Home"
-      // initialRouteName="Login"
       initialRouteName={isLoggedIn ? 'Home' : 'Login'}
-      // initialRouteName="InputProfile"
       screenOptions={{headerShown: false}}>
       <Stack.Screen
         name="Login"

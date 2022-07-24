@@ -1,11 +1,12 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {useAsyncStorage} from '@react-native-community/async-storage';
 import messaging from '@react-native-firebase/messaging';
 import {useEffect, useState} from 'react';
 import {Alert, Platform} from 'react-native';
 import {Linking} from 'react-native';
 
-import {userDeviceToken} from '~/apollo/client';
-import {notification} from '~/hooks/Notification';
+import {userDeviceToken} from 'apollo/client';
+import Notification from '@hooks/Notification';
 
 export async function requestUserPermission() {
   const authStatus = await messaging().requestPermission();
@@ -18,7 +19,7 @@ export async function requestUserPermission() {
   }
 }
 
-const Pushinit = () => {
+const Pushinit = (GoToAlarm: any) => {
   const [token, setToken] = useState('');
   const {getItem: getFcmItem, setItem: setFcmItem} =
     useAsyncStorage('fcmToken');
@@ -38,10 +39,12 @@ const Pushinit = () => {
     messaging().requestPermission();
     messaging().registerDeviceForRemoteMessages();
     getFcmToken();
+
     const unsubscribe = messaging().onMessage(async remoteMessage => {
-      notification(
+      Notification(
         remoteMessage.notification?.body,
         String(remoteMessage.notification?.title),
+        GoToAlarm,
       );
     });
     return unsubscribe;

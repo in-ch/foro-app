@@ -8,11 +8,14 @@ import {HomeProps} from './Home';
 import HomePresenter from './HomePresenter';
 
 const HomeContainer = ({navigation}: HomeProps) => {
+  const GoToAlarm = () => {
+    navigation.navigate('Alarm', {});
+  };
+
   const userNo = useReactiveVar(tokenUserNo);
   const [mutationUpdateUser] = useMutation(UPDATE_USER);
-  const token = Pushinit(); // 푸쉬 관련 코드
+  const token = Pushinit(GoToAlarm); // 푸쉬 관련 코드
   const inTroskip = useReactiveVar(IntroSkip);
-
   useEffect(() => {
     if (userNo !== null || userNo !== undefined) {
       mutationUpdateUser({
@@ -26,9 +29,6 @@ const HomeContainer = ({navigation}: HomeProps) => {
     }
   }, [token, mutationUpdateUser, userNo]);
 
-  const GoToAlarm = () => {
-    navigation.navigate('Alarm', {});
-  };
   const GoToSearch = () => {
     navigation.navigate('Search', {});
   };
