@@ -7,3 +7,11 @@ export const REQUEST_ADD_FRIEND = gql`
     }
   }
 `;
+
+export const READ_ALL_ALARM = gql`
+  mutation allReadAlarm($userNo: Float!) {
+    allReadAlarm(userNo: $userNo) {
+      ok
+    }
+  }
+`;

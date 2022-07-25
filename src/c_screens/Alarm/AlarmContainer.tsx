@@ -11,7 +11,7 @@ const AlarmContainer = ({navigation}: AlarmProps) => {
   const GoToBack = () => {
     navigation.goBack();
   };
-  const {data: myAlarm} = useQuery(LOAD_ALARM, {
+  const {data: myAlarm, loading} = useQuery(LOAD_ALARM, {
     variables: {
       userNo,
     },
@@ -23,7 +23,13 @@ const AlarmContainer = ({navigation}: AlarmProps) => {
     },
     fetchPolicy: 'network-only',
   });
-  return <AlarmPresenter GoToBack={GoToBack} myAlarm={myAlarm?.loadAlarm} />;
+  return (
+    <AlarmPresenter
+      GoToBack={GoToBack}
+      myAlarm={myAlarm?.loadAlarm}
+      loading={loading}
+    />
+  );
 };
 
 export default AlarmContainer;

@@ -1,14 +1,19 @@
-import React, {useCallback, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import styled from 'styled-components/native';
 import Toast from 'react-native-easy-toast';
-import {Modal} from 'react-native';
+import {Image, Modal} from 'react-native';
 import {useMutation, useReactiveVar} from '@apollo/client';
+import {ScrollView} from 'react-native-gesture-handler';
 
 import {cHeight, cWidth, nomalizes} from '@utills/constants';
 import {cssUtil} from '@utills/cssUtil';
 import {AlarmProps} from '~/types/Alarm';
 import {ADD_FRIEND} from '@services/mutations/user';
-import {tokenUserNo} from '~/apollo/client';
+import {tokenUserNo} from 'apollo/client';
+import {SizedBox} from '@components/SizedBox';
+import {READ_ALL_ALARM} from '@services/mutations/alarm';
+import images from '~/assets/images';
+import DDay from '~/c_components/DDay';
 
 const Container = styled.View`
   width: 100%;
@@ -72,12 +77,6 @@ const FoodText = styled.Text`
   line-height: ${nomalizes[15]}px;
   font-family: 'Pretendard';
 `;
-const DDay = styled.Text`
-  color: #a4a4a4;
-  font-size: ${nomalizes[10]}px;
-  margin-top: ${nomalizes[5]};
-  font-family: 'Pretendard';
-`;
 const AlertWrapper = styled.View<SelectModalProps>`
   background-color: #fff;
   width: ${nomalizes[200]}px;
@@ -139,9 +138,21 @@ const ModalButtonText = styled.Text`
   color: #fff;
   font-size: ${nomalizes[11]}px;
 `;
+const NoneContainer = styled.View`
+  width: 100%;
+  height: 250px;
+  display: flex;
+  ${cssUtil.doubleCenter};
+`;
+const NoneText = styled.Text`
+  margin-top: ${nomalizes[10]}px;
+  color: #a8a8a8;
+  font-size: ${nomalizes[12]}px;
+`;
 
 interface Props {
   myAlarm: AlarmProps[];
+  loading: boolean;
 }
 interface IsReadProps {
   isRead: boolean;
@@ -150,7 +161,7 @@ interface SelectModalProps {
   selectModal: boolean;
 }
 
-const ShareAlarm = ({myAlarm}: Props) => {
+const ShareAlarm = ({myAlarm, loading}: Props) => {
   const [highliteValue, setHighliteValue] = useState<string>('');
   const [doneValue, setDoneValue] = useState<string>('');
   const [selectValue, setSelectValue] = useState<number>(0);
@@ -201,37 +212,58 @@ const ShareAlarm = ({myAlarm}: Props) => {
     },
   });
 
+  const [mutationReadAllAlarm] = useMutation(READ_ALL_ALARM, {
+    variables: {
+      userNo,
+    },
+    onCompleted: d => {
+      console.log(d);
+    },
+    onError: e => {
+      console.log(JSON.stringify(e));
+    },
+  });
+
+  useEffect(() => {
+    mutationReadAllAlarm();
+  }, [mutationReadAllAlarm]);
+
   return (
-    <Container>
-      {myAlarm &&
-        myAlarm.map((alarm: AlarmProps, index: number) => {
-          if (alarm.type === 1) {
-            return (
-              <Wrapper
-                isRead={highliteValue.includes(`//${index}//`)}
-                onPress={() =>
-                  isClickWrapper(index, alarm.type, alarm?.fromUser?.no)
-                }>
-                <ProfileContainer>
-                  <Button>
-                    <ButtonText>이웃추가</ButtonText>
-                  </Button>
-                </ProfileContainer>
-                <TextContainer>
-                  <Header>
-                    <FoodText numberOfLines={2}>
-                      {alarm.fromUser?.nickname}님에게 이웃추가 요청이 왔습니다.
-                    </FoodText>
-                  </Header>
-                  <Bottom>
-                    <DDay>1시간 전</DDay>
-                  </Bottom>
-                </TextContainer>
-              </Wrapper>
-            );
-          }
-        })}
-      {/* <Wrapper>
+    <ScrollView>
+      {!loading ? (
+        <Container>
+          {myAlarm &&
+            myAlarm.map((alarm: AlarmProps, index: number) => {
+              if (alarm.type === 1) {
+                return (
+                  <Wrapper
+                    isRead={
+                      highliteValue.includes(`//${index}//`) || alarm.isRead
+                    }
+                    onPress={() =>
+                      isClickWrapper(index, alarm.type, alarm?.fromUser?.no)
+                    }>
+                    <ProfileContainer>
+                      <Button>
+                        <ButtonText>이웃추가</ButtonText>
+                      </Button>
+                    </ProfileContainer>
+                    <TextContainer>
+                      <Header>
+                        <FoodText numberOfLines={2}>
+                          {alarm.fromUser?.nickname}님에게 이웃추가 요청이
+                          왔습니다.
+                        </FoodText>
+                      </Header>
+                      <Bottom>
+                        <DDay time={alarm.createdAt.toString()} />
+                      </Bottom>
+                    </TextContainer>
+                  </Wrapper>
+                );
+              }
+            })}
+          {/* <Wrapper>
         <ProfileContainer>
           <Button>
             <ButtonText>이웃나눔</ButtonText>
@@ -300,29 +332,55 @@ const ShareAlarm = ({myAlarm}: Props) => {
         </TextContainer>
       </Wrapper> */}
 
-      <Modal animationType="fade" visible={selectModal} transparent={true}>
-        <ModalBackground>
-          <AlertWrapper selectModal={selectModal}>
-            <AlertText>이웃 추가를 하시겠습니까?</AlertText>
-            <AlertSub>이웃의 식품을 보고 공유할 수 있어요!</AlertSub>
-            <SelectButtonWrapper>
-              <CancelButton onPress={cancelSelectModal}>
-                <ModalButtonText>취소</ModalButtonText>
-              </CancelButton>
-              <OkButton onPress={handleEvent}>
-                <ModalButtonText>확인</ModalButtonText>
-              </OkButton>
-            </SelectButtonWrapper>
-          </AlertWrapper>
-        </ModalBackground>
-      </Modal>
-      <Toast
-        ref={toastRef}
-        positionValue={cHeight * 0.3}
-        fadeInDuration={400}
-        fadeOutDuration={1200}
-      />
-    </Container>
+          <Modal animationType="fade" visible={selectModal} transparent={true}>
+            <ModalBackground>
+              <AlertWrapper selectModal={selectModal}>
+                <AlertText>이웃 추가를 하시겠습니까?</AlertText>
+                <AlertSub>이웃의 식품을 보고 공유할 수 있어요!</AlertSub>
+                <SelectButtonWrapper>
+                  <CancelButton onPress={cancelSelectModal}>
+                    <ModalButtonText>취소</ModalButtonText>
+                  </CancelButton>
+                  <OkButton onPress={handleEvent}>
+                    <ModalButtonText>확인</ModalButtonText>
+                  </OkButton>
+                </SelectButtonWrapper>
+              </AlertWrapper>
+            </ModalBackground>
+          </Modal>
+          <Toast
+            ref={toastRef}
+            positionValue={cHeight * 0.3}
+            fadeInDuration={400}
+            fadeOutDuration={1200}
+          />
+        </Container>
+      ) : (
+        <NoneContainer>
+          <Image
+            style={{
+              width: nomalizes[100],
+              height: nomalizes[100],
+            }}
+            source={images.loading}
+          />
+        </NoneContainer>
+      )}
+
+      {myAlarm?.length < 1 && (
+        <NoneContainer>
+          <Image
+            style={{
+              width: nomalizes[80],
+              height: nomalizes[80],
+            }}
+            source={images.noSearch}
+          />
+          <NoneText>알림이 아직 없습니다.</NoneText>
+        </NoneContainer>
+      )}
+      <SizedBox.Custom margin={nomalizes[150]} />
+    </ScrollView>
   );
 };
 

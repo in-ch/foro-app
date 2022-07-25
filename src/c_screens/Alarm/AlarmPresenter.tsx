@@ -22,11 +22,12 @@ const LabelText = styled.Text`
 interface Props {
   GoToBack: () => void;
   myAlarm: AlarmProps[];
+  loading: boolean;
 }
 interface PProps {
   route: any;
 }
-const AlarmPresenter = ({GoToBack, myAlarm}: Props) => {
+const AlarmPresenter = ({GoToBack, myAlarm, loading}: Props) => {
   const [index, setIndex] = useState(0);
   const layout = useWindowDimensions();
   const [routes] = useState([
@@ -62,7 +63,7 @@ const AlarmPresenter = ({GoToBack, myAlarm}: Props) => {
   const renderScene = ({route}: PProps) => {
     switch (route.key) {
       case 'first':
-        return <FoodAlarm myAlarm={myAlarm} />;
+        return <FoodAlarm myAlarm={myAlarm} loading={loading} />;
       case 'second':
         return <ShareAlarm />;
       default:

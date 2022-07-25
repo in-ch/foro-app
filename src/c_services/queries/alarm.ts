@@ -5,6 +5,7 @@ export const LOAD_ALARM = gql`
     loadAlarm(userNo: $userNo) {
       type
       createdAt
+      isRead
       fromUser {
         nickname
         no
