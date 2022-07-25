@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import {NavigationProp, RouteProp} from '@react-navigation/native';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {Image, Modal} from 'react-native';
@@ -127,6 +128,12 @@ const NoneText = styled.Text`
   color: #a8a8a8;
   font-size: ${nomalizes[12]}px;
 `;
+const LoadingContainer = styled.View`
+  width: 100%;
+  height: 400px;
+  display: flex;
+  ${cssUtil.doubleCenter};
+`;
 
 export interface FriendAddResultProps {
   navigation: NavigationProp<RootTabParamList, 'FriendAddResult'>;
@@ -145,7 +152,7 @@ const FriendAddResult = ({navigation, route}: FriendAddResultProps) => {
   const [friendName, setFriendName] = useState<string>('');
 
   const [selectedUserName, setSelectedUserName] = useState<string>('');
-  const [mutationLoadUserByName] = useMutation(LOAD_USER_BY_NAME, {
+  const [mutationLoadUserByName, {loading}] = useMutation(LOAD_USER_BY_NAME, {
     variables: {
       nickname: route.params.foodText,
       userNo,
@@ -213,7 +220,8 @@ const FriendAddResult = ({navigation, route}: FriendAddResultProps) => {
       <Container>
         <ScrollView>
           <SearchResultContainer>
-            {userData &&
+            {!loading &&
+              userData &&
               userData.map((user: UserSearchData) => {
                 let date =
                   new Date(user.createdAt).getFullYear() +
@@ -237,17 +245,26 @@ const FriendAddResult = ({navigation, route}: FriendAddResultProps) => {
                   </SearchResultBox>
                 );
               })}
-            {userData.length < 1 && (
-              <NoneContainer>
+            {!loading ? (
+              userData.length < 1 && (
+                <NoneContainer>
+                  <Image
+                    style={{
+                      width: nomalizes[50],
+                      height: nomalizes[50],
+                    }}
+                    source={images.noSearch}
+                  />
+                  <NoneText>검색 결과가 없습니다.</NoneText>
+                </NoneContainer>
+              )
+            ) : (
+              <LoadingContainer>
                 <Image
-                  style={{
-                    width: nomalizes[50],
-                    height: nomalizes[50],
-                  }}
-                  source={images.noSearch}
+                  source={images.loading}
+                  style={{width: 100, height: 100}}
                 />
-                <NoneText>검색 결과가 없습니다.</NoneText>
-              </NoneContainer>
+              </LoadingContainer>
             )}
           </SearchResultContainer>
           <SizedBox.Custom margin={nomalizes[100]} />
