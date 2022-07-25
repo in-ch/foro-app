@@ -1,6 +1,8 @@
 require_relative '../node_modules/react-native/scripts/react_native_pods'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
+$RNFirebaseAsStaticFramework = true
+
 platform :ios, '11.0'
 
 target 'foro' do
@@ -10,12 +12,13 @@ target 'foro' do
     :path => config[:reactNativePath],
     # to enable hermes on iOS, change `false` to `true` and then install pods
     :hermes_enabled => false
-  )
-
+    )
+  pod 'GoogleUtilities', :modular_headers => true
   pod 'RNCPushNotificationIOS', :path => '../node_modules/@react-native-community/push-notification-ios'
 
   target 'foroTests' do
     inherit! :complete
+    # use_frameworks!
     # Pods for testing
   end
 
