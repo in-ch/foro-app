@@ -120,7 +120,7 @@ interface Props {
   cancelSelectModal: () => void;
   handleEvent: () => void;
   selectedUserName: string;
-  onClickUser: (value: string) => void;
+  onClickUser: (value: string, value2: number) => void;
   goToFriendAddResult: () => void;
 }
 interface SelectModalProps {
@@ -163,7 +163,8 @@ const FriendAddPresenter = ({
                   new Date(user.createdAt).getDate() +
                   '일 생성';
                 return (
-                  <SearchResultBox onPress={() => onClickUser(user.nickname)}>
+                  <SearchResultBox
+                    onPress={() => onClickUser(user.nickname, user.no)}>
                     <ProfileContainer>
                       <IImage
                         source={{

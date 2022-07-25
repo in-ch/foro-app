@@ -15,6 +15,8 @@ import {UserSearchData} from 'types/User';
 import {LOAD_USER_BY_NAME} from '@services/mutations/user';
 import images from '@assets/images';
 import {tokenUserNo} from 'apollo/client';
+import {REQUEST_ADD_FRIEND} from '@services/mutations/alarm';
+import {SEND_PUSH} from '@services/mutations/push';
 
 const Container = styled.View`
   flex: 1;
@@ -139,6 +141,8 @@ const FriendAddResult = ({navigation, route}: FriendAddResultProps) => {
   const [userData, setUserData] = useState<UserSearchData[]>([]);
   const [selectModal, setSelectModal] = useState<boolean>(false);
   const userNo = useReactiveVar(tokenUserNo);
+  const [friendNo, setFriendNo] = useState(0);
+  const [friendName, setFriendName] = useState<string>('');
 
   const [selectedUserName, setSelectedUserName] = useState<string>('');
   const [mutationLoadUserByName] = useMutation(LOAD_USER_BY_NAME, {
@@ -150,6 +154,30 @@ const FriendAddResult = ({navigation, route}: FriendAddResultProps) => {
       setUserData(d?.loadUserByName);
     },
   });
+
+  const [mutationRequestAddFriend] = useMutation(REQUEST_ADD_FRIEND, {
+    variables: {
+      userNo,
+      friendNo,
+    },
+    onCompleted: d => {
+      console.log('============= 성공', d);
+      mutationSendPush();
+    },
+  });
+
+  const [mutationSendPush] = useMutation(SEND_PUSH, {
+    variables: {
+      userNo: friendNo,
+      title: '친구 요청이 왔습니다.',
+      body: `${friendName}님! 새로운 이웃 요청이 왔어요.`,
+      type: 1,
+    },
+    onCompleted: d => {
+      console.log(d);
+    },
+  });
+
   const goBack = () => {
     navigation.goBack();
   };
@@ -157,9 +185,11 @@ const FriendAddResult = ({navigation, route}: FriendAddResultProps) => {
     mutationLoadUserByName();
   }, [mutationLoadUserByName]);
 
-  const onClickUser = (userName: string) => {
+  const onClickUser = (userName: string, userNoo: number) => {
     setSelectedUserName(userName);
     setSelectModal(true);
+    setFriendNo(userNoo);
+    setFriendName(userName);
   };
   const toastRef = useRef<any>(null);
   const showToast = useCallback((modalText: string) => {
@@ -171,6 +201,7 @@ const FriendAddResult = ({navigation, route}: FriendAddResultProps) => {
   const handleEvent = () => {
     showToast('이웃추가 요청을 보냈습니다.');
     setSelectModal(false);
+    mutationRequestAddFriend();
     setTimeout(() => {
       navigation.goBack();
     }, 500);
@@ -192,7 +223,8 @@ const FriendAddResult = ({navigation, route}: FriendAddResultProps) => {
                   new Date(user.createdAt).getDate() +
                   '일 생성';
                 return (
-                  <SearchResultBox onPress={() => onClickUser(user.nickname)}>
+                  <SearchResultBox
+                    onPress={() => onClickUser(user.nickname, user.no)}>
                     <ProfileContainer>
                       <IImage
                         source={{

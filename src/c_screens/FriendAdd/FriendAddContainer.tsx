@@ -3,20 +3,27 @@ import React, {useCallback, useRef, useState} from 'react';
 
 import {FriendAddProps} from './FriendAdd';
 import FriendAddPresenter from './FriendAddPresenter';
-import {UserSearchData} from '~/types/User';
-import {tokenUserNo} from '~/apollo/client';
+import {UserSearchData} from 'types/User';
+import {tokenUserNo} from 'apollo/client';
 import {LOAD_USER_BY_NAME} from '@services/mutations/user';
+import {REQUEST_ADD_FRIEND} from '@services/mutations/alarm';
+import {SEND_PUSH} from '@services/mutations/push';
 
 const FriendAddContainer = ({navigation}: FriendAddProps) => {
   const [text, setText] = useState<string>('');
   const [userData, setUserData] = useState<UserSearchData[]>([]);
   const [selectModal, setSelectModal] = useState<boolean>(false);
   const userNo = useReactiveVar(tokenUserNo);
+  const [friendNo, setFriendNo] = useState(0);
+  const [friendName, setFriendName] = useState<string>('');
 
   const [selectedUserName, setSelectedUserName] = useState<string>('');
-  const onClickUser = (userName: string) => {
+  const onClickUser = async (userName: string, _friendNo: number) => {
     setSelectedUserName(userName);
     setSelectModal(true);
+    setFriendNo(_friendNo);
+    mutationRequestAddFriend();
+    setFriendName(userName);
   };
 
   const goBack = () => {
@@ -36,6 +43,29 @@ const FriendAddContainer = ({navigation}: FriendAddProps) => {
     },
     onCompleted: d => {
       setUserData(d?.loadUserByName);
+    },
+  });
+
+  const [mutationRequestAddFriend] = useMutation(REQUEST_ADD_FRIEND, {
+    variables: {
+      userNo,
+      friendNo,
+    },
+    onCompleted: d => {
+      console.log('============= 성공', d);
+      mutationSendPush();
+    },
+  });
+
+  const [mutationSendPush] = useMutation(SEND_PUSH, {
+    variables: {
+      userNo: friendNo,
+      title: '친구 요청이 왔습니다.',
+      body: `${friendName}님! 새로운 이웃 요청이 왔어요.`,
+      type: 1,
+    },
+    onCompleted: d => {
+      console.log(d);
     },
   });
 
