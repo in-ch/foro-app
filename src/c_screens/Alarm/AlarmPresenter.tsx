@@ -1,26 +1,32 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
 import {TabView, TabBar} from 'react-native-tab-view';
-import {Text, useWindowDimensions} from 'react-native';
+import {useWindowDimensions} from 'react-native';
 import 'react-native-gesture-handler';
 import styled from 'styled-components/native';
 
 import Header from '@components/Header/Header';
-import {nomalizes} from '~/utills/constants';
+import {nomalizes} from '@utills/constants';
 import FoodAlarm from './routes/FoodAlarm';
 import ShareAlarm from './routes/ShareAlarm';
+import {AlarmProps} from '~/types/Alarm';
 
 const Container = styled.View`
   background-color: #fff;
   flex: 1;
 `;
+const LabelText = styled.Text`
+  font-size: ${nomalizes[12]}px;
+  color: #000;
+`;
 interface Props {
   GoToBack: () => void;
+  myAlarm: AlarmProps[];
 }
 interface PProps {
   route: any;
 }
-const AlarmPresenter = ({GoToBack}: Props) => {
+const AlarmPresenter = ({GoToBack, myAlarm}: Props) => {
   const [index, setIndex] = useState(0);
   const layout = useWindowDimensions();
   const [routes] = useState([
@@ -39,7 +45,7 @@ const AlarmPresenter = ({GoToBack}: Props) => {
         height: 2,
       }}
       renderLabel={({route, focused}) => (
-        <Text
+        <LabelText
           style={{
             color: focused ? '#000' : '#acacac',
             margin: 8,
@@ -48,7 +54,7 @@ const AlarmPresenter = ({GoToBack}: Props) => {
             fontFamily: 'Pretendard',
           }}>
           {route.title}
-        </Text>
+        </LabelText>
       )}
     />
   );
@@ -56,7 +62,7 @@ const AlarmPresenter = ({GoToBack}: Props) => {
   const renderScene = ({route}: PProps) => {
     switch (route.key) {
       case 'first':
-        return <FoodAlarm />;
+        return <FoodAlarm myAlarm={myAlarm} />;
       case 'second':
         return <ShareAlarm />;
       default:
