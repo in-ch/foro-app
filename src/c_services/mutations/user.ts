@@ -57,3 +57,11 @@ export const LOAD_USER_BY_NAME = gql`
     }
   }
 `;
+
+export const ADD_FRIEND = gql`
+  mutation addFriend($userNo: Float!, $friendNo: Float!) {
+    addFriend(userNo: $userNo, friendNo: $friendNo) {
+      ok
+    }
+  }
+`;

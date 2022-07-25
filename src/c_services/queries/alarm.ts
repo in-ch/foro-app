@@ -7,6 +7,7 @@ export const LOAD_ALARM = gql`
       createdAt
       fromUser {
         nickname
+        no
       }
     }
   }

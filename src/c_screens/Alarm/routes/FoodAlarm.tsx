@@ -1,11 +1,14 @@
 import React, {useCallback, useRef, useState} from 'react';
 import styled from 'styled-components/native';
+import Toast from 'react-native-easy-toast';
+import {Modal} from 'react-native';
+import {useMutation, useReactiveVar} from '@apollo/client';
 
 import {cHeight, cWidth, nomalizes} from '@utills/constants';
 import {cssUtil} from '@utills/cssUtil';
 import {AlarmProps} from '~/types/Alarm';
-import {Modal} from 'react-native';
-import Toast from 'react-native-easy-toast';
+import {ADD_FRIEND} from '@services/mutations/user';
+import {tokenUserNo} from '~/apollo/client';
 
 const Container = styled.View`
   width: 100%;
@@ -151,7 +154,13 @@ const ShareAlarm = ({myAlarm}: Props) => {
   const [highliteValue, setHighliteValue] = useState<string>('');
   const [doneValue, setDoneValue] = useState<string>('');
   const [selectValue, setSelectValue] = useState<number>(0);
-  const isClickWrapper = (value: number, type: number) => {
+  const [friendNo, setFriendNo] = useState<number | undefined>(0);
+  const userNo = useReactiveVar(tokenUserNo);
+  const isClickWrapper = (
+    value: number,
+    type: number,
+    _friendNo: number | undefined,
+  ) => {
     if (!highliteValue.includes(`//${value}//`)) {
       const va = highliteValue + `//${value}//`;
       setHighliteValue(va);
@@ -159,6 +168,7 @@ const ShareAlarm = ({myAlarm}: Props) => {
     if (type === 1 && !doneValue.includes(`//${value}//`)) {
       setSelectModal(true);
       setSelectValue(value);
+      setFriendNo(_friendNo);
     }
   };
 
@@ -169,14 +179,27 @@ const ShareAlarm = ({myAlarm}: Props) => {
   };
   const handleEvent = () => {
     setSelectModal(false);
-    showToast('이웃 추가가 완료되었습니다.');
     const va = doneValue + `//${selectValue}//`;
     setDoneValue(va);
+    mutationAddFriend();
   };
   const toastRef = useRef<any>(null);
   const showToast = useCallback((text: string) => {
     toastRef.current.show(text);
   }, []);
+
+  const [mutationAddFriend] = useMutation(ADD_FRIEND, {
+    variables: {
+      userNo,
+      friendNo,
+    },
+    onCompleted: () => {
+      showToast('이웃 추가가 완료되었습니다.');
+    },
+    onError: () => {
+      showToast('오류가 발생하였습니다.');
+    },
+  });
 
   return (
     <Container>
@@ -186,7 +209,9 @@ const ShareAlarm = ({myAlarm}: Props) => {
             return (
               <Wrapper
                 isRead={highliteValue.includes(`//${index}//`)}
-                onPress={() => isClickWrapper(index, alarm.type)}>
+                onPress={() =>
+                  isClickWrapper(index, alarm.type, alarm?.fromUser?.no)
+                }>
                 <ProfileContainer>
                   <Button>
                     <ButtonText>이웃추가</ButtonText>
