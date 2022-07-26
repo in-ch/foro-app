@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import styled from 'styled-components/native';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
@@ -5,7 +6,6 @@ import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import HeaderPlus from '@components/Header/HeaderPlus';
 import {SizedBox} from '@components/SizedBox';
 import {nomalizes} from '@utills/constants';
-import {Image, Modal} from 'react-native';
 import images from '@assets/images';
 import {cssUtil} from '@utills/cssUtil';
 
@@ -54,60 +54,88 @@ const ModalText = styled.Text`
   font-size: ${nomalizes[12]}px;
   margin-top: ${nomalizes[15]}px;
   margin-bottom: ${nomalizes[15]}px;
-  color: rgb(50, 50, 50);
+  color: rgb(37, 37, 37);
   font-family: 'Pretendard';
 `;
+const ImageContainer = styled.View`
+  width: ${nomalizes[36]}px;
+  height: ${nomalizes[36]}px;
+  border-radius: ${nomalizes[18]}px;
+  overflow: hidden;
+`;
+const TTouchableOpacity = styled.TouchableOpacity`
+  background-color: #e4e4e4;
+  width: 90%;
+  border-radius: ${nomalizes[10]}px;
+  display: flex;
+  ${cssUtil.doubleCenter};
+`;
+
+const IImage = styled.Image``;
+const MModal = styled.Modal``;
 
 interface Props {
   goBack: () => void;
   modalShow: boolean;
   onShowModal: () => void;
   kakaoshare: () => void;
+  friendsData: any;
+  goToFriendAdd: () => void;
 }
 const NeighborPresenter = ({
   goBack,
   modalShow,
   onShowModal,
   kakaoshare,
+  friendsData,
+  goToFriendAdd,
 }: Props) => {
+  console.log(friendsData.loadFriendFood);
   return (
     <Container>
-      <HeaderPlus text="이웃 관리" back={goBack} button={kakaoshare} />
+      <HeaderPlus text="이웃 관리" back={goBack} button={goToFriendAdd} />
       <SizedBox.Custom margin={nomalizes[15]} />
-      <RowBox>
-        <Row>
-          <Image
-            style={{
-              width: nomalizes[30],
-              height: nomalizes[30],
-            }}
-            source={images.user}
-          />
-          <TText>이웃 닉네임</TText>
-        </Row>
-        <Row>
-          <TouchableWithoutFeedback onPress={onShowModal}>
-            <Image
-              style={{
-                width: nomalizes[16],
-                height: nomalizes[16],
-              }}
-              source={images.setting}
-            />
-          </TouchableWithoutFeedback>
-        </Row>
-      </RowBox>
+      {friendsData?.loadFriendFood &&
+        friendsData?.loadFriendFood.map((data: any) => {
+          return (
+            <RowBox>
+              <Row>
+                <ImageContainer>
+                  <IImage
+                    style={{
+                      width: nomalizes[36],
+                      height: nomalizes[36],
+                    }}
+                    source={{uri: data.profile}}
+                  />
+                </ImageContainer>
+                <TText>{data.nickname}</TText>
+              </Row>
+              <Row>
+                <TouchableWithoutFeedback onPress={onShowModal}>
+                  <IImage
+                    style={{
+                      width: nomalizes[16],
+                      height: nomalizes[16],
+                    }}
+                    source={images.setting}
+                  />
+                </TouchableWithoutFeedback>
+              </Row>
+            </RowBox>
+          );
+        })}
 
-      <Modal animationType="fade" visible={modalShow} transparent={true}>
+      <MModal animationType="fade" visible={modalShow} transparent={true}>
         <Wrapper>
           <ModalExtra onPress={onShowModal} />
           <ModalContentBox>
-            <TouchableWithoutFeedback onPress={() => console.warn('')}>
+            <TTouchableOpacity onPress={() => console.warn('')}>
               <ModalText>이웃 삭제하기</ModalText>
-            </TouchableWithoutFeedback>
+            </TTouchableOpacity>
           </ModalContentBox>
         </Wrapper>
-      </Modal>
+      </MModal>
     </Container>
   );
 };

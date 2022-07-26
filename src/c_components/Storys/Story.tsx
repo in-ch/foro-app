@@ -1,5 +1,4 @@
 import React from 'react';
-import {Image, View} from 'react-native';
 import styled from 'styled-components/native';
 import {nomalizes} from '@utills/constants';
 import images from '@assets/images';
@@ -37,7 +36,8 @@ const IImage = styled.Image`
   width: ${nomalizes[40]}px;
   height: ${nomalizes[40]}px;
 `;
-
+const IIImage = styled.Image``;
+const VView = styled.View``;
 interface Props {
   isPlus?: boolean;
   profile?: string;
@@ -48,7 +48,7 @@ const Story = ({isPlus, profile, nickname}: Props) => {
     <Container>
       <Profile>
         {isPlus ? (
-          <Image
+          <IIImage
             style={{
               width: nomalizes[10],
               height: nomalizes[10],
@@ -59,7 +59,7 @@ const Story = ({isPlus, profile, nickname}: Props) => {
           <IImage source={{uri: profile}} />
         ) : (
           <SkeletonPlaceholder speed={1800}>
-            <View style={{width: nomalizes[40], height: nomalizes[40]}} />
+            <VView style={{width: nomalizes[40], height: nomalizes[40]}} />
           </SkeletonPlaceholder>
         )}
       </Profile>
@@ -71,7 +71,7 @@ const Story = ({isPlus, profile, nickname}: Props) => {
               nickname
             ) : (
               <SkeletonPlaceholder speed={1800}>
-                <View
+                <VView
                   style={{
                     width: nomalizes[40],
                     height: nomalizes[12],

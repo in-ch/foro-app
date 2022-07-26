@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-native/no-inline-styles */
 import React, {useRef, useState} from 'react';
 import styled from 'styled-components/native';
@@ -191,7 +192,8 @@ const ButtonText = styled.Text`
   color: #fff;
   font-size: ${nomalizes[11]}px;
 `;
-
+const MModal = styled.Modal``;
+const IIImage = styled.Image``;
 const AnimatedContainer = Animated.createAnimatedComponent(SidebarContainer);
 
 interface Props {
@@ -283,7 +285,7 @@ const MenuBar = ({
                     {data?.loadUser?.nickname}
                   </ProfileNickname>
                 </ProfileNicknameContainer>
-                <Image
+                <IIImage
                   style={{
                     width: nomalizes[6],
                     height: nomalizes[6],
@@ -297,9 +299,9 @@ const MenuBar = ({
                   borderBottomColor: '#000',
                   borderBottomWidth: 1,
                 }}>
-                {/* <TextContainer onPress={GoToNeighbor}>
+                <TextContainer onPress={GoToNeighbor}>
                   <TText style={{fontSize: nomalizes[14]}}>이웃 관리</TText>
-                  <Image
+                  <IIImage
                     style={{
                       width: nomalizes[6],
                       height: nomalizes[6],
@@ -307,10 +309,10 @@ const MenuBar = ({
                     }}
                     source={Images.arrowLeft}
                   />
-                </TextContainer> */}
+                </TextContainer>
                 <TextContainer onPress={GoToCategory}>
                   <TText style={{fontSize: nomalizes[14]}}>카테고리 관리</TText>
-                  <Image
+                  <IIImage
                     style={{
                       width: nomalizes[6],
                       height: nomalizes[6],
@@ -336,7 +338,7 @@ const MenuBar = ({
         </Wrapper>
       </AnimatedContainer>
 
-      <Modal animationType="fade" visible={show} transparent={true}>
+      <MModal animationType="fade" visible={show} transparent={true}>
         <LogoutContainer>
           <LogoutWrapper>
             <LogoutText>정말 로그아웃하시나요?</LogoutText>
@@ -350,7 +352,7 @@ const MenuBar = ({
             </SelectButtonWrapper>
           </LogoutWrapper>
         </LogoutContainer>
-      </Modal>
+      </MModal>
     </>
   );
 };

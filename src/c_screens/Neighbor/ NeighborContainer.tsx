@@ -4,9 +4,22 @@ import KakaoShareLink from 'react-native-kakao-share-link';
 import {NeighborProp} from './ Neighbor';
 import NeighborPresenter from './ NeighborPresenter';
 import {tokenUserNo} from '~/apollo/client';
-import {useReactiveVar} from '@apollo/client';
+import {useQuery, useReactiveVar} from '@apollo/client';
+import {LOAD_FRIEND_FOOD} from '@services/queries/friend';
 
 const NeighborContainer = ({navigation}: NeighborProp) => {
+  const userNo = useReactiveVar(tokenUserNo);
+  const {data: friendsData} = useQuery(LOAD_FRIEND_FOOD, {
+    variables: {
+      userNo,
+    },
+    fetchPolicy: 'cache-and-network',
+  });
+
+  const goToFriendAdd = () => {
+    navigation.navigate('FriendAdd', {});
+  };
+
   const goBack = () => {
     navigation.goBack();
   };
@@ -15,7 +28,6 @@ const NeighborContainer = ({navigation}: NeighborProp) => {
     setModalShow(!modalShow);
   };
 
-  const userNo = useReactiveVar(tokenUserNo);
   const kakaoshare = async () => {
     try {
       const response = await KakaoShareLink.sendText({
@@ -47,6 +59,8 @@ const NeighborContainer = ({navigation}: NeighborProp) => {
       onShowModal={onShowModal}
       goBack={goBack}
       kakaoshare={kakaoshare}
+      friendsData={friendsData}
+      goToFriendAdd={goToFriendAdd}
     />
   );
 };
