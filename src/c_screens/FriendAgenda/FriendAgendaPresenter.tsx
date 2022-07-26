@@ -319,6 +319,7 @@ interface Props {
   selectModalText: string;
   handleEvent: () => void;
   toastRef: any;
+  data: any;
 }
 
 const FriendAgendaPresenter = ({
@@ -343,6 +344,7 @@ const FriendAgendaPresenter = ({
   selectModalText,
   handleEvent,
   toastRef,
+  data,
 }: Props) => {
   return (
     <>
@@ -372,7 +374,7 @@ const FriendAgendaPresenter = ({
         ) : (
           <Body>
             <ScrollView>
-              {foodData !== undefined ? (
+              {data?.length > 0 ? (
                 Object.keys(foodData)?.map((foodKey: string) => {
                   return (
                     <ContentContainer>
@@ -457,9 +459,6 @@ const FriendAgendaPresenter = ({
                   <TText style={{fontSize: nomalizes[12], color: '#797979'}}>
                     등록된 식품이 없습니다.
                   </TText>
-                  <TText style={{fontSize: nomalizes[12], color: '#797979'}}>
-                    상품을 추가해보세요.
-                  </TText>
                 </NoneContainer>
               )}
               <SizedBox.Custom margin={nomalizes[150]} />
@@ -535,16 +534,6 @@ const FriendAgendaPresenter = ({
           </AlertWrapper>
         </ModalBackground>
       </MModal>
-
-      <PlusButton onPress={GoToFoodAdd}>
-        <IImage
-          style={{
-            width: nomalizes[18],
-            height: nomalizes[18],
-          }}
-          source={images.plusWhite}
-        />
-      </PlusButton>
 
       <Toast
         ref={toastRef}

@@ -1,8 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import styled from 'styled-components/native';
 import moment from 'moment';
-import {Image, Modal, Text, TouchableNativeFeedback} from 'react-native';
 import {
   ScrollView,
   TouchableWithoutFeedback,
@@ -280,6 +280,10 @@ const ButtonText = styled.Text`
   color: #fff;
   font-size: ${nomalizes[11]}px;
 `;
+const IImage = styled.Image``;
+const MModal = styled.Modal``;
+const TTouchableNativeFeedback = styled.TouchableNativeFeedback``;
+const TText = styled.Text``;
 
 interface MarkProps {
   background: string;
@@ -315,6 +319,7 @@ interface Props {
   selectModalText: string;
   handleEvent: () => void;
   toastRef: any;
+  data: any;
 }
 
 const AgendaNewPresenter = ({
@@ -339,6 +344,7 @@ const AgendaNewPresenter = ({
   selectModalText,
   handleEvent,
   toastRef,
+  data,
 }: Props) => {
   return (
     <>
@@ -368,7 +374,7 @@ const AgendaNewPresenter = ({
         ) : (
           <Body>
             <ScrollView>
-              {foodData !== undefined ? (
+              {data?.length > 0 ? (
                 Object.keys(foodData)?.map((foodKey: string) => {
                   return (
                     <ContentContainer>
@@ -384,12 +390,12 @@ const AgendaNewPresenter = ({
                         {foodData[foodKey]?.map((food: any) => {
                           return (
                             <MainContent>
-                              <TouchableNativeFeedback
+                              <TTouchableNativeFeedback
                                 onPress={() => goToDetail(food.no)}>
                                 <Heading line={food.consumed}>
                                   {food.name}
                                 </Heading>
-                              </TouchableNativeFeedback>
+                              </TTouchableNativeFeedback>
                               <RenderContainer>
                                 <RenderFlexOne>
                                   <TouchableWithoutFeedback
@@ -411,7 +417,7 @@ const AgendaNewPresenter = ({
                                           </ConsumeDoneText>
                                         </ConsumeDone>
                                       )}
-                                      <Image
+                                      <IImage
                                         style={{
                                           width: nomalizes[10],
                                           height: nomalizes[10],
@@ -442,7 +448,7 @@ const AgendaNewPresenter = ({
                 })
               ) : (
                 <NoneContainer>
-                  <Image
+                  <IImage
                     style={{
                       width: nomalizes[80],
                       height: nomalizes[80],
@@ -450,12 +456,12 @@ const AgendaNewPresenter = ({
                     source={images.bigSearch}
                   />
                   <SizedBox.Custom margin={nomalizes[20]} />
-                  <Text style={{fontSize: nomalizes[12], color: '#797979'}}>
+                  <TText style={{fontSize: nomalizes[12], color: '#797979'}}>
                     등록된 식품이 없습니다.
-                  </Text>
-                  <Text style={{fontSize: nomalizes[12], color: '#797979'}}>
+                  </TText>
+                  <TText style={{fontSize: nomalizes[12], color: '#797979'}}>
                     상품을 추가해보세요.
-                  </Text>
+                  </TText>
                 </NoneContainer>
               )}
               <SizedBox.Custom margin={nomalizes[150]} />
@@ -464,11 +470,11 @@ const AgendaNewPresenter = ({
         )}
       </Container>
 
-      <Modal animationType="fade" visible={showModal} transparent={true}>
+      <MModal animationType="fade" visible={showModal} transparent={true}>
         <ModalBackground>
-          <TouchableNativeFeedback onPress={() => selectedShow(1)}>
+          <TTouchableNativeFeedback onPress={() => selectedShow(1)}>
             <ModalBackgroundExtra />
-          </TouchableNativeFeedback>
+          </TTouchableNativeFeedback>
           <ModalButtonContainer>
             <ModalButtonWrapper>
               <ModalButtonContainerFlexRow>
@@ -484,7 +490,7 @@ const AgendaNewPresenter = ({
                   <ModalButtonText>공유</ModalButtonText>
                 </ModalButton> */}
                 <ModalButton onPress={consumeFood}>
-                  <Image
+                  <IImage
                     style={{
                       width: nomalizes[16],
                       height: nomalizes[16],
@@ -495,7 +501,7 @@ const AgendaNewPresenter = ({
                   <ModalButtonText>소비완료</ModalButtonText>
                 </ModalButton>
                 <ModalButton onPress={publicFood}>
-                  <Image
+                  <IImage
                     style={{
                       width: nomalizes[16],
                       height: nomalizes[16],
@@ -530,10 +536,10 @@ const AgendaNewPresenter = ({
             </SelectButtonWrapper>
           </AlertWrapper>
         </ModalBackground>
-      </Modal>
+      </MModal>
 
       <PlusButton onPress={GoToFoodAdd}>
-        <Image
+        <IImage
           style={{
             width: nomalizes[18],
             height: nomalizes[18],

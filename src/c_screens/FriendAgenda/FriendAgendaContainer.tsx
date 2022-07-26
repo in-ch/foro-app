@@ -155,6 +155,7 @@ const FriendAgendaContainer = ({navigation, route}: AgendaProps) => {
         groupBy(food?.loadFood, 'dday'),
         route?.params?.selected,
       )}
+      data={food?.loadFood}
       thisWeek={thisWeek()}
       weekData={week}
       thisDay={String(new Date().getDay())}

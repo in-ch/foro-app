@@ -187,6 +187,7 @@ const AgendaNewContainer = ({navigation, route}: AgendaProps) => {
       selectModalText={selectModalText}
       handleEvent={handleEvent}
       toastRef={toastRef}
+      data={food?.loadFood}
     />
   );
 };
