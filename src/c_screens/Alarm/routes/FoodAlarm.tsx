@@ -2,7 +2,7 @@ import React, {useCallback, useEffect, useRef, useState} from 'react';
 import styled from 'styled-components/native';
 import Toast from 'react-native-easy-toast';
 import {Image, Modal} from 'react-native';
-import {useMutation, useReactiveVar} from '@apollo/client';
+import {useLazyQuery, useMutation, useReactiveVar} from '@apollo/client';
 import {ScrollView} from 'react-native-gesture-handler';
 
 import {cHeight, cWidth, nomalizes} from '@utills/constants';
@@ -14,6 +14,8 @@ import {SizedBox} from '@components/SizedBox';
 import {READ_ALL_ALARM} from '@services/mutations/alarm';
 import images from '~/assets/images';
 import DDay from '~/c_components/DDay';
+import {SEND_PUSH} from '~/c_services/mutations/push';
+import {LOAD_USER} from '~/c_services/queries/user';
 
 const Container = styled.View`
   width: 100%;
@@ -204,8 +206,25 @@ const ShareAlarm = ({myAlarm, loading}: Props) => {
       userNo,
       friendNo,
     },
-    onCompleted: () => {
-      showToast('이웃 추가가 완료되었습니다.');
+    onCompleted: d => {
+      if (d?.addFriend?.ok) {
+        showToast('이웃 추가가 완료되었습니다.');
+        lazyLoadUser({
+          onCompleted: d => {
+            mutationSendPush({
+              variables: {
+                userNo: friendNo,
+                title: `${d?.loadUser?.nickname}님이 이웃추가를 수락했어요!`,
+                body: `바로 ${d?.loadUser?.nickname}님의 식품 보러가기`,
+                type: 2,
+              },
+            });
+            console.log(JSON.stringify(d));
+          },
+        });
+      } else {
+        showToast('이미 이웃으로 추가되어 있습니다.');
+      }
     },
     onError: () => {
       showToast('오류가 발생하였습니다.');
@@ -221,6 +240,14 @@ const ShareAlarm = ({myAlarm, loading}: Props) => {
     },
     onError: e => {
       console.log(JSON.stringify(e));
+    },
+  });
+
+  const [mutationSendPush] = useMutation(SEND_PUSH);
+
+  const [lazyLoadUser] = useLazyQuery(LOAD_USER, {
+    variables: {
+      userNo,
     },
   });
 
@@ -261,6 +288,25 @@ const ShareAlarm = ({myAlarm, loading}: Props) => {
                     </TextContainer>
                   </Wrapper>
                 );
+              } else if (alarm.type === 2) {
+                <Wrapper>
+                  <ProfileContainer>
+                    <Button>
+                      <ButtonText>이웃추가</ButtonText>
+                    </Button>
+                  </ProfileContainer>
+                  <TextContainer>
+                    <Header>
+                      <FoodText numberOfLines={2}>
+                        {alarm.fromUser?.nickname}님이 이웃추가를
+                        수락하였습니다.
+                      </FoodText>
+                    </Header>
+                    <Bottom>
+                      <DDay time={alarm.createdAt.toString()} />
+                    </Bottom>
+                  </TextContainer>
+                </Wrapper>;
               }
             })}
           {/* <Wrapper>
