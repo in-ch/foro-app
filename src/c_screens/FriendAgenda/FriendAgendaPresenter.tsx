@@ -175,7 +175,7 @@ const ModalBackgroundExtra = styled.View`
 `;
 const ModalButtonContainer = styled.View`
   width: ${cWidth}px;
-  height: ${nomalizes[270]}px;
+  height: ${nomalizes[150]}px;
   border-top-left-radius: ${nomalizes[25]}px;
   border-top-right-radius: ${nomalizes[25]}px;
   background-color: #fff;
@@ -301,7 +301,6 @@ interface Props {
   GoBack: () => void;
   goToDetail: (value: number) => void;
   nickname: string;
-  GoToFoodAdd: () => void;
   selectedShow: (id: number) => void;
   showModal: boolean;
   foodData: any;
@@ -310,10 +309,6 @@ interface Props {
   weekData: string[];
   loading: boolean;
   shareFood: () => void;
-  consumeFood: () => void;
-  publicFood: () => void;
-  updateFood: () => void;
-  deleteFood: () => void;
   selectModal: boolean;
   cancelSelectModal: () => void;
   selectModalText: string;
@@ -325,7 +320,6 @@ interface Props {
 const FriendAgendaPresenter = ({
   GoBack,
   goToDetail,
-  GoToFoodAdd,
   nickname,
   selectedShow,
   showModal,
@@ -335,10 +329,6 @@ const FriendAgendaPresenter = ({
   weekData,
   loading,
   shareFood,
-  consumeFood,
-  publicFood,
-  updateFood,
-  deleteFood,
   selectModal,
   cancelSelectModal,
   selectModalText,
@@ -475,7 +465,7 @@ const FriendAgendaPresenter = ({
           <ModalButtonContainer>
             <ModalButtonWrapper>
               <ModalButtonContainerFlexRow>
-                {/* <ModalButton onPress={shareFood}>
+                <ModalButton onPress={shareFood}>
                   <IImage
                     style={{
                       width: nomalizes[16],
@@ -484,40 +474,9 @@ const FriendAgendaPresenter = ({
                     source={images.share}
                   />
                   <SizedBox.Custom margin={nomalizes[5]} />
-                  <ModalButtonText>공유</ModalButtonText>
-                </ModalButton> */}
-                <ModalButton onPress={consumeFood}>
-                  <IImage
-                    style={{
-                      width: nomalizes[16],
-                      height: nomalizes[16],
-                    }}
-                    source={images.consumed}
-                  />
-                  <SizedBox.Custom margin={nomalizes[5]} />
-                  <ModalButtonText>소비완료</ModalButtonText>
-                </ModalButton>
-                <ModalButton onPress={publicFood}>
-                  <IImage
-                    style={{
-                      width: nomalizes[16],
-                      height: nomalizes[16],
-                    }}
-                    source={images.public}
-                  />
-                  <SizedBox.Custom margin={nomalizes[5]} />
-                  <ModalButtonText>공개전환</ModalButtonText>
+                  <ModalButtonText>공유 요청하기</ModalButtonText>
                 </ModalButton>
               </ModalButtonContainerFlexRow>
-              <ModalButtonContainerFlexColumn>
-                <ModalButton onPress={updateFood}>
-                  <ModalButtonText>수정</ModalButtonText>
-                </ModalButton>
-                <SizedBox.Custom margin={nomalizes[10]} />
-                <ModalButton onPress={deleteFood}>
-                  <ModalButtonText>삭제</ModalButtonText>
-                </ModalButton>
-              </ModalButtonContainerFlexColumn>
             </ModalButtonWrapper>
           </ModalButtonContainer>
 

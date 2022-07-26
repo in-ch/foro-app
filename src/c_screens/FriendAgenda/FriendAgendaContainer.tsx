@@ -1,11 +1,10 @@
-import {useMutation, useQuery} from '@apollo/client';
+import {useQuery} from '@apollo/client';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {useIsFocused} from '@react-navigation/native';
 
 import {AgendaProps} from './FriendAgenda';
 import {LOAD_USER} from '@services/queries/user';
 import {LOAD_FOOD} from '@services/queries/food';
-import {DELETE_FOOD, UPDATE_FOOD} from '@services/mutations/food';
 import {groupBy, sortByGroup} from '@utills/groupBy';
 import {thisWeek} from '@utills/thisWeek';
 import FriendAgendaPresenter from './FriendAgendaPresenter';
@@ -15,13 +14,7 @@ const FriendAgendaContainer = ({navigation, route}: AgendaProps) => {
     navigation.goBack();
   };
   const goToDetail = (no: number) => {
-    navigation.navigate('Detail', {no});
-  };
-  const GoToFoodAdd = () => {
-    navigation.navigate('FoodAdd', {});
-  };
-  const GoToShare = () => {
-    navigation.navigate('Share', {foodNo: selectedNo});
+    navigation.navigate('DetailFriend', {no});
   };
   const {data} = useQuery(LOAD_USER, {
     variables: {
@@ -38,16 +31,6 @@ const FriendAgendaContainer = ({navigation, route}: AgendaProps) => {
       userNo: route?.params?.userId,
     },
     fetchPolicy: 'network-only',
-  });
-  const [mutationUpdateFood] = useMutation(UPDATE_FOOD, {
-    onCompleted: () => {
-      refetch();
-    },
-  });
-  const [mutationDeleteFood] = useMutation(DELETE_FOOD, {
-    onCompleted: () => {
-      refetch();
-    },
   });
 
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -77,64 +60,11 @@ const FriendAgendaContainer = ({navigation, route}: AgendaProps) => {
   };
   const shareFood = () => {
     setSelectModal(true);
-    setSelectModalText('해당 식품을 공유하시겠습니까?');
-  };
-  const consumeFood = () => {
-    setSelectModal(true);
-    setSelectModalText('해당 식품을 소비 완료하시겠습니까?');
-  };
-  const publicFood = () => {
-    setSelectModalText('해당 식품을 공개하시겠습니까?');
-    setSelectModal(true);
-  };
-  const updateFood = () => {
-    navigation.navigate('Detail', {no: selectedNo});
-    setShowModal(!showModal);
-  };
-  const deleteFood = () => {
-    setSelectModalText('해당 식품을 삭제하시겠습니까?');
-    setSelectModal(true);
+    setSelectModalText('해당 식품을 공유 요청하겠습니까?');
   };
 
   const handleEvent = () => {
-    if (selectModalText === '해당 식품을 공유하시겠습니까?') {
-      GoToShare();
-    } else if (selectModalText === '해당 식품을 소비 완료하시겠습니까?') {
-      mutationUpdateFood({
-        variables: {
-          food: {
-            no: selectedNo,
-            consumed: true,
-          },
-        },
-        onCompleted: () => {
-          showToast('식품이 수정되었습니다.');
-        },
-      });
-    } else if (selectModalText === '해당 식품을 공개하시겠습니까?') {
-      mutationUpdateFood({
-        variables: {
-          food: {
-            no: selectedNo,
-            onlyMe: false,
-          },
-        },
-        onCompleted: () => {
-          showToast('식품이 수정되었습니다.');
-        },
-      });
-    } else if (selectModalText === '해당 식품을 삭제하시겠습니까?') {
-      mutationDeleteFood({
-        variables: {
-          foodNo: selectedNo,
-        },
-        onCompleted: () => {
-          showToast('삭제가 완료되었습니다.');
-        },
-      });
-    } else {
-      return;
-    }
+    showToast('공유를 요청하였습니다.');
     setSelectModal(false);
     setShowModal(false);
   };
@@ -147,7 +77,6 @@ const FriendAgendaContainer = ({navigation, route}: AgendaProps) => {
     <FriendAgendaPresenter
       GoBack={GoBack}
       goToDetail={goToDetail}
-      GoToFoodAdd={GoToFoodAdd}
       selectedShow={(value: number) => selectedShow(value)}
       showModal={showModal}
       nickname={data?.loadUser?.nickname}
@@ -161,10 +90,6 @@ const FriendAgendaContainer = ({navigation, route}: AgendaProps) => {
       thisDay={String(new Date().getDay())}
       loading={loading}
       shareFood={shareFood}
-      consumeFood={consumeFood}
-      publicFood={publicFood}
-      updateFood={updateFood}
-      deleteFood={deleteFood}
       cancelSelectModal={cancelSelectModal}
       selectModal={selectModal}
       selectModalText={selectModalText}

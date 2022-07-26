@@ -34,6 +34,7 @@ import FriendAgenda from '@screens/FriendAgenda/FriendAgenda';
 import {FoodData} from '~/types/Food';
 import {isLoggedInVar} from '~/apollo/client';
 import {useReactiveVar} from '@apollo/client';
+import DetailFriend from '~/c_screens/DetailFriend/DetailFriend';
 
 export type RootTabParamList = {
   Home: {};
@@ -52,6 +53,9 @@ export type RootTabParamList = {
     foodAddParams: FoodData;
   };
   Detail: {
+    no: number;
+  };
+  DetailFriend: {
     no: number;
   };
   Category: {};
@@ -204,6 +208,13 @@ const RootNavigation = () => {
       <Stack.Screen
         name="Detail"
         component={Detail}
+        options={{
+          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+        }}
+      />
+      <Stack.Screen
+        name="DetailFriend"
+        component={DetailFriend}
         options={{
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
         }}
