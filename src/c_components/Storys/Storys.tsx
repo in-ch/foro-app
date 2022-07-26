@@ -1,13 +1,14 @@
-import React from 'react';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import React, {useState} from 'react';
 import styled from 'styled-components/native';
-import {View} from 'react-native';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
 import {nomalizes} from '@utills/constants';
 import Story from './Story';
 import {useQuery, useReactiveVar} from '@apollo/client';
 import {LOAD_USER} from '@services/queries/user';
-import {tokenUserNo} from '~/apollo/client';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import {LOAD_FRIEND_FOOD} from '@services/queries/friend';
+import {tokenUserNo} from 'apollo/client';
 
 const Container = styled.View`
   height: ${nomalizes[75]}px;
@@ -25,10 +26,14 @@ const Wrapper = styled.View`
   padding-left: ${nomalizes[9]}px;
   margin-top: ${nomalizes[5]}px;
 `;
+const VView = styled.View``;
+const TTouchableOpacity = styled.TouchableOpacity``;
 interface Props {
   GoToFriendAdd: () => void;
+  GoToFriendAgenda: (value: number) => void;
 }
-const Storys = ({GoToFriendAdd}: Props) => {
+const Storys = ({GoToFriendAdd, GoToFriendAgenda}: Props) => {
+  const [friends, setFriends] = useState([]);
   const userNo = useReactiveVar(tokenUserNo);
   const {data} = useQuery(LOAD_USER, {
     variables: {
@@ -36,6 +41,18 @@ const Storys = ({GoToFriendAdd}: Props) => {
     },
     fetchPolicy: 'cache-and-network',
   });
+
+  const {data: friendsData} = useQuery(LOAD_FRIEND_FOOD, {
+    variables: {
+      userNo,
+    },
+    onCompleted: d => {
+      setFriends(d?.loadFriendFood);
+      console.log(friendsData);
+    },
+    fetchPolicy: 'cache-and-network',
+  });
+
   return (
     <Container>
       <SScrollView horizontal={true} showsHorizontalScrollIndicator={true}>
@@ -44,11 +61,19 @@ const Storys = ({GoToFriendAdd}: Props) => {
             nickname={data?.loadUser?.nickname}
             profile={data?.loadUser?.profile}
           />
-          <Story />
+
+          {friendsData?.loadFriendFood?.map((friend: any) => {
+            return (
+              <TTouchableOpacity onPress={() => GoToFriendAgenda(friend.no)}>
+                <Story nickname={friend.nickname} profile={friend.profile} />
+              </TTouchableOpacity>
+            );
+          })}
+
           <TouchableOpacity onPress={GoToFriendAdd}>
             <Story isPlus={true} />
           </TouchableOpacity>
-          <View style={{width: nomalizes[5]}} />
+          <VView style={{width: nomalizes[5]}} />
         </Wrapper>
       </SScrollView>
     </Container>

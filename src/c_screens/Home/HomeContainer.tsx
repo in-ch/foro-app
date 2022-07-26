@@ -56,6 +56,9 @@ const HomeContainer = ({navigation}: HomeProps) => {
   const GoToFriendAdd = () => {
     navigation.navigate('FriendAdd', {});
   };
+  const GoToFriendAgenda = (userId: number) => {
+    navigation.navigate('FriendAgenda', {userId});
+  };
   const Logout = () => {
     logUserOut();
     navigation.reset({
@@ -76,6 +79,7 @@ const HomeContainer = ({navigation}: HomeProps) => {
         GoToSetting={GoToSetting}
         GoToProfile={GoToProfile}
         GoToFriendAdd={GoToFriendAdd}
+        GoToFriendAgenda={GoToFriendAgenda}
         Logout={Logout}
         inTroskip={inTroskip}
       />

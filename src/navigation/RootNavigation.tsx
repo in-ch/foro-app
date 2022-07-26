@@ -29,6 +29,7 @@ import AgendaNew from '@screens/AgendaNew/AgendaNew';
 import Share from '@screens/Share/Share';
 import FriendAdd from '@screens/FriendAdd/FriendAdd';
 import FriendAddResult from '@screens/FriendAdd/page/FriendAddResult';
+import FriendAgenda from '@screens/FriendAgenda/FriendAgenda';
 
 import {FoodData} from '~/types/Food';
 import {isLoggedInVar} from '~/apollo/client';
@@ -73,6 +74,9 @@ export type RootTabParamList = {
   };
   AgendaNew: {
     selected?: string;
+    userId: number;
+  };
+  FriendAgenda: {
     userId: number;
   };
   FoodAddInput: {
@@ -130,6 +134,13 @@ const RootNavigation = () => {
       <Stack.Screen
         name="AgendaNew"
         component={AgendaNew}
+        options={{
+          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+        }}
+      />
+      <Stack.Screen
+        name="FriendAgenda"
+        component={FriendAgenda}
         options={{
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
         }}

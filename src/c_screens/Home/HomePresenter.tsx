@@ -1,7 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 
 import React from 'react';
-import {Image, View} from 'react-native';
 import styled from 'styled-components/native';
 
 import CCalendar from '@components/Calendar/Calendar';
@@ -31,6 +30,8 @@ const ModalButton = styled.TouchableOpacity`
   background-color: #ff6c63;
   ${cssUtil.doubleCenter};
 `;
+const IImage = styled.Image``;
+const VView = styled.View``;
 interface Props {
   GoToAlarm: () => void;
   GoToSearch: () => void;
@@ -42,6 +43,7 @@ interface Props {
   GoToSetting: () => void;
   GoToProfile: () => void;
   GoToFriendAdd: () => void;
+  GoToFriendAgenda: (value: number) => void;
   Logout: () => void;
   inTroskip: null | boolean | string;
 }
@@ -61,11 +63,12 @@ const HomePresenter = ({
   GoToSetting,
   GoToProfile,
   GoToFriendAdd,
+  GoToFriendAgenda,
   Logout,
   inTroskip,
 }: Props) => {
   return (
-    <View
+    <VView
       style={{
         backgroundColor: '#fff',
         flex: 1,
@@ -86,13 +89,16 @@ const HomePresenter = ({
         GoToProfile={GoToProfile}
         Logout={Logout}
       />
-      <Storys GoToFriendAdd={GoToFriendAdd} />
+      <Storys
+        GoToFriendAdd={GoToFriendAdd}
+        GoToFriendAgenda={GoToFriendAgenda}
+      />
 
       <CCalendar GoToAgenda={GoToAgenda} GoToDetail={GoToDetail} />
 
       <ModalBackground>
         <ModalButton onPress={GoToFoodAdd}>
-          <Image
+          <IImage
             style={{
               width: nomalizes[18],
               height: nomalizes[18],
@@ -101,7 +107,7 @@ const HomePresenter = ({
           />
         </ModalButton>
       </ModalBackground>
-    </View>
+    </VView>
   );
 };
 
