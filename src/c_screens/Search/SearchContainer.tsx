@@ -9,8 +9,17 @@ const SearchContainer = ({navigation}: SearchProps) => {
   const goToDetail = (no: number) => {
     navigation.navigate('Detail', {no});
   };
+  const goToFriendDetail = (no: number) => {
+    navigation.navigate('DetailFriend', {no});
+  };
 
-  return <SearchPresenter GoBack={GoBack} goToDetail={goToDetail} />;
+  return (
+    <SearchPresenter
+      GoBack={GoBack}
+      goToDetail={goToDetail}
+      goToFriendDetail={goToFriendDetail}
+    />
+  );
 };
 
 export default SearchContainer;

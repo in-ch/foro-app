@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
 import {TabView, TabBar} from 'react-native-tab-view';
-import {Text, useWindowDimensions} from 'react-native';
+import {useWindowDimensions} from 'react-native';
 import 'react-native-gesture-handler';
 import styled from 'styled-components/native';
 
@@ -14,16 +14,18 @@ const Container = styled.View`
   background-color: #fff;
   flex: 1;
 `;
+const TText = styled.Text``;
 
 interface Props {
   GoBack: () => void;
   goToDetail: (value: number) => void;
+  goToFriendDetail: (value: number) => void;
 }
 interface PProps {
   route: any;
 }
 
-const SearchPresenter = ({GoBack, goToDetail}: Props) => {
+const SearchPresenter = ({GoBack, goToDetail, goToFriendDetail}: Props) => {
   const [index, setIndex] = useState(0);
   const layout = useWindowDimensions();
   const [routes] = useState([
@@ -43,7 +45,7 @@ const SearchPresenter = ({GoBack, goToDetail}: Props) => {
         height: 2,
       }}
       renderLabel={({route, focused}) => (
-        <Text
+        <TText
           style={{
             color: focused ? '#000' : '#acacac',
             margin: 8,
@@ -52,7 +54,7 @@ const SearchPresenter = ({GoBack, goToDetail}: Props) => {
             fontFamily: 'Pretendard',
           }}>
           {route.title}
-        </Text>
+        </TText>
       )}
     />
   );
@@ -62,7 +64,7 @@ const SearchPresenter = ({GoBack, goToDetail}: Props) => {
       case 'first':
         return <MyRefrigerator goToDetail={goToDetail} />;
       case 'second':
-        return <FriendRefrigerator />;
+        return <FriendRefrigerator goToFriendDetail={goToFriendDetail} />;
       default:
         return null;
     }

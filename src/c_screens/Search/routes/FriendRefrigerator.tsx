@@ -1,10 +1,14 @@
-import React, {useState} from 'react';
+import React from 'react';
 import styled from 'styled-components/native';
+import {ScrollView} from 'react-native-gesture-handler';
+import {useQuery, useReactiveVar} from '@apollo/client';
 
-import SearchInput from '@components/SearchInput';
+// import SearchInput from '@components/SearchInput';
 import {SizedBox} from '@components/SizedBox';
 import {cWidth, nomalizes} from '@utills/constants';
-import {ScrollView} from 'react-native-gesture-handler';
+import {LOAD_FRIEND_FOOD} from '@services/queries/friend';
+import {tokenUserNo} from 'apollo/client';
+import {cssUtil} from '@utills/cssUtil';
 
 const Wrapper = styled.View`
   width: 90%;
@@ -39,44 +43,63 @@ const SearchResultBoxRemainText = styled.Text`
   color: rgb(109, 109, 109);
   font-family: 'Pretendard';
 `;
+const NoneContainer = styled.View`
+  width: 100%;
+  height: 250px;
+  display: flex;
+  ${cssUtil.doubleCenter};
+`;
+const NoneText = styled.Text`
+  margin-top: ${nomalizes[10]}px;
+  color: #a8a8a8;
+  font-size: ${nomalizes[12]}px;
+`;
 
-const FriendRefrigerator = () => {
-  const [text, setText] = useState<string>('');
+interface Props {
+  goToFriendDetail: (value: number) => void;
+}
+const FriendRefrigerator = ({goToFriendDetail}: Props) => {
+  // const [text, setText] = useState<string>('');
+  const userNo = useReactiveVar(tokenUserNo);
+  const {data: friendsData} = useQuery(LOAD_FRIEND_FOOD, {
+    variables: {
+      userNo,
+    },
+    fetchPolicy: 'network-only',
+  });
+
   return (
     <>
-      <SizedBox.Custom margin={nomalizes[30]} />
-      <SearchInput value={text} setValue={(value: string) => setText(value)} />
+      {/* <SizedBox.Custom margin={nomalizes[30]} /> */}
+      {/* <SearchInput value={text} setValue={(value: string) => setText(value)} /> */}
       <ScrollView>
-        <Wrapper>
-          <Heading>이웃 01</Heading>
-          <SearchResultBoxTextWrapper>
-            <SearchResultBoxText>어떠한 음식</SearchResultBoxText>
-            <SearchResultBoxRemainText>
-              소비기한: 22일
-            </SearchResultBoxRemainText>
-          </SearchResultBoxTextWrapper>
-          <SearchResultBoxTextWrapper>
-            <SearchResultBoxText>어떠한 음식</SearchResultBoxText>
-            <SearchResultBoxRemainText>
-              소비기한: 22일
-            </SearchResultBoxRemainText>
-          </SearchResultBoxTextWrapper>
-          <SearchResultBoxTextWrapper>
-            <SearchResultBoxText>어떠한 음식</SearchResultBoxText>
-            <SearchResultBoxRemainText>
-              소비기한: 22일
-            </SearchResultBoxRemainText>
-          </SearchResultBoxTextWrapper>
-        </Wrapper>
-        <Wrapper>
-          <Heading>이웃 02</Heading>
-          <SearchResultBoxTextWrapper>
-            <SearchResultBoxText>어떠한 음식</SearchResultBoxText>
-            <SearchResultBoxRemainText>
-              소비기한: 22일
-            </SearchResultBoxRemainText>
-          </SearchResultBoxTextWrapper>
-        </Wrapper>
+        {friendsData &&
+          friendsData?.loadFriendFood?.map((_friendData: any) => {
+            return (
+              <Wrapper>
+                <Heading>{_friendData?.nickname}</Heading>
+
+                {_friendData?.food?.map((_food: any) => {
+                  return (
+                    <SearchResultBoxTextWrapper
+                      onPress={() => goToFriendDetail(_food?.no)}>
+                      <SearchResultBoxText>{_food?.name}</SearchResultBoxText>
+                      <SearchResultBoxRemainText>
+                        소비날: {_food?.dday}
+                      </SearchResultBoxRemainText>
+                    </SearchResultBoxTextWrapper>
+                  );
+                })}
+              </Wrapper>
+            );
+          })}
+
+        {friendsData?.loadFriendFood?.length < 1 && (
+          <NoneContainer>
+            <NoneText>이웃이 아직 없습니다.</NoneText>
+          </NoneContainer>
+        )}
+
         <SizedBox.Custom margin={nomalizes[100]} />
       </ScrollView>
     </>

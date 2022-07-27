@@ -3,6 +3,7 @@ import {
   CardStyleInterpolators,
   createStackNavigator,
 } from '@react-navigation/stack';
+import {useReactiveVar} from '@apollo/client';
 
 import Home from '@screens/Home/Home';
 import Login from '@screens/Login/Login';
@@ -30,11 +31,10 @@ import Share from '@screens/Share/Share';
 import FriendAdd from '@screens/FriendAdd/FriendAdd';
 import FriendAddResult from '@screens/FriendAdd/page/FriendAddResult';
 import FriendAgenda from '@screens/FriendAgenda/FriendAgenda';
+import DetailFriend from '@screens/DetailFriend/DetailFriend';
 
-import {FoodData} from '~/types/Food';
-import {isLoggedInVar} from '~/apollo/client';
-import {useReactiveVar} from '@apollo/client';
-import DetailFriend from '~/c_screens/DetailFriend/DetailFriend';
+import {FoodData} from 'types/Food';
+import {isLoggedInVar} from 'apollo/client';
 
 export type RootTabParamList = {
   Home: {};

@@ -5,7 +5,7 @@ import {UPDATE_USER} from '@services/mutations/user';
 import {LOAD_USER} from '@services/queries/user';
 import {SettingProps} from './Setting';
 import SettingPresenter from './SettingPresetner';
-import {tokenUserNo} from '~/apollo/client';
+import {tokenUserNo} from 'apollo/client';
 
 const SettingContainer = ({navigation}: SettingProps) => {
   const userNo = useReactiveVar(tokenUserNo);
