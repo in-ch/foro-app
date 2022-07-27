@@ -1,21 +1,43 @@
-import React, {useState} from 'react';
+import React, {useCallback, useRef, useState} from 'react';
 import KakaoShareLink from 'react-native-kakao-share-link';
 
 import {NeighborProp} from './ Neighbor';
 import NeighborPresenter from './ NeighborPresenter';
-import {tokenUserNo} from '~/apollo/client';
-import {useQuery, useReactiveVar} from '@apollo/client';
+import {tokenUserNo} from 'apollo/client';
+import {useMutation, useQuery, useReactiveVar} from '@apollo/client';
 import {LOAD_FRIEND_FOOD} from '@services/queries/friend';
+import {DELETE_FRIEND} from '@services/mutations/user';
 
 const NeighborContainer = ({navigation}: NeighborProp) => {
   const userNo = useReactiveVar(tokenUserNo);
-  const {data: friendsData} = useQuery(LOAD_FRIEND_FOOD, {
+  const [friendNo, setFriendNo] = useState<Number>(0);
+  const toastRef = useRef<any>(null);
+  const showToast = useCallback((text: string) => {
+    toastRef.current.show(text);
+  }, []);
+
+  const {data: friendsData, refetch} = useQuery(LOAD_FRIEND_FOOD, {
     variables: {
       userNo,
     },
-    fetchPolicy: 'cache-and-network',
+    fetchPolicy: 'network-only',
   });
 
+  const [mutationDeleteFriend] = useMutation(DELETE_FRIEND);
+  const handleDeleteFriend = () => {
+    mutationDeleteFriend({
+      variables: {
+        userNo,
+        friendNo,
+      },
+      onCompleted: d => {
+        console.log(d);
+        showToast('이웃 삭제를 완료하였습니다.');
+        setModalShow(false);
+        refetch();
+      },
+    });
+  };
   const goToFriendAdd = () => {
     navigation.navigate('FriendAdd', {});
   };
@@ -24,8 +46,9 @@ const NeighborContainer = ({navigation}: NeighborProp) => {
     navigation.goBack();
   };
   const [modalShow, setModalShow] = useState<boolean>(false);
-  const onShowModal = () => {
+  const onShowModal = (value: number) => {
     setModalShow(!modalShow);
+    setFriendNo(value);
   };
 
   const kakaoshare = async () => {
@@ -61,6 +84,8 @@ const NeighborContainer = ({navigation}: NeighborProp) => {
       kakaoshare={kakaoshare}
       friendsData={friendsData}
       goToFriendAdd={goToFriendAdd}
+      handleDeleteFriend={handleDeleteFriend}
+      toastRef={toastRef}
     />
   );
 };

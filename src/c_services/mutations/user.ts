@@ -65,3 +65,11 @@ export const ADD_FRIEND = gql`
     }
   }
 `;
+
+export const DELETE_FRIEND = gql`
+  mutation deleteFriend($userNo: Float!, $friendNo: Float!) {
+    deleteFriend(userNo: $userNo, friendNo: $friendNo) {
+      ok
+    }
+  }
+`;

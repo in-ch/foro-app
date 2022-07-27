@@ -5,9 +5,10 @@ import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 
 import HeaderPlus from '@components/Header/HeaderPlus';
 import {SizedBox} from '@components/SizedBox';
-import {nomalizes} from '@utills/constants';
+import {cHeight, nomalizes} from '@utills/constants';
 import images from '@assets/images';
 import {cssUtil} from '@utills/cssUtil';
+import Toast from 'react-native-easy-toast';
 
 const Container = styled.View`
   flex: 1;
@@ -70,6 +71,17 @@ const TTouchableOpacity = styled.TouchableOpacity`
   display: flex;
   ${cssUtil.doubleCenter};
 `;
+const NoneContainer = styled.View`
+  width: 100%;
+  height: 250px;
+  display: flex;
+  ${cssUtil.doubleCenter};
+`;
+const NoneText = styled.Text`
+  margin-top: ${nomalizes[10]}px;
+  color: #a8a8a8;
+  font-size: ${nomalizes[12]}px;
+`;
 
 const IImage = styled.Image``;
 const MModal = styled.Modal``;
@@ -77,10 +89,12 @@ const MModal = styled.Modal``;
 interface Props {
   goBack: () => void;
   modalShow: boolean;
-  onShowModal: () => void;
+  onShowModal: (value: number) => void;
   kakaoshare: () => void;
   friendsData: any;
   goToFriendAdd: () => void;
+  handleDeleteFriend: () => void;
+  toastRef: any;
 }
 const NeighborPresenter = ({
   goBack,
@@ -89,8 +103,9 @@ const NeighborPresenter = ({
   kakaoshare,
   friendsData,
   goToFriendAdd,
+  handleDeleteFriend,
+  toastRef,
 }: Props) => {
-  console.log(friendsData.loadFriendFood);
   return (
     <Container>
       <HeaderPlus text="이웃 관리" back={goBack} button={goToFriendAdd} />
@@ -112,7 +127,7 @@ const NeighborPresenter = ({
                 <TText>{data.nickname}</TText>
               </Row>
               <Row>
-                <TouchableWithoutFeedback onPress={onShowModal}>
+                <TouchableWithoutFeedback onPress={() => onShowModal(data?.no)}>
                   <IImage
                     style={{
                       width: nomalizes[16],
@@ -126,16 +141,29 @@ const NeighborPresenter = ({
           );
         })}
 
+      {friendsData?.loadFriendFood?.length < 1 && (
+        <NoneContainer>
+          <NoneText>이웃이 아직 없습니다.</NoneText>
+        </NoneContainer>
+      )}
+
       <MModal animationType="fade" visible={modalShow} transparent={true}>
         <Wrapper>
           <ModalExtra onPress={onShowModal} />
           <ModalContentBox>
-            <TTouchableOpacity onPress={() => console.warn('')}>
+            <TTouchableOpacity onPress={handleDeleteFriend}>
               <ModalText>이웃 삭제하기</ModalText>
             </TTouchableOpacity>
           </ModalContentBox>
         </Wrapper>
       </MModal>
+
+      <Toast
+        ref={toastRef}
+        positionValue={cHeight * 0.1}
+        fadeInDuration={400}
+        fadeOutDuration={1200}
+      />
     </Container>
   );
 };
