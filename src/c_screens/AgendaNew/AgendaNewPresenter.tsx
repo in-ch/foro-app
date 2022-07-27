@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import styled from 'styled-components/native';
@@ -320,6 +319,8 @@ interface Props {
   handleEvent: () => void;
   toastRef: any;
   data: any;
+  valueConsumed: boolean;
+  valueShare: boolean;
 }
 
 const AgendaNewPresenter = ({
@@ -345,6 +346,8 @@ const AgendaNewPresenter = ({
   handleEvent,
   toastRef,
   data,
+  valueConsumed,
+  valueShare,
 }: Props) => {
   return (
     <>
@@ -498,7 +501,9 @@ const AgendaNewPresenter = ({
                     source={images.consumed}
                   />
                   <SizedBox.Custom margin={nomalizes[5]} />
-                  <ModalButtonText>소비완료</ModalButtonText>
+                  <ModalButtonText>
+                    {valueConsumed ? '소비취소' : '소비완료'}
+                  </ModalButtonText>
                 </ModalButton>
                 <ModalButton onPress={publicFood}>
                   <IImage
@@ -509,7 +514,9 @@ const AgendaNewPresenter = ({
                     source={images.public}
                   />
                   <SizedBox.Custom margin={nomalizes[5]} />
-                  <ModalButtonText>공개전환</ModalButtonText>
+                  <ModalButtonText>
+                    {valueShare ? '공개전환' : '비공개'}
+                  </ModalButtonText>
                 </ModalButton>
               </ModalButtonContainerFlexRow>
               <ModalButtonContainerFlexColumn>

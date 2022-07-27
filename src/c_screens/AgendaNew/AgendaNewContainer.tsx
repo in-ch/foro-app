@@ -1,11 +1,11 @@
-import {useMutation, useQuery} from '@apollo/client';
+import {useLazyQuery, useMutation, useQuery} from '@apollo/client';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {useIsFocused} from '@react-navigation/native';
 
 import {AgendaProps} from './AgendaNew';
 import AgendaNewPresenter from './AgendaNewPresenter';
 import {LOAD_USER} from '@services/queries/user';
-import {LOAD_FOOD} from '@services/queries/food';
+import {LOAD_FOOD, LOAD_FOOD_DATA} from '@services/queries/food';
 import {DELETE_FOOD, UPDATE_FOOD} from '@services/mutations/food';
 import {groupBy, sortByGroup} from '@utills/groupBy';
 import {thisWeek} from '@utills/thisWeek';
@@ -29,6 +29,20 @@ const AgendaNewContainer = ({navigation, route}: AgendaProps) => {
     },
   });
 
+  const [valueConsumed, setValueConsumed] = useState<boolean>(false); // 모달 소비 완료
+  const [valueShare, setValueShare] = useState<boolean>(false); // 모달 공개
+  const [loadFoodData] = useLazyQuery(LOAD_FOOD_DATA, {
+    onCompleted: d => {
+      setValueConsumed(
+        d?.loadFoodData?.consumed !== undefined
+          ? d?.loadFoodData?.consumed
+          : false,
+      );
+      setValueShare(
+        d?.loadFoodData?.onlyMe !== undefined ? d?.loadFoodData?.onlyMe : false,
+      );
+    },
+  });
   const {
     data: food,
     refetch,
@@ -39,15 +53,6 @@ const AgendaNewContainer = ({navigation, route}: AgendaProps) => {
     },
     fetchPolicy: 'network-only',
   });
-  // const [lazyFoodData] = useLazyQuery(LOAD_FOOD_DATA, {
-  //   onCompleted: d => {
-  //     console.log(d);
-  //   },
-  //   onError: e => {
-  //     console.log(JSON.stringify(e));
-  //   },
-  //   fetchPolicy: 'network-only',
-  // });
   const [mutationUpdateFood] = useMutation(UPDATE_FOOD, {
     onCompleted: () => {
       refetch();
@@ -71,20 +76,18 @@ const AgendaNewContainer = ({navigation, route}: AgendaProps) => {
   }, [isFocused, refetch]);
 
   const selectedShow = async (id: number) => {
+    if (!showModal) {
+      loadFoodData({
+        variables: {
+          foodNo: id,
+        },
+      });
+    }
     await setSelectedNo(id);
     setShowModal(!showModal);
     if (id === 1) {
-      // 1이면 사라져야함.
       setSelectModal(false);
     }
-    // } else {
-    //   console.log(selectedNo);
-    //   lazyFoodData({
-    //     variables: {
-    //       foodNo: selectedNo,
-    //     },
-    //   });
-    // }
   };
   const [selectModal, setSelectModal] = useState<boolean>(false);
   const [selectModalText, setSelectModalText] = useState<string>('');
@@ -99,10 +102,18 @@ const AgendaNewContainer = ({navigation, route}: AgendaProps) => {
   };
   const consumeFood = () => {
     setSelectModal(true);
-    setSelectModalText('해당 식품을 소비 완료하시겠습니까?');
+    if (valueConsumed) {
+      setSelectModalText('해당 식품의 소비를 취소하시겠습니까?');
+    } else {
+      setSelectModalText('해당 식품을 소비 완료하시겠습니까?');
+    }
   };
   const publicFood = () => {
-    setSelectModalText('해당 식품을 공개하시겠습니까?');
+    if (valueShare) {
+      setSelectModalText('해당 식품을 공개하시겠습니까?');
+    } else {
+      setSelectModalText('해당 식품을 비공개하시겠습니까?');
+    }
     setSelectModal(true);
   };
   const updateFood = () => {
@@ -115,26 +126,33 @@ const AgendaNewContainer = ({navigation, route}: AgendaProps) => {
   };
 
   const handleEvent = () => {
+    // vvv
     if (selectModalText === '해당 식품을 공유하시겠습니까?') {
       GoToShare();
-    } else if (selectModalText === '해당 식품을 소비 완료하시겠습니까?') {
+    } else if (
+      selectModalText === '해당 식품을 소비 완료하시겠습니까?' ||
+      selectModalText === '해당 식품의 소비를 취소하시겠습니까?'
+    ) {
       mutationUpdateFood({
         variables: {
           food: {
             no: selectedNo,
-            consumed: true,
+            consumed: !valueConsumed,
           },
         },
         onCompleted: () => {
           showToast('식품이 수정되었습니다.');
         },
       });
-    } else if (selectModalText === '해당 식품을 공개하시겠습니까?') {
+    } else if (
+      selectModalText === '해당 식품을 공개하시겠습니까?' ||
+      selectModalText === '해당 식품을 비공개하시겠습니까?'
+    ) {
       mutationUpdateFood({
         variables: {
           food: {
             no: selectedNo,
-            onlyMe: false,
+            onlyMe: !valueShare,
           },
         },
         onCompleted: () => {
@@ -188,6 +206,8 @@ const AgendaNewContainer = ({navigation, route}: AgendaProps) => {
       handleEvent={handleEvent}
       toastRef={toastRef}
       data={food?.loadFood}
+      valueConsumed={valueConsumed}
+      valueShare={valueShare}
     />
   );
 };

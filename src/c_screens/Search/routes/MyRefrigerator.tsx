@@ -3,6 +3,7 @@ import React, {useEffect, useState} from 'react';
 import styled from 'styled-components/native';
 import {ScrollView} from 'react-native-gesture-handler';
 import moment from 'moment';
+import {tokenUserNo} from 'apollo/client';
 
 import SearchInput from '@components/SearchInput';
 import {nomalizes} from '@utills/constants';
@@ -10,7 +11,6 @@ import {SizedBox} from '@components/SizedBox';
 import {useMutation, useReactiveVar} from '@apollo/client';
 import {SEARCH_FOOD_USER} from '@services/mutations/food';
 import {numberToWeek} from '@utills/numberToWeek';
-import {tokenUserNo} from '~/apollo/client';
 
 const Container = styled.View``;
 const ResultContainer = styled.View`
@@ -53,6 +53,9 @@ const MyRefrigerator = ({goToDetail}: Props) => {
         userNo,
         keyword: text.trim(),
       },
+      onCompleted: d => {
+        console.log(d);
+      },
     });
   };
   useEffect(() => {
@@ -63,7 +66,11 @@ const MyRefrigerator = ({goToDetail}: Props) => {
   return (
     <Container>
       <SizedBox.Custom margin={nomalizes[30]} />
-      <SearchInput value={text} setValue={(value: string) => setText(value)} />
+      <SearchInput
+        onSubmit={() => console.log('asdf')}
+        value={text}
+        setValue={(value: string) => setText(value)}
+      />
       <ResultContainer>
         <ScrollView>
           {data?.searchFoodUser?.map((result: any) => {
