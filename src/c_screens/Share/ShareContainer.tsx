@@ -108,14 +108,11 @@ const ShareContainer = ({navigation, route}: ShareProps) => {
 
   const [loadFoodData] = useLazyQuery(LOAD_FOOD_DATA, {
     onCompleted: d => {
-      console.log(JSON.stringify(d));
-      console.log(d?.name);
-
       userIds.map((userId: number) => {
         mutationSendPush({
           variables: {
             userNo: userId,
-            title: `${d?.name}이 전체 공유되었어요!`,
+            title: `${d?.loadFoodData?.name}이(가) 전체 공유되었어요!`,
             body: '바로 공유를 받아보세요!',
             type: 3,
           },
