@@ -1,24 +1,56 @@
+import {
+  useLazyQuery,
+  useMutation,
+  useQuery,
+  useReactiveVar,
+} from '@apollo/client';
 import React, {useCallback, useRef, useState} from 'react';
 import KakaoShareLink from 'react-native-kakao-share-link';
+import {tokenUserNo} from '~/apollo/client';
+import {TOTAL_SHARE_FOOD} from '~/c_services/mutations/alarm';
+import {SEND_PUSH} from '~/c_services/mutations/push';
+import {LOAD_FOOD_DATA} from '~/c_services/queries/food';
+import {LOAD_FRIEND_FOOD} from '~/c_services/queries/friend';
 
 import {ShareProps} from './Share';
 import SharePresenter from './SharePresenter';
 
 const ShareContainer = ({navigation, route}: ShareProps) => {
-  console.log(route.params.foodNo);
   const [userIds, setUserIds] = useState<any>([]);
   const [selectModal, setSelectModal] = useState<boolean>(false);
+  const userNo = useReactiveVar(tokenUserNo);
 
   const cancelSelectModal = () => {
     setSelectModal(false);
   };
-  const handleEvent = () => {
+  const [mutationTotalShare] = useMutation(TOTAL_SHARE_FOOD, {
+    variables: {
+      foodNo: route?.params?.foodNo,
+      users: String(userIds),
+      userNo,
+    },
+  });
+  const [mutationSendPush] = useMutation(SEND_PUSH);
+
+  const handleEvent = async () => {
     setSelectModal(false);
-    console.log('이벤트 실행');
     showToast('전체 공유가 완료되었습니다.');
-    setTimeout(() => {
-      navigation.goBack();
-    }, 1000);
+    mutationTotalShare({
+      onCompleted: () => {
+        loadFoodData({
+          variables: {
+            foodNo: route?.params?.foodNo,
+          },
+        });
+      },
+      onError: e => {
+        console.log(JSON.stringify(e));
+      },
+    });
+
+    // setTimeout(() => {
+    //   navigation.goBack();
+    // }, 1000);
   };
   const handleSubmit = () => {
     setSelectModal(true);
@@ -67,6 +99,31 @@ const ShareContainer = ({navigation, route}: ShareProps) => {
     toastRef.current.show(text);
   }, []);
 
+  const {data: friendsData} = useQuery(LOAD_FRIEND_FOOD, {
+    variables: {
+      userNo,
+    },
+    fetchPolicy: 'network-only',
+  });
+
+  const [loadFoodData] = useLazyQuery(LOAD_FOOD_DATA, {
+    onCompleted: d => {
+      console.log(JSON.stringify(d));
+      console.log(d?.name);
+
+      userIds.map((userId: number) => {
+        mutationSendPush({
+          variables: {
+            userNo: userId,
+            title: `${d?.name}이 전체 공유되었어요!`,
+            body: '바로 공유를 받아보세요!',
+            type: 3,
+          },
+        });
+      });
+    },
+  });
+
   return (
     <SharePresenter
       GoBack={GoBack}
@@ -78,6 +135,7 @@ const ShareContainer = ({navigation, route}: ShareProps) => {
       handleEvent={handleEvent}
       handleSubmit={handleSubmit}
       toastRef={toastRef}
+      friendsData={friendsData}
     />
   );
 };

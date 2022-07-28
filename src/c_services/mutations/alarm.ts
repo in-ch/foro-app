@@ -15,3 +15,11 @@ export const READ_ALL_ALARM = gql`
     }
   }
 `;
+
+export const TOTAL_SHARE_FOOD = gql`
+  mutation totalShareFood($foodNo: Float!, $users: String!, $userNo: Float!) {
+    totalShareFood(foodNo: $foodNo, users: $users, userNo: $userNo) {
+      ok
+    }
+  }
+`;

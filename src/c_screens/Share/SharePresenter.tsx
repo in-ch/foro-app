@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import {Image, Modal} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import Toast from 'react-native-easy-toast';
 
@@ -162,6 +161,8 @@ const ModalButtonText = styled.Text`
   color: #fff;
   font-size: ${nomalizes[11]}px;
 `;
+const IImage = styled.Image``;
+const MModal = styled.Modal``;
 
 interface Props {
   GoBack: () => void;
@@ -173,6 +174,7 @@ interface Props {
   handleEvent: () => void;
   handleSubmit: () => void;
   toastRef: any;
+  friendsData: any;
 }
 interface DisabledProps {
   disabled: boolean;
@@ -190,6 +192,7 @@ const SharePresenter = ({
   handleEvent,
   handleSubmit,
   toastRef,
+  friendsData,
 }: Props) => {
   return (
     <>
@@ -197,7 +200,7 @@ const SharePresenter = ({
       <ShareButtonContainer>
         <ButtonContainer>
           <ButtonWrapper onPress={kakaoshare}>
-            <Image
+            <IImage
               style={{
                 width: nomalizes[35],
                 height: nomalizes[35],
@@ -206,8 +209,8 @@ const SharePresenter = ({
             />
             <ButtonText>카카오톡</ButtonText>
           </ButtonWrapper>
-          <ButtonWrapper>
-            <Image
+          <ButtonWrapper onPress={handleSubmit} disabled={userIds?.length < 1}>
+            <IImage
               style={{
                 width: nomalizes[35],
                 height: nomalizes[35],
@@ -237,73 +240,41 @@ const SharePresenter = ({
         </NeigorContainerHeader>
         <Hr />
         <ScrollView>
-          <SelectWrapper>
-            <SelectWapperButtonWrapper>
-              <RadioGroup
-                options={['']}
-                activated={userIds.indexOf(1) !== -1}
-                activeButton="하이루"
-                onChange={() => handleClicked(1)}
-              />
-            </SelectWapperButtonWrapper>
-            <SelectTextView>
-              <Image
-                style={{
-                  width: nomalizes[30],
-                  height: nomalizes[30],
-                }}
-                source={images.user}
-              />
-              <SelectTextViewText>유저 닉네임</SelectTextViewText>
-            </SelectTextView>
-          </SelectWrapper>
-          <SelectWrapper>
-            <SelectWapperButtonWrapper>
-              <RadioGroup
-                options={['']}
-                activated={userIds.indexOf(2) !== -1}
-                activeButton="asdf"
-                onChange={() => handleClicked(2)}
-              />
-            </SelectWapperButtonWrapper>
-            <SelectTextView>
-              <Image
-                style={{
-                  width: nomalizes[30],
-                  height: nomalizes[30],
-                }}
-                source={images.user}
-              />
-              <SelectTextViewText>유저 닉네임</SelectTextViewText>
-            </SelectTextView>
-          </SelectWrapper>
-          <SelectWrapper>
-            <SelectWapperButtonWrapper>
-              <RadioGroup
-                options={['']}
-                activated={userIds.indexOf(3) !== -1}
-                activeButton="asdf"
-                onChange={() => handleClicked(3)}
-              />
-            </SelectWapperButtonWrapper>
-            <SelectTextView>
-              <Image
-                style={{
-                  width: nomalizes[30],
-                  height: nomalizes[30],
-                }}
-                source={images.user}
-              />
-              <SelectTextViewText>유저 닉네임</SelectTextViewText>
-            </SelectTextView>
-          </SelectWrapper>
+          {friendsData &&
+            friendsData?.loadFriendFood?.map((_friendData: any) => {
+              return (
+                <SelectWrapper>
+                  <SelectWapperButtonWrapper>
+                    <RadioGroup
+                      options={['']}
+                      activated={userIds.indexOf(_friendData?.no) !== -1}
+                      activeButton="asdf"
+                      onChange={() => handleClicked(_friendData?.no)}
+                    />
+                  </SelectWapperButtonWrapper>
+                  <SelectTextView>
+                    <IImage
+                      style={{
+                        width: nomalizes[30],
+                        height: nomalizes[30],
+                        borderRadius: nomalizes[15],
+                      }}
+                      source={{uri: _friendData?.profile}}
+                    />
+                    <SelectTextViewText>
+                      {_friendData?.nickname}
+                    </SelectTextViewText>
+                  </SelectTextView>
+                </SelectWrapper>
+              );
+            })}
         </ScrollView>
       </NeigorContainer>
       <Submit onPress={handleSubmit} disabled={userIds?.length < 1}>
         <SubmitText>완료</SubmitText>
       </Submit>
 
-      <Modal animationType="fade" visible={selectModal} transparent={true}>
+      <MModal animationType="fade" visible={selectModal} transparent={true}>
         <ModalBackground>
           <AlertWrapper selectModal={selectModal}>
             <AlertText>전체 나눔을 시작합니다!</AlertText>
@@ -318,7 +289,7 @@ const SharePresenter = ({
             </SelectButtonWrapper>
           </AlertWrapper>
         </ModalBackground>
-      </Modal>
+      </MModal>
       <Toast
         ref={toastRef}
         positionValue={cHeight * 0.1}
