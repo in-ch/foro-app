@@ -11,6 +11,9 @@ const AlarmContainer = ({navigation}: AlarmProps) => {
   const GoToBack = () => {
     navigation.goBack();
   };
+  const GotoFriendAgenda = (userId: number) => {
+    navigation.navigate('FriendAgenda', {userId});
+  };
   const {data: myAlarm, loading} = useQuery(LOAD_ALARM, {
     variables: {
       userNo,
@@ -28,6 +31,7 @@ const AlarmContainer = ({navigation}: AlarmProps) => {
       GoToBack={GoToBack}
       myAlarm={myAlarm?.loadAlarm}
       loading={loading}
+      GotoFriendAgenda={GotoFriendAgenda}
     />
   );
 };

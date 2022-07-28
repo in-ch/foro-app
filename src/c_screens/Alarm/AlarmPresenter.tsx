@@ -23,11 +23,18 @@ interface Props {
   GoToBack: () => void;
   myAlarm: AlarmProps[];
   loading: boolean;
+  GotoFriendAgenda: (value: number) => void;
 }
 interface PProps {
   route: any;
+  GotoFriendAgenda?: (value: number) => void;
 }
-const AlarmPresenter = ({GoToBack, myAlarm, loading}: Props) => {
+const AlarmPresenter = ({
+  GoToBack,
+  myAlarm,
+  loading,
+  GotoFriendAgenda,
+}: Props) => {
   const [index, setIndex] = useState(0);
   const layout = useWindowDimensions();
   const [routes] = useState([
@@ -64,7 +71,13 @@ const AlarmPresenter = ({GoToBack, myAlarm, loading}: Props) => {
   const renderScene = ({route}: PProps) => {
     switch (route.key) {
       case 'first':
-        return <FoodAlarm myAlarm={myAlarm} loading={loading} />;
+        return (
+          <FoodAlarm
+            myAlarm={myAlarm}
+            loading={loading}
+            GotoFriendAgenda={GotoFriendAgenda}
+          />
+        );
       case 'second':
         return <ShareAlarm />;
       default:

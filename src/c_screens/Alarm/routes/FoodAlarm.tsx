@@ -156,6 +156,7 @@ const IImage = styled.Image``;
 interface Props {
   myAlarm: AlarmProps[];
   loading: boolean;
+  GotoFriendAgenda: (value: number) => void;
 }
 interface IsReadProps {
   isRead: boolean;
@@ -164,7 +165,7 @@ interface SelectModalProps {
   selectModal: boolean;
 }
 
-const ShareAlarm = ({myAlarm, loading}: Props) => {
+const ShareAlarm = ({myAlarm, loading, GotoFriendAgenda}: Props) => {
   const [highliteValue, setHighliteValue] = useState<string>('');
   const [doneValue, setDoneValue] = useState<string>('');
   const [selectValue, setSelectValue] = useState<number>(0);
@@ -294,6 +295,9 @@ const ShareAlarm = ({myAlarm, loading}: Props) => {
                   <Wrapper
                     isRead={
                       highliteValue.includes(`//${index}//`) || alarm.isRead
+                    }
+                    onPress={() =>
+                      GotoFriendAgenda(Number(alarm?.fromUser?.no))
                     }>
                     <ProfileContainer>
                       <Button>
