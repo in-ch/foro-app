@@ -32,7 +32,7 @@ const AlarmPresenter = ({GoToBack, myAlarm, loading}: Props) => {
   const layout = useWindowDimensions();
   const [routes] = useState([
     {key: 'first', title: 'MY 알림'},
-    {key: 'second', title: '이웃 알림'},
+    // {key: 'second', title: '이웃 알림'},
   ]);
 
   const renderTabBar = (props: any) => (
@@ -41,7 +41,8 @@ const AlarmPresenter = ({GoToBack, myAlarm, loading}: Props) => {
       style={{backgroundColor: '#fff', height: nomalizes[35]}}
       indicatorStyle={{
         backgroundColor: '#FF6258',
-        width: '40%',
+        // width: '40%',
+        width: '90%',
         marginLeft: '5%',
         height: 2,
       }}

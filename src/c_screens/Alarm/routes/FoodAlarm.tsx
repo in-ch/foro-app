@@ -1,21 +1,20 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import styled from 'styled-components/native';
 import Toast from 'react-native-easy-toast';
-import {Image, Modal} from 'react-native';
 import {useLazyQuery, useMutation, useReactiveVar} from '@apollo/client';
 import {ScrollView} from 'react-native-gesture-handler';
 
 import {cHeight, cWidth, nomalizes} from '@utills/constants';
 import {cssUtil} from '@utills/cssUtil';
-import {AlarmProps} from '~/types/Alarm';
+import {AlarmProps} from 'types/Alarm';
 import {ADD_FRIEND} from '@services/mutations/user';
 import {tokenUserNo} from 'apollo/client';
 import {SizedBox} from '@components/SizedBox';
 import {READ_ALL_ALARM} from '@services/mutations/alarm';
-import images from '~/assets/images';
-import DDay from '~/c_components/DDay';
-import {SEND_PUSH} from '~/c_services/mutations/push';
-import {LOAD_USER} from '~/c_services/queries/user';
+import images from '@assets/images';
+import DDay from '@components/DDay';
+import {SEND_PUSH} from '@services/mutations/push';
+import {LOAD_USER} from '@services/queries/user';
 
 const Container = styled.View`
   width: 100%;
@@ -151,6 +150,8 @@ const NoneText = styled.Text`
   color: #a8a8a8;
   font-size: ${nomalizes[12]}px;
 `;
+const MModal = styled.Modal``;
+const IImage = styled.Image``;
 
 interface Props {
   myAlarm: AlarmProps[];
@@ -210,7 +211,7 @@ const ShareAlarm = ({myAlarm, loading}: Props) => {
       if (d?.addFriend?.ok) {
         showToast('이웃 추가가 완료되었습니다.');
         lazyLoadUser({
-          onCompleted: d => {
+          onCompleted: () => {
             mutationSendPush({
               variables: {
                 userNo: friendNo,
@@ -289,24 +290,29 @@ const ShareAlarm = ({myAlarm, loading}: Props) => {
                   </Wrapper>
                 );
               } else if (alarm.type === 2) {
-                <Wrapper>
-                  <ProfileContainer>
-                    <Button>
-                      <ButtonText>이웃추가</ButtonText>
-                    </Button>
-                  </ProfileContainer>
-                  <TextContainer>
-                    <Header>
-                      <FoodText numberOfLines={2}>
-                        {alarm.fromUser?.nickname}님이 이웃추가를
-                        수락하였습니다.
-                      </FoodText>
-                    </Header>
-                    <Bottom>
-                      <DDay time={alarm.createdAt.toString()} />
-                    </Bottom>
-                  </TextContainer>
-                </Wrapper>;
+                return (
+                  <Wrapper
+                    isRead={
+                      highliteValue.includes(`//${index}//`) || alarm.isRead
+                    }>
+                    <ProfileContainer>
+                      <Button>
+                        <ButtonText>이웃추가완료</ButtonText>
+                      </Button>
+                    </ProfileContainer>
+                    <TextContainer>
+                      <Header>
+                        <FoodText numberOfLines={2}>
+                          {alarm.fromUser?.nickname}님이 이웃추가를
+                          수락하였습니다.
+                        </FoodText>
+                      </Header>
+                      <Bottom>
+                        <DDay time={alarm.createdAt.toString()} />
+                      </Bottom>
+                    </TextContainer>
+                  </Wrapper>
+                );
               }
             })}
           {/* <Wrapper>
@@ -378,7 +384,7 @@ const ShareAlarm = ({myAlarm, loading}: Props) => {
         </TextContainer>
       </Wrapper> */}
 
-          <Modal animationType="fade" visible={selectModal} transparent={true}>
+          <MModal animationType="fade" visible={selectModal} transparent={true}>
             <ModalBackground>
               <AlertWrapper selectModal={selectModal}>
                 <AlertText>이웃 추가를 하시겠습니까?</AlertText>
@@ -393,7 +399,7 @@ const ShareAlarm = ({myAlarm, loading}: Props) => {
                 </SelectButtonWrapper>
               </AlertWrapper>
             </ModalBackground>
-          </Modal>
+          </MModal>
           <Toast
             ref={toastRef}
             positionValue={cHeight * 0.3}
@@ -403,7 +409,7 @@ const ShareAlarm = ({myAlarm, loading}: Props) => {
         </Container>
       ) : (
         <NoneContainer>
-          <Image
+          <IImage
             style={{
               width: nomalizes[100],
               height: nomalizes[100],
@@ -415,7 +421,7 @@ const ShareAlarm = ({myAlarm, loading}: Props) => {
 
       {myAlarm?.length < 1 && (
         <NoneContainer>
-          <Image
+          <IImage
             style={{
               width: nomalizes[80],
               height: nomalizes[80],
