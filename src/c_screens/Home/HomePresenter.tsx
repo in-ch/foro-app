@@ -73,7 +73,8 @@ const HomePresenter = ({
         backgroundColor: '#fff',
         flex: 1,
       }}>
-      {inTroskip === false && <IntroApp />}
+      {/* {inTroskip === false && <IntroApp />} */}
+      {inTroskip === true && <IntroApp />}
       <SizedBox.Custom
         margin={statusBarHeight}
         style={{

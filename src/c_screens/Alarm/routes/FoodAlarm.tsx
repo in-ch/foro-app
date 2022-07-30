@@ -15,6 +15,7 @@ import images from '@assets/images';
 import DDay from '@components/DDay';
 import {SEND_PUSH} from '@services/mutations/push';
 import {LOAD_USER} from '@services/queries/user';
+import {ALTER_FOOD_OWNER} from '~/c_services/mutations/food';
 
 const Container = styled.View`
   width: 100%;
@@ -203,6 +204,7 @@ const ShareAlarm = ({myAlarm, loading, GotoFriendAgenda}: Props) => {
     toastRef.current.show(text);
   }, []);
 
+  const [mutationAlterFoodOwner] = useMutation(ALTER_FOOD_OWNER);
   const [mutationAddFriend] = useMutation(ADD_FRIEND, {
     variables: {
       userNo,
@@ -228,7 +230,8 @@ const ShareAlarm = ({myAlarm, loading, GotoFriendAgenda}: Props) => {
         showToast('이미 이웃으로 추가되어 있습니다.');
       }
     },
-    onError: () => {
+    onError: e => {
+      console.log(JSON.stringify(e));
       showToast('오류가 발생하였습니다.');
     },
   });
@@ -252,6 +255,44 @@ const ShareAlarm = ({myAlarm, loading, GotoFriendAgenda}: Props) => {
       userNo,
     },
   });
+
+  const handleAlterFoodOwner = (
+    foodNo: number,
+    alarmNo: number,
+    fromUserNo: number,
+  ) => {
+    mutationAlterFoodOwner({
+      variables: {
+        userNo,
+        foodNo,
+        alarmNo,
+      },
+      onCompleted: d => {
+        if (d?.alterFoodOwner?.ok) {
+          showToast('식품을 공유받았습니다.');
+          lazyLoadUser({
+            onCompleted: () => {
+              mutationSendPush({
+                variables: {
+                  userNo: fromUserNo,
+                  title: `${d?.loadUser?.nickname}님이 식품을 공유해갔습니다.`,
+                  body: '식품을 공유해주셔서 감사합니다.',
+                  type: 4,
+                },
+              });
+              console.log(JSON.stringify(d));
+            },
+          });
+        } else {
+          showToast('이미 공유된 식품입니다.');
+        }
+      },
+      onError: e => {
+        console.log(JSON.stringify(e));
+        showToast('오류가 발생하였습니다. 관리자에게 문의해주세요.');
+      },
+    });
+  };
 
   useEffect(() => {
     mutationReadAllAlarm();
@@ -309,6 +350,61 @@ const ShareAlarm = ({myAlarm, loading, GotoFriendAgenda}: Props) => {
                         <FoodText numberOfLines={2}>
                           {alarm.fromUser?.nickname}님이 이웃추가를
                           수락하였습니다.
+                        </FoodText>
+                      </Header>
+                      <Bottom>
+                        <DDay time={alarm.createdAt.toString()} />
+                      </Bottom>
+                    </TextContainer>
+                  </Wrapper>
+                );
+              } else if (alarm.type === 3) {
+                return (
+                  <Wrapper
+                    isRead={
+                      highliteValue.includes(`//${index}//`) || alarm.isRead
+                    }
+                    onPress={() =>
+                      handleAlterFoodOwner(
+                        Number(alarm?.food?.no),
+                        Number(alarm?.no),
+                        Number(alarm?.fromUser?.no),
+                      )
+                    }>
+                    <ProfileContainer>
+                      <Button>
+                        <ButtonText>공유 알림</ButtonText>
+                      </Button>
+                    </ProfileContainer>
+                    <TextContainer>
+                      <Header>
+                        <FoodText numberOfLines={2}>
+                          {alarm.fromUser?.nickname}님이 식품을 단체 공유했어요.
+                          지금 바로 가져가세요.
+                        </FoodText>
+                      </Header>
+                      <Bottom>
+                        <DDay time={alarm.createdAt.toString()} />
+                      </Bottom>
+                    </TextContainer>
+                  </Wrapper>
+                );
+              } else if (alarm.type === 4) {
+                return (
+                  <Wrapper
+                    isRead={
+                      highliteValue.includes(`//${index}//`) || alarm.isRead
+                    }>
+                    <ProfileContainer>
+                      <Button>
+                        <ButtonText>공유 완료</ButtonText>
+                      </Button>
+                    </ProfileContainer>
+                    <TextContainer>
+                      <Header>
+                        <FoodText numberOfLines={2}>
+                          {alarm.fromUser?.nickname}님이 {alarm?.food?.name}을
+                          공유해갔어요.
                         </FoodText>
                       </Header>
                       <Bottom>

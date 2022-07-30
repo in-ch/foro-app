@@ -41,3 +41,11 @@ export const SEARCH_FOOD_USER = gql`
     }
   }
 `;
+
+export const ALTER_FOOD_OWNER = gql`
+  mutation alterFoodOwner($userNo: Float!, $foodNo: Float!, $alarmNo: Float!) {
+    alterFoodOwner(userNo: $userNo, foodNo: $foodNo, alarmNo: $alarmNo) {
+      ok
+    }
+  }
+`;

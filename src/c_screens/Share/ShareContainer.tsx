@@ -48,9 +48,9 @@ const ShareContainer = ({navigation, route}: ShareProps) => {
       },
     });
 
-    // setTimeout(() => {
-    //   navigation.goBack();
-    // }, 1000);
+    setTimeout(() => {
+      navigation.goBack();
+    }, 1000);
   };
   const handleSubmit = () => {
     setSelectModal(true);
