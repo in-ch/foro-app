@@ -339,7 +339,10 @@ const FriendAgendaPresenter = ({
   return (
     <>
       <Container>
-        <Header text={`${nickname}님의 리스트`} back={GoBack} />
+        <Header
+          text={`${nickname === undefined ? '' : nickname}님의 리스트`}
+          back={GoBack}
+        />
         <AgendaHeader>
           {thisWeek.map((week: string, index: number) => {
             return (
