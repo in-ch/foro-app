@@ -2,19 +2,11 @@
 /* eslint-disable react-native/no-inline-styles */
 import {useEffect, useRef, useState} from 'react';
 import React from 'react';
-import {
-  Dimensions,
-  Image,
-  PixelRatio,
-  StatusBar,
-  StyleSheet,
-  View,
-  Animated,
-} from 'react-native';
+import {Dimensions, PixelRatio, StyleSheet, Animated} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
 
-import {doIntroSkip} from '~/apollo/client';
+import {doIntroSkip} from 'apollo/client';
 import {cHeight, cWidth, nomalizes} from '@utills/constants';
 import {cssUtil} from '@utills/cssUtil';
 import images from '@assets/images';
@@ -34,7 +26,7 @@ const TopContainer = styled.TouchableOpacity`
   position: absolute;
   border-radius: ${nomalizes[15]}px;
   right: ${cWidth * 0.05}px;
-  top: ${cHeight * 0}.1px;
+  top: ${cHeight * 0.02}px;
   z-index: 999999999999;
   display: flex;
   ${cssUtil.doubleCenter};
@@ -42,11 +34,11 @@ const TopContainer = styled.TouchableOpacity`
 
 const ButtonContainer = styled.TouchableOpacity`
   width: ${cWidth * 0.9}px;
-  height: ${cHeight * 0.5}px;
+  height: ${cHeight * 0.1}px;
   position: absolute;
   border-radius: ${nomalizes[15]}px;
   right: ${cWidth * 0.05}px;
-  top: ${cHeight * 0.6}px;
+  top: ${cHeight * 0.7}px;
   z-index: 999999999999;
   display: flex;
   ${cssUtil.doubleCenter};
@@ -96,7 +88,7 @@ const TText = styled.Text`
 const ImageView = styled.View`
   width: ${cWidth};
   height: ${nomalizes[370]}px;
-  margin-top: ${nomalizes[130]}px;
+  margin-top: ${nomalizes[50]}px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -114,6 +106,9 @@ const SubText = styled.Text`
   margin-top: ${nomalizes[5]}px;
   color: #000;
 `;
+const SStatusBar = styled.StatusBar``;
+const IImage = styled.Image``;
+const VView = styled.View``;
 interface Props {
   hide: boolean;
 }
@@ -169,7 +164,7 @@ const IntroApp = () => {
 
   return (
     <AnimatedContainer hide={hide} style={{opacity: animatedValue}}>
-      <StatusBar barStyle="dark-content" />
+      <SStatusBar barStyle="dark-content" />
       <TopContainer>
         <Balls>
           <Ball highlight={sliderState.currentPage === 0} />
@@ -188,7 +183,7 @@ const IntroApp = () => {
           setSliderPage(event);
         }}>
         <ImageView>
-          <Image
+          <IImage
             source={images.intro1}
             style={{
               width: '100%',
@@ -202,7 +197,7 @@ const IntroApp = () => {
           </SubText>
         </ImageView>
         <ImageView>
-          <Image
+          <IImage
             source={images.intro2}
             style={{
               width: '100%',
@@ -214,7 +209,7 @@ const IntroApp = () => {
           <SubText>공유를 부탁해 보세요</SubText>
         </ImageView>
         <ImageView>
-          <Image
+          <IImage
             source={images.intro3}
             style={{
               width: '100%',
@@ -226,7 +221,7 @@ const IntroApp = () => {
           <SubText>먹거리를 기록해 볼까요?</SubText>
         </ImageView>
         <ImageView>
-          <Image
+          <IImage
             source={images.intro4}
             style={{
               width: '100%',
@@ -240,7 +235,7 @@ const IntroApp = () => {
           <SubText>유의 사항도 같이 확인해 보세요~!</SubText>
         </ImageView>
       </ScrollView>
-      <View style={styles.paginationWrapper}>
+      <VView style={styles.paginationWrapper}>
         <ButtonContainer>
           <SkipButtonContainer>
             {sliderState.currentPage === 3 ? (
@@ -254,7 +249,7 @@ const IntroApp = () => {
             )}
           </SkipButtonContainer>
         </ButtonContainer>
-      </View>
+      </VView>
     </AnimatedContainer>
   );
 };
