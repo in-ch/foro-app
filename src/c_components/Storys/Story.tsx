@@ -25,7 +25,7 @@ const Profile = styled.View`
 `;
 const NameContainer = styled.View`
   width: ${nomalizes[40]}px;
-  height: ${nomalizes[15]}px;
+  height: ${nomalizes[13]}px;
   display: flex;
   flex-direction: row;
   justify-content: center;
