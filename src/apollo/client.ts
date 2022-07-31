@@ -71,6 +71,7 @@ const isLogin = async () => {
 };
 export const doIntroSkip = async () => {
   await AsyncStorage.setItem(SKIP, 'true');
+  IntroSkip(true);
 };
 
 // 실행

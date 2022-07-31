@@ -162,7 +162,7 @@ const ModalBackground = styled.View`
   right: 0px;
   flex-direction: row;
   width: ${cWidth}px;
-  height: ${cHeight + nomalizes[40]}px;
+  height: ${cHeight + nomalizes[0]}px;
   justify-content: flex-end;
   align-items: flex-end;
 `;

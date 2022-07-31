@@ -214,12 +214,12 @@ const ShareAlarm = ({myAlarm, loading, GotoFriendAgenda}: Props) => {
       if (d?.addFriend?.ok) {
         showToast('이웃 추가가 완료되었습니다.');
         lazyLoadUser({
-          onCompleted: () => {
+          onCompleted: g => {
             mutationSendPush({
               variables: {
                 userNo: friendNo,
-                title: `${d?.loadUser?.nickname}님이 이웃추가를 수락했어요!`,
-                body: `바로 ${d?.loadUser?.nickname}님의 식품 보러가기`,
+                title: `${g?.loadUser?.nickname}님이 이웃추가를 수락했어요!`,
+                body: `바로 ${g?.loadUser?.nickname}님의 식품 보러가기`,
                 type: 2,
               },
             });

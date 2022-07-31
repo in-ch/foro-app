@@ -39,7 +39,7 @@ const Storys = ({GoToFriendAdd, GoToFriendAgenda}: Props) => {
     variables: {
       userNo,
     },
-    fetchPolicy: 'cache-and-network',
+    fetchPolicy: 'network-only',
   });
 
   const {data: friendsData} = useQuery(LOAD_FRIEND_FOOD, {
@@ -50,7 +50,7 @@ const Storys = ({GoToFriendAdd, GoToFriendAgenda}: Props) => {
       setFriends(d?.loadFriendFood);
       console.log(friendsData);
     },
-    fetchPolicy: 'cache-and-network',
+    fetchPolicy: 'network-only',
   });
 
   return (

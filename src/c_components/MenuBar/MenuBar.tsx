@@ -105,12 +105,12 @@ const Profile = styled.View`
 `;
 const ProfileNicknameContainer = styled.TouchableOpacity`
   max-width: 60%;
-  height: ${nomalizes[15]}px;
+  height: ${nomalizes[18]}px;
   text-overflow: ellipsis;
 `;
 const ProfileNickname = styled.Text`
   margin-left: ${nomalizes[15]}px;
-  font-size: ${nomalizes[14]}px;
+  font-size: ${nomalizes[12]}px;
   font-weight: bold;
   color: rgb(50, 50, 50);
   font-family: 'Pretendard';

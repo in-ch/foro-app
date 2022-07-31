@@ -22,11 +22,11 @@ const AnimatedContainer = Animated.createAnimatedComponent(Container);
 
 const TopContainer = styled.TouchableOpacity`
   width: ${cWidth * 0.9}px;
-  height: ${cHeight * 0.2}px;
+  height: ${cHeight * 0.1}px;
   position: absolute;
   border-radius: ${nomalizes[15]}px;
   right: ${cWidth * 0.05}px;
-  top: ${cHeight * 0.01}px;
+  top: ${cHeight * 0.005}px;
   z-index: 999999999999;
   display: flex;
   ${cssUtil.doubleCenter};
