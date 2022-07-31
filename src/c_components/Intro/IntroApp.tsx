@@ -218,8 +218,9 @@ const IntroApp = ({GoToFoodAdd}: Props) => {
     }, 501);
   };
 
-  const Good = () => {
+  const Good = async () => {
     sktip();
+    await doIntroSkip();
     GoToFoodAdd();
   };
 
