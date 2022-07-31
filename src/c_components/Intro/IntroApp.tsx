@@ -26,7 +26,7 @@ const TopContainer = styled.TouchableOpacity`
   position: absolute;
   border-radius: ${nomalizes[15]}px;
   right: ${cWidth * 0.05}px;
-  top: ${cHeight * 0.02}px;
+  top: ${cHeight * 0.01}px;
   z-index: 999999999999;
   display: flex;
   ${cssUtil.doubleCenter};

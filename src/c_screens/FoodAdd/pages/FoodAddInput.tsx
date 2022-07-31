@@ -2,7 +2,7 @@
 import {NavigationProp, RouteProp} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
 import styled from 'styled-components/native';
-import {View, Switch, Platform} from 'react-native';
+import {Platform} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import moment from 'moment';
 
@@ -15,10 +15,10 @@ import SelectInput from '@components/SelectInput';
 import DDatePicker from '@components/DatePicker';
 import TextInput from '@components/TextInput';
 import {cssUtil} from '@utills/cssUtil';
-import {CategoryProps} from '~/types/Category';
+import {CategoryProps} from 'types/Category';
 import {useQuery, useReactiveVar} from '@apollo/client';
 import {LOAD_CATEGORY} from '@services/queries/category';
-import {tokenUserNo} from '~/apollo/client';
+import {tokenUserNo} from 'apollo/client';
 
 const Container = styled.KeyboardAvoidingView`
   flex: 1;
@@ -71,6 +71,8 @@ const HashTagText = styled.Text`
   color: #757575;
   font-family: 'Pretendard';
 `;
+const VView = styled.View``;
+const SSwitch = styled.Switch``;
 export interface FoodSearchResultProps {
   navigation: NavigationProp<RootTabParamList, 'FoodAddInput'>;
   route: RouteProp<RootTabParamList, 'FoodAddInput'>;
@@ -160,7 +162,7 @@ const FoodAddInput = ({navigation, route}: FoodSearchResultProps) => {
           </Row>
           <SizedBox.Custom margin={nomalizes[20]} />
           <Heading>유의키워드</Heading>
-          <View style={{display: 'flex', flexDirection: 'row'}}>
+          <VView style={{display: 'flex', flexDirection: 'row'}}>
             {keyword.map(keywor => {
               return (
                 <HashTag>
@@ -168,11 +170,11 @@ const FoodAddInput = ({navigation, route}: FoodSearchResultProps) => {
                 </HashTag>
               );
             })}
-          </View>
+          </VView>
           <SizedBox.Custom margin={nomalizes[15]} />
           <RowBox>
             <RowText>공개</RowText>
-            <Switch
+            <SSwitch
               trackColor={{false: '#767577', true: '#FF6C63'}}
               thumbColor={onlyMe ? '#fff' : '#f4f3f4'}
               ios_backgroundColor="#3e3e3e"
@@ -180,6 +182,7 @@ const FoodAddInput = ({navigation, route}: FoodSearchResultProps) => {
               value={!onlyMe}
               style={{marginLeft: nomalizes[50]}}
             />
+            <SizedBox.Custom margin={nomalizes[50]} />
           </RowBox>
         </ScrollView>
       </Container>

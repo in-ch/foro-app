@@ -9,7 +9,7 @@ import Header from '@components/Header/Header';
 import {nomalizes} from '@utills/constants';
 import FoodAlarm from './routes/FoodAlarm';
 import ShareAlarm from './routes/ShareAlarm';
-import {AlarmProps} from '~/types/Alarm';
+import {AlarmProps} from 'types/Alarm';
 
 const Container = styled.View`
   background-color: #fff;

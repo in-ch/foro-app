@@ -223,15 +223,13 @@ const ShareAlarm = ({myAlarm, loading, GotoFriendAgenda}: Props) => {
                 type: 2,
               },
             });
-            console.log(JSON.stringify(d));
           },
         });
       } else {
         showToast('이미 이웃으로 추가되어 있습니다.');
       }
     },
-    onError: e => {
-      console.log(JSON.stringify(e));
+    onError: () => {
       showToast('오류가 발생하였습니다.');
     },
   });
@@ -239,12 +237,6 @@ const ShareAlarm = ({myAlarm, loading, GotoFriendAgenda}: Props) => {
   const [mutationReadAllAlarm] = useMutation(READ_ALL_ALARM, {
     variables: {
       userNo,
-    },
-    onCompleted: d => {
-      console.log(d);
-    },
-    onError: e => {
-      console.log(JSON.stringify(e));
     },
   });
 
@@ -280,16 +272,34 @@ const ShareAlarm = ({myAlarm, loading, GotoFriendAgenda}: Props) => {
                   type: 4,
                 },
               });
-              console.log(JSON.stringify(d));
             },
           });
         } else {
           showToast('이미 공유된 식품입니다.');
         }
       },
-      onError: e => {
-        console.log(JSON.stringify(e));
+      onError: () => {
         showToast('오류가 발생하였습니다. 관리자에게 문의해주세요.');
+      },
+    });
+  };
+
+  const type5event = (foodNo: number, alarmNo: number, _friendNo: number) => {
+    mutationAlterFoodOwner({
+      variables: {
+        userNo: _friendNo,
+        foodNo,
+        alarmNo,
+      },
+      onCompleted: d => {
+        if (d?.alterFoodOwner?.ok) {
+          showToast('공유가 안료되었습니다. 감사합니다');
+        } else {
+          showToast('이미 공유된 식품입니다.');
+        }
+      },
+      onError: () => {
+        showToast('오류가 발생하였습니다.');
       },
     });
   };
@@ -413,76 +423,39 @@ const ShareAlarm = ({myAlarm, loading, GotoFriendAgenda}: Props) => {
                     </TextContainer>
                   </Wrapper>
                 );
+              } else if (alarm.type === 5) {
+                return (
+                  <Wrapper
+                    isRead={
+                      highliteValue.includes(`//${index}//`) || alarm.isRead
+                    }
+                    onPress={() =>
+                      type5event(
+                        Number(alarm.food?.no),
+                        alarm.no,
+                        Number(alarm.fromUser?.no),
+                      )
+                    }>
+                    <ProfileContainer>
+                      <Button>
+                        <ButtonText>공유 요청</ButtonText>
+                      </Button>
+                    </ProfileContainer>
+                    <TextContainer>
+                      <Header>
+                        <FoodText numberOfLines={2}>
+                          {alarm.fromUser?.nickname}님이 {alarm?.food?.name}을
+                          공유 요청했어요.
+                        </FoodText>
+                      </Header>
+                      <Bottom>
+                        <DDay time={alarm.createdAt.toString()} />
+                      </Bottom>
+                    </TextContainer>
+                  </Wrapper>
+                );
               }
             })}
-          {/* <Wrapper>
-        <ProfileContainer>
-          <Button>
-            <ButtonText>이웃나눔</ButtonText>
-          </Button>
-        </ProfileContainer>
-        <TextContainer>
-          <Header>
-            <FoodText numberOfLines={2}>
-              이웃 닉네임 님에게 [사과]를 공유했습니다.
-            </FoodText>
-          </Header>
-          <Bottom>
-            <DDay>1시간 전</DDay>
-          </Bottom>
-        </TextContainer>
-      </Wrapper>
-      <Wrapper>
-        <ProfileContainer>
-          <Button>
-            <ButtonText>이웃나눔</ButtonText>
-          </Button>
-        </ProfileContainer>
-        <TextContainer>
-          <Header>
-            <FoodText numberOfLines={2}>
-              이웃 닉네임 님에게 [사과] 나눔을 요청했습니다.
-            </FoodText>
-          </Header>
-          <Bottom>
-            <DDay>1시간 전</DDay>
-          </Bottom>
-        </TextContainer>
-      </Wrapper>
-      <Wrapper>
-        <ProfileContainer>
-          <Button>
-            <ButtonText>전체나눔</ButtonText>
-          </Button>
-        </ProfileContainer>
-        <TextContainer>
-          <Header>
-            <FoodText numberOfLines={2}>
-              모두에게 [사과] 나눔을 신청했습니다!
-            </FoodText>
-          </Header>
-          <Bottom>
-            <DDay>1시간 전</DDay>
-          </Bottom>
-        </TextContainer>
-      </Wrapper>
-      <Wrapper>
-        <ProfileContainer>
-          <Button>
-            <ButtonText>소비알림</ButtonText>
-          </Button>
-        </ProfileContainer>
-        <TextContainer>
-          <Header>
-            <FoodText numberOfLines={2}>
-              [가지]의 소비 기한이 앞으로 2일 남았어요! 지금 바로 확인해보세요!
-            </FoodText>
-          </Header>
-          <Bottom>
-            <DDay>1시간 전</DDay>
-          </Bottom>
-        </TextContainer>
-      </Wrapper> */}
 
           <MModal animationType="fade" visible={selectModal} transparent={true}>
             <ModalBackground>
