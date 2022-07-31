@@ -31,18 +31,25 @@ const AgendaNewContainer = ({navigation, route}: AgendaProps) => {
 
   const [valueConsumed, setValueConsumed] = useState<boolean>(false); // 모달 소비 완료
   const [valueShare, setValueShare] = useState<boolean>(false); // 모달 공개
-  const [loadFoodData] = useLazyQuery(LOAD_FOOD_DATA, {
-    onCompleted: d => {
-      setValueConsumed(
-        d?.loadFoodData?.consumed !== undefined
-          ? d?.loadFoodData?.consumed
-          : false,
-      );
-      setValueShare(
-        d?.loadFoodData?.onlyMe !== undefined ? d?.loadFoodData?.onlyMe : false,
-      );
+  const [loadFoodData, {refetch: foodDataRefetch}] = useLazyQuery(
+    LOAD_FOOD_DATA,
+    {
+      onCompleted: d => {
+        setValueConsumed(
+          d?.loadFoodData?.consumed !== undefined
+            ? d?.loadFoodData?.consumed
+            : false,
+        );
+        setValueShare(
+          d?.loadFoodData?.onlyMe !== undefined
+            ? d?.loadFoodData?.onlyMe
+            : false,
+        );
+        console.log('비공개 여부' + valueShare);
+        console.log('소비 여부' + valueConsumed);
+      },
     },
-  });
+  );
   const {
     data: food,
     refetch,
@@ -109,12 +116,12 @@ const AgendaNewContainer = ({navigation, route}: AgendaProps) => {
     }
   };
   const publicFood = () => {
+    setSelectModal(true);
     if (valueShare) {
       setSelectModalText('해당 식품을 공개하시겠습니까?');
     } else {
       setSelectModalText('해당 식품을 비공개하시겠습니까?');
     }
-    setSelectModal(true);
   };
   const updateFood = () => {
     navigation.navigate('Detail', {no: selectedNo});
@@ -122,11 +129,9 @@ const AgendaNewContainer = ({navigation, route}: AgendaProps) => {
   };
   const deleteFood = () => {
     setSelectModalText('해당 식품을 삭제하시겠습니까?');
-    setSelectModal(true);
   };
 
   const handleEvent = () => {
-    // vvv
     if (selectModalText === '해당 식품을 공유하시겠습니까?') {
       GoToShare();
     } else if (
@@ -142,6 +147,7 @@ const AgendaNewContainer = ({navigation, route}: AgendaProps) => {
         },
         onCompleted: () => {
           showToast('식품이 수정되었습니다.');
+          foodDataRefetch();
         },
       });
     } else if (
@@ -157,6 +163,7 @@ const AgendaNewContainer = ({navigation, route}: AgendaProps) => {
         },
         onCompleted: () => {
           showToast('식품이 수정되었습니다.');
+          foodDataRefetch();
         },
       });
     } else if (selectModalText === '해당 식품을 삭제하시겠습니까?') {
