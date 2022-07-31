@@ -74,7 +74,7 @@ const HomePresenter = ({
         flex: 1,
       }}>
       {/* {inTroskip === false && <IntroApp />} */}
-      {inTroskip === true && <IntroApp />}
+      {inTroskip === true && <IntroApp GoToFoodAdd={GoToFoodAdd} />}
       <SizedBox.Custom
         margin={statusBarHeight}
         style={{

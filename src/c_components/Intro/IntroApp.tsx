@@ -106,17 +106,75 @@ const SubText = styled.Text`
   margin-top: ${nomalizes[5]}px;
   color: #000;
 `;
+const LogoutContainer = styled.View`
+  width: ${cWidth}px;
+  height: ${cHeight + nomalizes[50]}px;
+  background-color: rgba(0, 0, 0, 0.3);
+  display: flex;
+  ${cssUtil.doubleCenter};
+`;
+const LogoutWrapper = styled.View`
+  background-color: #fff;
+  width: ${nomalizes[200]}px;
+  height: ${nomalizes[120]}px;
+  border-radius: ${nomalizes[20]}px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: ${nomalizes[10]}px;
+  position: relative;
+  top: -${nomalizes[20]}px;
+  justify-content: space-between;
+`;
+const LogoutText = styled.Text`
+  color: #333333;
+  font-size: ${nomalizes[12]}px;
+  margin-top: ${nomalizes[5]}px;
+  font-weight: bold;
+`;
+const LogoutText2 = styled.Text`
+  color: #333333;
+  font-size: ${nomalizes[10]}px;
+  margin-top: ${nomalizes[5]}px;
+`;
+const SelectButtonWrapper = styled.View`
+  width: 90%;
+  height: ${nomalizes[30]}px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+const CancelButton = styled.TouchableOpacity`
+  width: 48%;
+  height: ${nomalizes[30]}px;
+  background-color: #dbdbdb;
+  border-radius: ${nomalizes[8]}px;
+  ${cssUtil.doubleCenter};
+`;
+const OkButton = styled.TouchableOpacity`
+  width: 48%;
+  height: ${nomalizes[30]}px;
+  background-color: #ff6258;
+  border-radius: ${nomalizes[8]}px;
+  ${cssUtil.doubleCenter};
+`;
+const ButtonText = styled.Text`
+  color: #fff;
+  font-size: ${nomalizes[11]}px;
+`;
 const SStatusBar = styled.StatusBar``;
 const IImage = styled.Image``;
 const VView = styled.View``;
+const MModal = styled.Modal``;
 interface Props {
-  hide: boolean;
+  hide?: boolean;
+  GoToFoodAdd: () => void;
 }
 interface HighlightProps {
   highlight: boolean;
 }
 
-const IntroApp = () => {
+const IntroApp = ({GoToFoodAdd}: Props) => {
   const animatedValue = useRef(new Animated.Value(0)).current;
   const onShow = () => {
     Animated.timing(animatedValue, {
@@ -135,6 +193,7 @@ const IntroApp = () => {
 
   const [sliderState, setSliderState] = useState({currentPage: 0});
   const [hide, setHide] = useState(true);
+  const [show, setShow] = useState(false);
 
   const {width} = Dimensions.get('window');
 
@@ -153,9 +212,15 @@ const IntroApp = () => {
   const sktip = async () => {
     await doIntroSkip();
     onHide();
+    setShow(false);
     setTimeout(() => {
       setHide(false);
     }, 501);
+  };
+
+  const Good = () => {
+    sktip();
+    GoToFoodAdd();
   };
 
   useEffect(() => {
@@ -239,17 +304,34 @@ const IntroApp = () => {
         <ButtonContainer>
           <SkipButtonContainer>
             {sliderState.currentPage === 3 ? (
-              <SkipButton onPress={sktip}>
+              <SkipButton onPress={() => setShow(true)}>
                 <TText>시작하기</TText>
               </SkipButton>
             ) : (
-              <SkipContainer onPress={sktip}>
+              <SkipContainer onPress={() => setShow(true)}>
                 <SkipText>Skip</SkipText>
               </SkipContainer>
             )}
           </SkipButtonContainer>
         </ButtonContainer>
       </VView>
+
+      <MModal animationType="fade" visible={show} transparent={true}>
+        <LogoutContainer>
+          <LogoutWrapper>
+            <LogoutText>Fooro에 오신 것을 환영합니다!</LogoutText>
+            <LogoutText2>바로 달력에 식품을 추가해 볼까요?</LogoutText2>
+            <SelectButtonWrapper>
+              <CancelButton onPress={sktip}>
+                <ButtonText>건너뛰기</ButtonText>
+              </CancelButton>
+              <OkButton onPress={Good}>
+                <ButtonText>수락하기</ButtonText>
+              </OkButton>
+            </SelectButtonWrapper>
+          </LogoutWrapper>
+        </LogoutContainer>
+      </MModal>
     </AnimatedContainer>
   );
 };
