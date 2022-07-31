@@ -18,3 +18,14 @@ export const LOAD_ALARM = gql`
     }
   }
 `;
+
+export const LOAD_ALARM_NOT = gql`
+  query loadAlarmNotRead($userNo: Float!) {
+    loadAlarmNotRead(userNo: $userNo) {
+      no
+      type
+      createdAt
+      isRead
+    }
+  }
+`;

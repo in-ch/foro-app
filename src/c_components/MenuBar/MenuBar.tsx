@@ -2,7 +2,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useRef, useState} from 'react';
 import styled from 'styled-components/native';
-import {Animated, Image, Modal} from 'react-native';
+import {Animated, Image, Modal, View} from 'react-native';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import {useQuery, useReactiveVar} from '@apollo/client';
 
@@ -12,6 +12,7 @@ import Images from 'assets';
 import FFText from '../FFText';
 import {tokenUserNo} from '~/apollo/client';
 import {LOAD_USER} from '@services/queries/user';
+import {LOAD_ALARM_NOT} from '@services/queries/alarm';
 
 const Container = styled.View`
   width: 100%;
@@ -39,10 +40,19 @@ const SearchAlarmContainer = styled.View`
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
+  position: relative;
+  top: -${nomalizes[5]}px;
 `;
 const Img = styled.Image`
   width: ${nomalizes[17]}px;
   height: ${nomalizes[15]}px;
+`;
+const Highlist = styled.View<HighlistProps>`
+  width: ${nomalizes[4]}px;
+  height: ${nomalizes[4]}px;
+  border-radius: ${nomalizes[2]}px;
+  background-color: #ff6258;
+  opacity: ${props => (props.highlite ? 1 : 0)};
 `;
 
 const SidebarContainer = styled.View<ContainerProps>`
@@ -208,6 +218,9 @@ interface Props {
 interface ContainerProps {
   show: boolean;
 }
+interface HighlistProps {
+  highlite: boolean;
+}
 
 const MenuBar = ({
   GoToAlarm,
@@ -219,6 +232,11 @@ const MenuBar = ({
   Logout,
 }: Props) => {
   const animatedValue = useRef(new Animated.Value(0)).current;
+  const asdf = () => {
+    GoToAlarm();
+    setHightLite(false);
+  };
+  const [hightLite, setHightLite] = useState(true);
   const onShow = () => {
     Animated.timing(animatedValue, {
       toValue: cWidth,
@@ -246,6 +264,16 @@ const MenuBar = ({
     },
     fetchPolicy: 'cache-and-network',
   });
+  const {data: myAlarm} = useQuery(LOAD_ALARM_NOT, {
+    variables: {
+      userNo,
+    },
+    onCompleted: d => {
+      console.log(d);
+    },
+    fetchPolicy: 'network-only',
+  });
+
   const [show, setShow] = useState<boolean>(false);
   return (
     <>
@@ -257,7 +285,14 @@ const MenuBar = ({
           Fooro
         </FFText>
         <SearchAlarmContainer>
-          <TouchableWithoutFeedback onPress={GoToAlarm}>
+          <TouchableWithoutFeedback onPress={asdf}>
+            <Highlist
+              highlite={
+                myAlarm?.loadAlarmNotRead?.length > 0 && hightLite
+                  ? true
+                  : false
+              }
+            />
             <Img
               style={{
                 marginRight: nomalizes[7],
@@ -267,6 +302,8 @@ const MenuBar = ({
             />
           </TouchableWithoutFeedback>
           <TouchableWithoutFeedback onPress={GoToSearch}>
+            <Highlist highlite={false} />
+
             <Img source={Images.search} />
           </TouchableWithoutFeedback>
         </SearchAlarmContainer>
