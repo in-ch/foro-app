@@ -158,6 +158,7 @@ interface Props {
   myAlarm: AlarmProps[];
   loading: boolean;
   GotoFriendAgenda: (value: number) => void;
+  GoToHome: () => void;
 }
 interface IsReadProps {
   isRead: boolean;
@@ -166,7 +167,7 @@ interface SelectModalProps {
   selectModal: boolean;
 }
 
-const ShareAlarm = ({myAlarm, loading, GotoFriendAgenda}: Props) => {
+const ShareAlarm = ({myAlarm, loading, GotoFriendAgenda, GoToHome}: Props) => {
   const [highliteValue, setHighliteValue] = useState<string>('');
   const [doneValue, setDoneValue] = useState<string>('');
   const [selectValue, setSelectValue] = useState<number>(0);
@@ -225,6 +226,9 @@ const ShareAlarm = ({myAlarm, loading, GotoFriendAgenda}: Props) => {
             });
           },
         });
+        setTimeout(() => {
+          GoToHome();
+        }, 200);
       } else {
         showToast('이미 이웃으로 추가되어 있습니다.');
       }

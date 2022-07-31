@@ -21,6 +21,7 @@ const LabelText = styled.Text`
 `;
 interface Props {
   GoToBack: () => void;
+  GoToHome: () => void;
   myAlarm: AlarmProps[];
   loading: boolean;
   GotoFriendAgenda: (value: number) => void;
@@ -31,6 +32,7 @@ interface PProps {
 }
 const AlarmPresenter = ({
   GoToBack,
+  GoToHome,
   myAlarm,
   loading,
   GotoFriendAgenda,
@@ -76,6 +78,7 @@ const AlarmPresenter = ({
             myAlarm={myAlarm}
             loading={loading}
             GotoFriendAgenda={GotoFriendAgenda}
+            GoToHome={GoToHome}
           />
         );
       case 'second':

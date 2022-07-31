@@ -11,6 +11,9 @@ const AlarmContainer = ({navigation}: AlarmProps) => {
   const GoToBack = () => {
     navigation.goBack();
   };
+  const GoToHome = () => {
+    navigation.reset({routes: [{name: 'Home', params: {}}]});
+  };
   const GotoFriendAgenda = (userId: number) => {
     navigation.navigate('FriendAgenda', {userId});
   };
@@ -18,17 +21,12 @@ const AlarmContainer = ({navigation}: AlarmProps) => {
     variables: {
       userNo,
     },
-    onCompleted: d => {
-      console.log(d);
-    },
-    onError: e => {
-      console.log(JSON.stringify(e));
-    },
     fetchPolicy: 'network-only',
   });
   return (
     <AlarmPresenter
       GoToBack={GoToBack}
+      GoToHome={GoToHome}
       myAlarm={myAlarm?.loadAlarm}
       loading={loading}
       GotoFriendAgenda={GotoFriendAgenda}
