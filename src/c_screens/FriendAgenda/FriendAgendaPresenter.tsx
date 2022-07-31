@@ -301,7 +301,7 @@ interface Props {
   GoBack: () => void;
   goToDetail: (value: number) => void;
   nickname: string;
-  selectedShow: (id: number) => void;
+  selectedShow: (id: number, id2: number) => void;
   showModal: boolean;
   foodData: any;
   thisWeek: string[];
@@ -401,7 +401,9 @@ const FriendAgendaPresenter = ({
                                     </Row>
                                   </TouchableWithoutFeedback>
                                   <TouchableWithoutFeedback
-                                    onPress={() => selectedShow(food.no)}>
+                                    onPress={() =>
+                                      selectedShow(food.no, food.user.no)
+                                    }>
                                     <Row>
                                       {food.consumed && (
                                         <ConsumeDone>
@@ -462,7 +464,7 @@ const FriendAgendaPresenter = ({
 
       <MModal animationType="fade" visible={showModal} transparent={true}>
         <ModalBackground>
-          <TTouchableNativeFeedback onPress={() => selectedShow(1)}>
+          <TTouchableNativeFeedback onPress={() => selectedShow(1, 0)}>
             <ModalBackgroundExtra />
           </TTouchableNativeFeedback>
           <ModalButtonContainer>

@@ -23,3 +23,11 @@ export const TOTAL_SHARE_FOOD = gql`
     }
   }
 `;
+
+export const REQUEST_FOOD = gql`
+  mutation requestFood($userNo: Float!, $foodNo: Float!, $friendNo: Float!) {
+    requestFood(userNo: $userNo, foodNo: $foodNo, friendNo: $friendNo) {
+      ok
+    }
+  }
+`;
