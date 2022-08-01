@@ -2,7 +2,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 
 import React, {useEffect} from 'react';
-import {Switch, View} from 'react-native';
 import {NavigationProp, RouteProp} from '@react-navigation/native';
 import {useMutation, useReactiveVar} from '@apollo/client';
 import styled from 'styled-components/native';
@@ -15,6 +14,7 @@ import {nomalizes} from '@utills/constants';
 import {cssUtil} from '@utills/cssUtil';
 import {RootTabParamList} from '@navigation/RootNavigation';
 import {tokenUserNo} from '~/apollo/client';
+import {SCHEDULE_PUSH} from '~/c_services/mutations/alarm';
 
 export interface FoodAddResultProps {
   navigation: NavigationProp<RootTabParamList, 'FoodDone'>;
@@ -93,6 +93,8 @@ const RowText = styled.Text`
   color: #000;
   font-family: 'Pretendard';
 `;
+const SSwitch = styled.Switch``;
+const VView = styled.View``;
 
 interface ColorProps {
   color: string;
@@ -103,6 +105,7 @@ const FoodDone = ({navigation, route}: FoodAddResultProps) => {
     route.params.foodAddParams;
   const userNo = useReactiveVar(tokenUserNo);
   const [mutationInsertFood] = useMutation(INSERT_FOOD);
+  const [mutationPush] = useMutation(SCHEDULE_PUSH);
   const handleInsertFood = () => {
     mutationInsertFood({
       variables: {
@@ -115,6 +118,25 @@ const FoodDone = ({navigation, route}: FoodAddResultProps) => {
           memo,
         },
         categoryNo: category.no,
+      },
+      onCompleted: d => {
+        console.log(JSON.stringify(d));
+        setTimeout(() => {
+          mutationPush({
+            variables: {
+              userNo,
+              foodName: d?.insertFood?.name,
+              type: 7,
+              time: d?.insertFood?.dday,
+            },
+            onCompleted: e => {
+              console.log(JSON.stringify(e));
+            },
+            onError: e => {
+              console.log(JSON.stringify(e));
+            },
+          });
+        }, 5000);
       },
     });
   };
@@ -155,7 +177,7 @@ const FoodDone = ({navigation, route}: FoodAddResultProps) => {
       </Box>
       <Box>
         <Heading>유의 키워드</Heading>
-        <View style={{display: 'flex', flexDirection: 'row'}}>
+        <VView style={{display: 'flex', flexDirection: 'row'}}>
           {keyword.map(keywor => {
             return (
               <HashTag>
@@ -163,11 +185,11 @@ const FoodDone = ({navigation, route}: FoodAddResultProps) => {
               </HashTag>
             );
           })}
-        </View>
+        </VView>
         <SizedBox.Custom margin={nomalizes[20]} />
         <RowBoxSwitch>
           <RowText>나만 보기</RowText>
-          <Switch
+          <SSwitch
             trackColor={{false: '#767577', true: '#FF6C63'}}
             thumbColor={onlyMe ? '#fff' : '#f4f3f4'}
             ios_backgroundColor="#3e3e3e"

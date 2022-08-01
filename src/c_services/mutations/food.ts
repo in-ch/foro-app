@@ -7,9 +7,8 @@ export const INSERT_FOOD = gql`
     $categoryNo: Float!
   ) {
     insertFood(userNo: $userNo, food: $food, categoryNo: $categoryNo) {
-      ok
-      error
-      isAdd
+      name
+      dday
     }
   }
 `;

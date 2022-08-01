@@ -1,5 +1,23 @@
+/* eslint-disable prettier/prettier */
 import {gql} from '@apollo/client';
 
+export const SCHEDULE_PUSH = gql`
+  mutation schedulePush(
+    $time: String!,
+    $userNo: Float!,
+    $foodName: String!,
+    $type: Float!,
+  ) {
+    schedulePush(
+      time: $time,
+      userNo: $userNo,
+      foodName: $foodName,
+      type: $type,
+    ) {
+      ok
+    }
+  }
+`;
 export const REQUEST_ADD_FRIEND = gql`
   mutation requestAddFriend($userNo: Float!, $friendNo: Float!) {
     requestAddFriend(userNo: $userNo, friendNo: $friendNo) {
