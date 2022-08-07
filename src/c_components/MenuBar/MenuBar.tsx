@@ -1,18 +1,20 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-native/no-inline-styles */
 import React, {useRef, useState} from 'react';
 import styled from 'styled-components/native';
-import {Animated, Image, Modal, View} from 'react-native';
+import {Animated} from 'react-native';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import {useQuery, useReactiveVar} from '@apollo/client';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import Images from 'assets';
 
 import {cHeight, cWidth, nomalizes} from '@utills/constants';
 import {cssUtil} from '@utills/cssUtil';
-import Images from 'assets';
 import FFText from '../FFText';
-import {tokenUserNo} from '~/apollo/client';
+import {tokenUserNo} from 'apollo/client';
 import {LOAD_USER} from '@services/queries/user';
 import {LOAD_ALARM_NOT} from '@services/queries/alarm';
+import Bell from './Bell';
+import Search from './Search';
 
 const Container = styled.View`
   width: 100%;
@@ -51,6 +53,8 @@ const Highlist = styled.View<HighlistProps>`
   width: ${nomalizes[4]}px;
   height: ${nomalizes[4]}px;
   border-radius: ${nomalizes[2]}px;
+  margin-left: ${nomalizes[12]}px;
+  margin-bottom: ${nomalizes[2]}px;
   background-color: #ff6258;
   opacity: ${props => (props.highlite ? 1 : 0)};
 `;
@@ -203,7 +207,6 @@ const ButtonText = styled.Text`
   font-size: ${nomalizes[11]}px;
 `;
 const MModal = styled.Modal``;
-const IIImage = styled.Image``;
 const AnimatedContainer = Animated.createAnimatedComponent(SidebarContainer);
 
 interface Props {
@@ -293,18 +296,11 @@ const MenuBar = ({
                   : false
               }
             />
-            <Img
-              style={{
-                marginRight: nomalizes[7],
-                marginTop: nomalizes[2.5],
-              }}
-              source={Images.alarm}
-            />
+            <Bell />
           </TouchableWithoutFeedback>
           <TouchableWithoutFeedback onPress={GoToSearch}>
             <Highlist highlite={false} />
-
-            <Img source={Images.search} />
+            <Search />
           </TouchableWithoutFeedback>
         </SearchAlarmContainer>
       </Container>
@@ -322,14 +318,7 @@ const MenuBar = ({
                     {data?.loadUser?.nickname}
                   </ProfileNickname>
                 </ProfileNicknameContainer>
-                <IIImage
-                  style={{
-                    width: nomalizes[6],
-                    height: nomalizes[6],
-                    marginLeft: nomalizes[4],
-                  }}
-                  source={Images.arrowLeft}
-                />
+                <Icon name="keyboard-arrow-right" size={20} color="#3a3a3a" />
               </ProfileContainer>
               <CategoryContainer
                 style={{
@@ -338,25 +327,11 @@ const MenuBar = ({
                 }}>
                 <TextContainer onPress={GoToNeighbor}>
                   <TText style={{fontSize: nomalizes[14]}}>이웃 관리</TText>
-                  <IIImage
-                    style={{
-                      width: nomalizes[6],
-                      height: nomalizes[6],
-                      marginLeft: nomalizes[4],
-                    }}
-                    source={Images.arrowLeft}
-                  />
+                  <Icon name="keyboard-arrow-right" size={20} color="#3a3a3a" />
                 </TextContainer>
                 <TextContainer onPress={GoToCategory}>
                   <TText style={{fontSize: nomalizes[14]}}>카테고리 관리</TText>
-                  <IIImage
-                    style={{
-                      width: nomalizes[6],
-                      height: nomalizes[6],
-                      marginLeft: nomalizes[4],
-                    }}
-                    source={Images.arrowLeft}
-                  />
+                  <Icon name="keyboard-arrow-right" size={20} color="#3a3a3a" />
                 </TextContainer>
               </CategoryContainer>
               <SettingContainer>

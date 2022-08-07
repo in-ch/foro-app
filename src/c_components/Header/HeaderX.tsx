@@ -1,11 +1,11 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import styled from 'styled-components/native';
-import {Image} from 'react-native';
+import Icon from 'react-native-vector-icons/Feather';
+
 import {cWidth, nomalizes, statusBarHeight} from '@utills/constants';
 import {SizedBox} from '@components/SizedBox';
 import {cssUtil} from '@utills/cssUtil';
-import Images from '@assets/images';
 
 const Container = styled.View`
   background-color: #fff;
@@ -61,13 +61,7 @@ const HeaderX = ({text, button}: HeaderProps) => {
           </TText>
         </TextContainer>
         <Button onPress={button}>
-          <Image
-            style={{
-              width: nomalizes[15],
-              height: nomalizes[15],
-            }}
-            source={Images.close}
-          />
+          <Icon name="x" size={30} color="#3a3a3a" />
         </Button>
       </Wrapper>
     </Container>

@@ -1,11 +1,11 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import styled from 'styled-components/native';
-import {Image} from 'react-native';
+import Icon from 'react-native-vector-icons/Feather';
+
 import {cWidth, nomalizes, statusBarHeight} from '@utills/constants';
-import {SizedBox} from '@components/SizedBox';
 import {cssUtil} from '@utills/cssUtil';
-import Images from '@assets/images';
+import {SizedBox} from '@components/SizedBox';
 
 const Container = styled.View`
   background-color: #fff;
@@ -21,13 +21,14 @@ const Wrapper = styled.View`
 const IconContatiner = styled.TouchableOpacity`
   width: ${nomalizes[30]}px;
   height: ${nomalizes[30]}px;
+  border: 0px solid #000;
   display: flex;
   flex-direction: row;
   ${cssUtil.doubleCenter}
 `;
 const TextContainer = styled.View<TextContainerProps>`
   width: ${props =>
-    props.button ? cWidth - nomalizes[80] : cWidth - nomalizes[30]};
+    props.button ? cWidth - nomalizes[80] : cWidth - nomalizes[50]};
 `;
 const TText = styled.Text<TextContainerProps>`
   position: relative;
@@ -69,10 +70,7 @@ const Header = ({text, back, button}: HeaderProps) => {
           borderBottomWidth: 1,
         }}>
         <IconContatiner onPress={back}>
-          <Image
-            style={{width: nomalizes[20], height: nomalizes[20]}}
-            source={Images.back}
-          />
+          <Icon name="chevron-left" size={30} color="#3a3a3a" />
         </IconContatiner>
         <TextContainer button={button ? true : false}>
           <TText button={button ? true : false} style={{textAlign: 'center'}}>

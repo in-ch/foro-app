@@ -1,13 +1,12 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import {Image} from 'react-native';
 import styled from 'styled-components/native';
+import Icon from 'react-native-vector-icons/Feather';
 
 import {cWidth, nomalizes, statusBarHeight} from '@utills/constants';
 import {cssUtil} from '@utills/cssUtil';
 import {SizedBox} from '@components/SizedBox';
-import Images from '@assets/images';
 
 const Container = styled.View`
   background-color: #fff;
@@ -82,10 +81,7 @@ const HeaderPlus = ({
           borderBottomWidth: 1,
         }}>
         <IconContatiner onPress={back}>
-          <Image
-            style={{width: nomalizes[20], height: nomalizes[20]}}
-            source={Images.back}
-          />
+          <Icon name="chevron-left" size={30} color="#3a3a3a" />
         </IconContatiner>
         <TextContainer button={button ? true : false}>
           <TText button={button ? true : false} style={{textAlign: 'center'}}>
@@ -107,14 +103,7 @@ const HeaderPlus = ({
                 <StyledButtonText>{buttonStyleText}</StyledButtonText>
               </StyledButton>
             ) : (
-              <Image
-                style={{
-                  width: nomalizes[20],
-                  height: nomalizes[20],
-                  marginRight: nomalizes[10],
-                }}
-                source={Images.bigPlus}
-              />
+              <Icon name="plus" size={30} color="#3a3a3a" />
             )}
           </TouchableOpacity>
         )}
