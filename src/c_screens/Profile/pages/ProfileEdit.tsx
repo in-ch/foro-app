@@ -13,10 +13,10 @@ import Toast from 'react-native-easy-toast';
 import {cHeight, isAndroid, nomalizes} from '@utills/constants';
 import {NavigationProp, RouteProp} from '@react-navigation/native';
 import {RootTabParamList} from '@navigation/RootNavigation';
-import {API_URL} from '~/apollo/client';
+import {API_URL} from 'apollo/client';
 import Header from '@components/Header/Header';
 import {DEUPLICATENICKNAME, UPDATE_USER} from '@services/mutations/user';
-import {tokenUserNo} from '~/apollo/client';
+import {tokenUserNo} from 'apollo/client';
 import {LOAD_USER} from '@services/queries/user';
 
 const Container = styled.View`
@@ -105,6 +105,9 @@ const ProfileEdit = ({navigation, route}: ProfileEditProps) => {
     onCompleted: () => {
       showToast('프로필 편집이 완료되었습니다.');
     },
+    onError: e => {
+      console.log(JSON.stringify(e));
+    },
     update(cache) {
       let dataUserQuery = cache.readQuery<any>({
         query: LOAD_USER,
@@ -122,6 +125,8 @@ const ProfileEdit = ({navigation, route}: ProfileEditProps) => {
             loadUser: {
               nickname: text,
               profile,
+              alarmNeighborFoodSharingNews: false,
+              alarmNeighborShareRequest: false,
             },
           },
         });
@@ -156,7 +161,6 @@ const ProfileEdit = ({navigation, route}: ProfileEditProps) => {
             uri: isAndroid ? photo.uri : photo.uri?.replace('file://', ''),
           });
           try {
-            console.log(formData);
             const {url} = await (
               await fetch(`${API_URL}/uploads`, {
                 // 안드로이드에서 실험할 때는 npm run androidTcp 명령어 emulator 실행 때 마다 쳐야함.
@@ -167,8 +171,6 @@ const ProfileEdit = ({navigation, route}: ProfileEditProps) => {
                 body: formData,
               })
             ).json();
-            console.log(url);
-            console.log(formData);
             setProfileLoading(true);
             await setProfile(String(url));
             setTimeout(() => {
