@@ -111,7 +111,8 @@ const ButtonText = styled.Text`
   font-size: ${nomalizes[14]}px;
   font-family: 'Pretendard';
 `;
-
+const VView = styled.View``;
+const SSwitch = styled.Switch``;
 interface ColorProps {
   color: string;
 }
@@ -191,19 +192,25 @@ const DetailPresenter = ({
         </Box>
         <Box>
           <Heading>유의 키워드</Heading>
-          <View style={{display: 'flex', flexDirection: 'row'}}>
-            {keywords?.map(keywor => {
-              return (
-                <HashTag>
-                  <HashTagText>{keywor}</HashTagText>
-                </HashTag>
-              );
-            })}
-          </View>
+          <VView style={{display: 'flex', flexDirection: 'row'}}>
+            {keywords?.length < 1 ||
+              (keywords?.length === 1 && keywords[0] === '' ? (
+                <TText>유의 키워드가 없습니다.</TText>
+              ) : (
+                keywords?.map(keywor => {
+                  console.log(keywords);
+                  return (
+                    <HashTag>
+                      <HashTagText>{keywor}</HashTagText>
+                    </HashTag>
+                  );
+                })
+              ))}
+          </VView>
           <SizedBox.Custom margin={nomalizes[20]} />
           <RowBoxSwitch>
             <RowText>나만 보기</RowText>
-            <Switch
+            <SSwitch
               onChange={() => setOnlyMe(!onlyMe)}
               trackColor={{false: '#767577', true: '#FF6C63'}}
               thumbColor={true ? '#fff' : '#f4f3f4'}
@@ -215,7 +222,7 @@ const DetailPresenter = ({
           <SizedBox.Custom margin={nomalizes[10]} />
           <RowBoxSwitch>
             <RowText>소비 완료</RowText>
-            <Switch
+            <SSwitch
               onChange={() => setConsumed(!consumed)}
               trackColor={{false: '#767577', true: '#FF6C63'}}
               thumbColor={true ? '#fff' : '#f4f3f4'}

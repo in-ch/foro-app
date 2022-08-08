@@ -148,13 +148,19 @@ const DetailFriendPresenter = ({goToBack, data, memo, toastRef}: Props) => {
         <Box>
           <Heading>유의 키워드</Heading>
           <VView style={{display: 'flex', flexDirection: 'row'}}>
-            {keywords?.map(keywor => {
-              return (
-                <HashTag>
-                  <HashTagText>{keywor}</HashTagText>
-                </HashTag>
-              );
-            })}
+            {keywords?.length < 1 ||
+              (keywords?.length === 1 && keywords[0] === '' ? (
+                <TText>유의 키워드가 없습니다.</TText>
+              ) : (
+                keywords?.map(keywor => {
+                  console.log(keywords);
+                  return (
+                    <HashTag>
+                      <HashTagText>{keywor}</HashTagText>
+                    </HashTag>
+                  );
+                })
+              ))}
           </VView>
           <SizedBox.Custom margin={nomalizes[20]} />
         </Box>

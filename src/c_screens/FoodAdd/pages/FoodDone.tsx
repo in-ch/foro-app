@@ -178,13 +178,19 @@ const FoodDone = ({navigation, route}: FoodAddResultProps) => {
       <Box>
         <Heading>유의 키워드</Heading>
         <VView style={{display: 'flex', flexDirection: 'row'}}>
-          {keyword.map(keywor => {
-            return (
-              <HashTag>
-                <HashTagText>{keywor}</HashTagText>
-              </HashTag>
-            );
-          })}
+          {keyword?.length < 1 ||
+            (keyword?.length === 1 && keyword[0] === '' ? (
+              <TText>유의 키워드가 없습니다.</TText>
+            ) : (
+              keyword?.map(keywor => {
+                console.log(keyword);
+                return (
+                  <HashTag>
+                    <HashTagText>{keywor}</HashTagText>
+                  </HashTag>
+                );
+              })
+            ))}
         </VView>
         <SizedBox.Custom margin={nomalizes[20]} />
         <RowBoxSwitch>

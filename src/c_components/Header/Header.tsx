@@ -6,6 +6,7 @@ import Icon from 'react-native-vector-icons/Feather';
 import {cWidth, nomalizes, statusBarHeight} from '@utills/constants';
 import {cssUtil} from '@utills/cssUtil';
 import {SizedBox} from '@components/SizedBox';
+import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 
 const Container = styled.View`
   background-color: #fff;
@@ -18,10 +19,11 @@ const Wrapper = styled.View`
   flex-direction: row;
   ${cssUtil.doubleCenter}
 `;
-const IconContatiner = styled.TouchableOpacity`
+const IconContatiner = styled.View`
   width: ${nomalizes[30]}px;
   height: ${nomalizes[30]}px;
   border: 0px solid #000;
+
   display: flex;
   flex-direction: row;
   ${cssUtil.doubleCenter}
@@ -69,9 +71,11 @@ const Header = ({text, back, button}: HeaderProps) => {
           borderBottomColor: '#e2e2e2',
           borderBottomWidth: 1,
         }}>
-        <IconContatiner onPress={back}>
-          <Icon name="chevron-left" size={30} color="#3a3a3a" />
-        </IconContatiner>
+        <TouchableWithoutFeedback onPress={back}>
+          <IconContatiner>
+            <Icon name="chevron-left" size={30} color="#3a3a3a" />
+          </IconContatiner>
+        </TouchableWithoutFeedback>
         <TextContainer button={button ? true : false}>
           <TText button={button ? true : false} style={{textAlign: 'center'}}>
             {text}
