@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useCallback, useRef, useState} from 'react';
-import {Platform, Text, View} from 'react-native';
+import {Platform} from 'react-native';
 import styled from 'styled-components/native';
 import {
   ImageLibraryOptions,
@@ -57,6 +57,10 @@ const IImage = styled.Image`
   width: ${nomalizes[66]}px;
   height: ${nomalizes[66]}px;
 `;
+const TText = styled.Text`
+  color: #000;
+`;
+const VView = styled.View``;
 export interface ProfileEditProps {
   navigation: NavigationProp<RootTabParamList, 'ProfileEdit'>;
   route: RouteProp<RootTabParamList, 'ProfileEdit'>;
@@ -152,6 +156,7 @@ const ProfileEdit = ({navigation, route}: ProfileEditProps) => {
             uri: isAndroid ? photo.uri : photo.uri?.replace('file://', ''),
           });
           try {
+            console.log(formData);
             const {url} = await (
               await fetch(`${API_URL}/uploads`, {
                 // 안드로이드에서 실험할 때는 npm run androidTcp 명령어 emulator 실행 때 마다 쳐야함.
@@ -162,6 +167,8 @@ const ProfileEdit = ({navigation, route}: ProfileEditProps) => {
                 body: formData,
               })
             ).json();
+            console.log(url);
+            console.log(formData);
             setProfileLoading(true);
             await setProfile(String(url));
             setTimeout(() => {
@@ -169,13 +176,19 @@ const ProfileEdit = ({navigation, route}: ProfileEditProps) => {
             }, 2000);
           } catch (error) {
             showToast('이미지 등록에 오류가 발생했습니다.');
+            console.log('3');
+            console.log(error);
           }
         } else {
           showToast('이미지 등록에 오류가 발생했습니다.');
+          console.log('2');
         }
       });
     } catch (error) {
       showToast('이미지 등록에 오류가 발생했습니다.');
+      console.log('1');
+      console.log(error);
+
       throw error;
     }
   };
@@ -190,7 +203,7 @@ const ProfileEdit = ({navigation, route}: ProfileEditProps) => {
         <ImageContainer onPress={showImagePicker}>
           {profileLoading && (
             <SkeletonPlaceholder speed={1500}>
-              <View style={{width: nomalizes[66], height: nomalizes[66]}} />
+              <VView style={{width: nomalizes[66], height: nomalizes[66]}} />
             </SkeletonPlaceholder>
           )}
           <IImage source={{uri: profile}} />
@@ -207,7 +220,7 @@ const ProfileEdit = ({navigation, route}: ProfileEditProps) => {
             value={text}
             onChangeText={(value: string) => setText(value)}
           />
-          <Text>{text?.length}/10</Text>
+          <TText>{text?.length}/10</TText>
         </TextContainer>
       </ProfileContainer>
       <Toast

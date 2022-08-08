@@ -5,7 +5,7 @@ import {UPDATE_USER} from '@services/mutations/user';
 import {LOAD_USER} from '@services/queries/user';
 import {SettingProps} from './Setting';
 import SettingPresenter from './SettingPresetner';
-import {tokenUserNo} from 'apollo/client';
+import {logUserOut, tokenUserNo} from 'apollo/client';
 
 const SettingContainer = ({navigation}: SettingProps) => {
   const userNo = useReactiveVar(tokenUserNo);
@@ -40,7 +40,12 @@ const SettingContainer = ({navigation}: SettingProps) => {
   const goToPersonalPolicy = () => {
     navigation.navigate('PersonalPolicy', {});
   };
-
+  const Logout = () => {
+    logUserOut();
+    navigation.reset({
+      routes: [{name: 'Login', params: {}}],
+    });
+  };
   const handleNeighborShareAbled = async () => {
     await setNeighborShareAbled(!neighborShareAbled);
     await mutationUpdateUser();
@@ -100,6 +105,7 @@ const SettingContainer = ({navigation}: SettingProps) => {
       neighborShareAbled={neighborShareAbled}
       neighborShareNewsAbled={neighborShareNewsAbled}
       loading={loading}
+      Logout={Logout}
     />
   );
 };
