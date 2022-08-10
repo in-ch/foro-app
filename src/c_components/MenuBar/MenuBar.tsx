@@ -18,7 +18,8 @@ import Search from './Search';
 
 const Container = styled.View`
   width: 100%;
-  height: ${nomalizes[30]}px;
+  height: ${nomalizes[35]}px;
+  padding-top: ${nomalizes[10]}px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
