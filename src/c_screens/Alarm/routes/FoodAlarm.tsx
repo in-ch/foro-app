@@ -418,7 +418,7 @@ const ShareAlarm = ({myAlarm, loading, GotoFriendAgenda, GoToHome}: Props) => {
                       <Header>
                         <FoodText numberOfLines={2}>
                           {alarm.fromUser?.nickname}님이 {alarm?.food?.name}을
-                          공유해갔어요.
+                          공유해줬습니다.
                         </FoodText>
                       </Header>
                       <Bottom>
@@ -479,7 +479,7 @@ const ShareAlarm = ({myAlarm, loading, GotoFriendAgenda, GoToHome}: Props) => {
           </MModal>
           <Toast
             ref={toastRef}
-            positionValue={cHeight * 0.3}
+            positionValue={cHeight * 0.5}
             fadeInDuration={400}
             fadeOutDuration={1200}
           />

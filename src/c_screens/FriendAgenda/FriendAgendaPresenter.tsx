@@ -156,26 +156,25 @@ const Mark = styled.View<MarkProps>`
 `;
 const ModalBackground = styled.View`
   background-color: rgba(0, 0, 0, 0.2);
-  padding: ${nomalizes[30]}px;
   position: absolute;
   top: 0px;
   right: 0px;
   flex-direction: row;
   width: ${cWidth}px;
-  height: ${cHeight + nomalizes[0]}px;
+  height: ${cHeight + nomalizes[50]}px;
   justify-content: flex-end;
   align-items: flex-end;
 `;
 const ModalBackgroundExtra = styled.View`
   width: ${cWidth}px;
-  height: ${cHeight - nomalizes[150]}px;
+  height: ${cHeight - nomalizes[200]}px;
   position: absolute;
   top: 0px;
   left: 0px;
 `;
 const ModalButtonContainer = styled.View`
   width: ${cWidth}px;
-  height: ${nomalizes[150]}px;
+  height: ${nomalizes[200]}px;
   border-top-left-radius: ${nomalizes[25]}px;
   border-top-right-radius: ${nomalizes[25]}px;
   background-color: #fff;
