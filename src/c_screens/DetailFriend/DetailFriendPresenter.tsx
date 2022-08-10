@@ -80,6 +80,20 @@ const HashTagText = styled.Text`
   font-family: 'Pretendard';
 `;
 const VView = styled.View``;
+const RequestButton = styled.TouchableOpacity`
+  height: ${nomalizes[40]}px;
+  margin-bottom: ${nomalizes[30]}px;
+  width: 90%;
+  margin-left: 5%;
+  background-color: #ff6c63;
+  border-radius: ${nomalizes[10]}px;
+  display: flex;
+  ${cssUtil.doubleCenter};
+`;
+const RequestButtonText = styled.Text`
+  color: white;
+  font-size: ${nomalizes[12]}px;
+`;
 interface ColorProps {
   color: string;
 }
@@ -94,9 +108,16 @@ interface Props {
   setMemo: (value: string) => void;
   handleUpdate: () => void;
   handleDelete: () => void;
+  handleRequest: (value: number, value2: number) => void;
   toastRef: any;
 }
-const DetailFriendPresenter = ({goToBack, data, memo, toastRef}: Props) => {
+const DetailFriendPresenter = ({
+  goToBack,
+  data,
+  memo,
+  toastRef,
+  handleRequest,
+}: Props) => {
   const keywords = String(data?.keyword).split(',');
   return (
     <Container
@@ -163,6 +184,11 @@ const DetailFriendPresenter = ({goToBack, data, memo, toastRef}: Props) => {
               ))}
           </VView>
           <SizedBox.Custom margin={nomalizes[20]} />
+        </Box>
+        <Box>
+          <RequestButton onPress={() => handleRequest(data?.no, data?.user.no)}>
+            <RequestButtonText>공유 요청하기</RequestButtonText>
+          </RequestButton>
         </Box>
         <Toast
           ref={toastRef}

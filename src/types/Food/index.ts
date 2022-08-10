@@ -21,4 +21,7 @@ export interface FoodOutputData {
   onlyMe: boolean;
   consumed: boolean;
   createdAt: string;
+  user: {
+    no: number;
+  };
 }

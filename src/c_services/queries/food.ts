@@ -38,6 +38,9 @@ export const LOAD_FOOD_DATA = gql`
       createdAt
       updatedAt
       consumed
+      user {
+        no
+      }
     }
   }
 `;
