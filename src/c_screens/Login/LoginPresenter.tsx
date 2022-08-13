@@ -64,6 +64,8 @@ const LoadingContainer = styled.View`
   display: flex;
   ${cssUtil.doubleCenter};
 `;
+const IImage = styled.Image``;
+const AActivityIndicator = styled.ActivityIndicator``;
 interface Props {
   signInWithKakao: () => void;
   signInWithGoogle: () => void;
@@ -90,7 +92,7 @@ const LoginPresenter = ({
           <Container>
             <SizedBox.Custom margin={statusBarHeight} />
             <IntroJon>
-              <Image
+              <IImage
                 style={{
                   width: nomalizes[90],
                   height: nomalizes[120],
@@ -100,7 +102,7 @@ const LoginPresenter = ({
             </IntroJon>
             <LoginJon>
               <PhoneButton background={'#FEE501'} onPress={signInWithKakao}>
-                <Image
+                <IImage
                   style={{
                     width: nomalizes[25],
                     height: nomalizes[25],
@@ -112,7 +114,7 @@ const LoginPresenter = ({
                 </TextContainer>
               </PhoneButton>
               <PhoneButton background={'#fff'} onPress={signInWithGoogle}>
-                <Image
+                <IImage
                   style={{
                     width: nomalizes[25],
                     height: nomalizes[25],
@@ -126,7 +128,7 @@ const LoginPresenter = ({
 
               {isIOS && (
                 <PhoneButton background={'#000'} onPress={signInWithApple}>
-                  <Image
+                  <IImage
                     style={{
                       width: nomalizes[25],
                       height: nomalizes[25],
@@ -134,7 +136,7 @@ const LoginPresenter = ({
                     source={Images.apple}
                   />
                   <TextContainer>
-                    <TText color="#fff">애플로 로그인</TText>
+                    <TText color="#fff">Apple로 로그인</TText>
                   </TextContainer>
                 </PhoneButton>
               )}
@@ -144,7 +146,7 @@ const LoginPresenter = ({
       ) : (
         <>
           <LoadingContainer>
-            <ActivityIndicator animating={true} size="small" color="#000" />
+            <AActivityIndicator animating={true} size="small" color="#000" />
           </LoadingContainer>
         </>
       )}
