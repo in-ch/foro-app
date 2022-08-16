@@ -1,5 +1,4 @@
 import React from 'react';
-import {ActivityIndicator, Image} from 'react-native';
 import styled from 'styled-components/native';
 
 import {SizedBox} from '@components/SizedBox';
@@ -13,6 +12,7 @@ import {
 import {cssUtil} from '@utills/cssUtil';
 
 import Images from 'assets';
+import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 
 const Container = styled.View`
   display: flex;
@@ -64,13 +64,87 @@ const LoadingContainer = styled.View`
   display: flex;
   ${cssUtil.doubleCenter};
 `;
+
+const AlertWrapper = styled.View<SelectModalProps>`
+  background-color: #fff;
+  width: ${nomalizes[200]}px;
+  height: ${nomalizes[120]}px;
+  border-radius: ${nomalizes[20]}px;
+  display: ${props => (props.selectModal ? 'flex' : 'none')};
+  flex-direction: column;
+  align-items: center;
+  padding: ${nomalizes[10]}px;
+  position: absolute;
+  top: ${cHeight / 2 - nomalizes[45]}px;
+  left: ${cWidth / 2 - nomalizes[100]}px;
+  justify-content: space-between;
+`;
+const AlertText = styled.Text`
+  color: #333333;
+  font-size: ${nomalizes[12]}px;
+  margin-top: ${nomalizes[5]}px;
+`;
+const AlertText2 = styled.Text`
+  color: #8f8f8f;
+  font-size: ${nomalizes[10]}px;
+  margin-top: ${nomalizes[5]}px;
+`;
+
+const SelectButtonWrapper = styled.View`
+  width: 90%;
+  height: ${nomalizes[30]}px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+const CancelButton = styled.TouchableOpacity`
+  width: 48%;
+  height: ${nomalizes[30]}px;
+  background-color: #ff6258;
+  border-radius: ${nomalizes[8]}px;
+  ${cssUtil.doubleCenter};
+`;
+const OkButton = styled.TouchableOpacity`
+  width: 48%;
+  height: ${nomalizes[30]}px;
+  background-color: #dbdbdb;
+  border-radius: ${nomalizes[8]}px;
+  ${cssUtil.doubleCenter};
+`;
+const ButtonText = styled.Text`
+  color: #fff;
+  font-size: ${nomalizes[11]}px;
+`;
+const GuestText = styled.Text`
+  color: #fff;
+  font-size: ${nomalizes[12]}px;
+  margin-bottom: ${nomalizes[20]}px;
+`;
+const ModalBackground = styled.View`
+  background-color: rgba(0, 0, 0, 0.4);
+  padding: ${nomalizes[30]}px;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  flex-direction: row;
+  width: ${cWidth}px;
+  height: ${cHeight + nomalizes[40]}px;
+  justify-content: flex-end;
+  align-items: flex-end;
+`;
 const IImage = styled.Image``;
 const AActivityIndicator = styled.ActivityIndicator``;
+const MModal = styled.Modal``;
+
 interface Props {
   signInWithKakao: () => void;
   signInWithGoogle: () => void;
   signInWithApple: () => void;
   loading: boolean;
+  selectModal: boolean;
+  handleEvent: () => void;
+  handleCancel: () => void;
+  handleGuestLogin: () => void;
 }
 interface TextProps {
   color: string;
@@ -78,12 +152,19 @@ interface TextProps {
 interface ButtonProps {
   background: string;
 }
+interface SelectModalProps {
+  selectModal: boolean;
+}
 
 const LoginPresenter = ({
   signInWithKakao,
   signInWithGoogle,
   signInWithApple,
   loading,
+  selectModal,
+  handleEvent,
+  handleCancel,
+  handleGuestLogin,
 }: Props) => {
   return (
     <>
@@ -101,6 +182,10 @@ const LoginPresenter = ({
               />
             </IntroJon>
             <LoginJon>
+              <TouchableWithoutFeedback onPress={handleGuestLogin}>
+                <GuestText>Guest로 로그인</GuestText>
+              </TouchableWithoutFeedback>
+
               <PhoneButton background={'#FEE501'} onPress={signInWithKakao}>
                 <IImage
                   style={{
@@ -150,6 +235,22 @@ const LoginPresenter = ({
           </LoadingContainer>
         </>
       )}
+      <MModal animationType="fade" visible={selectModal} transparent={true}>
+        <ModalBackground>
+          <AlertWrapper selectModal={selectModal}>
+            <AlertText>게스트로 로그인하시겠습니까?</AlertText>
+            <AlertText2>로그아웃 시 정보는 저장되지 않습니다.</AlertText2>
+            <SelectButtonWrapper>
+              <CancelButton onPress={handleCancel}>
+                <ButtonText>취소</ButtonText>
+              </CancelButton>
+              <OkButton onPress={handleEvent}>
+                <ButtonText>확인</ButtonText>
+              </OkButton>
+            </SelectButtonWrapper>
+          </AlertWrapper>
+        </ModalBackground>
+      </MModal>
     </>
   );
 };

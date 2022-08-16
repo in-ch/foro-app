@@ -46,6 +46,8 @@ const LoginContainer = ({navigation}: Props) => {
   const [appleToken, setAppleToken] = useState<string>(''); // 애플 토큰
   const [id, setId] = useState<string>(''); // 고유값
 
+  const [selectModal, setSelectModal] = useState<boolean>(false);
+
   const userNo = useReactiveVar(tokenUserNo);
 
   // kakao login
@@ -200,12 +202,15 @@ const LoginContainer = ({navigation}: Props) => {
   const GoToHomePage = () => {
     navigation.reset({routes: [{name: 'Home', params: {}}]});
   };
-
-  // useEffect(() => {
-  //   if (userNo !== null) {
-  //     GoToHomePage();
-  //   }
-  // }, [userNo]);
+  const handleGuestLogin = () => {
+    setSelectModal(true);
+  };
+  const handleEvent = () => {
+    console.log('핸들');
+  };
+  const handleCancel = () => {
+    setSelectModal(false);
+  };
 
   return (
     <>
@@ -214,6 +219,10 @@ const LoginContainer = ({navigation}: Props) => {
         signInWithGoogle={onGoogleButtonPress}
         signInWithApple={onAppleButtonPress}
         loading={loading}
+        selectModal={selectModal}
+        handleEvent={handleEvent}
+        handleCancel={handleCancel}
+        handleGuestLogin={handleGuestLogin}
       />
     </>
   );
