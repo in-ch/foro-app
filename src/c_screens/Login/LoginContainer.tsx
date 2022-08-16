@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-shadow */
 // @ts-nocheck
@@ -160,13 +159,15 @@ const LoginContainer = ({navigation}: Props) => {
         kakao_id: type === 'KAKAO' ? id : '',
         google_id: type === 'GOOGLE' ? String(id) : '',
         apple_id: type === 'APPLE' ? id : '',
+        guest_id: type === 'GUEST' ? id : '',
       },
     },
-    onCompleted: async d => {
+    onCompleted: async () => {
       await mutationLogin();
     },
     onError: e => {
       Alert.alert('오류가 발생했습니다. 관리자에게 문의해주세요.');
+      console.log(JSON.stringify(e));
       setLoading(false);
       setLoading(false);
     },
@@ -189,8 +190,9 @@ const LoginContainer = ({navigation}: Props) => {
         await GoToHomePage(); // 프로필이 있다면 ..
       }
     },
-    onError: () => {
+    onError: e => {
       Alert.alert('로그인 오류가 발생했습니다.');
+      console.log(JSON.stringify(e));
       setLoading(false);
     },
   });
@@ -205,8 +207,11 @@ const LoginContainer = ({navigation}: Props) => {
   const handleGuestLogin = () => {
     setSelectModal(true);
   };
-  const handleEvent = () => {
-    console.log('핸들');
+  const handleEvent = async () => {
+    await setNickname('Guest' + Math.floor(Math.random() * 101000));
+    await setId(String(Math.floor(Math.random() * 101000)));
+    await setType('GUEST');
+    mutationInsertUser();
   };
   const handleCancel = () => {
     setSelectModal(false);

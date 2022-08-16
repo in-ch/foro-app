@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/native';
+import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 
 import {SizedBox} from '@components/SizedBox';
 import {
@@ -12,7 +13,6 @@ import {
 import {cssUtil} from '@utills/cssUtil';
 
 import Images from 'assets';
-import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 
 const Container = styled.View`
   display: flex;
