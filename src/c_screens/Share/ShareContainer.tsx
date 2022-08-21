@@ -6,11 +6,13 @@ import {
 } from '@apollo/client';
 import React, {useCallback, useRef, useState} from 'react';
 import KakaoShareLink from 'react-native-kakao-share-link';
-import {tokenUserNo} from '~/apollo/client';
-import {TOTAL_SHARE_FOOD} from '~/c_services/mutations/alarm';
-import {SEND_PUSH} from '~/c_services/mutations/push';
-import {LOAD_FOOD_DATA} from '~/c_services/queries/food';
-import {LOAD_FRIEND_FOOD} from '~/c_services/queries/friend';
+import {tokenUserNo} from 'apollo/client';
+
+import {TOTAL_SHARE_FOOD} from '@services/mutations/alarm';
+import {SEND_PUSH} from '@services/mutations/push';
+import {LOAD_FOOD_DATA} from '@services/queries/food';
+import {LOAD_FRIEND_FOOD} from '@services/queries/friend';
+import {LOAD_USER} from '@services/queries/user';
 
 import {ShareProps} from './Share';
 import SharePresenter from './SharePresenter';
@@ -19,6 +21,8 @@ const ShareContainer = ({navigation, route}: ShareProps) => {
   const [userIds, setUserIds] = useState<any>([]);
   const [selectModal, setSelectModal] = useState<boolean>(false);
   const userNo = useReactiveVar(tokenUserNo);
+  const [text1, setText1] = useState('');
+  const [text2, setText2] = useState('');
 
   const cancelSelectModal = () => {
     setSelectModal(false);
@@ -58,25 +62,8 @@ const ShareContainer = ({navigation, route}: ShareProps) => {
 
   const kakaoshare = async () => {
     try {
-      const response = await KakaoShareLink.sendText({
-        text: `${'userNo'}님이 ${'foodName'}을(를) 공유하셨습니다.`,
-        link: {
-          androidExecutionParams: [{key: 'from', value: `${'userNo'}`}],
-          iosExecutionParams: [{key: 'from', value: `${'userNo'}`}],
-        },
-        buttons: [
-          {
-            title: '앱에서 보기',
-            link: {
-              androidExecutionParams: [{key: 'from', value: `${'userNo'}`}],
-              iosExecutionParams: [{key: 'from', value: `${'userNo'}`}],
-            },
-          },
-        ],
-      });
-      console.log(response);
+      await mutationLoadUserData();
     } catch (e) {
-      console.error(e);
       console.error(e.message);
     }
   };
@@ -104,6 +91,46 @@ const ShareContainer = ({navigation, route}: ShareProps) => {
       userNo,
     },
     fetchPolicy: 'network-only',
+  });
+
+  const [mutationLoadUserData] = useLazyQuery(LOAD_USER, {
+    variables: {
+      userNo,
+    },
+    onCompleted: async d => {
+      await setText1(d?.loadUser?.nickname);
+      mutationLoadFoodData({
+        onCompleted: async d => {
+          await setText2(d?.loadFoodData?.name);
+
+          await KakaoShareLink.sendText({
+            text: `${text1}님이 ${text2}을(를) 공유하셨습니다.`,
+            link: {
+              androidExecutionParams: [{key: 'from', value: `${'userNo'}`}],
+              iosExecutionParams: [{key: 'from', value: `${'userNo'}`}],
+            },
+            buttons: [
+              {
+                title: '앱에서 보기',
+                link: {
+                  androidExecutionParams: [{key: 'from', value: `${'userNo'}`}],
+                  iosExecutionParams: [{key: 'from', value: `${'userNo'}`}],
+                },
+              },
+            ],
+          });
+        },
+      });
+    },
+  });
+
+  const [mutationLoadFoodData] = useLazyQuery(LOAD_FOOD_DATA, {
+    variables: {
+      foodNo: route?.params?.foodNo,
+    },
+    onCompleted: async d => {
+      await setText2(d?.loadFoodData?.name);
+    },
   });
 
   const [loadFoodData] = useLazyQuery(LOAD_FOOD_DATA, {
