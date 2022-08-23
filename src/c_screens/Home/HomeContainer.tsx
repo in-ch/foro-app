@@ -1,7 +1,7 @@
 import {useMutation, useReactiveVar} from '@apollo/client';
 import React, {useEffect} from 'react';
 
-import {IntroSkip, logUserOut, tokenUserNo} from '~/apollo/client';
+import {IntroSkip, logUserOut, tokenUserNo} from 'apollo/client';
 import {UPDATE_USER} from '@services/mutations/user';
 import Pushinit from '@utills/notification';
 import {HomeProps} from './Home';

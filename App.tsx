@@ -3,10 +3,10 @@ import {ApolloProvider} from '@apollo/client';
 import {NavigationContainer} from '@react-navigation/native';
 import {Dimensions} from 'react-native';
 import RNRestart from 'react-native-restart';
+import SplashScreen from 'react-native-splash-screen';
 
 import client from './src/apollo/client';
 import RootNavigation from './src/navigation/RootNavigation';
-import SplashScreen from 'react-native-splash-screen';
 
 const linking = {
   prefixes: ['kakao8e1ff68c09e6b4bb069c110e76d314df://'],

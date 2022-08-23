@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 import {
   useLazyQuery,
   useMutation,
@@ -8,7 +9,7 @@ import React, {useCallback, useRef, useState} from 'react';
 import KakaoShareLink from 'react-native-kakao-share-link';
 import {tokenUserNo} from 'apollo/client';
 
-import {TOTAL_SHARE_FOOD} from '@services/mutations/alarm';
+import {SHARE_FOOD, TOTAL_SHARE_FOOD} from '@services/mutations/alarm';
 import {SEND_PUSH} from '@services/mutations/push';
 import {LOAD_FOOD_DATA} from '@services/queries/food';
 import {LOAD_FRIEND_FOOD} from '@services/queries/friend';
@@ -21,8 +22,9 @@ const ShareContainer = ({navigation, route}: ShareProps) => {
   const [userIds, setUserIds] = useState<any>([]);
   const [selectModal, setSelectModal] = useState<boolean>(false);
   const userNo = useReactiveVar(tokenUserNo);
-  const [text1, setText1] = useState('');
-  const [text2, setText2] = useState('');
+  const [text1, setText1] = useState(''); // 메시지1
+  const [text2, setText2] = useState(''); // 메시지2
+  const [alarmNo, setAlarmNo] = useState(0); // 카카오톡 공유 알림 no
 
   const cancelSelectModal = () => {
     setSelectModal(false);
@@ -99,15 +101,16 @@ const ShareContainer = ({navigation, route}: ShareProps) => {
     },
     onCompleted: async d => {
       await setText1(d?.loadUser?.nickname);
-      mutationLoadFoodData({
+      await mutationShareFood();
+      await mutationLoadFoodData({
         onCompleted: async d => {
           await setText2(d?.loadFoodData?.name);
 
           await KakaoShareLink.sendText({
             text: `${text1}님이 ${text2}을(를) 공유하셨습니다.`,
             link: {
-              androidExecutionParams: [{key: 'from', value: `${'userNo'}`}],
-              iosExecutionParams: [{key: 'from', value: `${'userNo'}`}],
+              androidExecutionParams: [{key: 'no', value: `${alarmNo}`}],
+              iosExecutionParams: [{key: 'no', value: `${alarmNo}`}],
             },
             buttons: [
               {
@@ -145,6 +148,19 @@ const ShareContainer = ({navigation, route}: ShareProps) => {
           },
         });
       });
+    },
+  });
+
+  const [mutationShareFood] = useMutation(SHARE_FOOD, {
+    variables: {
+      foodNo: route?.params?.foodNo,
+      userNo: userNo,
+    },
+    onCompleted: async d => {
+      await setAlarmNo(d?.shareFood?.no);
+    },
+    onError: e => {
+      console.log(JSON.stringify(e));
     },
   });
 

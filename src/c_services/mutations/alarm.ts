@@ -49,3 +49,12 @@ export const REQUEST_FOOD = gql`
     }
   }
 `;
+
+export const SHARE_FOOD = gql`
+  mutation shareFood($foodNo: Float!, $userNo: Float!) {
+    shareFood(foodNo: $foodNo, userNo: $userNo) {
+      ok
+      no
+    }
+  }
+`;
