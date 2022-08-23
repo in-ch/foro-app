@@ -21,7 +21,7 @@ const AlarmContainer = ({navigation}: AlarmProps) => {
     variables: {
       userNo,
     },
-    fetchPolicy: 'network-only',
+    fetchPolicy: 'no-cache',
   });
   return (
     <AlarmPresenter

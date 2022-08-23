@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   CardStyleInterpolators,
   createStackNavigator,
@@ -35,6 +35,7 @@ import DetailFriend from '@screens/DetailFriend/DetailFriend';
 
 import {FoodData} from 'types/Food';
 import {isLoggedInVar} from 'apollo/client';
+import {Linking} from 'react-native';
 
 export type RootTabParamList = {
   Home: {};
@@ -102,6 +103,32 @@ const RootNavigation = () => {
   const Stack = createStackNavigator();
 
   const isLoggedIn = useReactiveVar(isLoggedInVar);
+
+  const handleDeepLink = () => {
+    Linking.getInitialURL().then(res => {
+      //앱이 실행되지 않은 상태에서 요청이 왔을 때
+      if (res == null || res === undefined || res === '') {
+        return;
+      } else {
+        // var params = urlParamtersToJson(res);
+        console.log('parmmmmmmmmmmmmmmmm');
+        console.log(res);
+      }
+    });
+    Linking.addEventListener('url', e => {
+      // 앱이 실행되어있는 상태에서 요청이 왔을 때 처리하는 이벤트 등록
+      if (e.url === null || e.url === undefined || e.url === '') {
+        return;
+      } else {
+        console.log('parmmmmmmmmmmmmmmmm');
+        console.log(e);
+      }
+    });
+  };
+
+  useEffect(() => {
+    handleDeepLink();
+  }, []);
 
   return (
     <Stack.Navigator

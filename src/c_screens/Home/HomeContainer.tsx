@@ -1,5 +1,6 @@
 import {useMutation, useReactiveVar} from '@apollo/client';
 import React, {useEffect} from 'react';
+import {useRoute} from '@react-navigation/native';
 
 import {IntroSkip, logUserOut, tokenUserNo} from 'apollo/client';
 import {UPDATE_USER} from '@services/mutations/user';
@@ -8,6 +9,7 @@ import {HomeProps} from './Home';
 import HomePresenter from './HomePresenter';
 
 const HomeContainer = ({navigation}: HomeProps) => {
+  const route = useRoute();
   const GoToAlarm = () => {
     navigation.navigate('Alarm', {});
   };
@@ -17,6 +19,7 @@ const HomeContainer = ({navigation}: HomeProps) => {
   const token = Pushinit(GoToAlarm); // 푸쉬 관련 코드
   const inTroskip = useReactiveVar(IntroSkip);
   useEffect(() => {
+    console.log(route?.params);
     if (userNo !== null || userNo !== undefined) {
       mutationUpdateUser({
         variables: {
@@ -27,7 +30,7 @@ const HomeContainer = ({navigation}: HomeProps) => {
         },
       });
     }
-  }, [token, mutationUpdateUser, userNo]);
+  }, [token, mutationUpdateUser, userNo, route?.params]);
 
   const GoToSearch = () => {
     navigation.navigate('Search', {});
