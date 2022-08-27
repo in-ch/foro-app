@@ -13,6 +13,7 @@ import {
 import {cssUtil} from '@utills/cssUtil';
 
 import Images from 'assets';
+import IntroApp from '~/c_components/Intro/IntroApp';
 
 const Container = styled.View`
   display: flex;
@@ -145,6 +146,7 @@ interface Props {
   handleEvent: () => void;
   handleCancel: () => void;
   handleGuestLogin: () => void;
+  inTroskip: null | boolean | string;
 }
 interface TextProps {
   color: string;
@@ -165,6 +167,7 @@ const LoginPresenter = ({
   handleEvent,
   handleCancel,
   handleGuestLogin,
+  inTroskip,
 }: Props) => {
   return (
     <>
@@ -251,6 +254,8 @@ const LoginPresenter = ({
           </AlertWrapper>
         </ModalBackground>
       </MModal>
+
+      {inTroskip === false && <IntroApp />}
     </>
   );
 };

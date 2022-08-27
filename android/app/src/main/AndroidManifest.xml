@@ -19,6 +19,13 @@
           <intent-filter>
               <action android:name="android.intent.action.BOOT_COMPLETED" />
           </intent-filter>
+          <intent-filter>
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.DEFAULT" />
+            <category android:name="android.intent.category.BROWSABLE" />
+            <data android:host="kakaolink"
+                android:scheme="kakao8e1ff68c09e6b4bb069c110e76d314df" />
+          </intent-filter>
       </receiver>
       <service
           android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationListenerService"

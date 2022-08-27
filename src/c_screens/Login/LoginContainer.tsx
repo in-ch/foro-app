@@ -25,7 +25,7 @@ import {
 } from '@services/mutations/user';
 import LoginPresenter from './LoginPresenter';
 import {RootTabParamList} from '../../navigation/RootNavigation';
-import {logUserIn, tokenUserNo} from '../../apollo/client';
+import {IntroSkip, logUserIn, tokenUserNo} from '../../apollo/client';
 interface Props {
   navigation: NavigationProp<RootTabParamList, 'Home'>;
 }
@@ -217,6 +217,12 @@ const LoginContainer = ({navigation}: Props) => {
     setSelectModal(false);
   };
 
+  /**
+   * 인트로 부분
+   */
+
+  const inTroskip = useReactiveVar(IntroSkip);
+
   return (
     <>
       <LoginPresenter
@@ -228,6 +234,7 @@ const LoginContainer = ({navigation}: Props) => {
         handleEvent={handleEvent}
         handleCancel={handleCancel}
         handleGuestLogin={handleGuestLogin}
+        inTroskip={inTroskip}
       />
     </>
   );
