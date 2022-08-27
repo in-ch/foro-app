@@ -8,7 +8,7 @@ import {nomalizes, statusBarHeight} from '@utills/constants';
 import {SizedBox} from '@components/SizedBox';
 import MenuBar from '@components/MenuBar/MenuBar';
 import Storys from '@components/Storys/Storys';
-import IntroApp from '@components/Intro/IntroApp';
+import HowAboutFoodAdd from '@components/Intro/HowAboutFoodAdd';
 import {cssUtil} from '@utills/cssUtil';
 import images from '@assets/images';
 
@@ -48,10 +48,6 @@ interface Props {
   inTroskip: null | boolean | string;
 }
 
-interface DisplayProps {
-  display: boolean;
-}
-
 const HomePresenter = ({
   GoToAlarm,
   GoToSearch,
@@ -73,7 +69,7 @@ const HomePresenter = ({
         backgroundColor: '#fff',
         flex: 1,
       }}>
-      {/* {inTroskip === false && <IntroApp GoToFoodAdd={GoToFoodAdd} />} */}
+      {inTroskip === false && <HowAboutFoodAdd GoToFoodAdd={GoToFoodAdd} />}
       <SizedBox.Custom
         margin={statusBarHeight}
         style={{
