@@ -8,8 +8,8 @@ import NoResult from '@components/NoResult';
 import {SizedBox} from '@components/SizedBox';
 import {cHeight, nomalizes} from '@utills/constants';
 import {cssUtil} from '@utills/cssUtil';
-import {CategoryData} from '~/types/Category';
-import Dots from '~/c_components/Icons/Dots';
+import {CategoryData} from 'types/Category';
+import Dots from '@components/Icons/Dots';
 
 const Container = styled.View`
   flex: 1;
