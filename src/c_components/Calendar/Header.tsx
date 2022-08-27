@@ -1,5 +1,4 @@
 import React, {useCallback, useState} from 'react';
-import {Image, Modal} from 'react-native';
 import styled from 'styled-components/native';
 import moment from 'moment';
 import MonthPicker from 'react-native-month-year-picker';
@@ -31,7 +30,15 @@ const TText = styled.Text`
   color: rgb(50, 50, 50);
   font-family: 'Pretendard';
 `;
-
+const TTText = styled.Text`
+  font-size: ${nomalizes[12]}px;
+  font-weight: bold;
+  padding-right: ${nomalizes[5]}px;
+  color: rgb(50, 50, 50);
+  font-family: 'Pretendard';
+`;
+const IImage = styled.Image``;
+const MModal = styled.Modal``;
 interface Props {
   date: string;
   GoToAgenda: () => void;
@@ -67,7 +74,7 @@ const Header = ({date, GoToAgenda, setCurrent}: Props) => {
             <TText>
               {year}년 {month + 1}월
             </TText>
-            <Image
+            <IImage
               style={{
                 width: nomalizes[5],
                 height: nomalizes[5],
@@ -76,7 +83,9 @@ const Header = ({date, GoToAgenda, setCurrent}: Props) => {
             />
           </Row>
           <Row onPress={GoToAgenda}>
-            <Image
+            <TTText>식품리스트</TTText>
+
+            <IImage
               style={{
                 width: nomalizes[17],
                 height: nomalizes[17],
@@ -88,7 +97,7 @@ const Header = ({date, GoToAgenda, setCurrent}: Props) => {
       </Container>
       {!isAndroid
         ? show && (
-            <Modal animationType="slide" visible={show} transparent={true}>
+            <MModal animationType="slide" visible={show} transparent={true}>
               <MonthPicker
                 onChange={onValueChange}
                 value={date}
@@ -96,7 +105,7 @@ const Header = ({date, GoToAgenda, setCurrent}: Props) => {
                 maximumDate={new Date(2024, 5)}
                 locale="ko"
               />
-            </Modal>
+            </MModal>
           )
         : show && (
             <MonthPicker
