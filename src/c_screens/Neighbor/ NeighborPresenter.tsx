@@ -65,7 +65,7 @@ const ImageContainer = styled.View`
   overflow: hidden;
 `;
 const TTouchableOpacity = styled.TouchableOpacity`
-  background-color: #e4e4e4;
+  background-color: #f0f0f0;
   width: 90%;
   border-radius: ${nomalizes[10]}px;
   display: flex;
