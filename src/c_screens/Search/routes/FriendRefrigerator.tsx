@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components/native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {useQuery, useReactiveVar} from '@apollo/client';
@@ -25,13 +25,14 @@ const Heading = styled.Text`
 const SearchResultBoxTextWrapper = styled.TouchableOpacity`
   display: flex;
   width: ${cWidth * 0.85}px;
-  height: ${nomalizes[16]}px;
+  height: ${nomalizes[20]}px;
   margin-left: ${nomalizes[5]}px;
-  margin-bottom: ${nomalizes[10]}px;
+  margin-bottom: ${nomalizes[5]}px;
   font-family: 'Pretendard';
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  background-color: #fff;
 `;
 const SearchResultBoxText = styled.Text`
   font-size: ${nomalizes[11]}px;
@@ -52,14 +53,20 @@ const NoneContainer = styled.View`
 const NoneText = styled.Text`
   margin-top: ${nomalizes[10]}px;
   color: #a8a8a8;
-  font-size: ${nomalizes[12]}px;
+  font-size: ${nomalizes[10]}px;
+`;
+const FoodNoneContainer = styled.View`
+  position: absolute;
+  top: ${nomalizes[20]}px;
+  left: ${nomalizes[10]}px;
+  z-index: -1;
 `;
 
 interface Props {
   goToFriendDetail: (value: number) => void;
 }
 const FriendRefrigerator = ({goToFriendDetail}: Props) => {
-  // const [text, setText] = useState<string>('');
+  const [length, setLength] = useState(0);
   const userNo = useReactiveVar(tokenUserNo);
   const {data: friendsData} = useQuery(LOAD_FRIEND_FOOD, {
     variables: {
@@ -78,18 +85,27 @@ const FriendRefrigerator = ({goToFriendDetail}: Props) => {
             return (
               <Wrapper>
                 <Heading>{_friendData?.nickname}</Heading>
-
                 {_friendData?.food?.map((_food: any) => {
-                  return (
-                    <SearchResultBoxTextWrapper
-                      onPress={() => goToFriendDetail(_food?.no)}>
-                      <SearchResultBoxText>{_food?.name}</SearchResultBoxText>
-                      <SearchResultBoxRemainText>
-                        소비날: {_food?.dday}
-                      </SearchResultBoxRemainText>
-                    </SearchResultBoxTextWrapper>
-                  );
+                  let length = 0;
+                  if (!_food.onlyMe && !_food.consumed && !_food.onlyMe) {
+                    return (
+                      <>
+                        <SearchResultBoxTextWrapper
+                          onPress={() => goToFriendDetail(_food?.no)}>
+                          <SearchResultBoxText>
+                            {_food?.name}
+                          </SearchResultBoxText>
+                          <SearchResultBoxRemainText>
+                            소비날: {_food?.dday}
+                          </SearchResultBoxRemainText>
+                        </SearchResultBoxTextWrapper>
+                      </>
+                    );
+                  }
                 })}
+                <FoodNoneContainer>
+                  <NoneText>등록된 상품이 없습니다.</NoneText>
+                </FoodNoneContainer>
               </Wrapper>
             );
           })}

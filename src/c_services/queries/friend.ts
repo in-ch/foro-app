@@ -10,6 +10,9 @@ export const LOAD_FRIEND_FOOD = gql`
         no
         name
         dday
+        isDeleted
+        consumed
+        onlyMe
       }
     }
   }
