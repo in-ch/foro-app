@@ -1,9 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect} from 'react';
 import {
   CardStyleInterpolators,
   createStackNavigator,
 } from '@react-navigation/stack';
 import {useReactiveVar} from '@apollo/client';
+import {Alert, Linking} from 'react-native';
 
 import Home from '@screens/Home/Home';
 import Login from '@screens/Login/Login';
@@ -35,7 +37,6 @@ import DetailFriend from '@screens/DetailFriend/DetailFriend';
 
 import {FoodData} from 'types/Food';
 import {isLoggedInVar} from 'apollo/client';
-import {Linking} from 'react-native';
 
 export type RootTabParamList = {
   Home: {};
@@ -107,25 +108,31 @@ const RootNavigation = () => {
   const handleDeepLink = () => {
     Linking.getInitialURL().then(res => {
       //앱이 실행되지 않은 상태에서 요청이 왔을 때
-      if (res == null || res === undefined || res === '') {
-        return;
-      } else {
-        // var params = urlParamtersToJson(res);
-        console.log('parmmmmmmmmmmmmmmmm');
-        console.log(res);
-      }
+      // if (res == null || res === undefined || res === '') {
+      //   Alert.alert('1');
+      //   return;
+      // } else {
+      //   Alert.alert(res);
+      // }
+      handleEvent(res);
     });
     Linking.addEventListener('url', e => {
       // 앱이 실행되어있는 상태에서 요청이 왔을 때 처리하는 이벤트 등록
-      if (e.url === null || e.url === undefined || e.url === '') {
-        return;
-      } else {
-        console.log('parmmmmmmmmmmmmmmmm');
-        console.log(e);
-      }
+      // if (e.url === null || e.url === undefined || e.url === '') {
+      //   Alert.alert('3');
+      //   return;
+      // } else {
+      //   Alert.alert('4');
+      // }
+      handleEvent(`${e}`);
     });
   };
-
+  const handleEvent = (value: string | null) => {
+    Alert.alert(`${value}`);
+    if (value === 'kakao8e1ff68c09e6b4bb069c110e76d314df://vvv') {
+      Alert.alert('Some action');
+    }
+  };
   useEffect(() => {
     handleDeepLink();
   }, []);

@@ -19,7 +19,6 @@ const HomeContainer = ({navigation}: HomeProps) => {
   const token = Pushinit(GoToAlarm); // 푸쉬 관련 코드
   const inTroskip = useReactiveVar(IntroSkip);
   useEffect(() => {
-    console.log(route?.params);
     if (userNo !== null || userNo !== undefined) {
       mutationUpdateUser({
         variables: {
