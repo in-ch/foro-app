@@ -5,7 +5,7 @@ import {useIsFocused} from '@react-navigation/native';
 
 import {AgendaProps} from './FriendAgenda';
 import {LOAD_USER} from '@services/queries/user';
-import {LOAD_FOOD} from '@services/queries/food';
+import {LOAD_FOOD_FRIEND_AGENDA} from '@services/queries/food';
 import {REQUEST_FOOD} from '@services/mutations/alarm';
 import {groupBy, sortByGroup} from '@utills/groupBy';
 import {thisWeek} from '@utills/thisWeek';
@@ -30,9 +30,12 @@ const FriendAgendaContainer = ({navigation, route}: AgendaProps) => {
     data: food,
     refetch,
     loading,
-  } = useQuery(LOAD_FOOD, {
+  } = useQuery(LOAD_FOOD_FRIEND_AGENDA, {
     variables: {
       userNo: route?.params?.userId,
+    },
+    onCompleted: d => {
+      console.log(JSON.stringify(d));
     },
     fetchPolicy: 'network-only',
   });
@@ -100,8 +103,6 @@ const FriendAgendaContainer = ({navigation, route}: AgendaProps) => {
     handleRequestFood();
     setSelectModal(false);
     setShowModal(false);
-
-    //vvv
   };
 
   const showToast = useCallback((text: string) => {
@@ -118,10 +119,10 @@ const FriendAgendaContainer = ({navigation, route}: AgendaProps) => {
       showModal={showModal}
       nickname={data?.loadUser?.nickname}
       foodData={sortByGroup(
-        groupBy(food?.loadFood, 'dday'),
+        groupBy(food?.loadFriendFoodAgenda, 'dday'),
         route?.params?.selected,
       )}
-      data={food?.loadFood}
+      data={food?.loadFriendFoodAgenda}
       thisWeek={thisWeek()}
       weekData={week}
       thisDay={String(new Date().getDay())}

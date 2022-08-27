@@ -22,6 +22,28 @@ export const LOAD_FOOD = gql`
   }
 `;
 
+export const LOAD_FOOD_FRIEND_AGENDA = gql`
+  query loadFriendFoodAgenda($userNo: Float!) {
+    loadFriendFoodAgenda(userNo: $userNo) {
+      no
+      name
+      category {
+        color
+        name
+      }
+      dday
+      keyword
+      onlyMe
+      consumed
+      createdAt
+      updatedAt
+      user {
+        no
+      }
+    }
+  }
+`;
+
 export const LOAD_FOOD_DATA = gql`
   query loadFoodData($foodNo: Float!) {
     loadFoodData(foodNo: $foodNo) {

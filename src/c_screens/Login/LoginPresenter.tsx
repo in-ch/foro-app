@@ -101,14 +101,14 @@ const SelectButtonWrapper = styled.View`
 const CancelButton = styled.TouchableOpacity`
   width: 48%;
   height: ${nomalizes[30]}px;
-  background-color: #ff6258;
+  background-color: #dbdbdb;
   border-radius: ${nomalizes[8]}px;
   ${cssUtil.doubleCenter};
 `;
 const OkButton = styled.TouchableOpacity`
   width: 48%;
   height: ${nomalizes[30]}px;
-  background-color: #dbdbdb;
+  background-color: #ff6258;
   border-radius: ${nomalizes[8]}px;
   ${cssUtil.doubleCenter};
 `;

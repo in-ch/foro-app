@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import styled from 'styled-components/native';
 import {ScrollView} from 'react-native-gesture-handler';
@@ -163,7 +164,14 @@ const ModalButtonText = styled.Text`
 `;
 const IImage = styled.Image``;
 const MModal = styled.Modal``;
-
+const Button = styled.View`
+  width: ${nomalizes[35]}px;
+  height: ${nomalizes[35]}px;
+  border-radius: ${nomalizes[10]}px;
+  background-color: #fff;
+  display: flex;
+  ${cssUtil.doubleCenter};
+`;
 interface Props {
   GoBack: () => void;
   handleClicked: (value: number) => void;
@@ -172,7 +180,7 @@ interface Props {
   selectModal: boolean;
   cancelSelectModal: () => void;
   handleEvent: () => void;
-  handleSubmit: () => void;
+  handleSubmit: (quick: boolean) => void;
   toastRef: any;
   friendsData: any;
 }
@@ -200,23 +208,49 @@ const SharePresenter = ({
       <ShareButtonContainer>
         <ButtonContainer>
           <ButtonWrapper onPress={kakaoshare}>
-            <IImage
+            <Button
               style={{
-                width: nomalizes[35],
-                height: nomalizes[35],
-              }}
-              source={images.kakaoShare}
-            />
+                shadowColor: '#818181',
+                shadowOffset: {
+                  width: 0,
+                  height: 2,
+                },
+                shadowOpacity: 0.3,
+                shadowRadius: 3.84,
+                elevation: 15,
+                backgroundColor: '#f8e136',
+              }}>
+              <IImage
+                style={{
+                  width: nomalizes[26],
+                  height: nomalizes[26],
+                }}
+                source={images.kakaoShare}
+              />
+            </Button>
             <ButtonText>카카오톡</ButtonText>
           </ButtonWrapper>
-          <ButtonWrapper onPress={handleSubmit} disabled={userIds?.length < 1}>
-            <IImage
+          <ButtonWrapper onPress={() => handleSubmit(true)}>
+            <Button
               style={{
-                width: nomalizes[35],
-                height: nomalizes[35],
-              }}
-              source={images.pinkShare}
-            />
+                shadowColor: '#818181',
+                shadowOffset: {
+                  width: 0,
+                  height: 2,
+                },
+                shadowOpacity: 0.3,
+                shadowRadius: 3.84,
+                elevation: 15,
+              }}>
+              <IImage
+                style={{
+                  width: nomalizes[16],
+                  height: nomalizes[16],
+                }}
+                source={images.pinkShare}
+              />
+            </Button>
+
             <ButtonText>전체나눔</ButtonText>
           </ButtonWrapper>
         </ButtonContainer>
@@ -270,7 +304,9 @@ const SharePresenter = ({
             })}
         </ScrollView>
       </NeigorContainer>
-      <Submit onPress={handleSubmit} disabled={userIds?.length < 1}>
+      <Submit
+        onPress={() => handleSubmit(false)}
+        disabled={userIds?.length < 1}>
         <SubmitText>완료</SubmitText>
       </Submit>
 

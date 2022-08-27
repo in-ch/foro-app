@@ -45,8 +45,6 @@ const AgendaNewContainer = ({navigation, route}: AgendaProps) => {
             ? d?.loadFoodData?.onlyMe
             : false,
         );
-        console.log('비공개 여부' + valueShare);
-        console.log('소비 여부' + valueConsumed);
       },
     },
   );
