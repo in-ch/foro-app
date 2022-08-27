@@ -212,7 +212,8 @@ const IntroApp = () => {
               height: '100%',
             }}
           />
-          <Heading>이웃을 넘나들며 서로의 식품창고를 구경해 보세요!</Heading>
+          <Heading>이웃과 식품 공유</Heading>
+          <SubText>이웃을 넘나들며 서로의 식품창고를 구경해 보세요!</SubText>
           <SubText>마음에 드는 먹거리가 보인다면?</SubText>
           <SubText>공유를 부탁해 보세요</SubText>
         </ImageView>
@@ -252,7 +253,7 @@ const IntroApp = () => {
               </SkipButton>
             ) : (
               <SkipContainer onPress={sktip}>
-                <SkipText>Skip</SkipText>
+                <SkipText>건너뛰기</SkipText>
               </SkipContainer>
             )}
           </SkipButtonContainer>
