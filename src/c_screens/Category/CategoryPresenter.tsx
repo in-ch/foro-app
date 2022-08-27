@@ -1,16 +1,15 @@
 import React from 'react';
-import {Image, Modal} from 'react-native';
 import Toast from 'react-native-easy-toast';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
 
-import images from '@assets/images';
 import HeaderPlus from '@components/Header/HeaderPlus';
 import NoResult from '@components/NoResult';
 import {SizedBox} from '@components/SizedBox';
 import {cHeight, nomalizes} from '@utills/constants';
 import {cssUtil} from '@utills/cssUtil';
 import {CategoryData} from '~/types/Category';
+import Dots from '~/c_components/Icons/Dots';
 
 const Container = styled.View`
   flex: 1;
@@ -96,6 +95,7 @@ const Skeleton = styled.View`
   height: ${nomalizes[15]}px;
   background-color: #dddddd;
 `;
+const MModal = styled.Modal``;
 interface Props {
   goBack: () => void;
   goToCategoryAdd: () => void;
@@ -233,13 +233,7 @@ const CategoryPresenter = ({
                 <TText>{category?.name}</TText>
               </Row>
               <RowRight onPress={() => onShowModal(category?.no)}>
-                <Image
-                  style={{
-                    width: nomalizes[16],
-                    height: nomalizes[16],
-                  }}
-                  source={images.setting}
-                />
+                <Dots />
               </RowRight>
             </Box>
           );
@@ -251,7 +245,7 @@ const CategoryPresenter = ({
           </NoResultContainer>
         )}
 
-        <Modal animationType="fade" visible={modalShow} transparent={true}>
+        <MModal animationType="fade" visible={modalShow} transparent={true}>
           <Wrapper>
             <ModalExtra onPress={() => onShowModal(0)} />
             <ModalContentBox>
@@ -264,7 +258,7 @@ const CategoryPresenter = ({
               </TouchableWithoutFeedback>
             </ModalContentBox>
           </Wrapper>
-        </Modal>
+        </MModal>
       </>
       <Toast
         ref={toastRef}
