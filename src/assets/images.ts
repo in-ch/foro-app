@@ -3,6 +3,7 @@ const images = {
   google: require('./imgs/google-logo.png'),
   kakao: require('./imgs/kakao-logo.png'),
   logo: require('./imgs/logo.png'),
+  textLogo: require('./imgs/text-logo.png'),
   back: require('./icons/back-icon.png'),
   search: require('./icons/search-icon.png'),
   noSearch: require('./icons/no-search-icon.png'),
