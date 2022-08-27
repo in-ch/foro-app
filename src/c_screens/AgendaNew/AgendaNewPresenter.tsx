@@ -97,9 +97,10 @@ const MainContent = styled.View`
 `;
 const Heading = styled.Text<LineThroughProps>`
   font-size: ${nomalizes[14]}px;
-  color: rgb(50, 50, 50);
-  font-weight: bold;
+  color: ${props => (props.line ? 'rgb(150, 150, 150)' : 'rgb(50, 50, 50)')};
+  font-weight: ${props => (props.line ? 'normal' : 'bold')};
   text-decoration: ${props => (props.line ? 'line-through' : 'none')};
+  text-decoration-color: 'rgb(150,150,150)';
 `;
 const RenderContainer = styled.View`
   height: ${nomalizes[40]}px;
@@ -123,21 +124,22 @@ const Row = styled.View`
 const FruitText = styled.Text<LineThroughProps>`
   margin-left: ${nomalizes[5]}px;
   font-size: ${nomalizes[12]}px;
-  color: #000;
+  color: ${props => (props.line ? 'rgb(150, 150, 150)' : 'rgb(50, 50, 50)')};
   font-family: 'Pretendard';
   text-decoration: ${props => (props.line ? 'line-through' : 'none')};
+  text-decoration-color: 'rgb(150,150,150)';
 `;
 const ConsumeDone = styled.View`
-  width: ${nomalizes[26]}px;
-  height: ${nomalizes[10]}px;
-  border-radius: ${nomalizes[2]}px;
+  width: ${nomalizes[35]}px;
+  height: ${nomalizes[14]}px;
+  border-radius: ${nomalizes[5]}px;
   margin-right: ${nomalizes[5]}px;
   background-color: #ffd9d7;
   display: flex;
   ${cssUtil.doubleCenter};
 `;
 const ConsumeDoneText = styled.Text`
-  font-size: ${nomalizes[5]}px;
+  font-size: ${nomalizes[7]}px;
   color: #ff6c63;
   font-family: 'Pretendard';
 `;
