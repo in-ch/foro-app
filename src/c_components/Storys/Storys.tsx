@@ -48,6 +48,7 @@ const Storys = ({GoToFriendAdd, GoToFriendAgenda}: Props) => {
     },
     onCompleted: d => {
       setFriends(d?.loadFriendFood);
+      console.log('==========');
       console.log(friendsData);
     },
     fetchPolicy: 'network-only',

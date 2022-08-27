@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import {ScrollView} from 'react-native-gesture-handler';
-import {Modal} from 'react-native';
 
 import Header from '@components/Header/Header';
 import SearchInput from '@components/SearchInput';
@@ -109,6 +108,7 @@ const OkButton = styled.TouchableOpacity`
   border-radius: ${nomalizes[8]}px;
   ${cssUtil.doubleCenter};
 `;
+const MModal = styled.Modal``;
 interface Props {
   goBack: () => void;
   text: string;
@@ -182,7 +182,7 @@ const FriendAddPresenter = ({
         </ScrollView>
       </Container>
 
-      <Modal animationType="fade" visible={selectModal} transparent={true}>
+      <MModal animationType="fade" visible={selectModal} transparent={true}>
         <ModalBackground>
           <AlertWrapper selectModal={selectModal}>
             <AlertText>{selectedUserName}님에게</AlertText>
@@ -197,7 +197,7 @@ const FriendAddPresenter = ({
             </SelectButtonWrapper>
           </AlertWrapper>
         </ModalBackground>
-      </Modal>
+      </MModal>
       <Toast
         ref={toastRef}
         positionValue={cHeight * 0.1}
