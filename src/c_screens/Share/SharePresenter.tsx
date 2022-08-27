@@ -180,7 +180,7 @@ interface Props {
   selectModal: boolean;
   cancelSelectModal: () => void;
   handleEvent: () => void;
-  handleSubmit: () => void;
+  handleSubmit: (quick: boolean) => void;
   toastRef: any;
   friendsData: any;
 }
@@ -230,7 +230,7 @@ const SharePresenter = ({
             </Button>
             <ButtonText>카카오톡</ButtonText>
           </ButtonWrapper>
-          <ButtonWrapper onPress={handleSubmit} disabled={userIds?.length < 1}>
+          <ButtonWrapper onPress={() => handleSubmit(true)}>
             <Button
               style={{
                 shadowColor: '#818181',
@@ -304,7 +304,9 @@ const SharePresenter = ({
             })}
         </ScrollView>
       </NeigorContainer>
-      <Submit onPress={handleSubmit} disabled={userIds?.length < 1}>
+      <Submit
+        onPress={() => handleSubmit(false)}
+        disabled={userIds?.length < 1}>
         <SubmitText>완료</SubmitText>
       </Submit>
 

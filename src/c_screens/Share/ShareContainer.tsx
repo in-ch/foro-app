@@ -20,6 +20,8 @@ import SharePresenter from './SharePresenter';
 
 const ShareContainer = ({navigation, route}: ShareProps) => {
   const [userIds, setUserIds] = useState<any>([]);
+  const [totalShareUsers, setTotalShareUsers] = useState<any>([]);
+  const [quickShare, setQuickShare] = useState<boolean>(false); // 퀵 쉐어인지
   const [selectModal, setSelectModal] = useState<boolean>(false);
   const userNo = useReactiveVar(tokenUserNo);
   const [text1, setText1] = useState(''); // 메시지1
@@ -32,7 +34,7 @@ const ShareContainer = ({navigation, route}: ShareProps) => {
   const [mutationTotalShare] = useMutation(TOTAL_SHARE_FOOD, {
     variables: {
       foodNo: route?.params?.foodNo,
-      users: String(userIds),
+      users: quickShare ? totalShareUsers : String(userIds),
       userNo,
     },
   });
@@ -58,7 +60,12 @@ const ShareContainer = ({navigation, route}: ShareProps) => {
       navigation.goBack();
     }, 1000);
   };
-  const handleSubmit = () => {
+  const handleSubmit = (quick: boolean) => {
+    if (quick) {
+      setQuickShare(true);
+    } else {
+      setQuickShare(false);
+    }
     setSelectModal(true);
   };
 
@@ -91,6 +98,13 @@ const ShareContainer = ({navigation, route}: ShareProps) => {
   const {data: friendsData} = useQuery(LOAD_FRIEND_FOOD, {
     variables: {
       userNo,
+    },
+    onCompleted: async d => {
+      let map: number[] = [];
+      d?.loadFriendFood?.map((user: {no: number}) => {
+        map.push(user.no);
+      });
+      await setTotalShareUsers(map);
     },
     fetchPolicy: 'network-only',
   });
