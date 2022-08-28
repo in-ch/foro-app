@@ -13,7 +13,10 @@ const linking = {
   config: {
     screens: {
       Alarm: {
-        path: 'alarm',
+        path: 'alarm/:id',
+        parse: {
+          id: (id: any) => `${id}`,
+        },
       },
     },
   },

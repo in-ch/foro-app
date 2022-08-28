@@ -1,18 +1,22 @@
 import {useMutation, useReactiveVar} from '@apollo/client';
 import React, {useEffect} from 'react';
-import {useRoute} from '@react-navigation/native';
+import {RouteProp} from '@react-navigation/native';
 
 import {IntroSkip, logUserOut, tokenUserNo} from 'apollo/client';
 import {UPDATE_USER} from '@services/mutations/user';
 import Pushinit from '@utills/notification';
 import {HomeProps} from './Home';
 import HomePresenter from './HomePresenter';
+import {RootTabParamList} from 'navigation/RootNavigation';
+
+type HomeScreenRoute = RouteProp<RootTabParamList, 'Home'>;
 
 const HomeContainer = ({navigation}: HomeProps) => {
-  const route = useRoute();
   const GoToAlarm = () => {
     navigation.navigate('Alarm', {});
   };
+
+  // const {foodNo} = route.params;
 
   const userNo = useReactiveVar(tokenUserNo);
   const [mutationUpdateUser] = useMutation(UPDATE_USER);
@@ -29,7 +33,7 @@ const HomeContainer = ({navigation}: HomeProps) => {
         },
       });
     }
-  }, [token, mutationUpdateUser, userNo, route?.params]);
+  }, [token, mutationUpdateUser, userNo]);
 
   const GoToSearch = () => {
     navigation.navigate('Search', {});
@@ -67,7 +71,6 @@ const HomeContainer = ({navigation}: HomeProps) => {
       routes: [{name: 'Login', params: {}}],
     });
   };
-
   return (
     <>
       <HomePresenter

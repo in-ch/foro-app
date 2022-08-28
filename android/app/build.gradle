@@ -212,6 +212,7 @@ dependencies {
         force = true
     }
     implementation 'com.google.firebase:firebase-messaging:20.2.3' // 파이어 베이스 push notification
+    implementation 'com.google.code.gson:gson:2.8.5'
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
         exclude group:'com.facebook.fbjni'

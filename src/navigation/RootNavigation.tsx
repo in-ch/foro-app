@@ -39,7 +39,9 @@ import {FoodData} from 'types/Food';
 import {isLoggedInVar} from 'apollo/client';
 
 export type RootTabParamList = {
-  Home: {};
+  Home: {
+    foodNo?: number;
+  };
   Login: {};
   Alarm: {};
   Search: {};

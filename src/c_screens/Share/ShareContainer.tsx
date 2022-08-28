@@ -24,9 +24,12 @@ const ShareContainer = ({navigation, route}: ShareProps) => {
   const [quickShare, setQuickShare] = useState<boolean>(false); // 퀵 쉐어인지
   const [selectModal, setSelectModal] = useState<boolean>(false);
   const userNo = useReactiveVar(tokenUserNo);
-  const [text1, setText1] = useState(''); // 메시지1
-  const [text2, setText2] = useState(''); // 메시지2
-  const [alarmNo, setAlarmNo] = useState(0); // 카카오톡 공유 알림 no
+  // const [text1, setText1] = useState(''); // 메시지1
+  // const [text2, setText2] = useState(''); // 메시지2
+  // const [alarmNo, setAlarmNo] = useState(0); // 카카오톡 공유 알림 no
+  const [, setText1] = useState(''); // 메시지1
+  const [, setText2] = useState(''); // 메시지2
+  const [, setAlarmNo] = useState(0); // 카카오톡 공유 알림 no
 
   const cancelSelectModal = () => {
     setSelectModal(false);
@@ -119,19 +122,21 @@ const ShareContainer = ({navigation, route}: ShareProps) => {
       await mutationLoadFoodData({
         onCompleted: async d => {
           await setText2(d?.loadFoodData?.name);
-
           await KakaoShareLink.sendText({
-            text: `${text1}님이 ${text2}을(를) 공유하셨습니다.`,
+            text: '푸드제로 앱을 공유해줬어요!',
+            // text: `${text1}님이 ${text2}을(를) 공유하셨습니다.`,
             link: {
-              androidExecutionParams: [{key: 'no', value: `${alarmNo}`}],
-              iosExecutionParams: [{key: 'no', value: `${alarmNo}`}],
+              webUrl: 'kakao8e1ff68c09e6b4bb069c110e76d314df://app/alarm/1',
+              mobileWebUrl:
+                'kakao8e1ff68c09e6b4bb069c110e76d314df://app/alarm/1',
             },
             buttons: [
               {
-                title: '앱에서 보기',
+                title: '음식물 제로에 참여하기',
                 link: {
-                  androidExecutionParams: [{key: 'from', value: `${'userNo'}`}],
-                  iosExecutionParams: [{key: 'from', value: `${'userNo'}`}],
+                  webUrl: 'kakao8e1ff68c09e6b4bb069c110e76d314df://app/alarm/1',
+                  mobileWebUrl:
+                    'kakao8e1ff68c09e6b4bb069c110e76d314df://app/alarm/1',
                 },
               },
             ],
