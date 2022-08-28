@@ -1,14 +1,14 @@
 import React from 'react';
-import {ActivityIndicator, Platform, View} from 'react-native';
+import {Platform} from 'react-native';
 import styled from 'styled-components/native';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
+import Toast from 'react-native-easy-toast';
 
 import {SizedBox} from '@components/SizedBox';
 import TextInput from '@components/TextInput';
 import Loading from '@components/Loading';
 import {cHeight, cWidth, nomalizes} from '@utills/constants';
 import {cssUtil} from '@utills/cssUtil';
-import Toast from 'react-native-easy-toast';
 
 const Container = styled.KeyboardAvoidingView`
   display: flex;
@@ -79,6 +79,8 @@ const LoadingContainer = styled.View`
   display: flex;
   ${cssUtil.doubleCenter};
 `;
+const VView = styled.View``;
+const AActivityIndicator = styled.ActivityIndicator``;
 
 interface IsOkProps {
   isOk: boolean;
@@ -124,7 +126,7 @@ const InputProfilePresenter = ({
           <ImageContainer onPress={showImagePicker}>
             {profileLoading && (
               <SkeletonPlaceholder speed={1500}>
-                <View style={{width: nomalizes[66], height: nomalizes[66]}} />
+                <VView style={{width: nomalizes[66], height: nomalizes[66]}} />
               </SkeletonPlaceholder>
             )}
             <IImage source={{uri: profile}} />
@@ -133,7 +135,7 @@ const InputProfilePresenter = ({
           <TextInput
             value={String(nickname)}
             setValue={(value: string) => setNickname(value)}
-            maxLength={10}
+            maxLength={15}
             onlyBottom={true}
           />
         </InputContainer>
@@ -145,7 +147,7 @@ const InputProfilePresenter = ({
       </Container>
       {loading && (
         <LoadingContainer>
-          <ActivityIndicator animating={true} size="small" color="#000" />
+          <AActivityIndicator animating={true} size="small" color="#000" />
         </LoadingContainer>
       )}
       <Toast

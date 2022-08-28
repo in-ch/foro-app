@@ -13,6 +13,7 @@ import {
 import {cssUtil} from '@utills/cssUtil';
 
 import Images from 'assets';
+import IntroApp from '@components/Intro/IntroApp';
 
 const Container = styled.View`
   display: flex;
@@ -100,14 +101,14 @@ const SelectButtonWrapper = styled.View`
 const CancelButton = styled.TouchableOpacity`
   width: 48%;
   height: ${nomalizes[30]}px;
-  background-color: #ff6258;
+  background-color: #dbdbdb;
   border-radius: ${nomalizes[8]}px;
   ${cssUtil.doubleCenter};
 `;
 const OkButton = styled.TouchableOpacity`
   width: 48%;
   height: ${nomalizes[30]}px;
-  background-color: #dbdbdb;
+  background-color: #ff6258;
   border-radius: ${nomalizes[8]}px;
   ${cssUtil.doubleCenter};
 `;
@@ -135,7 +136,9 @@ const ModalBackground = styled.View`
 const IImage = styled.Image``;
 const AActivityIndicator = styled.ActivityIndicator``;
 const MModal = styled.Modal``;
-
+const TTText = styled.Text`
+  color: #fff;
+`;
 interface Props {
   signInWithKakao: () => void;
   signInWithGoogle: () => void;
@@ -145,6 +148,7 @@ interface Props {
   handleEvent: () => void;
   handleCancel: () => void;
   handleGuestLogin: () => void;
+  inTroskip: null | boolean | string;
 }
 interface TextProps {
   color: string;
@@ -165,6 +169,7 @@ const LoginPresenter = ({
   handleEvent,
   handleCancel,
   handleGuestLogin,
+  inTroskip,
 }: Props) => {
   return (
     <>
@@ -180,6 +185,8 @@ const LoginPresenter = ({
                 }}
                 source={Images.logo}
               />
+              <SizedBox.Custom margin={nomalizes[20]} />
+              <TTText>푸드제로, 음식물 쓰레기 제로 공유 서비스</TTText>
             </IntroJon>
             <LoginJon>
               <TouchableWithoutFeedback onPress={handleGuestLogin}>
@@ -251,6 +258,8 @@ const LoginPresenter = ({
           </AlertWrapper>
         </ModalBackground>
       </MModal>
+
+      {inTroskip === false && <IntroApp />}
     </>
   );
 };

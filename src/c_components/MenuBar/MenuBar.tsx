@@ -9,7 +9,6 @@ import Images from 'assets';
 
 import {cHeight, cWidth, nomalizes} from '@utills/constants';
 import {cssUtil} from '@utills/cssUtil';
-import FFText from '../FFText';
 import {tokenUserNo} from 'apollo/client';
 import {LOAD_USER} from '@services/queries/user';
 import {LOAD_ALARM_NOT} from '@services/queries/alarm';
@@ -24,7 +23,7 @@ const Container = styled.View`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  background-color: #f4f4f4;
+  /* background-color: #f4f4f4; */
 `;
 const HambergerContainer = styled.TouchableOpacity`
   width: ${nomalizes[70]}px;
@@ -192,14 +191,14 @@ const SelectButtonWrapper = styled.View`
 const CancelButton = styled.TouchableOpacity`
   width: 48%;
   height: ${nomalizes[30]}px;
-  background-color: #ff6258;
+  background-color: #dbdbdb;
   border-radius: ${nomalizes[8]}px;
   ${cssUtil.doubleCenter};
 `;
 const OkButton = styled.TouchableOpacity`
   width: 48%;
   height: ${nomalizes[30]}px;
-  background-color: #dbdbdb;
+  background-color: #ff6258;
   border-radius: ${nomalizes[8]}px;
   ${cssUtil.doubleCenter};
 `;
@@ -285,9 +284,11 @@ const MenuBar = ({
         <HambergerContainer onPress={onShow}>
           <Img source={Images.hamber} />
         </HambergerContainer>
-        <FFText fontSize={nomalizes[14]} fontWeight="bold">
-          Fooro
-        </FFText>
+        <Img
+          style={{width: 45, height: 12, marginBottom: 3}}
+          source={Images.textLogo}
+        />
+
         <SearchAlarmContainer>
           <TouchableWithoutFeedback onPress={asdf}>
             <Highlist

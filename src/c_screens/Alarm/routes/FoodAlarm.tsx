@@ -26,7 +26,7 @@ const Wrapper = styled.TouchableOpacity<IsReadProps>`
   width: 100%;
   display: flex;
   flex-direction: row;
-  background-color: ${props => (props.isRead ? '#fff' : '#eeeeee')};
+  background-color: ${props => (props.isRead ? '#fff' : '#ffe6e4')};
   padding-top: ${nomalizes[10]}px;
   padding-left: ${nomalizes[15]}px;
   padding-right: ${nomalizes[15]}px;
@@ -297,7 +297,7 @@ const ShareAlarm = ({myAlarm, loading, GotoFriendAgenda, GoToHome}: Props) => {
       },
       onCompleted: d => {
         if (d?.alterFoodOwner?.ok) {
-          showToast('공유가 안료되었습니다. 감사합니다');
+          showToast('공유가 완료되었습니다. 감사합니다');
         } else {
           showToast('이미 공유된 식품입니다.');
         }

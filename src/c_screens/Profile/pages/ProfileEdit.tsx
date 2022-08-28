@@ -218,11 +218,11 @@ const ProfileEdit = ({navigation, route}: ProfileEditProps) => {
           <TTextInput
             placeholder="닉네임 입력 공간"
             placeholderTextColor="#646464"
-            maxLength={10}
+            maxLength={15}
             value={text}
             onChangeText={(value: string) => setText(value)}
           />
-          <TText>{text?.length}/10</TText>
+          <TText>{text?.length}/15</TText>
         </TextContainer>
       </ProfileContainer>
       <Toast

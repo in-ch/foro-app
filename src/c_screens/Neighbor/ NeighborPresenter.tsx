@@ -9,6 +9,7 @@ import {cHeight, nomalizes} from '@utills/constants';
 import images from '@assets/images';
 import {cssUtil} from '@utills/cssUtil';
 import Toast from 'react-native-easy-toast';
+import Dots from '~/c_components/Icons/Dots';
 
 const Container = styled.View`
   flex: 1;
@@ -65,7 +66,7 @@ const ImageContainer = styled.View`
   overflow: hidden;
 `;
 const TTouchableOpacity = styled.TouchableOpacity`
-  background-color: #e4e4e4;
+  background-color: #f0f0f0;
   width: 90%;
   border-radius: ${nomalizes[10]}px;
   display: flex;
@@ -128,13 +129,14 @@ const NeighborPresenter = ({
               </Row>
               <Row>
                 <TouchableWithoutFeedback onPress={() => onShowModal(data?.no)}>
-                  <IImage
+                  {/* <IImage
                     style={{
                       width: nomalizes[16],
                       height: nomalizes[16],
                     }}
                     source={images.setting}
-                  />
+                  /> */}
+                  <Dots />
                 </TouchableWithoutFeedback>
               </Row>
             </RowBox>

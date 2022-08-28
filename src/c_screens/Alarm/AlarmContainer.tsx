@@ -1,5 +1,5 @@
 import {useQuery, useReactiveVar} from '@apollo/client';
-import React from 'react';
+import React, {useState} from 'react';
 import {tokenUserNo} from 'apollo/client';
 
 import {AlarmProps} from './Alarm';
@@ -8,8 +8,14 @@ import {LOAD_ALARM} from '@services/queries/alarm';
 
 const AlarmContainer = ({navigation}: AlarmProps) => {
   const userNo = useReactiveVar(tokenUserNo);
+  const [backLoading, setBackLoading] = useState<boolean>(false);
   const GoToBack = () => {
-    navigation.goBack();
+    if (navigation.canGoBack()) {
+      navigation.goBack();
+    } else {
+      setBackLoading(true);
+      GoToHome();
+    }
   };
   const GoToHome = () => {
     navigation.reset({routes: [{name: 'Home', params: {}}]});
@@ -23,12 +29,14 @@ const AlarmContainer = ({navigation}: AlarmProps) => {
     },
     fetchPolicy: 'no-cache',
   });
+
   return (
     <AlarmPresenter
       GoToBack={GoToBack}
       GoToHome={GoToHome}
       myAlarm={myAlarm?.loadAlarm}
       loading={loading}
+      backLoading={backLoading}
       GotoFriendAgenda={GotoFriendAgenda}
     />
   );

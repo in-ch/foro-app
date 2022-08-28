@@ -12,7 +12,7 @@ import {cssUtil} from '@utills/cssUtil';
 import images from '@assets/images';
 
 const Container = styled.View<Props>`
-  width: 100%;
+  width: ${cWidth};
   height: ${cHeight + nomalizes[50]}px;
   z-index: 9999999999998;
   background-color: white;
@@ -55,17 +55,18 @@ const SkipText = styled.Text`
   color: #000;
 `;
 const Balls = styled.View`
-  width: ${nomalizes[120]}px;
+  width: ${nomalizes[60]}px;
   height: ${nomalizes[40]}px;
+  padding-top: ${nomalizes[10]}px;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
 `;
 const Ball = styled.View<HighlightProps>`
-  width: ${nomalizes[8]}px;
-  height: ${nomalizes[8]}px;
-  border-radius: ${nomalizes[4]}px;
+  width: ${nomalizes[6]}px;
+  height: ${nomalizes[6]}px;
+  border-radius: ${nomalizes[3]}px;
   background-color: ${props => (props.highlight ? '#FF6258' : '#a8a8a8')};
 `;
 const SkipButtonContainer = styled.View`
@@ -106,75 +107,18 @@ const SubText = styled.Text`
   margin-top: ${nomalizes[5]}px;
   color: #000;
 `;
-const LogoutContainer = styled.View`
-  width: ${cWidth}px;
-  height: ${cHeight + nomalizes[50]}px;
-  background-color: rgba(0, 0, 0, 0.3);
-  display: flex;
-  ${cssUtil.doubleCenter};
-`;
-const LogoutWrapper = styled.View`
-  background-color: #fff;
-  width: ${nomalizes[200]}px;
-  height: ${nomalizes[120]}px;
-  border-radius: ${nomalizes[20]}px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: ${nomalizes[10]}px;
-  position: relative;
-  top: -${nomalizes[20]}px;
-  justify-content: space-between;
-`;
-const LogoutText = styled.Text`
-  color: #333333;
-  font-size: ${nomalizes[12]}px;
-  margin-top: ${nomalizes[5]}px;
-  font-weight: bold;
-`;
-const LogoutText2 = styled.Text`
-  color: #333333;
-  font-size: ${nomalizes[10]}px;
-  margin-top: ${nomalizes[5]}px;
-`;
-const SelectButtonWrapper = styled.View`
-  width: 90%;
-  height: ${nomalizes[30]}px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-`;
-const CancelButton = styled.TouchableOpacity`
-  width: 48%;
-  height: ${nomalizes[30]}px;
-  background-color: #dbdbdb;
-  border-radius: ${nomalizes[8]}px;
-  ${cssUtil.doubleCenter};
-`;
-const OkButton = styled.TouchableOpacity`
-  width: 48%;
-  height: ${nomalizes[30]}px;
-  background-color: #ff6258;
-  border-radius: ${nomalizes[8]}px;
-  ${cssUtil.doubleCenter};
-`;
-const ButtonText = styled.Text`
-  color: #fff;
-  font-size: ${nomalizes[11]}px;
-`;
 const SStatusBar = styled.StatusBar``;
 const IImage = styled.Image``;
 const VView = styled.View``;
-const MModal = styled.Modal``;
+
 interface Props {
   hide?: boolean;
-  GoToFoodAdd: () => void;
 }
 interface HighlightProps {
   highlight: boolean;
 }
 
-const IntroApp = ({GoToFoodAdd}: Props) => {
+const IntroApp = () => {
   const animatedValue = useRef(new Animated.Value(0)).current;
   const onShow = () => {
     Animated.timing(animatedValue, {
@@ -193,7 +137,6 @@ const IntroApp = ({GoToFoodAdd}: Props) => {
 
   const [sliderState, setSliderState] = useState({currentPage: 0});
   const [hide, setHide] = useState(true);
-  const [show, setShow] = useState(false);
 
   const {width} = Dimensions.get('window');
 
@@ -212,17 +155,16 @@ const IntroApp = ({GoToFoodAdd}: Props) => {
   const sktip = async () => {
     await doIntroSkip();
     onHide();
-    setShow(false);
     setTimeout(() => {
       setHide(false);
     }, 501);
   };
 
-  const Good = async () => {
-    sktip();
-    await doIntroSkip();
-    GoToFoodAdd();
-  };
+  // const Good = async () => {
+  //   sktip();
+  //   await doIntroSkip();
+  //   // GoToFoodAdd();
+  // };
 
   useEffect(() => {
     onShow();
@@ -252,7 +194,7 @@ const IntroApp = ({GoToFoodAdd}: Props) => {
           <IImage
             source={images.intro1}
             style={{
-              width: '100%',
+              width: cWidth,
               height: '100%',
             }}
           />
@@ -266,11 +208,12 @@ const IntroApp = ({GoToFoodAdd}: Props) => {
           <IImage
             source={images.intro2}
             style={{
-              width: '100%',
+              width: cWidth,
               height: '100%',
             }}
           />
-          <Heading>이웃을 넘나들며 서로의 식품창고를 구경해 보세요!</Heading>
+          <Heading>이웃과 식품 공유</Heading>
+          <SubText>이웃을 넘나들며 서로의 식품창고를 구경해 보세요!</SubText>
           <SubText>마음에 드는 먹거리가 보인다면?</SubText>
           <SubText>공유를 부탁해 보세요</SubText>
         </ImageView>
@@ -278,7 +221,7 @@ const IntroApp = ({GoToFoodAdd}: Props) => {
           <IImage
             source={images.intro3}
             style={{
-              width: '100%',
+              width: cWidth,
               height: '100%',
             }}
           />
@@ -290,7 +233,7 @@ const IntroApp = ({GoToFoodAdd}: Props) => {
           <IImage
             source={images.intro4}
             style={{
-              width: '100%',
+              width: cWidth,
               height: '100%',
             }}
           />
@@ -305,34 +248,17 @@ const IntroApp = ({GoToFoodAdd}: Props) => {
         <ButtonContainer>
           <SkipButtonContainer>
             {sliderState.currentPage === 3 ? (
-              <SkipButton onPress={() => setShow(true)}>
+              <SkipButton onPress={sktip}>
                 <TText>시작하기</TText>
               </SkipButton>
             ) : (
-              <SkipContainer onPress={() => setShow(true)}>
-                <SkipText>Skip</SkipText>
+              <SkipContainer onPress={sktip}>
+                <SkipText>건너뛰기</SkipText>
               </SkipContainer>
             )}
           </SkipButtonContainer>
         </ButtonContainer>
       </VView>
-
-      <MModal animationType="fade" visible={show} transparent={true}>
-        <LogoutContainer>
-          <LogoutWrapper>
-            <LogoutText>Fooro에 오신 것을 환영합니다!</LogoutText>
-            <LogoutText2>바로 달력에 식품을 추가해 볼까요?</LogoutText2>
-            <SelectButtonWrapper>
-              <CancelButton onPress={sktip}>
-                <ButtonText>건너뛰기</ButtonText>
-              </CancelButton>
-              <OkButton onPress={Good}>
-                <ButtonText>수락하기</ButtonText>
-              </OkButton>
-            </SelectButtonWrapper>
-          </LogoutWrapper>
-        </LogoutContainer>
-      </MModal>
     </AnimatedContainer>
   );
 };

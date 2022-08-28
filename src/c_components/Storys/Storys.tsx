@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, {useState} from 'react';
 import styled from 'styled-components/native';
@@ -9,10 +10,11 @@ import {useQuery, useReactiveVar} from '@apollo/client';
 import {LOAD_USER} from '@services/queries/user';
 import {LOAD_FRIEND_FOOD} from '@services/queries/friend';
 import {tokenUserNo} from 'apollo/client';
+import {SizedBox} from '../SizedBox';
 
 const Container = styled.View`
   height: ${nomalizes[75]}px;
-  background-color: #f5f5f5;
+  border-bottom: 1px solid red;
 `;
 const SScrollView = styled.ScrollView`
   height: ${nomalizes[70]}px;
@@ -48,6 +50,7 @@ const Storys = ({GoToFriendAdd, GoToFriendAgenda}: Props) => {
     },
     onCompleted: d => {
       setFriends(d?.loadFriendFood);
+      console.log('==========');
       console.log(friendsData);
     },
     fetchPolicy: 'network-only',
@@ -55,6 +58,7 @@ const Storys = ({GoToFriendAdd, GoToFriendAgenda}: Props) => {
 
   return (
     <Container>
+      <SizedBox.Custom margin={1} style={{backgroundColor: '#dfdfdf'}} />
       <SScrollView horizontal={true} showsHorizontalScrollIndicator={true}>
         <Wrapper>
           <Story
@@ -76,6 +80,7 @@ const Storys = ({GoToFriendAdd, GoToFriendAgenda}: Props) => {
           <VView style={{width: nomalizes[5]}} />
         </Wrapper>
       </SScrollView>
+      <SizedBox.Custom margin={1} style={{backgroundColor: '#dfdfdf'}} />
     </Container>
   );
 };

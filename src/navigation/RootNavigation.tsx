@@ -1,9 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect} from 'react';
 import {
   CardStyleInterpolators,
   createStackNavigator,
 } from '@react-navigation/stack';
 import {useReactiveVar} from '@apollo/client';
+import {Alert, Linking} from 'react-native';
 
 import Home from '@screens/Home/Home';
 import Login from '@screens/Login/Login';
@@ -35,10 +37,11 @@ import DetailFriend from '@screens/DetailFriend/DetailFriend';
 
 import {FoodData} from 'types/Food';
 import {isLoggedInVar} from 'apollo/client';
-import {Linking} from 'react-native';
 
 export type RootTabParamList = {
-  Home: {};
+  Home: {
+    foodNo?: number;
+  };
   Login: {};
   Alarm: {};
   Search: {};
@@ -104,28 +107,7 @@ const RootNavigation = () => {
 
   const isLoggedIn = useReactiveVar(isLoggedInVar);
 
-  const handleDeepLink = () => {
-    Linking.getInitialURL().then(res => {
-      //앱이 실행되지 않은 상태에서 요청이 왔을 때
-      if (res == null || res === undefined || res === '') {
-        return;
-      } else {
-        // var params = urlParamtersToJson(res);
-        console.log('parmmmmmmmmmmmmmmmm');
-        console.log(res);
-      }
-    });
-    Linking.addEventListener('url', e => {
-      // 앱이 실행되어있는 상태에서 요청이 왔을 때 처리하는 이벤트 등록
-      if (e.url === null || e.url === undefined || e.url === '') {
-        return;
-      } else {
-        console.log('parmmmmmmmmmmmmmmmm');
-        console.log(e);
-      }
-    });
-  };
-
+  const handleDeepLink = () => {};
   useEffect(() => {
     handleDeepLink();
   }, []);

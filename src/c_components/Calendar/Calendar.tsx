@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import {CalendarList} from 'react-native-calendars';
-import {View} from 'react-native';
 import styled from 'styled-components/native';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import moment from 'moment';
@@ -57,6 +56,7 @@ const DayText = styled.Text<DayTextProps>`
   color: ${props =>
     props.dis === 'disabled' ? '#b6b6b6' : props.current ? '#fff' : '#303030'};
 `;
+const VView = styled.View``;
 
 interface CurrentProps {
   current?: boolean;
@@ -103,7 +103,7 @@ const CCalendar = ({GoToAgenda, GoToDetail}: Props) => {
             DateToString(date?.year, date?.month, date?.day),
           );
           return (
-            <View style={{height: nomalizes[75], marginTop: nomalizes[3]}}>
+            <VView style={{height: nomalizes[75], marginTop: nomalizes[3]}}>
               <DayContainer
                 current={
                   DateToString(date?.year, date?.month, date?.day) ===
@@ -146,7 +146,7 @@ const CCalendar = ({GoToAgenda, GoToDetail}: Props) => {
                     );
                   })}
               </TouchableWithoutFeedback>
-            </View>
+            </VView>
           );
         }}
         theme={{

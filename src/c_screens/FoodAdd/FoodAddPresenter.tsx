@@ -31,7 +31,7 @@ const SearchResultBoxTextWrapper = styled.TouchableOpacity`
   display: flex;
   width: ${cWidth * 0.85}px;
   height: ${nomalizes[16]}px;
-  margin-bottom: ${nomalizes[10]}px;
+  margin-bottom: ${nomalizes[15]}px;
   font-family: 'Pretendard';
   flex-direction: row;
   justify-content: space-between;

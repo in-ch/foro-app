@@ -7,6 +7,7 @@ import {Linking} from 'react-native';
 
 import {userDeviceToken} from 'apollo/client';
 import Notification from '@hooks/Notification';
+import {useNavigation} from '@react-navigation/native';
 
 export async function requestUserPermission() {
   const authStatus = await messaging().requestPermission();
@@ -23,6 +24,7 @@ const Pushinit = (GoToAlarm: any) => {
   const [token, setToken] = useState('');
   const {getItem: getFcmItem, setItem: setFcmItem} =
     useAsyncStorage('fcmToken');
+  const {navigate} = useNavigation();
 
   useEffect(() => {
     const getFcmToken = async () => {
@@ -38,6 +40,9 @@ const Pushinit = (GoToAlarm: any) => {
     requestUserPermission();
     messaging().requestPermission();
     messaging().registerDeviceForRemoteMessages();
+    messaging().onNotificationOpenedApp(_notificationOpen => {
+      navigate('Alarm', {});
+    });
     getFcmToken();
 
     const unsubscribe = messaging().onMessage(async remoteMessage => {
