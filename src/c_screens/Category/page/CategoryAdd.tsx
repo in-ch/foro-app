@@ -50,7 +50,7 @@ const CategoryAdd = ({navigation}: CategoryAddProps) => {
     if (vvalue === '' || vvalue === ' ' || vvalue === ' ') {
       showToast('카테고리명이 비어 있습니다.');
       setValue('');
-    } else if (vvalue?.length < 3) {
+    } else if (vvalue?.length < 2) {
       showToast('두글자 이상을 적어주세요.');
       setValue('');
     } else {
@@ -69,6 +69,9 @@ const CategoryAdd = ({navigation}: CategoryAddProps) => {
     onCompleted: () => {
       showToast('카테고리가 추가되었습니다.');
       setValue('');
+      setTimeout(() => {
+        goBack();
+      }, 1000);
     },
     onError: e => {
       console.log(JSON.stringify(e));
