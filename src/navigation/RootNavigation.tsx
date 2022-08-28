@@ -105,34 +105,7 @@ const RootNavigation = () => {
 
   const isLoggedIn = useReactiveVar(isLoggedInVar);
 
-  const handleDeepLink = () => {
-    Linking.getInitialURL().then(res => {
-      //앱이 실행되지 않은 상태에서 요청이 왔을 때
-      // if (res == null || res === undefined || res === '') {
-      //   Alert.alert('1');
-      //   return;
-      // } else {
-      //   Alert.alert(res);
-      // }
-      handleEvent(res);
-    });
-    Linking.addEventListener('url', e => {
-      // 앱이 실행되어있는 상태에서 요청이 왔을 때 처리하는 이벤트 등록
-      // if (e.url === null || e.url === undefined || e.url === '') {
-      //   Alert.alert('3');
-      //   return;
-      // } else {
-      //   Alert.alert('4');
-      // }
-      handleEvent(`${e}`);
-    });
-  };
-  const handleEvent = (value: string | null) => {
-    Alert.alert(`${value}`);
-    if (value === 'kakao8e1ff68c09e6b4bb069c110e76d314df://vvv') {
-      Alert.alert('Some action');
-    }
-  };
+  const handleDeepLink = () => {};
   useEffect(() => {
     handleDeepLink();
   }, []);

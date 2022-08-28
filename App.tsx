@@ -9,10 +9,12 @@ import client from './src/apollo/client';
 import RootNavigation from './src/navigation/RootNavigation';
 
 const linking = {
-  prefixes: ['kakao8e1ff68c09e6b4bb069c110e76d314df://'],
+  prefixes: ['kakao8e1ff68c09e6b4bb069c110e76d314df://app'],
   config: {
     screens: {
-      UserAdd: 'kakaolink',
+      Alarm: {
+        path: 'alarm',
+      },
     },
   },
 };

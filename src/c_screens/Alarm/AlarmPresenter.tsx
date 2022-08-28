@@ -10,6 +10,7 @@ import {nomalizes} from '@utills/constants';
 import FoodAlarm from './routes/FoodAlarm';
 import ShareAlarm from './routes/ShareAlarm';
 import {AlarmProps} from 'types/Alarm';
+import Loading from '~/c_components/Loading';
 
 const Container = styled.View`
   background-color: #fff;
@@ -19,11 +20,13 @@ const LabelText = styled.Text`
   font-size: ${nomalizes[12]}px;
   color: #000;
 `;
+const MModal = styled.Modal``;
 interface Props {
   GoToBack: () => void;
   GoToHome: () => void;
   myAlarm: AlarmProps[];
   loading: boolean;
+  backLoading: boolean;
   GotoFriendAgenda: (value: number) => void;
 }
 interface PProps {
@@ -35,6 +38,7 @@ const AlarmPresenter = ({
   GoToHome,
   myAlarm,
   loading,
+  backLoading,
   GotoFriendAgenda,
 }: Props) => {
   const [index, setIndex] = useState(0);
@@ -100,6 +104,9 @@ const AlarmPresenter = ({
         lazy={true}
         renderTabBar={renderTabBar}
       />
+      <MModal animationType="fade" visible={backLoading} transparent={true}>
+        <Loading />
+      </MModal>
     </Container>
   );
 };
