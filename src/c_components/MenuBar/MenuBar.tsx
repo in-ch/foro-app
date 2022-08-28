@@ -284,7 +284,10 @@ const MenuBar = ({
         <HambergerContainer onPress={onShow}>
           <Img source={Images.hamber} />
         </HambergerContainer>
-        <Img style={{width: 45, height: 12}} source={Images.textLogo} />
+        <Img
+          style={{width: 45, height: 12, marginBottom: 3}}
+          source={Images.textLogo}
+        />
 
         <SearchAlarmContainer>
           <TouchableWithoutFeedback onPress={asdf}>

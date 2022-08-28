@@ -22,8 +22,10 @@ const FriendAddContainer = ({navigation}: FriendAddProps) => {
     setSelectedUserName(userName);
     setSelectModal(true);
     setFriendNo(_friendNo);
-    mutationRequestAddFriend();
     setFriendName(userName);
+    if (friendNo !== 0 || (friendNo !== undefined && friendNo !== null)) {
+      mutationRequestAddFriend();
+    }
   };
 
   const goBack = () => {
@@ -51,8 +53,7 @@ const FriendAddContainer = ({navigation}: FriendAddProps) => {
       userNo,
       friendNo,
     },
-    onCompleted: d => {
-      console.log('============= 성공', d);
+    onCompleted: () => {
       mutationSendPush();
     },
   });
@@ -64,9 +65,6 @@ const FriendAddContainer = ({navigation}: FriendAddProps) => {
       body: `${friendName}님! 새로운 이웃 요청이 왔어요.`,
       type: 1,
     },
-    onCompleted: d => {
-      console.log(d);
-    },
   });
 
   const toastRef = useRef<any>(null);
@@ -76,7 +74,7 @@ const FriendAddContainer = ({navigation}: FriendAddProps) => {
   const cancelSelectModal = () => {
     setSelectModal(false);
   };
-  const handleEvent = () => {
+  const handleEvent = async () => {
     showToast('이웃추가 요청을 보냈습니다.');
     setSelectModal(false);
   };

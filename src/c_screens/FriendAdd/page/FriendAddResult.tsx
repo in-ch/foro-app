@@ -1,22 +1,21 @@
 /* eslint-disable react-native/no-inline-styles */
 import {NavigationProp, RouteProp} from '@react-navigation/native';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
-import {Image, Modal} from 'react-native';
 import styled from 'styled-components/native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {useMutation, useReactiveVar} from '@apollo/client';
 import Toast from 'react-native-easy-toast';
 
+import {tokenUserNo} from 'apollo/client';
 import {RootTabParamList} from 'navigation/RootNavigation';
 import Header from '@components/Header/Header';
 import {SizedBox} from '@components/SizedBox';
 import {cHeight, cWidth, nomalizes} from '@utills/constants';
 import {cssUtil} from '@utills/cssUtil';
 import {UserSearchData} from 'types/User';
-import {LOAD_USER_BY_NAME} from '@services/mutations/user';
 import images from '@assets/images';
-import {tokenUserNo} from 'apollo/client';
 import {REQUEST_ADD_FRIEND} from '@services/mutations/alarm';
+import {LOAD_USER_BY_NAME} from '@services/mutations/user';
 import {SEND_PUSH} from '@services/mutations/push';
 
 const Container = styled.View`
@@ -134,6 +133,8 @@ const LoadingContainer = styled.View`
   display: flex;
   ${cssUtil.doubleCenter};
 `;
+const IIImage = styled.Image``;
+const MModal = styled.Modal``;
 
 export interface FriendAddResultProps {
   navigation: NavigationProp<RootTabParamList, 'FriendAddResult'>;
@@ -248,7 +249,7 @@ const FriendAddResult = ({navigation, route}: FriendAddResultProps) => {
             {!loading ? (
               userData.length < 1 && (
                 <NoneContainer>
-                  <Image
+                  <IIImage
                     style={{
                       width: nomalizes[50],
                       height: nomalizes[50],
@@ -260,7 +261,7 @@ const FriendAddResult = ({navigation, route}: FriendAddResultProps) => {
               )
             ) : (
               <LoadingContainer>
-                <Image
+                <IIImage
                   source={images.loading}
                   style={{width: 100, height: 100}}
                 />
@@ -270,7 +271,7 @@ const FriendAddResult = ({navigation, route}: FriendAddResultProps) => {
           <SizedBox.Custom margin={nomalizes[100]} />
         </ScrollView>
 
-        <Modal animationType="fade" visible={selectModal} transparent={true}>
+        <MModal animationType="fade" visible={selectModal} transparent={true}>
           <ModalBackground>
             <AlertWrapper selectModal={selectModal}>
               <AlertText>{selectedUserName}님에게</AlertText>
@@ -285,7 +286,7 @@ const FriendAddResult = ({navigation, route}: FriendAddResultProps) => {
               </SelectButtonWrapper>
             </AlertWrapper>
           </ModalBackground>
-        </Modal>
+        </MModal>
         <Toast
           ref={toastRef}
           positionValue={cHeight * 0.25}
