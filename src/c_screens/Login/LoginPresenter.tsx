@@ -13,7 +13,7 @@ import {
 import {cssUtil} from '@utills/cssUtil';
 
 import Images from 'assets';
-import IntroApp from '~/c_components/Intro/IntroApp';
+import IntroApp from '@components/Intro/IntroApp';
 
 const Container = styled.View`
   display: flex;
@@ -136,7 +136,9 @@ const ModalBackground = styled.View`
 const IImage = styled.Image``;
 const AActivityIndicator = styled.ActivityIndicator``;
 const MModal = styled.Modal``;
-
+const TTText = styled.Text`
+  color: #fff;
+`;
 interface Props {
   signInWithKakao: () => void;
   signInWithGoogle: () => void;
@@ -183,6 +185,8 @@ const LoginPresenter = ({
                 }}
                 source={Images.logo}
               />
+              <SizedBox.Custom margin={nomalizes[20]} />
+              <TTText>푸드제로, 음식물 쓰레기 제로 공유 서비스</TTText>
             </IntroJon>
             <LoginJon>
               <TouchableWithoutFeedback onPress={handleGuestLogin}>
