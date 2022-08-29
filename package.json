@@ -1,6 +1,6 @@
 {
   "name": "foro",
-  "version": "1.6.0",
+  "version": "1.5.2",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
@@ -13,7 +13,19 @@
     "androidTcp": "adb -s emulator-5554 reverse tcp:3000 tcp:3000",
     "iosPhone": "react-native run-ios --device '성인치의 iPad'",
     "build:ios": "react-native bundle --entry-file='index.js' --bundle-output='./ios/main.jsbundle' --dev=false --platform='ios'",
-    "minor": "standard-version --release-as minor"
+    "minor":"standard-version --release-as minor",
+    "major":"standard-version --release-as major",
+    "patch":"standard-version --release-as patch"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
   },
   "dependencies": {
     "@apollo/client": "^3.4.9",
@@ -60,7 +72,7 @@
     "react-native-vector-icons": "^9.2.0",
     "styled-components": "^5.3.5",
     "styled-reset": "^4.3.4",
-    "subscriptions-transport-ws": "^0.11.0"
+    "subscriptions-transport-ws": "^0.11.0" 
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
