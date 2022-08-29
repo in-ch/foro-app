@@ -7,14 +7,15 @@ import {useMutation, useReactiveVar} from '@apollo/client';
 import styled from 'styled-components/native';
 import moment from 'moment';
 
+import {tokenUserNo} from 'apollo/client';
+import {RootTabParamList} from '@navigation/RootNavigation';
 import HeaderX from '@components/Header/HeaderX';
 import {SizedBox} from '@components/SizedBox';
 import {INSERT_FOOD} from '@services/mutations/food';
+import {SCHEDULE_PUSH} from '@services/mutations/alarm';
 import {nomalizes} from '@utills/constants';
 import {cssUtil} from '@utills/cssUtil';
-import {RootTabParamList} from '@navigation/RootNavigation';
-import {tokenUserNo} from '~/apollo/client';
-import {SCHEDULE_PUSH} from '~/c_services/mutations/alarm';
+import {SEND_PUSH} from '@services/mutations/push';
 
 export interface FoodAddResultProps {
   navigation: NavigationProp<RootTabParamList, 'FoodDone'>;
@@ -106,6 +107,15 @@ const FoodDone = ({navigation, route}: FoodAddResultProps) => {
   const userNo = useReactiveVar(tokenUserNo);
   const [mutationInsertFood] = useMutation(INSERT_FOOD);
   const [mutationPush] = useMutation(SCHEDULE_PUSH);
+  const [mutationSendPushToUser] = useMutation(SEND_PUSH, {
+    variables: {
+      userNo: userNo,
+      title: '식품 추가가 완료되었습니다.',
+      body: '감사합니다.',
+      type: 99,
+    },
+  });
+
   const handleInsertFood = () => {
     mutationInsertFood({
       variables: {
@@ -143,6 +153,7 @@ const FoodDone = ({navigation, route}: FoodAddResultProps) => {
 
   useEffect(() => {
     handleInsertFood();
+    mutationSendPushToUser();
   }, []);
   return (
     <>

@@ -3,6 +3,7 @@
 import React, {useEffect, useState} from 'react';
 import styled from 'styled-components/native';
 import {NavigationProp, RouteProp} from '@react-navigation/native';
+import {ScrollView} from 'react-native-gesture-handler';
 
 import {nomalizes} from '@utills/constants';
 import {cssUtil} from '@utills/cssUtil';
@@ -10,9 +11,8 @@ import {getListFilter} from '@utills/getListFilter';
 import Header from '@components/Header/Header';
 import {RootTabParamList} from '@navigation/RootNavigation';
 import {SizedBox} from '@components/SizedBox';
-import {FoodData} from '~/types/Food';
-import {foods} from '~/data/FOOD';
-import {ScrollView} from 'react-native-gesture-handler';
+import {FoodData} from 'types/Food';
+import {foods} from 'data/FOOD';
 
 const Container = styled.View`
   flex: 1;
