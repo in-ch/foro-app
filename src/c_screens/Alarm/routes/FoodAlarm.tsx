@@ -15,7 +15,7 @@ import images from '@assets/images';
 import DDay from '@components/DDay';
 import {SEND_PUSH} from '@services/mutations/push';
 import {LOAD_USER} from '@services/queries/user';
-import {ALTER_FOOD_OWNER} from '~/c_services/mutations/food';
+import {ALTER_FOOD_OWNER} from '@services/mutations/food';
 
 const Container = styled.View`
   width: 100%;
@@ -167,12 +167,13 @@ interface SelectModalProps {
   selectModal: boolean;
 }
 
-const ShareAlarm = ({myAlarm, loading, GotoFriendAgenda, GoToHome}: Props) => {
+const ShareAlarm = ({myAlarm, loading, GoToHome}: Props) => {
   const [highliteValue, setHighliteValue] = useState<string>('');
   const [doneValue, setDoneValue] = useState<string>('');
   const [selectValue, setSelectValue] = useState<number>(0);
   const [friendNo, setFriendNo] = useState<number | undefined>(0);
   const userNo = useReactiveVar(tokenUserNo);
+  const [alarmLength, setAlarmLength] = useState<number | undefined>(0);
   const isClickWrapper = (
     value: number,
     type: number,
@@ -252,42 +253,6 @@ const ShareAlarm = ({myAlarm, loading, GotoFriendAgenda, GoToHome}: Props) => {
     },
   });
 
-  const handleAlterFoodOwner = (
-    foodNo: number,
-    alarmNo: number,
-    fromUserNo: number,
-  ) => {
-    mutationAlterFoodOwner({
-      variables: {
-        userNo,
-        foodNo,
-        alarmNo,
-      },
-      onCompleted: d => {
-        if (d?.alterFoodOwner?.ok) {
-          showToast('식품을 공유받았습니다.');
-          lazyLoadUser({
-            onCompleted: () => {
-              mutationSendPush({
-                variables: {
-                  userNo: fromUserNo,
-                  title: `${d?.loadUser?.nickname}님이 식품을 공유해갔습니다.`,
-                  body: '식품을 공유해주셔서 감사합니다.',
-                  type: 4,
-                },
-              });
-            },
-          });
-        } else {
-          showToast('이미 공유된 식품입니다.');
-        }
-      },
-      onError: () => {
-        showToast('오류가 발생하였습니다. 관리자에게 문의해주세요.');
-      },
-    });
-  };
-
   const type5event = (foodNo: number, alarmNo: number, _friendNo: number) => {
     mutationAlterFoodOwner({
       variables: {
@@ -310,7 +275,11 @@ const ShareAlarm = ({myAlarm, loading, GotoFriendAgenda, GoToHome}: Props) => {
 
   useEffect(() => {
     mutationReadAllAlarm();
-  }, [mutationReadAllAlarm]);
+    const filterdAlarm = myAlarm?.filter(alarm => {
+      return alarm?.type === 1 || alarm?.type === 4 || alarm?.type === 5;
+    });
+    setAlarmLength(filterdAlarm?.length);
+  }, [mutationReadAllAlarm, myAlarm]);
 
   return (
     <ScrollView>
@@ -337,64 +306,6 @@ const ShareAlarm = ({myAlarm, loading, GotoFriendAgenda, GoToHome}: Props) => {
                         <FoodText numberOfLines={2}>
                           {alarm.fromUser?.nickname}님에게 이웃추가 요청이
                           왔습니다.
-                        </FoodText>
-                      </Header>
-                      <Bottom>
-                        <DDay time={alarm.createdAt.toString()} />
-                      </Bottom>
-                    </TextContainer>
-                  </Wrapper>
-                );
-              } else if (alarm.type === 2) {
-                return (
-                  <Wrapper
-                    isRead={
-                      highliteValue.includes(`//${index}//`) || alarm.isRead
-                    }
-                    onPress={() =>
-                      GotoFriendAgenda(Number(alarm?.fromUser?.no))
-                    }>
-                    <ProfileContainer>
-                      <Button>
-                        <ButtonText>이웃추가완료</ButtonText>
-                      </Button>
-                    </ProfileContainer>
-                    <TextContainer>
-                      <Header>
-                        <FoodText numberOfLines={2}>
-                          {alarm.fromUser?.nickname}님이 이웃추가를
-                          수락하였습니다.
-                        </FoodText>
-                      </Header>
-                      <Bottom>
-                        <DDay time={alarm.createdAt.toString()} />
-                      </Bottom>
-                    </TextContainer>
-                  </Wrapper>
-                );
-              } else if (alarm.type === 3) {
-                return (
-                  <Wrapper
-                    isRead={
-                      highliteValue.includes(`//${index}//`) || alarm.isRead
-                    }
-                    onPress={() =>
-                      handleAlterFoodOwner(
-                        Number(alarm?.food?.no),
-                        Number(alarm?.no),
-                        Number(alarm?.fromUser?.no),
-                      )
-                    }>
-                    <ProfileContainer>
-                      <Button>
-                        <ButtonText>공유 알림</ButtonText>
-                      </Button>
-                    </ProfileContainer>
-                    <TextContainer>
-                      <Header>
-                        <FoodText numberOfLines={2}>
-                          {alarm.fromUser?.nickname}님이 식품을 단체 공유했어요.
-                          지금 바로 가져가세요.
                         </FoodText>
                       </Header>
                       <Bottom>
@@ -496,7 +407,7 @@ const ShareAlarm = ({myAlarm, loading, GotoFriendAgenda, GoToHome}: Props) => {
         </NoneContainer>
       )}
 
-      {myAlarm?.length < 1 && (
+      {Number(alarmLength) < 1 && (
         <NoneContainer>
           <IImage
             style={{

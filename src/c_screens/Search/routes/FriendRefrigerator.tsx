@@ -104,7 +104,7 @@ const FriendRefrigerator = ({goToFriendDetail}: Props) => {
                   }
                 })}
                 <FoodNoneContainer>
-                  <NoneText>등록된 상품이 없습니다.</NoneText>
+                  <NoneText>등록된 식품이 없습니다.</NoneText>
                 </FoodNoneContainer>
               </Wrapper>
             );
