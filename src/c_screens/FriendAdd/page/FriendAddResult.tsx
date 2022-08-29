@@ -168,9 +168,9 @@ const FriendAddResult = ({navigation, route}: FriendAddResultProps) => {
       userNo,
       friendNo,
     },
-    onCompleted: d => {
-      console.log('============= 성공', d);
+    onCompleted: () => {
       mutationSendPush();
+      mutationSendPushToUser();
     },
   });
 
@@ -183,6 +183,15 @@ const FriendAddResult = ({navigation, route}: FriendAddResultProps) => {
     },
     onCompleted: d => {
       console.log(d);
+    },
+  });
+
+  const [mutationSendPushToUser] = useMutation(SEND_PUSH, {
+    variables: {
+      userNo: userNo,
+      title: '이웃 추가 요청을 보냈습니다.',
+      body: '수락을 해야 이웃추가가 완료됩니다.',
+      type: 99,
     },
   });
 

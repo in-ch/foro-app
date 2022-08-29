@@ -67,6 +67,15 @@ const FriendAddContainer = ({navigation}: FriendAddProps) => {
     },
   });
 
+  const [mutationSendPushToUser] = useMutation(SEND_PUSH, {
+    variables: {
+      userNo: userNo,
+      title: '이웃 추가 요청을 보냈습니다.',
+      body: '수락을 해야 이웃추가가 완료됩니다.',
+      type: 99,
+    },
+  });
+
   const toastRef = useRef<any>(null);
   const showToast = useCallback((modalText: string) => {
     toastRef.current.show(modalText);
@@ -77,6 +86,7 @@ const FriendAddContainer = ({navigation}: FriendAddProps) => {
   const handleEvent = async () => {
     showToast('이웃추가 요청을 보냈습니다.');
     setSelectModal(false);
+    mutationSendPushToUser();
   };
   const goToFriendAddResult = () => {
     navigation.navigate('FriendAddResult', {foodText: text});
