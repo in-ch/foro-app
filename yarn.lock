@@ -7378,9 +7378,9 @@ react-native-month-year-picker@^1.8.1:
     invariant "^2.2.4"
     moment "^2.24.0"
 
-react-native-pager-view@^5.4.15:
+react-native-pager-view@^5.4.25:
   version "5.4.25"
-  resolved "https://registry.npmjs.org/react-native-pager-view/-/react-native-pager-view-5.4.25.tgz"
+  resolved "https://registry.yarnpkg.com/react-native-pager-view/-/react-native-pager-view-5.4.25.tgz#cd639d5387a7f3d5581b55a33c5faa1cbc200f97"
   integrity sha512-3drrYwaLat2fYszymZe3nHMPASJ4aJMaxiejfA1V5SK3OygYmdtmV2u5prX7TnjueJzGSyyaCYEr2JlrRt4YPg==
 
 react-native-push-notification@^8.1.1:
