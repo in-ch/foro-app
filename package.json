@@ -15,7 +15,8 @@
     "build:ios": "react-native bundle --entry-file='index.js' --bundle-output='./ios/main.jsbundle' --dev=false --platform='ios'",
     "minor": "standard-version --release-as minor",
     "major": "standard-version --release-as major",
-    "patch": "standard-version --release-as patch"
+    "patch": "standard-version --release-as patch",
+    "androidr":"react-native run-android --variant=release"
   },
   "husky": {
     "hooks": {
