@@ -434,9 +434,9 @@ const AgendaNewPresenter = ({
                                 </RenderFlexOne>
                                 <RenderFlexOne>
                                   <ConsumeDoneDate>
-                                    {moment(new Date('2022-07-30')).format(
+                                    {moment(new Date(food.createdAt)).format(
                                       'YYYY-MM-DD',
-                                    )}{' '}
+                                    )}
                                     ~ {food.dday}
                                   </ConsumeDoneDate>
                                   {food.onlyMe && (
