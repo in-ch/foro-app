@@ -45,7 +45,7 @@ const App = () => {
       link.url.includes('http://www.2hw.co.kr')
     ) {
       console.log(link);
-      Alert.alert('기모띠 foreground events');
+      Alert.alert('foreground events');
       Alert.alert(link.url);
     }
   };
@@ -66,7 +66,7 @@ const App = () => {
         ) {
           console.log(link);
 
-          Alert.alert('기모띠 background/quit events');
+          Alert.alert('background/quit events');
           Alert.alert(link.url);
         }
       });
