@@ -16,8 +16,6 @@ const HomeContainer = ({navigation}: HomeProps) => {
     navigation.navigate('Alarm', {});
   };
 
-  // const {foodNo} = route.params;
-
   const userNo = useReactiveVar(tokenUserNo);
   const [mutationUpdateUser] = useMutation(UPDATE_USER);
   const token = Pushinit(GoToAlarm); // 푸쉬 관련 코드

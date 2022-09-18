@@ -24,6 +24,9 @@ PODS:
     - FirebaseAuth (~> 8.8.0)
   - Firebase/CoreOnly (8.8.0):
     - FirebaseCore (= 8.8.0)
+  - Firebase/DynamicLinks (8.8.0):
+    - Firebase/CoreOnly
+    - FirebaseDynamicLinks (~> 8.8.0)
   - Firebase/Messaging (8.8.0):
     - Firebase/CoreOnly
     - FirebaseMessaging (~> 8.8.0)
@@ -41,6 +44,8 @@ PODS:
     - GoogleUtilities/Environment (~> 7.7)
     - GoogleUtilities/Logger (~> 7.7)
     - nanopb (~> 2.30908.0)
+  - FirebaseDynamicLinks (8.8.0):
+    - FirebaseCore (~> 8.0)
   - FirebaseInstallations (8.15.0):
     - FirebaseCore (~> 8.0)
     - GoogleUtilities/Environment (~> 7.7)
@@ -513,6 +518,11 @@ PODS:
     - Firebase/Auth (= 8.8.0)
     - React-Core
     - RNFBApp
+  - RNFBDynamicLinks (12.4.0):
+    - Firebase/DynamicLinks (= 8.8.0)
+    - GoogleUtilities/AppDelegateSwizzler
+    - React-Core
+    - RNFBApp
   - RNFBMessaging (12.9.3):
     - Firebase/Messaging (= 8.8.0)
     - React-Core
@@ -625,6 +635,7 @@ DEPENDENCIES:
   - "RNCPushNotificationIOS (from `../node_modules/@react-native-community/push-notification-ios`)"
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
   - "RNFBAuth (from `../node_modules/@react-native-firebase/auth`)"
+  - "RNFBDynamicLinks (from `../node_modules/@react-native-firebase/dynamic-links`)"
   - "RNFBMessaging (from `../node_modules/@react-native-firebase/messaging`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - "RNGoogleSignin (from `../node_modules/@react-native-google-signin/google-signin`)"
@@ -641,6 +652,7 @@ SPEC REPOS:
     - FirebaseAuth
     - FirebaseCore
     - FirebaseCoreDiagnostics
+    - FirebaseDynamicLinks
     - FirebaseInstallations
     - FirebaseMessaging
     - Flipper
@@ -764,6 +776,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-firebase/app"
   RNFBAuth:
     :path: "../node_modules/@react-native-firebase/auth"
+  RNFBDynamicLinks:
+    :path: "../node_modules/@react-native-firebase/dynamic-links"
   RNFBMessaging:
     :path: "../node_modules/@react-native-firebase/messaging"
   RNGestureHandler:
@@ -790,6 +804,7 @@ SPEC CHECKSUMS:
   FirebaseAuth: bcf0adeff88bda5dcb3beeabe5760f1226ab7b2f
   FirebaseCore: 98b29e3828f0a53651c363937a7f7d92a19f1ba2
   FirebaseCoreDiagnostics: 92e07a649aeb66352b319d43bdd2ee3942af84cb
+  FirebaseDynamicLinks: cf76a46274569da2d4491548a39ef35f3c1a992d
   FirebaseInstallations: 40bd9054049b2eae9a2c38ef1c3dd213df3605cd
   FirebaseMessaging: 419b5c9d84f294a753c6501d8cfb9ced1ce37304
   Flipper: 30e8eeeed6abdc98edaf32af0cda2f198be4b733
@@ -860,6 +875,7 @@ SPEC CHECKSUMS:
   RNCPushNotificationIOS: 87b8d16d3ede4532745e05b03c42cff33a36cc45
   RNFBApp: aa6a864798daa054bda002bb3d6905800d6d4156
   RNFBAuth: 7ec7cd7ed1b4065489c8b376c9e3cb832521c759
+  RNFBDynamicLinks: a093e1f4ae1391ccf1074bf35252d769e22c5089
   RNFBMessaging: 8d3dc5212a844b0c2d4552382394aad046d551fe
   RNGestureHandler: bad495418bcbd3ab47017a38d93d290ebd406f50
   RNGoogleSignin: d7f8368b82d94f1dec964785d496387ca7f19092
